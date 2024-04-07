@@ -97,6 +97,7 @@
     lm_sensors
     psmisc
     duplicity
+    ctop
   ];
 
   programs.nano.nanorc = ''
