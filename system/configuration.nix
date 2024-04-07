@@ -16,58 +16,32 @@
 
   # security.sudo.wheelNeedsPassword = false;
 
-  networking.hostName = "opi5"; # Define your hostname.
-  # Pick only one of the below networking options.
-  # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
-  networking.networkmanager.enable = true;  # Easiest to use and most distros use this by default.
+  networking.hostName = "opi5";
+  networking.networkmanager.enable = true;
 
   # Set your time zone.
   time.timeZone = "Europe/Moscow";
 
   zramSwap.enable = true;
 
-  # Configure network proxy if necessary
-  # networking.proxy.default = "http://user:password@proxy:port/";
-  # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
-
-  # Select internationalisation properties.
   i18n.defaultLocale = "en_US.UTF-8";
-#  console = {
-#    font = "Lat2-Terminus16";
-#    keyMap = "us";
-#    useXkbConfig = true; # use xkb.options in tty.
-#  };
 
-  # Enable the X11 windowing system.
-  # services.xserver.enable = true;
-
-
-  
-
-  # Configure keymap in X11
-  # services.xserver.xkb.layout = "us";
-  # services.xserver.xkb.options = "eurosign:e,caps:escape";
-
-  # Enable CUPS to print documents.
-  # services.printing.enable = true;
-
-  # Enable sound.
-  # sound.enable = true;
-  # hardware.pulseaudio.enable = true;
-
-  # Enable touchpad support (enabled default in most desktopManager).
-  # services.xserver.libinput.enable = true;
-
-  # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.herobrine1st = {
     isNormalUser = true;
-    extraGroups = [ "wheel" "docker" ]; # Enable ‘sudo’ for the user.
-    packages = with pkgs; [
+    extraGroups = [ "wheel" "docker" ];
+  #  packages = with pkgs; [
   #     firefox
   #     tree
-    ];
+  #  ];
     openssh.authorizedKeys.keys = [
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICs5D9zh4OUHN+wwHiNgiqC4Ec0Qi0qLAyA9oh515HJA herobrine1st@DESKTOP-IJK2GUG"
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMvg7OeMT5A85IBk9G4Y7utsVVw/B5L4J3F7BPizwFET herobrine1st@MOBILE-DCV5AQD"
+
+      # "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIANeHsIs+Zvz0YQn0Vfwzb7OKYy4+4FANzdCbjYZ3s6U herobrine1st@ZB602KL"
+      # "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIIU05hdK6vf9zmC4od6Qbja5HeNM8NSmqX+0sQFjjmI solidexplorer@ZB602KL"
+
+      # "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFVkir1w4CKIl8dTNZ9m7Ecyr1BNJuWdIACol+uFg4BP solidexplorer@lynx"
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILXHFHXgJNzzhhP22ANBqoNUKHhqwSvmRXs2Sz1DETwK herobrine1st@lynx"
     ];
   };
 
@@ -77,8 +51,6 @@
     ];
   };
 
-  # List packages installed in system profile. To search, run:
-  # $ nix search wget
   environment.systemPackages = with pkgs; [
     nano
     wget
@@ -105,17 +77,6 @@
     set tabstospaces
   '';
 
-  # Some programs need SUID wrappers, can be configured further or are
-  # started in user sessions.
-  # programs.mtr.enable = true;
-  # programs.gnupg.agent = {
-  #   enable = true;
-  #   enableSSHSupport = true;
-  # };
-
-  # List services that you want to enable:
-
-  # Enable the OpenSSH daemon.
   services.openssh = {
     enable = true;
     settings = {
@@ -139,8 +100,6 @@
     ];
   };
 
-  
-
   virtualisation.docker.enable = true;
   virtualisation.docker.enableOnBoot = true;
   virtualisation.docker.liveRestore = false;
@@ -148,30 +107,12 @@
 
   # Open ports in the firewall.
   networking.firewall = {
+    enable = true;
     allowedTCPPorts = [ 4443 8853 ];
+    # allowedUDPPorts = [];
   };
 
-  # networking.firewall.allowedUDPPorts = [ ... ];
-  # Or disable the firewall altogether.
-  # networking.firewall.enable = false;
-
-  # This option defines the first version of NixOS you have installed on this particular machine,
-  # and is used to maintain compatibility with application data (e.g. databases) created on older NixOS versions.
-  #
-  # Most users should NEVER change this value after the initial install, for any reason,
-  # even if you've upgraded your system to a new NixOS release.
-  #
-  # This value does NOT affect the Nixpkgs version your packages and OS are pulled from,
-  # so changing it will NOT upgrade your system.
-  #
-  # This value being lower than the current NixOS release does NOT mean your system is
-  # out of date, out of support, or vulnerable.
-  #
-  # Do NOT change this value unless you have manually inspected all the changes it would make to your configuration,
-  # and migrated your data accordingly.
-  #
-  # For more information, see `man configuration.nix` or https://nixos.org/manual/nixos/stable/options#opt-system.stateVersion .
-  system.stateVersion = "23.11"; # Did you read the comment?
+  system.stateVersion = "23.11"; # Do not change
 
 }
 
