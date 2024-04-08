@@ -119,6 +119,8 @@ curl --header "Content-Type: application/json"  --request POST --data "$body" --
     ctop
     smartdnotify
     python3
+    gnupg
+    rclone
   ];
 
   programs.nano.nanorc = ''
