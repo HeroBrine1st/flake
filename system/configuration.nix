@@ -161,8 +161,7 @@ curl --header "Content-Type: application/json"  --request POST --data "$body" --
   services.cron = {
     enable = true;
     systemCronJobs = [
-      #"*/5 * * * *      root    date >> /tmp/cron.log"
-      # TODO hdparm -B 192
+      "*/15 * * * * /home/herobrine1st/Docker/grafana/grafanaTask.sh"
     ];
   };
 
