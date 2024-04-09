@@ -87,7 +87,6 @@ curl --header "Content-Type: application/json"  --request POST --data "$body" --
       # "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIANeHsIs+Zvz0YQn0Vfwzb7OKYy4+4FANzdCbjYZ3s6U herobrine1st@ZB602KL"
       # "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIIU05hdK6vf9zmC4od6Qbja5HeNM8NSmqX+0sQFjjmI solidexplorer@ZB602KL"
 
-      # "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFVkir1w4CKIl8dTNZ9m7Ecyr1BNJuWdIACol+uFg4BP solidexplorer@lynx"
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILXHFHXgJNzzhhP22ANBqoNUKHhqwSvmRXs2Sz1DETwK herobrine1st@lynx"
     ];
   };
@@ -161,7 +160,7 @@ curl --header "Content-Type: application/json"  --request POST --data "$body" --
   services.cron = {
     enable = true;
     systemCronJobs = [
-      "*/15 * * * * /home/herobrine1st/Docker/grafana/grafanaTask.sh"
+      "*/15 * * * * root . /etc/profile; /home/herobrine1st/Docker/grafana/grafanaTask.sh 2>&1 > /root/grafanaTask.log"
     ];
   };
 
