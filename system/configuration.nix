@@ -176,7 +176,7 @@ curl --header "Content-Type: application/json"  --request POST --data "$body" --
   # Open ports in the firewall.
   networking.firewall = {
     enable = true;
-    allowedTCPPorts = [ 4443 8853 ];
+    # allowedTCPPorts = [];
     # allowedUDPPorts = [];
   };
 
