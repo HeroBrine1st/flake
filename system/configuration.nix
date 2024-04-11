@@ -120,6 +120,7 @@ curl --header "Content-Type: application/json"  --request POST --data "$body" --
     python3
     gnupg
     rclone
+    gnumake
   ];
 
   programs.nano.nanorc = ''
