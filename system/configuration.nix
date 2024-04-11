@@ -168,6 +168,9 @@ curl --header "Content-Type: application/json"  --request POST --data "$body" --
   virtualisation.docker.enableOnBoot = true;
   virtualisation.docker.liveRestore = false;
   virtualisation.docker.storageDriver = "btrfs";
+  virtualisation.docker.daemon.settings = {
+    dns = [ "1.1.1.1" ];
+  };
 
   # Open ports in the firewall.
   networking.firewall = {
