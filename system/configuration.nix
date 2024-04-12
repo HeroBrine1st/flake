@@ -117,11 +117,12 @@ curl --header "Content-Type: application/json"  --request POST --data "$body" --
     duplicity
     ctop
     smartdnotify
-    python3
+    (python3.withPackages(pythonPkgs: with pythonPkgs; [
+      rich
+    ]))
     gnupg
     rclone
     gnumake
-    python311Packages.rich
   ];
 
   programs.nano.nanorc = ''
