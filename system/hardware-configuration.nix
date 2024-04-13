@@ -90,4 +90,14 @@
   # networking.interfaces.end1.useDHCP = lib.mkDefault true;
 
   nixpkgs.hostPlatform = lib.mkDefault "aarch64-linux";
+
+  # hardware.opengl.enable = true;
+
+#  services.udev.extraRules = ''
+#KERNEL=="rga", MODE="0660", GROUP="video"
+#KERNEL=="system-dma32", MODE="0660", GROUP="video"
+#KERNEL=="system-uncached", MODE="0660", GROUP="video"
+#KERNEL=="system-uncached-dma32", MODE="0660", GROUP="video" RUN+="${pkgs.coreutils}/bin/chmod a+rw /dev/dma_heap"
+#  '';
+
 }
