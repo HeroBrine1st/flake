@@ -32,9 +32,12 @@
           ./system/opi5/hardware-configuration.nix
         ];
       };
-#      DESKTOP-IJK2GUG = nixpkg.lib.nixosSystem {
-#
-#      };
+      DESKTOP-IJK2GUG = nixpkg.lib.nixosSystem {
+        modules = [
+          ./system/pc/configuration.nix
+          ./system/pc/hardware-configuration.nix
+        ];
+      };
     };
   };
 }
