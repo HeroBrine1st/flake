@@ -7,13 +7,15 @@
     nixos-rk3588.url = "github:ryan4yin/nixos-rk3588?rev=349f39dcaafeb41250544bcc066db8668a7762ce";
   };
 
-  outputs = { nixpkgs, nixos-rk3588, ... }: let
-    # using the same nixpkgs as nixos-rk3588 to utilize the cross-compilation cache.
-    inherit (nixos-rk3588.inputs) nixpkgs;
-  in {
+  outputs = { nixpkgs, nixos-rk3588, ... }: {
     nixosConfigurations = {
-      opi5 = nixpkgs.lib.nixosSystem {
+
+      opi5 = let
+        # using the same nixpkgs as nixos-rk3588 to utilize the cross-compilation cache.
+        inherit (nixos-rk3588.inputs) nixpkgs;
         system = "aarch64-linux";
+      in nixpkgs.lib.nixosSystem {
+        inherit system;
         specialArgs = {
           rk3588 = { 
             inherit nixpkgs;
