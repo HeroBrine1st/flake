@@ -4,7 +4,7 @@
 
 { config, lib, pkgs, ... }:
 let
-  smartdnotify = pkgs.callPackage ../packages/smartdnotify.nix {};
+  smartdnotify = pkgs.callPackage ../../packages/smartdnotify.nix {};
 in
 {
   boot.tmp.useTmpfs = true;
