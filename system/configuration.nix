@@ -2,7 +2,11 @@
 # your system. Help is available in the configuration.nix(5) man page, on
 # https://search.nixos.org/options and in the NixOS manual (`nixos-help`).
 
-{ config, lib, pkgs, ... }: {
+{ config, lib, pkgs, ... }:
+let
+  smartdnotify = pkgs.callPackage ../packages/smartdnotify.nix {};
+in
+{
   boot.tmp.useTmpfs = true;
 
   nix = {
@@ -67,7 +71,7 @@
     psmisc
     duplicity
     ctop
-    ../packages/smartdnotify.nix
+    smartdnotify
     (python3.withPackages(pythonPkgs: with pythonPkgs; [
       rich
     ]))
