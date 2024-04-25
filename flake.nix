@@ -7,14 +7,12 @@
     nixos-rk3588.url = "github:ryan4yin/nixos-rk3588?rev=349f39dcaafeb41250544bcc066db8668a7762ce";
   };
 
-  outputs = { nixpkgs, nixos-rk3588, ... }: let
-    # using the same nixpkgs as nixos-rk3588 to utilize the cross-compilation cache.
-    inherit (nixos-rk3588.inputs) nixpkgs;
-    system = "aarch64-linux";
-  in {
+  outputs = { nixpkgs, nixos-rk3588, ... }: {
     nixosConfigurations = {
       opi5 = nixpkgs.lib.nixosSystem {
-        inherit system;
+        # using the same nixpkgs as nixos-rk3588 to utilize the cross-compilation cache.
+        inherit (nixos-rk3588.inputs) nixpkgs;
+        system = "aarch64-linux";
         specialArgs = {
           rk3588 = { 
             inherit nixpkgs; 
@@ -27,10 +25,13 @@
         modules = [
           nixos-rk3588.nixosModules.orangepi5.core
 #          nixos-rk3588.nixosModules.orangepi5.sd-image
-          ./system/configuration.nix
-          ./system/hardware-configuration.nix
+          ./system/opi5/configuration.nix
+          ./system/opi5/hardware-configuration.nix
         ];
       };
+#      DESKTOP-IJK2GUG = nixpkg.lib.nixosSystem {
+#
+#      };
     };
   };
 }
