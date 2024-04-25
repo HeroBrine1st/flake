@@ -10,11 +10,10 @@
   outputs = { nixpkgs, nixos-rk3588, ... }: let
     # using the same nixpkgs as nixos-rk3588 to utilize the cross-compilation cache.
     inherit (nixos-rk3588.inputs) nixpkgs;
-    system = "aarch64-linux";
   in {
     nixosConfigurations = {
       opi5 = nixpkgs.lib.nixosSystem {
-        inherit system;
+        system = "aarch64-linux";
         specialArgs = {
           rk3588 = { 
             inherit nixpkgs;
