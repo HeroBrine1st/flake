@@ -8,17 +8,17 @@
 
   boot = {
     kernelModules = [ "kvm-amd" ];
-    initrd = {
-      availableKernelModules = [ "nvme" "xhci_pci" "usbhid" ];
-    };
     loader = {
       systemd-boot.enable = true;
       efi.canTouchEfiVariables = true;
     };
-    luks.devices = {
-      "root" = {
-        device = "/dev/disk/by-uuid/e0a78f05-e0b6-4fbb-bf07-08b432b291d5";
-        allowDiscards = true;
+    initrd = {
+      availableKernelModules = [ "nvme" "xhci_pci" "usbhid" ];
+      luks.devices = {
+        "root" = {
+          device = "/dev/disk/by-uuid/e0a78f05-e0b6-4fbb-bf07-08b432b291d5";
+          allowDiscards = true;
+        };
       };
     };
   };
@@ -98,8 +98,6 @@
   # networking.interfaces.end1.useDHCP = lib.mkDefault true;
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
-
-  hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.stable;
 
     # Enable OpenGL
   hardware.opengl = {
