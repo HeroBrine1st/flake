@@ -3,7 +3,7 @@
 
   inputs = {
     unstable.url = "nixpkgs/nixos-unstable";
-    nixpkgs.url = "nixpkgs/nixos-23.11";
+#    nixpkgs.url = "nixpkgs/nixos-23.11";
     nixos-rk3588.url = "github:ryan4yin/nixos-rk3588?rev=349f39dcaafeb41250544bcc066db8668a7762ce";
   };
 
@@ -32,7 +32,7 @@
           ./system/opi5/hardware-configuration.nix
         ];
       };
-      DESKTOP-IJK2GUG = nixpkg.lib.nixosSystem {
+      DESKTOP-IJK2GUG = unstable.lib.nixosSystem {
         modules = [
           ./system/pc/configuration.nix
           ./system/pc/hardware-configuration.nix
