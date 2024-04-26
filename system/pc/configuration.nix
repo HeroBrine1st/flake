@@ -106,6 +106,7 @@
     sing-geosite
     sing-geoip
     nodejs
+    jetbrains-mono
 
 
     # Extensions
@@ -289,20 +290,20 @@
         executable = "${pkgs.lutris}/bin/lutris";
         profile = "${pkgs.firejail}/etc/firejail/lutris.profile";
         extraArgs = [
-          "--ignore=mkdir \${HOME}/Games"
-          "--ignore=whitelist \${HOME}/Games"
-          "--ignore=whitelist \${DOWNLOADS}"
-          "--blacklist=\${DOWNLOADS}"
+          "--ignore=mkdir \\\${HOME}/Games"
+          "--ignore=whitelist \\\${HOME}/Games"
+          "--ignore=whitelist \\\${HOME}/Downloads"
+          "--blacklist=~/Downloads"
 
-          "--noblacklist=\${HOME}/.config/MangoHud"
-          "--whitelist=\${HOME}/.config/MangoHud"
+          "--noblacklist=~/.config/MangoHud"
+          "--whitelist=~/.config/MangoHud"
           "--whitelist=/mnt/extra/Lutris"
-          "--whitelist=\${HOME}/.cache/lutris"
-          "--whitelist=\${HOME}/.cache/wine"
-          "--whitelist=\${HOME}/.cache/winetricks"
+          "--whitelist=~/.cache/lutris"
+          "--whitelist=~/.cache/wine"
+          "--whitelist=~/.cache/winetricks"
 
           "--ignore=seccomp !modify_ldt"
-          "--ignore=ignore seccomp.32 !modify_ldt"
+          "--ignore=seccomp.32 !modify_ldt"
 
           "--apparmor"
 
@@ -321,20 +322,20 @@
           "--mkfile=~/.npmrc"
           "--mkdir=~/.nvm"
           "--mkdir=~/.yarn"
-          "--mkdir=\${HOME}/.yarn-config"
-          "--mkdir=\${HOME}/.yarncache"
-          "--mkfile=\${HOME}/.yarnrc"
-          "--whitelist=\${HOME}/.node-gyp"
-          "--whitelist=\${HOME}/.npm"
-          "--whitelist=\${HOME}/.npm-packages"
-          "--whitelist=\${HOME}/.npmrc"
-          "--whitelist=\${HOME}/.nvm"
-          "--whitelist=\${HOME}/.yarn"
-          "--whitelist=\${HOME}/.yarn-config"
-          "--whitelist=\${HOME}/.yarncache"
-          "--whitelist=\${HOME}/.yarnrc"
-          "--whitelist=\${HOME}/Git"
-          "--include=whitelist-common.inc"
+          "--mkdir=~/.yarn-config"
+          "--mkdir=~/.yarncache"
+          "--mkfile=~/.yarnrc"
+          "--whitelist=~/.node-gyp"
+          "--whitelist=~/.npm"
+          "--whitelist=~/.npm-packages"
+          "--whitelist=~/.npmrc"
+          "--whitelist=~/.nvm"
+          "--whitelist=~/.yarn"
+          "--whitelist=~/.yarn-config"
+          "--whitelist=~/.yarncache"
+          "--whitelist=~/.yarnrc"
+          "--whitelist=~/Git"
+          "--include=${pkgs.firejail}/etc/firejail/whitelist-common.inc"
         ];
       };
       spotify = {
@@ -342,7 +343,7 @@
         profile = "${pkgs.firejail}/etc/firejail/spotify.profile";
         extraArgs = [
           "--join-or-start=spotify"
-          "--whitelist=\${HOME}/Music/Main"
+          "--whitelist=~/Music/Main"
         ];
       };
       steam = {
@@ -362,23 +363,23 @@
           #"--ignore=private-tmp"
 
           # Generic configuration
-          "--noblacklist=\${HOME}/.cache"
+          "--noblacklist=~/.cache"
           "--noblacklist=/mnt/games/Steam"
           "--noblacklist=/mnt/games_hdd/Steam"
           "--noblacklist=/mnt/games_ssd/Steam"
-          "--whitelist=\${HOME}/.cache"
+          "--whitelist=~/.cache"
           "--whitelist=/mnt/games/Steam"
           "--whitelist=/mnt/extra/Steam"
           "--caps.keep=sys_nice"
           "--join-or-start=steam"
 
           # Factorio
-          "--noblacklist=\${HOME}/.factorio"
-          "--whitelist=\${HOME}/.factorio"
+          "--noblacklist=~/.factorio"
+          "--whitelist=~/.factorio"
 
           # Elite: Dangerous
           "--env=DOTNET_BUNDLE_EXTRACT_BASE_DIR=/mnt/extra/Steam/.dotnet_bundle_extract"
-          "--whitelist=\${HOME}/.config/min-ed-launcher"
+          "--whitelist=~/.config/min-ed-launcher"
         ];
       };
       #steam-runtime
@@ -386,7 +387,8 @@
         executable = "${pkgs.discord}/opt/Discord/Discord";
         profile = "${pkgs.firejail}/etc/firejail/discord.profile";
         extraArgs = [
-          "--ignore=whitelist \${DOWNLOADS}"
+          #"--ignore=whitelist \\\${DOWNLOADS}"
+          #"--blacklist=~/Downloads"
           "--whitelist=/mnt/tmp"
           "--blacklist=/dev/snd"
         ];
@@ -395,7 +397,8 @@
         executable = "${pkgs.discord}/opt/Discord/Discord";
         profile = "${pkgs.firejail}/etc/firejail/discord.profile";
         extraArgs = [
-          "--ignore=whitelist \${DOWNLOADS}"
+          #"--ignore=whitelist \\\${DOWNLOADS}"
+          #"--blacklist=~/Downloads"
           "--whitelist=/mnt/tmp"
           "--blacklist=/dev/snd"
         ];
