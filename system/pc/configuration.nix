@@ -5,6 +5,24 @@
 { config, lib, pkgs, fetchUrl, ... }: {
   boot.tmp.useTmpfs = true;
 
+  nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [
+    "discord"
+    "nvidia-x11" "nvidia-settings"
+    "spotify"
+    "android-studio-stable"
+    "idea-ultimate"
+    "pycharm-professional"
+    "webstorm"
+    "clion"
+    "rust-rover"
+    "steam" "steam-original"
+    "osu-lazer-bin"
+    "veracrypt"
+    "code" "vscode"
+    "winbox"
+  ];
+
+
   nix = {
     settings = {
       experimental-features = [ "flakes" "nix-command" ];
@@ -24,10 +42,10 @@
   environment.gnome.excludePackages = (with pkgs; [
     gnome-photos
     gnome-tour
+    gedit
   ]) ++ (with pkgs.gnome; [
     cheese # webcam tool
     gnome-music
-    gedit # text editor
     epiphany # web browser
     geary # email reader
     evince # document viewer
@@ -83,6 +101,12 @@
     gnumake
     mangohud
     gamescope
+    (pkgs.callPackage ../../packages/organize-screenshots.nix {})
+    sing-box
+    sing-geosite
+    sing-geoip
+    nodejs
+
 
     # Extensions
     gnomeExtensions.control-blur-effect-on-lock-screen
@@ -95,6 +119,8 @@
     gnomeExtensions.dash-to-dock
     gnomeExtensions.unite xorg.xprop
     gnomeExtensions.gsconnect
+
+    oreo-cursors-plus
 
     # Dash
     gnome.gnome-terminal
@@ -124,10 +150,6 @@
     gnome.gnome-logs
     helvum
     easyeffects
-    callPackage ../../packages/organize-screenshots.nix {}
-    sing-box
-    sing-geosite
-    sing-geoip
 
     # "Media"
     gthumb
@@ -159,13 +181,14 @@
         sha256 = "c302bd84b48a56ef1b0f033e8e93a0da5590f80482eae172db6130da035314a6";
       };
     })
-    (jetbrains.pycharm-professional.overrideAttrs {
-      version = "2022.3.3";
-      src = fetchurl {
-        url = "https://download.jetbrains.com/python/pycharm-professional-2022.3.3.tar.gz";
-        sha256 = "50c37aafd9fbe3a78d97cccf4f7abd80266c548d1c7ea4751b08c52810f16f2d";
-      };
-    })
+# does not build
+#    (jetbrains.pycharm-professional.overrideAttrs {
+#      version = "2022.3.3";
+#      src = fetchurl {
+#        url = "https://download.jetbrains.com/python/pycharm-professional-2022.3.3.tar.gz";
+#        sha256 = "50c37aafd9fbe3a78d97cccf4f7abd80266c548d1c7ea4751b08c52810f16f2d";
+#      };
+#    })
     (jetbrains.webstorm.overrideAttrs {
       version = "2022.3.4";
       src = fetchurl {
@@ -208,7 +231,7 @@
     ungoogled-chromium
     gnome.dconf-editor
     vscode-fhs
-    winbox
+    #winbox
     ventoy
     gnome-connections # RDP client
     feishin
@@ -227,6 +250,7 @@
   };
 
   hardware.opentabletdriver.enable = true;
+  hardware.pulseaudio.enable = false;
 
   programs.nano.nanorc = ''
     set tabsize 4
@@ -288,15 +312,15 @@
         ];
       };
       node = {
-        executable = "${pkgs.nodejs_21}/bin/node";
-        profile = "${pkgs.filejail}/etc/firejail/node.profile";
+        executable = "${pkgs.nodejs}/bin/node";
+        profile = "${pkgs.firejail}/etc/firejail/node.profile";
         extraArgs = [
-          "--mkdir=\${HOME}/.node-gyp"
-          "--mkdir=\${HOME}/.npm"
-          "--mkdir=\${HOME}/.npm-packages"
-          "--mkfile=\${HOME}/.npmrc"
-          "--mkdir=\${HOME}/.nvm"
-          "--mkdir=\${HOME}/.yarn"
+          "--mkdir=~/.node-gyp"
+          "--mkdir=~/.npm"
+          "--mkdir=~/.npm-packages"
+          "--mkfile=~/.npmrc"
+          "--mkdir=~/.nvm"
+          "--mkdir=~/.yarn"
           "--mkdir=\${HOME}/.yarn-config"
           "--mkdir=\${HOME}/.yarncache"
           "--mkfile=\${HOME}/.yarnrc"
@@ -359,7 +383,16 @@
       };
       #steam-runtime
       discord = {
-        executable = "${pkgs.discord}/bin/discord";
+        executable = "${pkgs.discord}/opt/Discord/Discord";
+        profile = "${pkgs.firejail}/etc/firejail/discord.profile";
+        extraArgs = [
+          "--ignore=whitelist \${DOWNLOADS}"
+          "--whitelist=/mnt/tmp"
+          "--blacklist=/dev/snd"
+        ];
+      };
+      Discord = {
+        executable = "${pkgs.discord}/opt/Discord/Discord";
         profile = "${pkgs.firejail}/etc/firejail/discord.profile";
         extraArgs = [
           "--ignore=whitelist \${DOWNLOADS}"
