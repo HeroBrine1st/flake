@@ -4,31 +4,38 @@
 { config, lib, pkgs, modulesPath, ... }:
 
 {
-  imports =
-    [ (modulesPath + "/installer/scan/not-detected.nix")
-    ];
+  imports = [ (modulesPath + "/installer/scan/not-detected.nix") ];
 
   boot = {
+    kernelModules = [ "kvm-amd" ];
+    initrd = {
+      availableKernelModules = [ "nvme" "xhci_pci" "usbhid" ];
+    };
     loader = {
       systemd-boot.enable = true;
       efi.canTouchEfiVariables = true;
     };
     luks.devices = {
       "root" = {
-        device = ""; # TODO
+        device = "/dev/disk/by-uuid/e0a78f05-e0b6-4fbb-bf07-08b432b291d5";
         allowDiscards = true;
       };
     };
   };
 
+#  environment.etc.crypttab.text = ''
+#hdd PARTLABEL=HDD /etc/keyfile/hdd.key nofail
+#ssd PARTLABEL=SSD /etc/keyfile/ssd.key allow-discards
+#  '';
+
   fileSystems = {
     "/" = {
       device = "/dev/mapper/root";
       fsType = "btrfs";
-      options = [ "defaults" "compress=zstd" "discard=async" "subvol=@" ];
+      options = [ "defaults" "compress=zstd" "discard=async" "subvol=@nix" ];
     };
     "/boot" = {
-      device = "/dev/disk/by-uuid/C9F0-41F7";
+      device = "/dev/disk/by-uuid/D6F2-4688";
       fsType = "vfat";
     };
     "/.fsroot" = {
@@ -39,28 +46,48 @@
     "/home" = {
       device = "/dev/mapper/root";
       fsType = "btrfs";
-      options = [ "defaults" "compress=zstd" "discard=async" "subvol=@home" ];
+      options = [ "defaults" "compress=zstd" "discard=async" "subvol=@home-nix" ];
     };
-    "/var/log" = {
-      device = "/dev/mapper/root";
-      fsType = "btrfs";
-      options = [ "defaults" "compress=zstd" "discard=async" "subvol=@var_log" ];
-    };
-    "/var/run" = {
-      device = "/dev/mapper/root";
-      fsType = "btrfs";
-      options = [ "defaults" "compress=zstd" "discard=async" "subvol=@var_run" ];
-    };
-    "/var/tmp" = {
-      device = "/dev/mapper/root";
-      fsType = "btrfs";
-      options = [ "defaults" "compress=zstd" "discard=async" "subvol=@var_tmp" ];
-    };
-    "/var/lib/docker" = {
-      device = "/dev/mapper/root";
-      fsType = "btrfs";
-      options = [ "defaults" "compress=zstd" "discard=async" "subvol=@var_lib_docker" ];
-    };
+#    "/var/log" = {
+#      device = "/dev/mapper/root";
+#      fsType = "btrfs";
+#      options = [ "defaults" "compress=zstd" "discard=async" "subvol=@var_log" ];
+#    };
+#    "/var/run" = {
+#      device = "/dev/mapper/root";
+#      fsType = "btrfs";
+#      options = [ "defaults" "compress=zstd" "discard=async" "subvol=@var_run" ];
+#    };
+#    "/var/tmp" = {
+#      device = "/dev/mapper/root";
+#      fsType = "btrfs";
+#      options = [ "defaults" "compress=zstd" "discard=async" "subvol=@var_tmp" ];
+#    };
+#    "/var/lib/docker" = {
+#      device = "/dev/mapper/root";
+#      fsType = "btrfs";
+#      options = [ "defaults" "compress=zstd" "discard=async" "subvol=@var_lib_docker" ];
+#    };                                                0      2
+#    "/mnt/extra" = {
+#      device = "/dev/mapper/ssd";
+#      fsType = "btrfs";
+#      options = [ "defaults" "compress=zstd" "discard=async" "subvol=@" ];
+#    };
+#    "/mnt/extra/.fsroot" = {
+#      device = "/dev/mapper/ssd";
+#      fsType = "btrfs";
+#      options = [ "defaults" "compress=zstd" "discard=async" ];
+#    };
+#    "/mnt/hdd" = {
+#      device = "/dev/mapper/hdd";
+#      fsType = "btrfs";
+#      options = [ "defaults" "compress=zstd" "autodefrag" "subvol=@" ];
+#    };
+#    "/mnt/extra" = {
+#      device = "/dev/mapper/ssd";
+#      fsType = "btrfs";
+#      options = [ "defaults" "compress=zstd" "autodefrag" ];
+#    };
   };
 
   # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
@@ -70,7 +97,7 @@
   networking.useDHCP = lib.mkDefault true;
   # networking.interfaces.end1.useDHCP = lib.mkDefault true;
 
-  nixpkgs.hostPlatform = lib.mkDefault "aarch64-linux";
+  nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
 
   hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.stable;
 
@@ -79,6 +106,9 @@
     enable = true;
     driSupport = true;
     driSupport32Bit = true;
+    extraPackages = with pkgs; [
+      vaapiVdpau
+    ];
   };
 
   # Load nvidia driver for Xorg and Wayland
@@ -109,7 +139,7 @@
     open = false;
 
     # Enable the Nvidia settings menu,
-	# accessible via `nvidia-settings`.
+	  # accessible via `nvidia-settings`.
     nvidiaSettings = true;
 
     # Optionally, you may need to select the appropriate driver version for your specific GPU.
@@ -120,12 +150,12 @@
     options nvidia NVreg_TemporaryFilePath=/var/tmp
   '';
 
+  hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 
-#  services.udev.extraRules = ''
-#KERNEL=="rga", MODE="0660", GROUP="video"
-#KERNEL=="system-dma32", MODE="0660", GROUP="video"
-#KERNEL=="system-uncached", MODE="0660", GROUP="video"
-#KERNEL=="system-uncached-dma32", MODE="0660", GROUP="video" RUN+="${pkgs.coreutils}/bin/chmod a+rw /dev/dma_heap"
-#  '';
-
+#  environment.sessionVariables = rec {
+#    LIBVA_DRIVER_NAME=nvidia
+#    MOZ_X11_EGL=1
+#    __EGL_VENDOR_LIBRARY_FILENAMES=/usr/share/glvnd/egl_vendor.d/10_nvidia.json
+#    NVD_BACKEND=direct MOZ_DISABLE_RDD_SANDBOX=1
+#  };
 }
