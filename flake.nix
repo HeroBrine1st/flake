@@ -7,7 +7,7 @@
     nixos-rk3588.url = "github:ryan4yin/nixos-rk3588?rev=349f39dcaafeb41250544bcc066db8668a7762ce";
   };
 
-  outputs = { nixpkgs, nixos-rk3588, ... }: {
+  outputs = { unstable, nixos-rk3588, ... }: {
     nixosConfigurations = {
 
       opi5 = let
