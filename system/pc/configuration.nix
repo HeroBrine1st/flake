@@ -387,7 +387,7 @@
         executable = "${pkgs.discord}/opt/Discord/Discord";
         profile = "${pkgs.firejail}/etc/firejail/discord.profile";
         extraArgs = [
-          #"--ignore=whitelist \\\${DOWNLOADS}"
+          "--ignore=whitelist \\\${DOWNLOADS}"
           #"--blacklist=~/Downloads"
           "--whitelist=/mnt/tmp"
           "--blacklist=/dev/snd"
@@ -397,7 +397,7 @@
         executable = "${pkgs.discord}/opt/Discord/Discord";
         profile = "${pkgs.firejail}/etc/firejail/discord.profile";
         extraArgs = [
-          #"--ignore=whitelist \\\${DOWNLOADS}"
+          "--ignore=whitelist \\\${DOWNLOADS}"
           #"--blacklist=~/Downloads"
           "--whitelist=/mnt/tmp"
           "--blacklist=/dev/snd"
