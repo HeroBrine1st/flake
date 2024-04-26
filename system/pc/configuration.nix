@@ -99,7 +99,7 @@
     # Dash
     gnome.gnome-terminal
     gnome.nautilus
-    firefox
+    firefox-bin
     discord
     element-desktop
     spotify
@@ -124,6 +124,10 @@
     gnome.gnome-logs
     helvum
     easyeffects
+    callPackage ../../packages/organize-screenshots.nix {}
+    sing-box
+    sing-geosite
+    sing-geoip
 
     # "Media"
     gthumb
@@ -353,7 +357,7 @@
           "--whitelist=\${HOME}/.config/min-ed-launcher"
         ];
       };
-      # steam-runtime
+      #steam-runtime
       discord = {
         executable = "${pkgs.discord}/bin/discord";
         profile = "${pkgs.firejail}/etc/firejail/discord.profile";
