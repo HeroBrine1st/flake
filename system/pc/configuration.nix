@@ -81,6 +81,14 @@
     ]))
     gnupg
     gnumake
+
+    gnome.gnome-terminal
+    gnome.nautilus
+    firefox
+    discord
+    element-desktop
+    spotify
+
     gthumb
   ];
 
