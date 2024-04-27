@@ -5,6 +5,8 @@
 { config, lib, pkgs, fetchUrl, ... }: {
   boot.tmp.useTmpfs = true;
 
+  boot.kernelPackages = pkgs.linuxPackages_latest;
+
   nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [
     "discord"
     "nvidia-x11" "nvidia-settings"
@@ -21,7 +23,6 @@
     "code" "vscode"
     "winbox"
   ];
-
 
   nix = {
     settings = {
@@ -119,6 +120,7 @@
     sing-geoip
     nodejs
     jetbrains-mono
+    go
 
     gnome.gnome-themes-extra # Adwaita-dark
 

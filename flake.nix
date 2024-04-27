@@ -5,9 +5,10 @@
     pkgs-unstable.url = "nixpkgs/nixos-unstable";
     pkgs-stable.url = "nixpkgs/nixos-23.11";
     nixos-rk3588.url = "github:ryan4yin/nixos-rk3588?rev=349f39dcaafeb41250544bcc066db8668a7762ce";
+    home-manager.url = "github:nix-community/home-manager";
   };
 
-  outputs = { pkgs-unstable, nixos-rk3588, ... }: {
+  outputs = { pkgs-unstable, nixos-rk3588, home-manager, ... }: {
     nixosConfigurations = {
 
       opi5 = let
@@ -34,8 +35,10 @@
       };
       DESKTOP-IJK2GUG = pkgs-unstable.lib.nixosSystem {
         modules = [
+          home-manager.nixosModules.home-manager
           ./system/pc/configuration.nix
           ./system/pc/hardware-configuration.nix
+          ./system/pc/home.nix
         ];
       };
     };
