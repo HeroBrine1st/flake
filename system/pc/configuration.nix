@@ -43,6 +43,9 @@
     gnome-photos
     gnome-tour
     gedit
+    gnome-console
+    snapshot # gnome camera
+    loupe
   ]) ++ (with pkgs.gnome; [
     cheese # webcam tool
     gnome-music
@@ -55,7 +58,15 @@
     iagno # go game
     hitori # sudoku game
     atomix # puzzle game
+    eog # image viewer
+    yelp # help
+    gnome-contacts
+    simple-scan # document scanner
+    gnome-font-viewer
   ]);
+
+  services.xserver.excludePackages = [ pkgs.xterm ];
+  documentation.nixos.enable = false;
 
   # Set your time zone.
   time.timeZone = "Europe/Moscow";
@@ -66,6 +77,7 @@
 
   users.users.herobrine1st = {
     isNormalUser = true;
+    description = "HeroBrine1st Erquilenne";
     extraGroups = [ "wheel" "docker" ];
   #  packages = with pkgs; [
   #     firefox
@@ -108,13 +120,14 @@
     nodejs
     jetbrains-mono
 
+    gnome.gnome-themes-extra # Adwaita-dark
 
     # Extensions
     gnomeExtensions.control-blur-effect-on-lock-screen
-    # gnomeExtensions.panel-corners outdated, available on EGO
+    gnomeExtensions.panel-corners # outdated, available on EGO
     gnomeExtensions.primary-input-on-lockscreen
     gnomeExtensions.quick-settings-tweaker
-    # gnomeExtensions.removable-drive-menu outdated, available on EGO
+    gnomeExtensions.removable-drive-menu # outdated, available on EGO
     gnomeExtensions.spotify-tray
     gnomeExtensions.system-monitor-next
     gnomeExtensions.dash-to-dock
@@ -140,10 +153,11 @@
     krita
 
     # "System maintenance"
-    # gnome-settings inferred
+    gnome.gnome-control-center
     # timeshift pointless
     gnome.gnome-system-monitor
     # opentabletdriver inferred
+    # gnome-extensions inferred from gnome-shell
     pavucontrol
     # grub-customizer not needed
     gnome.gnome-tweaks
@@ -406,6 +420,11 @@
     };
   };
 
+environment.etc = {
+  "firejail/globals.local".text = ''
+    blacklist /.fsroot
+  '';
+};
 
   system.stateVersion = "23.11"; # Do not change
 }

@@ -23,10 +23,10 @@
     };
   };
 
-#  environment.etc.crypttab.text = ''
-#hdd PARTLABEL=HDD /etc/keyfile/hdd.key nofail
-#ssd PARTLABEL=SSD /etc/keyfile/ssd.key allow-discards
-#  '';
+  environment.etc.crypttab.text = ''
+    hdd PARTLABEL=HDD /etc/keyfile/hdd.key nofail
+    ssd PARTLABEL=SSD /etc/keyfile/ssd.key allow-discards
+  '';
 
   fileSystems = {
     "/" = {
@@ -48,6 +48,11 @@
       fsType = "btrfs";
       options = [ "defaults" "compress=zstd" "discard=async" "subvol=@home-nix" ];
     };
+#    "/var/cache" = {
+#      device = "/dev/mapper/root";
+#      fsType = "btrfs";
+#      options = [ "defaults" "compress=zstd" "discard=async" "subvol=@var_cache" ];
+#    };
 #    "/var/log" = {
 #      device = "/dev/mapper/root";
 #      fsType = "btrfs";
@@ -67,26 +72,36 @@
 #      device = "/dev/mapper/root";
 #      fsType = "btrfs";
 #      options = [ "defaults" "compress=zstd" "discard=async" "subvol=@var_lib_docker" ];
-#    };                                                0      2
-#    "/mnt/extra" = {
-#      device = "/dev/mapper/ssd";
-#      fsType = "btrfs";
-#      options = [ "defaults" "compress=zstd" "discard=async" "subvol=@" ];
 #    };
-#    "/mnt/extra/.fsroot" = {
-#      device = "/dev/mapper/ssd";
-#      fsType = "btrfs";
-#      options = [ "defaults" "compress=zstd" "discard=async" ];
-#    };
-#    "/mnt/hdd" = {
-#      device = "/dev/mapper/hdd";
-#      fsType = "btrfs";
-#      options = [ "defaults" "compress=zstd" "autodefrag" "subvol=@" ];
-#    };
-#    "/mnt/extra" = {
-#      device = "/dev/mapper/ssd";
-#      fsType = "btrfs";
-#      options = [ "defaults" "compress=zstd" "autodefrag" ];
+    "/mnt/extra" = {
+      device = "/dev/mapper/ssd";
+      fsType = "btrfs";
+      options = [ "defaults" "compress=zstd" "discard=async" "subvol=@user" ];
+    };
+    "/mnt/extra/.fsroot" = {
+      device = "/dev/mapper/ssd";
+      fsType = "btrfs";
+      options = [ "defaults" "compress=zstd" "discard=async" ];
+    };
+    "/mnt/hdd" = {
+      device = "/dev/mapper/hdd";
+      fsType = "btrfs";
+      options = [ "defaults" "compress=zstd" "autodefrag" "subvol=@user" ];
+    };
+    "/mnt/hdd/.fsroot" = {
+      device = "/dev/mapper/hdd";
+      fsType = "btrfs";
+      options = [ "defaults" "compress=zstd" "autodefrag" ];
+    };
+    "/mnt/tmp" = {
+      device = "tmpfs";
+      fsType = "tmpfs";
+      options = [ "rw" "noexec" "nodev" "nosuid" "uid=1000" "gid=1000" "mode=1700" ];
+    };
+#    "/home/herobrine1st/.cache" = {
+#      device = "/var/cache/user/1000";
+#      fsType = "none";
+#      options = [ "defaults" "bind" ];
 #    };
   };
 
