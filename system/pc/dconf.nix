@@ -60,6 +60,7 @@
       intellihide-mode = "FOCUS_APPLICATION_WINDOWS";
       show-mounts = false;
       show-trash = false;
+      show-icons-emblems = false;
     };
 
     "org/gnome/shell/extensions/panel-corners" = {
@@ -83,55 +84,6 @@
       volume-mixer-position = "top";
       volume-mixer-show-description = true;
       volume-mixer-show-icon = true;
-    };
-
-    "org/gnome/shell/extensions/system-monitor" = {
-      battery-display = false;
-      battery-time = false;
-      center-display = false;
-      compact-display = false;
-      cpu-display = true;
-      cpu-individual-cores = false;
-      cpu-show-text = false;
-      cpu-style = "digit";
-      disk-display = false;
-      disk-show-menu = true;
-      disk-show-text = false;
-      disk-style = "digit";
-      disk-usage-style = "none";
-      fan-display = false;
-      fan-fan0-color = "#f2002eff";
-      fan-refresh-time = 1000;
-      fan-sensor-file = "/sys/class/hwmon/hwmon2/fan2_input";
-      fan-show-menu = true;
-      fan-show-text = false;
-      fan-style = "digit";
-      freq-display = false;
-      freq-show-menu = false;
-      freq-style = "graph";
-      gpu-display = true;
-      gpu-refresh-time = 1000;
-      gpu-show-menu = true;
-      gpu-show-text = false;
-      gpu-style = "digit";
-      icon-display = false;
-      memory-display = true;
-      memory-show-text = false;
-      memory-style = "digit";
-      move-clock = false;
-      net-display = false;
-      net-show-menu = true;
-      net-show-text = false;
-      show-tooltip = false;
-      swap-display = false;
-      thermal-display = true;
-      thermal-fahrenheit-unit = false;
-      thermal-refresh-time = 1000;
-      thermal-sensor-file = "/sys/class/hwmon/hwmon1/temp1_input";
-      thermal-show-text = false;
-      thermal-style = "digit";
-      thermal-threshold = 70;
-      tooltip-delay-ms = 0;
     };
 
     "org/gnome/shell/extensions/unite" = {
@@ -295,6 +247,15 @@
     "org/gnome/desktop/app-folders/folders/dd9876f1-0856-4470-8baf-a17a28f3b309" = {
       apps = [ "startcenter.desktop" "base.desktop" "calc.desktop" "draw.desktop" "impress.desktop" "math.desktop" "writer.desktop" ];
       name = "Office";
+    };
+
+    "org/gnome/desktop/background" = {
+      color-shading-type = "solid";
+      picture-options = "zoom";
+      picture-uri = "${../../wallpapers/no-mans-sky-atlas.png}";
+      picture-uri-dark = "${../../wallpapers/no-mans-sky-atlas.png}";
+      primary-color = "#000000000000";
+      secondary-color = "#000000000000";
     };
   };
 }
