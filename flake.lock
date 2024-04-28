@@ -149,6 +149,22 @@
         "type": "github"
       }
     },
+    "pkgs-jetbrains-2022-3-3": {
+      "locked": {
+        "lastModified": 1679675651,
+        "narHash": "sha256-Jn3rF0AKtRDA/v7cF3YY2CdaBL0PspOl6gefbpwuh1E=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "f6aa4144d0c38231d8c383facf40f63b13759bb5",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "f6aa4144d0c38231d8c383facf40f63b13759bb5",
+        "type": "github"
+      }
+    },
     "pkgs-stable": {
       "locked": {
         "lastModified": 1713995372,
@@ -216,6 +232,7 @@
       "inputs": {
         "home-manager": "home-manager",
         "nixos-rk3588": "nixos-rk3588",
+        "pkgs-jetbrains-2022-3-3": "pkgs-jetbrains-2022-3-3",
         "pkgs-stable": "pkgs-stable",
         "pkgs-unstable": "pkgs-unstable"
       }

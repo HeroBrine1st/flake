@@ -127,6 +127,17 @@
       switch-input-source = [ "<Alt>Shift_L" "<Shift>Alt_L" "<Alt>Shift_R" "<Shift>Alt_R" "<Super>space" ];
     };
 
+    "org/gnome/settings-daemon/plugins/media-keys" = {
+      control-center = [ "<Super>i" ];
+      custom-keybindings = [ "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/" ];
+    };
+
+    "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0" = {
+      binding = "<Control><Alt>t";
+      command = "gnome-terminal";
+      name = "Launch terminal";
+    };
+
     "org/gnome/desktop/wm/preferences" = {
       button-layout = "appmenu:minimize,close";
       focus-mode = "click";
@@ -196,7 +207,7 @@
     };
 
     "org/gnome/desktop/app-folders/folders/6fa7fcc2-aefd-4e1f-827c-cf4a6be704e5" = {
-      apps = [ "android-studio.desktop" "idea-ultimate.desktop" "webstorm.desktop" "clion.desktop" "arduino.desktop" "rust-rover.desktop" "idea-community.desktop" "code.desktop" ];
+      apps = [ "android-studio.desktop" "idea-ultimate.desktop" "pycharm-professional.desktop" "webstorm.desktop" "clion.desktop" "arduino.desktop" "rust-rover.desktop" "idea-community.desktop" "code.desktop" ];
       name = "Development";
       translate = false;
     };
@@ -252,10 +263,17 @@
     "org/gnome/desktop/background" = {
       color-shading-type = "solid";
       picture-options = "zoom";
-      picture-uri = "${../../wallpapers/no-mans-sky-atlas.png}";
-      picture-uri-dark = "${../../wallpapers/no-mans-sky-atlas.png}";
+      picture-uri = "file://${../../wallpapers/no-mans-sky-atlas.png}";
+      picture-uri-dark = "file://${../../wallpapers/no-mans-sky-atlas.png}";
       primary-color = "#000000000000";
       secondary-color = "#000000000000";
     };
+
+    "org/gnome/desktop/input-sources" = {
+      per-window = true;
+      sources = [ (mkTuple [ "xkb" "us" ]) (mkTuple [ "xkb" "ru" ]) ];
+      # xkb-options = [ "lv3:ralt_switch" "terminate:ctrl_alt_bksp" ];
+    };
+
   };
 }
