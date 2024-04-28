@@ -13,5 +13,12 @@
         noDisplay = true;
       };
     };
+
+    xdg.configFile = {
+      "MangoHud/MangoHud.conf" = ''
+        full
+        font_glyph_ranges = cyrillic
+      '';
+    };
   };
 }
