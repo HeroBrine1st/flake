@@ -119,6 +119,7 @@
     mangohud
     gamescope
     gamemode
+    obs-studio-plugins.obs-vkcapture
     (pkgs.callPackage ../../packages/organize-screenshots.nix {})
     sing-box
     sing-geosite
@@ -226,6 +227,7 @@
         sha256 = "1b46ff0791bcb38ecb39c5f4a99941f99ed73d4f6d924a2042fdb55afc5fc03d";
       };
     })
+    gcc cmake
     arduino
     jetbrains.rust-rover
     jetbrains.idea-community
