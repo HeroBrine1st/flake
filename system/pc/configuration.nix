@@ -146,6 +146,7 @@
 
     oreo-cursors-plus
     (callPackage ../../packages/arc-x-icons.nix {})
+#    (callPackage ../../packages/paper-icon-theme.nix {})
 
     # Dash
     gnome.gnome-terminal
@@ -207,6 +208,7 @@
         sha256 = "c302bd84b48a56ef1b0f033e8e93a0da5590f80482eae172db6130da035314a6";
       };
     })
+    custom-pkgs.pycharm-professional
 # does not build
 #    (jetbrains.pycharm-professional.overrideAttrs {
 #      version = "2022.3.3";

@@ -4,18 +4,24 @@
   inputs = {
     pkgs-unstable.url = "nixpkgs/nixos-unstable";
     pkgs-stable.url = "nixpkgs/nixos-23.11";
+    pkgs-jetbrains-2022-3-3.url = "github:NixOS/nixpkgs?rev=f6aa4144d0c38231d8c383facf40f63b13759bb5";
     nixos-rk3588.url = "github:ryan4yin/nixos-rk3588?rev=349f39dcaafeb41250544bcc066db8668a7762ce";
     home-manager.url = "github:nix-community/home-manager";
   };
 
-  outputs = { self, pkgs-unstable, nixos-rk3588, home-manager, ... }: {
+  outputs = { self, pkgs-unstable, nixos-rk3588, pkgs-jetbrains-2022-3-3, home-manager, ... }: {
     packages."x86_64-linux" = let
       pkgs = import pkgs-unstable {
         system = "x86_64-linux";
         config.allowUnfree = true;
       };
+      jb = import pkgs-jetbrains-2022-3-3 {
+        system = "x86_64-linux";
+        config.allowUnfree = true;
+      };
     in {
       spotify = pkgs.callPackage packages/spotify.nix {};
+      pycharm-professional = jb.jetbrains.pycharm-professional;
     };
     nixosConfigurations = {
       opi5 = let
