@@ -2,9 +2,11 @@
 # your system. Help is available in the configuration.nix(5) man page, on
 # https://search.nixos.org/options and in the NixOS manual (`nixos-help`).
 
-{ config, lib, pkgs, fetchUrl, ... }: let
-  spotify-patched = pkgs.callPackage ../../packages/spotify.nix {};
-in {
+{ config, lib, pkgs, fetchUrl, custom-pkgs, ... }: {
+  imports = [
+    ../../shared/firejail.nix
+  ];
+
   boot.tmp.useTmpfs = true;
 
   boot.kernelPackages = pkgs.linuxPackages_latest;
@@ -116,6 +118,7 @@ in {
     gnumake
     mangohud
     gamescope
+    gamemode
     (pkgs.callPackage ../../packages/organize-screenshots.nix {})
     sing-box
     sing-geosite
@@ -147,7 +150,7 @@ in {
     firefox-bin
     discord
     element-desktop
-    spotify-patched
+    custom-pkgs.spotify
 
     # "Personal"
     gnome.gnome-weather
@@ -304,135 +307,6 @@ in {
     # allowedTCPPorts = [];
     # allowedUDPPorts = [];
   };
-
-  programs.firejail = {
-    enable = true;
-    wrappedBinaries = {
-      lutris = {
-        executable = "${pkgs.lutris}/bin/lutris";
-        profile = "${pkgs.firejail}/etc/firejail/lutris.profile";
-        extraArgs = [
-          "--ignore=mkdir \\\${HOME}/Games"
-          "--ignore=whitelist \\\${HOME}/Games"
-          "--ignore=whitelist \\\${HOME}/Downloads"
-          "--blacklist=~/Downloads"
-
-          "--noblacklist=~/.config/MangoHud"
-          "--whitelist=~/.config/MangoHud"
-          "--whitelist=/mnt/extra/Lutris"
-          "--whitelist=~/.cache/lutris"
-          "--whitelist=~/.cache/wine"
-          "--whitelist=~/.cache/winetricks"
-
-          "--ignore=seccomp !modify_ldt"
-          "--ignore=seccomp.32 !modify_ldt"
-
-          "--apparmor"
-
-          "--deterministic-shutdown"
-
-          "--join-or-start=lutris"
-        ];
-      };
-      node = {
-        executable = "${pkgs.nodejs}/bin/node";
-        profile = "${pkgs.firejail}/etc/firejail/node.profile";
-        extraArgs = [
-          "--mkdir=~/.node-gyp"
-          "--mkdir=~/.npm"
-          "--mkdir=~/.npm-packages"
-          "--mkfile=~/.npmrc"
-          "--mkdir=~/.nvm"
-          "--mkdir=~/.yarn"
-          "--mkdir=~/.yarn-config"
-          "--mkdir=~/.yarncache"
-          "--mkfile=~/.yarnrc"
-          "--whitelist=~/.node-gyp"
-          "--whitelist=~/.npm"
-          "--whitelist=~/.npm-packages"
-          "--whitelist=~/.npmrc"
-          "--whitelist=~/.nvm"
-          "--whitelist=~/.yarn"
-          "--whitelist=~/.yarn-config"
-          "--whitelist=~/.yarncache"
-          "--whitelist=~/.yarnrc"
-          "--whitelist=~/Git"
-          "--include=${pkgs.firejail}/etc/firejail/whitelist-common.inc"
-        ];
-      };
-      spotify = {
-        executable = "${spotify-patched}/bin/spotify";
-        profile = "${pkgs.firejail}/etc/firejail/spotify.profile";
-        extraArgs = [
-          "--join-or-start=spotify"
-          "--whitelist=~/Music/Main"
-        ];
-      };
-      steam = {
-        executable = "${pkgs.steam}/bin/steam";
-        profile = "${pkgs.firejail}/etc/firejail/steam.profile";
-        extraArgs = [
-          "--ignore=private-etc"
-          "--ignore=restrict-namespaces"
-          "--ignore=seccomp"
-
-          # Gamepad
-          "--ignore=private-dev"
-          "--ignore=nou2f"
-          "--ignore=noroot"
-
-          # gamescope
-          #"--ignore=private-tmp"
-
-          # Generic configuration
-          "--noblacklist=~/.cache"
-          "--noblacklist=/mnt/games/Steam"
-          "--noblacklist=/mnt/games_hdd/Steam"
-          "--noblacklist=/mnt/games_ssd/Steam"
-          "--whitelist=~/.cache"
-          "--whitelist=/mnt/games/Steam"
-          "--whitelist=/mnt/extra/Steam"
-          "--caps.keep=sys_nice"
-          "--join-or-start=steam"
-
-          # Factorio
-          "--noblacklist=~/.factorio"
-          "--whitelist=~/.factorio"
-
-          # Elite: Dangerous
-          "--env=DOTNET_BUNDLE_EXTRACT_BASE_DIR=/mnt/extra/Steam/.dotnet_bundle_extract"
-          "--whitelist=~/.config/min-ed-launcher"
-        ];
-      };
-      #steam-runtime
-      discord = {
-        executable = "${pkgs.discord}/opt/Discord/Discord";
-        profile = "${pkgs.firejail}/etc/firejail/discord.profile";
-        extraArgs = [
-          "--ignore=whitelist \\\${DOWNLOADS}"
-          #"--blacklist=~/Downloads"
-          "--whitelist=/mnt/tmp"
-          "--blacklist=/dev/snd"
-        ];
-      };
-      Discord = {
-        executable = "${pkgs.discord}/opt/Discord/Discord";
-        profile = "${pkgs.firejail}/etc/firejail/discord.profile";
-        extraArgs = [
-          "--ignore=whitelist \\\${DOWNLOADS}"
-          #"--blacklist=~/Downloads"
-          "--whitelist=/mnt/tmp"
-          "--blacklist=/dev/snd"
-        ];
-      };
-    };
-  };
-
-environment.etc = {
-  "firejail/globals.local".text = ''
-    blacklist /.fsroot
-  '';
-};
 
   system.stateVersion = "23.11"; # Do not change
 }

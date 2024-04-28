@@ -8,9 +8,16 @@
     home-manager.url = "github:nix-community/home-manager";
   };
 
-  outputs = { pkgs-unstable, nixos-rk3588, home-manager, ... }: {
+  outputs = { self, pkgs-unstable, nixos-rk3588, home-manager, ... }: {
+    packages."x86_64-linux" = let
+      pkgs = import pkgs-unstable {
+        system = "x86_64-linux";
+        config.allowUnfree = true;
+      };
+    in {
+      spotify = pkgs.callPackage packages/spotify.nix {};
+    };
     nixosConfigurations = {
-
       opi5 = let
         # using the same nixpkgs as nixos-rk3588 to utilize the cross-compilation cache.
         inherit (nixos-rk3588.inputs) nixpkgs;
@@ -34,6 +41,9 @@
         ];
       };
       DESKTOP-IJK2GUG = pkgs-unstable.lib.nixosSystem {
+        specialArgs = {
+          custom-pkgs = self.packages."x86_64-linux";
+        };
         modules = [
           home-manager.nixosModules.home-manager
           ./system/pc/configuration.nix
