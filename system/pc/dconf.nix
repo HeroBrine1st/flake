@@ -54,11 +54,10 @@
       dash-max-icon-size = 64;
       dock-position = "BOTTOM";
       height-fraction = 0.9;
+      hotkeys-overlay = false;
       hotkeys-show-dock = false;
       icon-size-fixed = false;
       intellihide-mode = "FOCUS_APPLICATION_WINDOWS";
-      preferred-monitor = -2;
-      preferred-monitor-by-connector = "HDMI-1";
       show-mounts = false;
       show-trash = false;
     };
@@ -152,10 +151,6 @@
       automatic-location = true;
     };
 
-    "org/gnome/shell/world-clocks" = {
-      locations = [ (mkVariant [ (mkUint32 2) (mkVariant [ "Vladivostok" "UHWW" true [ (mkTuple [ 0.752527801635986 2.3026710539800876 ]) ] [ (mkTuple [ 0.7527265771844955 2.30210867398851 ]) ] ]) ]) ];
-    };
-
     "org/gnome/terminal/legacy/profiles:/:b1dcc9dd-5262-4d8d-a863-c897e6d979b9" = {
       audible-bell = true;
       font = "JetBrains Mono 10";
@@ -203,8 +198,31 @@
     };
 
     "org/gnome/shell" = {
-      enabled-extensions = [ "volume-mixer@evermiss.net" "tweaks-system-menu@extensions.gnome-shell.fifi.org" "sound-output-device-chooser@kgshank.net" "quick-settings-tweaks@qwreey" "system-monitor-next@paradoxxx.zero.gmail.com" "dash-to-dock@micxgx.gmail.com" "auto-move-windows@gnome-shell-extensions.gcampax.github.com" "primary_input_on_lockscreen@sagidayan.com" "ding@rastersoft.com" "panel-corners@aunetx" "gnomebedtime@ionutbortis.gmail.com" "unite@hardpixel.eu" "sp-tray@sp-tray.esenliyim.github.com" "gsconnect@andyholmes.github.io" "ControlBlurEffectOnLockScreen@pratap.fastmail.fm" "drive-menu@gnome-shell-extensions.gcampax.github.com" ];
-      favorite-apps = [ "org.gnome.Terminal.desktop" "org.gnome.Nautilus.desktop" "firefox.desktop" "discord.desktop" "io.element.Element.desktop" "spotify.desktop" ];
+      enabled-extensions = [
+        # IDK what are those
+        "volume-mixer@evermiss.net"
+        "tweaks-system-menu@extensions.gnome-shell.fifi.org"
+        "sound-output-device-chooser@kgshank.net"
+        "ding@rastersoft.com"
+        "gnomebedtime@ionutbortis.gmail.com"
+
+        # Internal
+        "auto-move-windows@gnome-shell-extensions.gcampax.github.com"
+
+        # External
+        "panel-corners@aunetx"
+        "unite@hardpixel.eu"
+        "sp-tray@sp-tray.esenliyim.github.com"
+        "gsconnect@andyholmes.github.io"
+        "ControlBlurEffectOnLockScreen@pratap.fastmail.fm"
+        "drive-menu@gnome-shell-extensions.gcampax.github.com"
+        "clipboard-indicator@tudmotu.com"
+        "quick-settings-tweaks@qwreey"
+        "system-monitor-next@paradoxxx.zero.gmail.com"
+        "dash-to-dock@micxgx.gmail.com"
+        "primary_input_on_lockscreen@sagidayan.com"
+      ];
+      favorite-apps = [ "org.gnome.Terminal.desktop" "org.gnome.Nautilus.desktop" "firefox.desktop" "discord.desktop" "element-desktop.desktop" "spotify.desktop" ];
     };
 
 #    "org/gnome/shell/extensions/auto-move-windows" = {

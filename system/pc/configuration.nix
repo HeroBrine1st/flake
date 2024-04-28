@@ -142,8 +142,10 @@
     gnomeExtensions.dash-to-dock
     gnomeExtensions.unite xorg.xprop
     gnomeExtensions.gsconnect
+    gnomeExtensions.clipboard-indicator
 
     oreo-cursors-plus
+    (callPackage ../../packages/arc-x-icons.nix {})
 
     # Dash
     gnome.gnome-terminal
