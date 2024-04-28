@@ -120,7 +120,8 @@
     sing-geoip
     nodejs
     jetbrains-mono
-    go
+    dconf2nix
+    unzip
 
     gnome.gnome-themes-extra # Adwaita-dark
 
@@ -129,7 +130,7 @@
     gnomeExtensions.panel-corners # outdated, available on EGO
     gnomeExtensions.primary-input-on-lockscreen
     gnomeExtensions.quick-settings-tweaker
-    gnomeExtensions.removable-drive-menu # outdated, available on EGO
+    # gnomeExtensions.removable-drive-menu # somehow already available
     gnomeExtensions.spotify-tray
     gnomeExtensions.system-monitor-next
     gnomeExtensions.dash-to-dock
@@ -144,7 +145,7 @@
     firefox-bin
     discord
     element-desktop
-    spotify
+    (callPackage ../../packages/spotify.nix {})
 
     # "Personal"
     gnome.gnome-weather
@@ -295,6 +296,9 @@
   # Open ports in the firewall.
   networking.firewall = {
     enable = true;
+    trustedInterfaces = [
+      "sing-box-tun"
+    ];
     # allowedTCPPorts = [];
     # allowedUDPPorts = [];
   };
