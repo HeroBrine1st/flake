@@ -2,7 +2,9 @@
 # your system. Help is available in the configuration.nix(5) man page, on
 # https://search.nixos.org/options and in the NixOS manual (`nixos-help`).
 
-{ config, lib, pkgs, fetchUrl, ... }: {
+{ config, lib, pkgs, fetchUrl, ... }: let
+  spotify-patched = pkgs.callPackage ../../packages/spotify.nix {};
+in {
   boot.tmp.useTmpfs = true;
 
   boot.kernelPackages = pkgs.linuxPackages_latest;
@@ -145,7 +147,7 @@
     firefox-bin
     discord
     element-desktop
-    (callPackage ../../packages/spotify.nix {})
+    spotify-patched
 
     # "Personal"
     gnome.gnome-weather
@@ -359,7 +361,7 @@
         ];
       };
       spotify = {
-        executable = "${pkgs.spotify}/bin/spotify";
+        executable = "${spotify-patched}/bin/spotify";
         profile = "${pkgs.firejail}/etc/firejail/spotify.profile";
         extraArgs = [
           "--join-or-start=spotify"
