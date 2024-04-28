@@ -15,10 +15,15 @@
     };
 
     xdg.configFile = {
-      "MangoHud/MangoHud.conf" = ''
+      "MangoHud/MangoHud.conf".text = ''
         full
         font_glyph_ranges = cyrillic
       '';
     };
+
+    imports = [
+      ./dconf.nix
+      ./dconf-pc.nix
+    ];
   };
 }
