@@ -244,7 +244,7 @@
     };
 
     "org/gnome/desktop/app-folders/folders/bd0b4f41-819e-4769-bbf2-f48d027bf961" = {
-      apps = [ "org.gnome.DiskUtility.desktop" "org.gnome.Calculator.desktop" "org.gnome.baobab.desktop" "org.gnome.FileRoller.desktop" "gparted.desktop" "org.gnome.Evince.desktop" "org.gnome.TextEditor.desktop" "org.gnome.Boxes.desktop" "gnome-nettool.desktop" ];
+      apps = [ "org.gnome.DiskUtility.desktop" "org.gnome.Calculator.desktop" "org.gnome.baobab.desktop" "org.gnome.FileRoller.desktop" "gparted.desktop" "org.gnome.Evince.desktop" "org.gnome.TextEditor.desktop" "virt-manager.desktop" "gnome-nettool.desktop" ];
       name = "Utilities";
       translate = false;
     };

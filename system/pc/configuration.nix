@@ -83,7 +83,7 @@
   users.users.herobrine1st = {
     isNormalUser = true;
     description = "HeroBrine1st Erquilenne";
-    extraGroups = [ "wheel" "docker" ];
+    extraGroups = [ "wheel" "docker" "libvirtd" ];
   #  packages = with pkgs; [
   #     firefox
   #     tree
@@ -194,7 +194,7 @@
     gparted
     evince # GNOME Document Viewer
     gnome-text-editor
-    gnome.gnome-boxes
+    virt-manager
     lshw
     gnome.gnome-nettool
 
@@ -267,6 +267,8 @@
     bytecode-viewer
 
   ];
+
+  virtualisation.libvirtd.enable = true;
 
   security.rtkit.enable = true;
   services.pipewire = {
