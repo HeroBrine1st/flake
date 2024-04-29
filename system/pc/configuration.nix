@@ -44,32 +44,8 @@
   services.xserver.displayManager.gdm.enable = true;
   services.xserver.desktopManager.gnome.enable = true;
 
-  environment.gnome.excludePackages = (with pkgs; [
-    gnome-photos
-    gnome-tour
-    gedit
-    gnome-console
-    snapshot # gnome camera
-    loupe
-  ]) ++ (with pkgs.gnome; [
-    cheese # webcam tool
-    gnome-music
-    epiphany # web browser
-    geary # email reader
-    evince # document viewer
-    gnome-characters
-    totem # video player
-    tali # poker game
-    iagno # go game
-    hitori # sudoku game
-    atomix # puzzle game
-    eog # image viewer
-    yelp # help
-    gnome-contacts
-    simple-scan # document scanner
-    gnome-font-viewer
-  ]);
-
+  services.gnome.core-utilities.enable = false;
+  environment.gnome.excludePackages = [ pkgs.gnome-tour ];
   services.xserver.excludePackages = [ pkgs.xterm ];
   documentation.nixos.enable = false;
 
