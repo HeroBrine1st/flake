@@ -185,14 +185,6 @@
       };
     })
     custom-pkgs.pycharm-professional
-# does not build
-#    (jetbrains.pycharm-professional.overrideAttrs {
-#      version = "2022.3.3";
-#      src = fetchurl {
-#        url = "https://download.jetbrains.com/python/pycharm-professional-2022.3.3.tar.gz";
-#        sha256 = "50c37aafd9fbe3a78d97cccf4f7abd80266c548d1c7ea4751b08c52810f16f2d";
-#      };
-#    })
     (jetbrains.webstorm.overrideAttrs {
       version = "2022.3.4";
       src = fetchurl {
