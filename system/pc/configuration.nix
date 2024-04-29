@@ -128,6 +128,7 @@
     jetbrains-mono
     dconf2nix
     unzip
+    file
 
     gnome.gnome-themes-extra # Adwaita-dark
 
@@ -146,7 +147,6 @@
 
     oreo-cursors-plus
     (callPackage ../../packages/arc-x-icons.nix {})
-#    (callPackage ../../packages/paper-icon-theme.nix {})
 
     # Dash
     gnome.gnome-terminal
@@ -260,7 +260,7 @@
     ungoogled-chromium
     gnome.dconf-editor
     vscode-fhs
-    #winbox
+    winbox
     ventoy
     gnome-connections # RDP client
     feishin

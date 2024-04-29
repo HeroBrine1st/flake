@@ -22,6 +22,7 @@
     in {
       spotify = pkgs.callPackage packages/spotify.nix {};
       pycharm-professional = jb.jetbrains.pycharm-professional;
+      debounce-keyboard = pkgs.callPackage packages/debounce-keyboard {};
     };
     nixosConfigurations = {
       opi5 = let

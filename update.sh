@@ -1,1 +1,1 @@
-nixos-rebuild switch --flake .#opi5
+nixos-rebuild switch --flake . --print-build-logs
