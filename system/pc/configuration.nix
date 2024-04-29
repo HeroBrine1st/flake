@@ -350,6 +350,20 @@
     };
   };
 
+
+  programs.firejail = {
+    enable = true;
+    wrappedBinaries = {
+      "idea-community" = {
+        executable = "${pkgs.jetbrains.idea-community}/bin/idea-community";
+        extraArgs = [
+          "--noprofile"
+          "--env=LD_LIBRARY_PATH=${pkgs.libGL}/lib"
+        ];
+      };
+    };
+  };
+
   system.stateVersion = "23.11"; # Do not change
 }
 
