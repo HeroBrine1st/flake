@@ -9,6 +9,7 @@
       gtk-theme = "Adwaita-dark";
       icon-theme = "Arc-OSX-D";
       monospace-font-name = "JetBrains Mono 10";
+      enable-hot-corners = true;
     };
 
     "org/gnome/shell/extensions/bedtime-mode" = {
@@ -275,5 +276,17 @@
       # xkb-options = [ "lv3:ralt_switch" "terminate:ctrl_alt_bksp" ];
     };
 
+    "system/locale" = {
+      region = "ru_RU.UTF-8";
+    };
+
+    "org/gnome/mutter" = {
+      dynamic-workspaces = true;
+      edge-tiling = true;
+    };
+
+    "org/gnome/GWeather4" = {
+      temperature-unit = "centigrade";
+    };
   };
 }
