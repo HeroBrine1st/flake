@@ -277,7 +277,7 @@
     };
 
     "system/locale" = {
-      region = "ru_RU.UTF-8";
+      region = "en_GB.UTF-8";
     };
 
     "org/gnome/mutter" = {

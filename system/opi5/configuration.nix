@@ -78,6 +78,9 @@ in
     gnupg
     rclone
     gnumake
+    unzip
+    file
+    pv
   ];
 
   programs.nano.nanorc = ''

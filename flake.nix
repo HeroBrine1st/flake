@@ -56,6 +56,7 @@
           ./system/pc/configuration.nix
           ./system/pc/hardware-configuration.nix
           ./system/pc/home.nix
+#          (import ./overlays/bash-completion.nix)
         ];
       };
     };
