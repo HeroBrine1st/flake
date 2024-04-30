@@ -13,16 +13,18 @@
     packages."x86_64-linux" = let
       pkgs = import pkgs-unstable {
         system = "x86_64-linux";
-        config.allowUnfree = true;
+        config.allowUnfreePredicate = pkg: builtins.elem (pkgs.lib.getName pkg) [ "spotify" ];
       };
       jb = import pkgs-jetbrains-2022-3-3 {
         system = "x86_64-linux";
-        config.allowUnfree = true;
+        config.allowUnfreePredicate = pkg: builtins.elem (pkgs.lib.getName pkg) [ "pycharm-professional" ];
       };
     in {
       spotify = pkgs.callPackage packages/spotify.nix {};
       pycharm-professional = jb.jetbrains.pycharm-professional;
       debounce-keyboard = pkgs.callPackage packages/debounce-keyboard {};
+      # https://github.com/scop/bash-completion/issues/1157
+      bash-completion = pkgs.callPackage packages/bash-completion.nix {};
     };
     nixosConfigurations = {
       opi5 = let
@@ -56,7 +58,6 @@
           ./system/pc/configuration.nix
           ./system/pc/hardware-configuration.nix
           ./system/pc/home.nix
-#          (import ./overlays/bash-completion.nix)
         ];
       };
     };
