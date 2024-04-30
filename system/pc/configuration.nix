@@ -55,11 +55,11 @@
   zramSwap.enable = true;
 
   i18n = {
-    defaultLocale = "en_US.UTF-8";
-    supportedLocales = [
-      "en_US.UTF-8/UTF-8"
-      "ru_RU.UTF-8/UTF-8"
-    ];
+    defaultLocale = "en_GB.UTF-8";
+#    supportedLocales = [
+#      "en_GB.UTF-8/UTF-8"
+#      "ru_RU.UTF-8/UTF-8"
+#    ];
   };
 
 
@@ -103,7 +103,6 @@
     mangohud
     gamescope
     gamemode
-    obs-studio-plugins.obs-vkcapture
     (pkgs.callPackage ../../packages/organize-screenshots.nix {})
     sing-box
     sing-geosite
@@ -113,6 +112,7 @@
     dconf2nix
     unzip
     file
+    pv
 
     gnome.gnome-themes-extra # Adwaita-dark
 
@@ -211,8 +211,8 @@
     arduino
     jetbrains.rust-rover
     jetbrains.idea-community
+    vscode-fhs
     # fleet unavailable
-
 
     # "Office"
     libreoffice-fresh
@@ -224,7 +224,11 @@
     # TLauncher unavailable
     # CKAN not needed yet
     # protontricks not needed yet
-    obs-studio
+    (pkgs.wrapOBS {
+      plugins = with pkgs.obs-studio-plugins; [
+        obs-vkcapture         
+      ];
+    })
 
     # "Security"
     veracrypt
@@ -235,13 +239,11 @@
     # Other desktop applications
     ungoogled-chromium
     gnome.dconf-editor
-    vscode-fhs
     winbox
     ventoy
     gnome-connections # RDP client
     feishin
     bytecode-viewer
-
   ];
 
   virtualisation.libvirtd.enable = true;
@@ -340,6 +342,10 @@
         ];
       };
     };
+  };
+
+  environment.sessionVariables = rec {
+    NAUTILUS_4_EXTENSION_DIR = "/run/current-system/sw/lib/nautilus/extensions-4/";
   };
 
   system.stateVersion = "23.11"; # Do not change

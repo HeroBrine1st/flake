@@ -44,6 +44,10 @@
         source = ../../wallpapers + "/no-mans-sky-atlas.png";
         enable = false;
       };
+      ".inputrc".text = ''
+        set show-all-if-ambiguous on
+        set bell-style audible
+      '';
     };
 
     imports = [
