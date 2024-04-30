@@ -125,6 +125,10 @@
         executable = "${pkgs.discord}/opt/Discord/Discord";
         profile = "${pkgs.firejail}/etc/firejail/discord.profile";
       };
+      vesktop = {
+        executable = "${custom-pkgs.vesktop}/bin/vesktop";
+        profile = "${./vesktop.profile}";
+      };
     };
   };
 }

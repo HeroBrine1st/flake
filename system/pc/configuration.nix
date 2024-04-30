@@ -73,7 +73,8 @@
   #     tree
   #  ];
     openssh.authorizedKeys.keys = [
-      # TODO
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDhbfIlo673pgcavZFZyKWoMf+Ak0ETfyD1Y89YJJnue solidexplorer@lynx"
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMqqnT2Z4o9nZ81w9IbwYC6fkQvPfgGAwhgvBnp1VDWR herobrine1st@lynx"
     ];
   };
 
@@ -159,7 +160,7 @@
     gnome.gnome-terminal
     gnome.nautilus
     firefox-bin
-    discord
+    discord custom-pkgs.vesktop
     element-desktop
     custom-pkgs.spotify
 
@@ -290,9 +291,9 @@
   '';
 
   services.openssh = {
-    enable = false;
+    enable = true;
     settings = {
-      PermitRootLogin = "without-password";
+      PermitRootLogin = "no";
       PasswordAuthentication = false;
       Macs = [
         "hmac-sha2-512"
@@ -319,7 +320,7 @@
     trustedInterfaces = [
       "sing-box-tun"
     ];
-    allowedTCPPorts = [ 8384 22000 ];
+    allowedTCPPorts = [ 22 8384 22000 ];
     allowedUDPPorts = [ 22000 21027 ];
     allowedTCPPortRanges = [
       { from = 1714; to = 1764; } # KDE Connect
