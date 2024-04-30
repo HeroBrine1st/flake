@@ -25,6 +25,7 @@
       debounce-keyboard = pkgs.callPackage packages/debounce-keyboard {};
       # https://github.com/scop/bash-completion/issues/1157
       bash-completion = pkgs.callPackage packages/bash-completion.nix {};
+      vesktop = pkgs.callPackage packages/vesktop {};
     };
     nixosConfigurations = {
       opi5 = let
