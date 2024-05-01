@@ -186,7 +186,7 @@
         "dash-to-dock@micxgx.gmail.com"
         "primary_input_on_lockscreen@sagidayan.com"
       ];
-      favorite-apps = [ "org.gnome.Terminal.desktop" "org.gnome.Nautilus.desktop" "firefox.desktop" "discord.desktop" "element-desktop.desktop" "spotify.desktop" ];
+      favorite-apps = [ "org.gnome.Terminal.desktop" "org.gnome.Nautilus.desktop" "firefox.desktop" "vesktop.desktop" "element-desktop.desktop" "spotify.desktop" ];
     };
 
 #    "org/gnome/shell/extensions/auto-move-windows" = {
