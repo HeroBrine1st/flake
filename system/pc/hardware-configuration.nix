@@ -167,6 +167,8 @@
 
   hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 
+  hardware.xpadneo.enable = true;
+
 #  environment.sessionVariables = rec {
 #    LIBVA_DRIVER_NAME=nvidia
 #    MOZ_X11_EGL=1
