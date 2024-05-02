@@ -121,6 +121,7 @@
     (python3.withPackages(pythonPkgs: with pythonPkgs; [
       rich
       ptpython
+      evdev
     ]))
     gnupg
     gnumake
