@@ -200,14 +200,14 @@
         "d7db46c4-d38c-4c67-9869-e0e7aa7899c3"
         "85c4a776-29ea-4ff5-8f15-670e17e1fe62"
         "bd0b4f41-819e-4769-bbf2-f48d027bf961"
-        "6fa7fcc2-aefd-4e1f-827c-cf4a6be704e5"
+        "6fa7fcc2-aefd-4e1f-827c-cf4a6be704a5"
         "dd9876f1-0856-4470-8baf-a17a28f3b309"
         "75b80c76-a354-4910-a0de-1a76fd2eefeb"
         "87b23f92-4dfb-4de2-9e1a-d87353238049"
       ];
     };
 
-    "org/gnome/desktop/app-folders/folders/6fa7fcc2-aefd-4e1f-827c-cf4a6be704e5" = {
+    "org/gnome/desktop/app-folders/folders/6fa7fcc2-aefd-4e1f-827c-cf4a6be704a5" = {
       apps = [ "android-studio.desktop" "idea-ultimate.desktop" "pycharm-professional.desktop" "webstorm.desktop" "clion.desktop" "arduino.desktop" "rust-rover.desktop" "idea-community.desktop" "code.desktop" ];
       name = "Development";
       translate = false;
