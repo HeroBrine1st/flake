@@ -9,7 +9,7 @@
   ];
 
   boot = {
-    kernelModules = [ "kvm-amd" ];
+    kernelModules = [ "kvm-amd" "lm75" "nct6775" ];
     loader = {
       systemd-boot.enable = true;
       efi.canTouchEfiVariables = true;

@@ -17,7 +17,7 @@
       fan-display = false;
       fan-fan0-color = "#f2002eff";
       fan-refresh-time = 1000;
-      fan-sensor-file = "/sys/class/hwmon/hwmon2/fan2_input";
+      fan-sensor-file = "/sys/class/hwmon/hwmon1/fan2_input";
       fan-show-menu = true;
       fan-show-text = false;
       fan-style = "digit";
