@@ -77,7 +77,7 @@
       disable-remove-shadow = false;
       input-show-selected = false;
       media-control-compact-mode = true;
-      notifications-enabled = true;
+      notifications-enabled = false;
       notifications-hide-when-no-notifications = true;
       notifications-use-native-controls = false;
       output-show-selected = false;
