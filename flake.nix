@@ -69,6 +69,7 @@
       pkgs = import pkgs-unstable { system = "x86_64-linux"; };
     in {
       opengl = pkgs.callPackage shells/opengl {};
+      android = pkgs.callPackage shells/android.nix {};
     };
   };
 }

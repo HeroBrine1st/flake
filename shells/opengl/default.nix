@@ -16,7 +16,4 @@
     xorg.libXcursor
     xorg.libXi
   ];
-#  propagatedBuildInputs = with pkgs; [
-#
-#  ];
 }
