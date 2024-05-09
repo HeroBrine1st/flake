@@ -363,18 +363,18 @@
   };
 
 
-  programs.firejail = {
-    enable = true;
-    wrappedBinaries = {
-      "idea-community" = {
-        executable = "${pkgs.jetbrains.idea-community}/bin/idea-community";
-        extraArgs = [
-          "--noprofile"
-          "--env=LD_LIBRARY_PATH=${pkgs.libGL}/lib"
-        ];
-      };
-    };
-  };
+#  programs.firejail = {
+#    enable = true;
+#    wrappedBinaries = {
+#      "idea-community" = {
+#        executable = "${pkgs.jetbrains.idea-community}/bin/idea-community";
+#        extraArgs = [
+#          "--noprofile"
+#          "--env=LD_LIBRARY_PATH=${pkgs.libGL}/lib"
+#        ];
+#      };
+#    };
+#  };
 
   environment.sessionVariables = rec {
     NAUTILUS_4_EXTENSION_DIR = "/run/current-system/sw/lib/nautilus/extensions-4/";
