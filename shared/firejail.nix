@@ -3,12 +3,6 @@
     "firejail/globals.local".text = ''
       blacklist /.fsroot
     '';
-    "firejail/discord.local".text = ''
-      ignore whitelist ''${DOWNLOADS}
-      whitelist /mnt/tmp
-      blacklist /dev/snd
-      blacklist /usr/local/bin
-    '';
     "firejail/lutris.local".text = ''
       ignore mkdir ''${HOME}/Games
       ignore whitelist ''${HOME}/Games
@@ -116,14 +110,6 @@
       steam-runtime = {
         executable = "${pkgs.steam}/bin/steam-runtime";
         profile = "${pkgs.firejail}/etc/firejail/steam.profile";
-      };
-      discord = {
-        executable = "${pkgs.discord}/opt/Discord/Discord";
-        profile = "${pkgs.firejail}/etc/firejail/discord.profile";
-      };
-      Discord = {
-        executable = "${pkgs.discord}/opt/Discord/Discord";
-        profile = "${pkgs.firejail}/etc/firejail/discord.profile";
       };
       vesktop = {
         executable = "${custom-pkgs.vesktop}/bin/vesktop";

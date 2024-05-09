@@ -13,7 +13,6 @@
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
   nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [
-    "discord"
     "nvidia-x11" "nvidia-settings"
     "spotify"
     "android-studio-stable"
@@ -161,7 +160,7 @@
     gnome.gnome-terminal
     gnome.nautilus
     firefox-bin
-    discord custom-pkgs.vesktop
+    custom-pkgs.vesktop
     element-desktop
     custom-pkgs.spotify
 
