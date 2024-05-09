@@ -129,13 +129,11 @@
     mangohud
     gamescope
     gamemode
-    (pkgs.callPackage ../../packages/organize-screenshots.nix {})
     sing-box
     sing-geosite
     sing-geoip
     nodejs
     jetbrains-mono
-    dconf2nix
     unzip
     file
     pv

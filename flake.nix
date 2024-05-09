@@ -6,11 +6,12 @@
     pkgs-stable.url = "nixpkgs/nixos-23.11";
     pkgs-jetbrains-2022-3-3.url = "github:NixOS/nixpkgs?rev=f6aa4144d0c38231d8c383facf40f63b13759bb5";
     nixos-rk3588.url = "github:ryan4yin/nixos-rk3588?rev=349f39dcaafeb41250544bcc066db8668a7762ce";
-    home-manager.url = "github:nix-community/home-manager";
-    # TODO inputs = {
-    #        nixpkgs.follows = "nixpkgs";
-    #        flake-utils.follows = "flake-utils";
-    #      };
+    home-manager = {
+      url = "github:nix-community/home-manager";
+      inputs = {
+        nixpkgs.follows = "pkgs-unstable";
+      };
+    };
   };
 
   outputs = { self, pkgs-unstable, nixos-rk3588, pkgs-jetbrains-2022-3-3, home-manager, ... }: {
@@ -30,6 +31,7 @@
       # https://github.com/scop/bash-completion/issues/1157
       bash-completion = pkgs.callPackage packages/bash-completion.nix {};
       vesktop = pkgs.callPackage packages/vesktop {};
+      organise-files = pkgs.callPackage packages/organise-files.nix {};
     };
     nixosConfigurations = {
       opi5 = let
