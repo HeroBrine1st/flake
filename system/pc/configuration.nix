@@ -5,6 +5,7 @@
 { config, lib, pkgs, fetchUrl, custom-pkgs, ... }: {
   imports = [
     ../../shared/firejail.nix
+    ../../modules/wrappers.nix
   ];
 
   boot.tmp.useTmpfs = true;
@@ -362,19 +363,18 @@
     };
   };
 
-
-#  programs.firejail = {
-#    enable = true;
-#    wrappedBinaries = {
-#      "idea-community" = {
-#        executable = "${pkgs.jetbrains.idea-community}/bin/idea-community";
-#        extraArgs = [
-#          "--noprofile"
-#          "--env=LD_LIBRARY_PATH=${pkgs.libGL}/lib"
-#        ];
-#      };
-#    };
-#  };
+  programs.wrappedBinaries = {
+    enable = true;
+    binaries = {
+      "idea-community" = {
+        cmdline = [
+          "${pkgs.callPackage ../../packages/android-fhs-env.nix {}}/bin/android-fhs-env"
+          "-c"
+          "${pkgs.jetbrains.idea-community}/bin/idea-community"
+        ];
+      };
+    };
+  };
 
   environment.sessionVariables = rec {
     NAUTILUS_4_EXTENSION_DIR = "/run/current-system/sw/lib/nautilus/extensions-4/";
