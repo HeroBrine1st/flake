@@ -234,7 +234,7 @@
     gcc cmake
     arduino
     jetbrains.rust-rover
-    jetbrains.idea-community
+    jetbrains.idea-community-bin
     vscode-fhs
     # fleet unavailable
 
@@ -367,7 +367,7 @@
         cmdline = [
           "${pkgs.callPackage ../../packages/android-fhs-env.nix {}}/bin/android-fhs-env"
           "LD_LIBRARY_PATH=${pkgs.libGL}/lib"
-          "${pkgs.jetbrains.idea-community}/bin/idea-community"
+          "${pkgs.jetbrains.idea-community-bin}/bin/idea-community"
         ];
       };
     };
