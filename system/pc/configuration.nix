@@ -366,7 +366,7 @@
       "idea-community" = {
         cmdline = [
           "${pkgs.callPackage ../../packages/android-fhs-env.nix {}}/bin/android-fhs-env"
-          "-c"
+          "LD_LIBRARY_PATH=${pkgs.libGL}/lib"
           "${pkgs.jetbrains.idea-community}/bin/idea-community"
         ];
       };
