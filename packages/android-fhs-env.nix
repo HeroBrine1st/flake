@@ -4,5 +4,5 @@
     [
       libGL
    ]);
-  runScript = "bash";
+  runScript = "env";
 }
