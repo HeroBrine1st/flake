@@ -14,7 +14,6 @@
     ];
     loader = {
       systemd-boot.enable = true;
-      systemd-boot.consoleMode = "auto";
       efi.canTouchEfiVariables = true;
     };
     initrd = {
