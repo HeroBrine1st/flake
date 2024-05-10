@@ -4,9 +4,11 @@
 { config, lib, pkgs, modulesPath, ... }:
 
 {
-  imports = [ (modulesPath + "/installer/scan/not-detected.nix")
+  imports = [
     ./hardware-mitigations.nix
   ];
+
+  hardware.enableRedistributableFirmware = true;
 
   boot = {
     kernelModules = [ "kvm-amd" "lm75" "nct6775" ];
