@@ -67,7 +67,7 @@
   users.users.herobrine1st = {
     isNormalUser = true;
     description = "HeroBrine1st Erquilenne";
-    extraGroups = [ "wheel" "docker" "libvirtd" ];
+    extraGroups = [ "wheel" "docker" "libvirtd" "wireshark" ];
   #  packages = with pkgs; [
   #     firefox
   #     tree
@@ -204,6 +204,7 @@
     gnome-text-editor
     virt-manager
     lshw
+    # wireshark inferred
     gnome.gnome-nettool
 
 
@@ -372,6 +373,9 @@
       };
     };
   };
+
+  programs.wireshark.enable = true;
+  programs.wireshark.package = pkgs.wireshark;
 
   environment.sessionVariables = rec {
     NAUTILUS_4_EXTENSION_DIR = "/run/current-system/sw/lib/nautilus/extensions-4/";
