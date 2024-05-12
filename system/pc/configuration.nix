@@ -321,7 +321,7 @@
     trustedInterfaces = [
       "sing-box-tun"
     ];
-    allowedTCPPorts = [ 22 8384 22000 ];
+    allowedTCPPorts = [ 8384 22000 8080 ];
     allowedUDPPorts = [ 22000 21027 ];
     allowedTCPPortRanges = [
       { from = 1714; to = 1764; } # KDE Connect
