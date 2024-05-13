@@ -7,8 +7,7 @@ let
   smartdnotify = pkgs.callPackage ../../packages/smartdnotify.nix {};
 in
 {
-#  boot.tmp.useTmpfs = true;
-#  boot.tmp.tmpfsSize = "75%";
+  boot.tmp.useTmpfs = true;
 
   nix = {
     settings = {
