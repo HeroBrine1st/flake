@@ -6,7 +6,26 @@
     hash = "";
   };
 in {
-  libmali-valhall-g610-g13p0-x11-wayland-gbm = stdenv.mkDerivation rec {
+  mali-firmware-g610 = stdenvNoCC.mkDerivation {
+    pname = "mali-firmware-g610";
+    version = "v1.9-1-2d267b0";
+    dontBuild = true;
+    dontFixup = true;
+    compressFirmware = false;
+
+    inherit src;
+
+    installPhase = ''
+      runHook preInstall
+
+      mkdir -p $out/lib/firmware
+      install --mode=755 firmware/g610/mali_csffw.bin $out/lib/firmware/
+
+      runHook postInstall
+    '';
+  };
+
+  libmali-valhall-g610 = stdenv.mkDerivation rec {
     pname = "libmali-valhall-g610";
     version = "g13p0";
     variant = "x11-wayland-gbm";
