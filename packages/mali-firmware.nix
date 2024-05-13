@@ -7,7 +7,7 @@
 
   src = fetchurl {
     url = "https://github.com/tsukumijima/libmali-rockchip/raw/2d267b0ab97b9116a75f8b606204297a200db37c/firmware/g610/mali_csffw.bin";
-    hash = "";
+    hash = "sha256-Ei8ezBTS3g/pP8Al+Md+RTGr0AT6Fy/+aeQM19FdXGY=";
   };
 
   buildCommand = ''
