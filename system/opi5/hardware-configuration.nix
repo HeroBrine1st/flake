@@ -91,7 +91,7 @@ in {
 
   nixpkgs.hostPlatform = lib.mkDefault "aarch64-linux";
 
-  hardware.firmware = [
+  hardware.firmware = lib.mkOverride -1 [
     mali-firmware
   ];
 
