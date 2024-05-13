@@ -66,6 +66,8 @@
       };
     };
 
+    services.arrpc.enable = true;
+
 
     imports = [
       ./dconf.nix
