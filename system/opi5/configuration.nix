@@ -8,6 +8,7 @@ let
 in
 {
   boot.tmp.useTmpfs = true;
+  boot.tmp.tmpfsSize = "75%";
 
   nix = {
     settings = {
