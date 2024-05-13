@@ -82,6 +82,7 @@ in
     unzip
     file
     pv
+    clinfo
   ];
 
   programs.nano.nanorc = ''
