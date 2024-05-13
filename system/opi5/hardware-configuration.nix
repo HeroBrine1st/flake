@@ -91,13 +91,19 @@
 
   nixpkgs.hostPlatform = lib.mkDefault "aarch64-linux";
 
+  hardware.firmware = [
+    (pkgs.callPackage ../../packages/libmali.nix {}).libmali-valhall-g610-g13p0-x11-wayland-gbm
+  ];
+
   # hardware.opengl.enable = true;
 
 #  services.udev.extraRules = ''
-#KERNEL=="rga", MODE="0660", GROUP="video"
-#KERNEL=="system-dma32", MODE="0660", GROUP="video"
-#KERNEL=="system-uncached", MODE="0660", GROUP="video"
-#KERNEL=="system-uncached-dma32", MODE="0660", GROUP="video" RUN+="${pkgs.coreutils}/bin/chmod a+rw /dev/dma_heap"
+#    KERNEL=="mpp_service", MODE="0660", GROUP="video"
+#    KERNEL=="rga", MODE="0660", GROUP="video"
+#    KERNEL=="system", MODE="0666", GROUP="video"
+#    KERNEL=="system-dma32", MODE="0666", GROUP="video"
+#    KERNEL=="system-uncached", MODE="0666", GROUP="video"
+#    KERNEL=="system-uncached-dma32", MODE="0666", GROUP="video" RUN+="${pkgs.coreutils}bin/chmod a+rw /dev/dma_heap"
 #  '';
 
 }

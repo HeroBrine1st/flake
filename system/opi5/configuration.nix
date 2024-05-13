@@ -16,7 +16,7 @@ in
     };
   };
 
-  # security.sudo.wheelNeedsPassword = false;
+   security.sudo.wheelNeedsPassword = false;
 
   networking.hostName = "opi5";
   networking.networkmanager.enable = true;
