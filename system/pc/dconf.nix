@@ -62,6 +62,7 @@
       show-mounts = false;
       show-trash = false;
       show-icons-emblems = false;
+      show-dock-urgent-notify = false;
     };
 
     "org/gnome/shell/extensions/panel-corners" = {
