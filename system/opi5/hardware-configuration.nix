@@ -2,7 +2,7 @@
 # and may be overwritten by future invocations.  Please make changes
 # to /etc/nixos/configuration.nix instead.
 { config, lib, pkgs, modulesPath, ... }: let
-  libmali = (pkgs.callPackage ../../packages/libmali.nix {});
+  mali-firmware = (pkgs.callPackage ../../packages/mali-firmware.nix {});
 in {
   imports = [];
 
@@ -91,12 +91,8 @@ in {
 
   nixpkgs.hostPlatform = lib.mkDefault "aarch64-linux";
 
-  environment.systemPackages = [
-    libmali.libmali-valhall-g610
-  ];
-
   hardware.firmware = [
-    libmali.mali-firmware-g610
+    mali-firmware
   ];
 
   # hardware.opengl.enable = true;
