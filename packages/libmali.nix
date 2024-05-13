@@ -3,7 +3,7 @@
     owner = "tsukumijima";
     repo = "libmali-rockchip";
     rev = "2d267b0ab97b9116a75f8b606204297a200db37c";
-    hash = "";
+    hash = "sha256-Q4ZPdOiQ7t3+ndcxnq/7d6NZszxKuVENBJzpBF2kEhA=";
   };
 in {
   mali-firmware-g610 = stdenvNoCC.mkDerivation {
