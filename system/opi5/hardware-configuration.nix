@@ -107,7 +107,7 @@ in {
     KERNEL=="system", MODE="0666", GROUP="video"
     KERNEL=="system-dma32", MODE="0666", GROUP="video"
     KERNEL=="system-uncached", MODE="0666", GROUP="video"
-    KERNEL=="system-uncached-dma32", MODE="0666", GROUP="video" RUN+="${pkgs.coreutils}/bin/chmod a+rw /dev/dma_heap"
+    KERNEL=="system-uncached-dma32", MODE="0666", GROUP="video", RUN+="${pkgs.coreutils}/bin/chmod a+rw /dev/dma_heap"
   '';
 
 }
