@@ -91,13 +91,13 @@ in {
 
   nixpkgs.hostPlatform = lib.mkDefault "aarch64-linux";
 
-  environment.systemPackages = [
-    libmali.libmali-valhall-g610
-  ];
-
-  hardware.firmware = [
-    libmali.mali-firmware-g610
-  ];
+#  environment.systemPackages = [
+#    libmali.libmali-valhall-g610
+#  ];
+#
+#  hardware.firmware = [
+#    libmali.mali-firmware-g610
+#  ];
 
   # hardware.opengl.enable = true;
 
