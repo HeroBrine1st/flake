@@ -144,6 +144,9 @@ in
 
   # Open ports in the firewall.
   networking.firewall = {
+    trustedInterfaces = [
+      "sing-box-tun"
+    ];
     enable = true;
     # allowedTCPPorts = [];
     # allowedUDPPorts = [];
