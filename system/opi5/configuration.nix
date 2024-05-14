@@ -81,7 +81,9 @@ in
     unzip
     file
     pv
-    clinfo
+    sing-box
+    sing-geosite
+    sing-geoip
   ];
 
   programs.nano.nanorc = ''
