@@ -91,8 +91,8 @@ in {
 
   nixpkgs.hostPlatform = lib.mkDefault "aarch64-linux";
 
-  hardware.firmware = lib.mkForce [
-    builtins.trace ''compressFirmware=${builtins.toString mali-firmware.compressFirmware}'' mali-firmware
+  hardware.firmware = [
+    mali-firmware
   ];
 
   # hardware.opengl.enable = true;
