@@ -1,6 +1,6 @@
 { vesktop, makeDesktopItem }: vesktop.overrideAttrs (old: {
   # https://www.reddit.com/r/discordapp/comments/k6s89b/i_recreated_the_discord_loading_animation/
-  postPatch = (old.postInstall or "") + ''
+  postPatch = (old.postPatch or "") + ''
     cp --remove-destination ${./discord.gif} static/shiggy.gif
   '';
 
