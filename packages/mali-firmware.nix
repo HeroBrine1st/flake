@@ -6,8 +6,8 @@
   version = "unstable-2023-06-08";
 
   src = fetchurl {
-    url = "https://github.com/tsukumijima/libmali-rockchip/raw/2d267b0ab97b9116a75f8b606204297a200db37c/firmware/g610/mali_csffw.bin";
-    hash = "sha256-Ei8ezBTS3g/pP8Al+Md+RTGr0AT6Fy/+aeQM19FdXGY=";
+    url = "https://github.com/JeffyCN/mirrors/raw/e08ced3e0235b25a7ba2a3aeefd0e2fcbd434b68/firmware/g610/mali_csffw.bin";
+    hash = "sha256-jnyCGlXKHDRcx59hJDYW3SX8NbgfCQlG8wKIbWdxLfU=";
   };
 
   buildCommand = ''
