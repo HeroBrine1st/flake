@@ -14,5 +14,5 @@
     install -Dm444 $src $out/lib/firmware/mali_csffw.bin
   '';
 
-  compressFirmware = true;
+  compressFirmware = false;
 }
