@@ -91,10 +91,10 @@ in {
 
   nixpkgs.hostPlatform = lib.mkDefault "aarch64-linux";
 
-  hardware.enableMaliFirmware = false;
-  hardware.firmware = [
-    mali-firmware
-  ];
+#  hardware.enableMaliFirmware = false;
+#  hardware.firmware = [
+#    mali-firmware
+#  ];
 
   # hardware.opengl.enable = true;
 
