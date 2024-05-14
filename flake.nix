@@ -6,7 +6,7 @@
     pkgs-stable.url = "nixpkgs/nixos-23.11";
     pkgs-jetbrains-2022-3-3.url = "github:NixOS/nixpkgs?rev=f6aa4144d0c38231d8c383facf40f63b13759bb5";
     #nixos-rk3588.url = "github:ryan4yin/nixos-rk3588?rev=349f39dcaafeb41250544bcc066db8668a7762ce";
-    nixos-rk3588.url = "github:HeroBrine1st/nixos-rk3588?rev=cc7eb756c221ce11d4fa90eccf0b8e2fde6847d1";
+    nixos-rk3588.url = "github:HeroBrine1st/nixos-rk3588?rev=d0cd7dd3527b36f9754d5bd9b15dff2692c3e02a";
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs = {
