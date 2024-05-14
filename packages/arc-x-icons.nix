@@ -11,11 +11,6 @@ in stdenvNoCC.mkDerivation rec {
     hash = "sha256-f3fFquLccgUfxQ/vyevfQZIU4umVY8kEFTGXJxKhRwA=";
   };
 
-  # runtime inputs
-  buildInputs = [
-
-  ];
-
   patchPhase = ''
     rm -rf ./src/Paper*
   '';
