@@ -14,6 +14,53 @@
       };
     };
 
+    xdg.mimeApps = {
+      enable = true;
+      defaultApplications = {
+        "inode/directory" = "org.gnome.Nautilus.desktop";
+        "x-scheme-handler/http" = ["firefox.desktop"];
+        "x-scheme-handler/https" = ["firefox.desktop"];
+        "x-scheme-handler/chrome" = ["firefox.desktop"];
+        "text/html"= ["firefox.desktop"];
+        "application/x-extension-htm" = ["firefox.desktop"];
+        "application/x-extension-html" = ["firefox.desktop"];
+        "application/x-extension-shtml" = ["firefox.desktop"];
+        "application/xhtml+xml" = ["firefox.desktop"];
+        "application/x-extension-xhtml" = ["firefox.desktop"];
+        "application/x-extension-xht" = ["firefox.desktop"];
+        "application/pdf" = ["firefox.desktop"];
+        "image/png" = ["org.gnome.gThumb.desktop"];
+        "image/jpeg" = ["org.gnome.gThumb.desktop"];
+        "video/mp4" = ["mpv.desktop"];
+        "image/webp" = ["org.gnome.gThumb.desktop"];
+        "video/x-matroska" = ["vlc.desktop"];
+        "text/plain" = ["org.gnome.TextEditor.desktop"];
+        "video/webm"=["org.gnome.Totem.desktop"];
+      };
+      associations.added = {
+        "x-scheme-handler/http" = ["firefox.desktop"];
+        "x-scheme-handler/https" = ["firefox.desktop"];
+        "x-scheme-handler/chrome" = ["firefox.desktop"];
+        "text/html"= ["firefox.desktop"];
+        "application/x-extension-htm" = ["firefox.desktop"];
+        "application/x-extension-html" = ["firefox.desktop"];
+        "application/x-extension-shtml" = ["firefox.desktop"];
+        "application/xhtml+xml" = ["firefox.desktop"];
+        "application/x-extension-xhtml" = ["firefox.desktop"];
+        "application/x-extension-xht" = ["firefox.desktop"];
+        "application/pdf" = ["firefox.desktop"];
+        "x-scheme-handler/sms" = ["org.gnome.Shell.Extensions.GSConnect.desktop"];
+        "x-scheme-handler/tel" = ["org.gnome.Shell.Extensions.GSConnect.desktop"];
+        "image/png" = ["org.gnome.gThumb.desktop"];
+        "image/jpeg" = ["org.gnome.gThumb.desktop"];
+        "video/mp4" = ["mpv.desktop"];
+        "image/webp" = ["org.gnome.gThumb.desktop"];
+        "video/x-matroska" = ["vlc.desktop"];
+        "text/plain" = ["org.gnome.TextEditor.desktop"];
+        "video/webm"=["org.gnome.Totem.desktop"];
+      };
+    };
+
     xdg.configFile = {
       "MangoHud/MangoHud.conf".text = ''
         full
