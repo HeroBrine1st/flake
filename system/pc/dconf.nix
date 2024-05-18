@@ -6,7 +6,7 @@
       cursor-theme = "oreo_spark_purple_cursors";
       font-antialiasing = "rgba";
       font-hinting = "slight";
-      gtk-theme = "Adwaita-dark";
+      gtk-theme = "Adwaita";
       icon-theme = "Arc-OSX-D";
       monospace-font-name = "JetBrains Mono 10";
       enable-hot-corners = true;

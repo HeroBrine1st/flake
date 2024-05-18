@@ -137,7 +137,7 @@
     file
     pv
 
-    gnome.gnome-themes-extra # Adwaita-dark
+    # gnome.gnome-themes-extra # Adwaita-dark
 
     # Extensions
     gnomeExtensions.control-blur-effect-on-lock-screen
