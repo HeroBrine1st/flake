@@ -172,10 +172,20 @@
 
   hardware.xpadneo.enable = true;
 
-#  environment.sessionVariables = rec {
-#    LIBVA_DRIVER_NAME=nvidia
-#    MOZ_X11_EGL=1
-#    __EGL_VENDOR_LIBRARY_FILENAMES=/usr/share/glvnd/egl_vendor.d/10_nvidia.json
-#    NVD_BACKEND=direct MOZ_DISABLE_RDD_SANDBOX=1
-#  };
+  programs.wrappedBinaries = {
+    enable = true;
+    binaries = {
+      "firefox" = {
+        cmdline = [
+          "/usr/bin/env"
+          "LIBVA_DRIVER_NAME=nvidia"
+          "MOZ_X11_EGL=1"
+          "__EGL_VENDOR_LIBRARY_FILENAMES=${config.hardware.nvidia.package}/share/glvnd/egl_vendor.d/10_nvidia.json"
+          "NVD_BACKEND=direct"
+          "MOZ_DISABLE_RDD_SANDBOX=1"
+          "${pkgs.firefox-bin}/bin/firefox"
+        ];
+      };
+    };
+  };
 }
