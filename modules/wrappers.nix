@@ -2,7 +2,7 @@
   cfg = config.programs.wrappedBinaries;
   wrappedBins = pkgs.runCommand "wrapped-binaries" {
     # take precedence over non-wrapped versions
-    meta.priority = -1;
+    meta.priority = -10;
   } ''
       mkdir -p $out/bin
       mkdir -p $out/share/applications
