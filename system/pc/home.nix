@@ -35,7 +35,7 @@
         "image/webp" = ["org.gnome.gThumb.desktop"];
         "video/x-matroska" = ["vlc.desktop"];
         "text/plain" = ["org.gnome.TextEditor.desktop"];
-        "video/webm"=["org.gnome.Totem.desktop"];
+        "video/webm"=["vlc.desktop"];
       };
       associations.added = {
         "x-scheme-handler/http" = ["firefox.desktop"];
@@ -57,7 +57,7 @@
         "image/webp" = ["org.gnome.gThumb.desktop"];
         "video/x-matroska" = ["vlc.desktop"];
         "text/plain" = ["org.gnome.TextEditor.desktop"];
-        "video/webm"=["org.gnome.Totem.desktop"];
+        "video/webm"=["vlc.desktop"];
       };
     };
 
