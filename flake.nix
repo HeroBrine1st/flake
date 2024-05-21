@@ -5,7 +5,9 @@
     pkgs-unstable.url = "nixpkgs/nixos-unstable";
     pkgs-stable.url = "nixpkgs/nixos-23.11";
     pkgs-jetbrains-2022-3-3.url = "github:NixOS/nixpkgs?rev=f6aa4144d0c38231d8c383facf40f63b13759bb5";
-    nixos-rk3588.url = "github:ryan4yin/nixos-rk3588?rev=c4fef04d8c124146e6e99138283e0c57b2ad8e29";
+    nixos-rk3588 = {
+      url = "github:ryan4yin/nixos-rk3588?rev=c4fef04d8c124146e6e99138283e0c57b2ad8e29";
+    };
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs = {
@@ -14,7 +16,7 @@
     };
   };
 
-  outputs = { self, pkgs-unstable, nixos-rk3588, pkgs-jetbrains-2022-3-3, home-manager, ... }: {
+  outputs = { self, pkgs-unstable, pkgs-stable, nixos-rk3588, pkgs-jetbrains-2022-3-3, home-manager, ... }: {
     packages."x86_64-linux" = let
       pkgs = import pkgs-unstable {
         system = "x86_64-linux";
@@ -38,7 +40,7 @@
         # using the same nixpkgs as nixos-rk3588 to utilize the cross-compilation cache.
         inherit (nixos-rk3588.inputs) nixpkgs;
         system = "aarch64-linux";
-      in nixpkgs.lib.nixosSystem {
+      in pkgs-stable.lib.nixosSystem {
         inherit system;
         specialArgs = {
           rk3588 = { 
