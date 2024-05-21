@@ -110,6 +110,7 @@
       font = "JetBrains Mono 10";
       use-system-font = false;
       use-theme-colors = true;
+      bold-is-bright = true;
     };
 
     "org/gnome/desktop/peripherals/mouse" = {
