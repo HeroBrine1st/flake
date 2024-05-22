@@ -84,6 +84,7 @@
         file:///home/herobrine1st/Downloads
         sftp://192.168.88.72/mnt/basic Seagate Basic on Orange Pi 5
       '';
+      "ptpython/config.py".source = ./ptpython-config.py;
     };
 
     home.file = {
