@@ -236,7 +236,13 @@
     arduino
     jetbrains.rust-rover
     jetbrains.idea-community-bin
-    vscode-fhs
+    (vscode-with-extensions.override {
+      vscode = vscodium.fhsWithPackages (ps: [ ps.nixd ]);
+      vscodeExtensions = with vscode-extensions; [
+        jnoortheen.nix-ide
+        k--kato.intellij-idea-keybindings
+      ];
+    })
     # fleet unavailable
 
     # "Office"

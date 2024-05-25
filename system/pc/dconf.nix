@@ -210,7 +210,7 @@
     };
 
     "org/gnome/desktop/app-folders/folders/6fa7fcc2-aefd-4e1f-827c-cf4a6be704a5" = {
-      apps = [ "android-studio.desktop" "idea-ultimate.desktop" "pycharm-professional.desktop" "webstorm.desktop" "clion.desktop" "arduino.desktop" "rust-rover.desktop" "idea-community.desktop" "code.desktop" ];
+      apps = [ "android-studio.desktop" "idea-ultimate.desktop" "pycharm-professional.desktop" "webstorm.desktop" "clion.desktop" "arduino.desktop" "rust-rover.desktop" "idea-community.desktop" "codium.desktop" ];
       name = "Development";
       translate = false;
     };
