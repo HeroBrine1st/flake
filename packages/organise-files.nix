@@ -1,5 +1,5 @@
 { config, lib, pkgs, ... }: pkgs.writeShellApplication {
-  runtimeInputs = [ pkgs.coreutils ];
+  runtimeInputs = [ pkgs.coreutils pkgs.findutils ];
   name = "organise-files.sh";
   text = ''
     #!/bin/bash
