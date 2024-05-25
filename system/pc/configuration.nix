@@ -13,7 +13,7 @@
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
   nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [
-    "nvidia-x11" "nvidia-settings"
+    "nvidia-x11" "nvidia-settings" "nvidia-persistenced"
     "spotify"
     "android-studio-stable"
     "idea-ultimate"
