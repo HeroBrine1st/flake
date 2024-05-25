@@ -40,7 +40,7 @@
       options = [ "defaults" "compress=zstd" "discard=async" "subvol=@nix" ];
     };
     "/boot" = {
-      device = "/dev/disk/by-uuid/D6F2-4688";
+      device = "/dev/disk/by-uuid/FC4D-3317";
       fsType = "vfat";
     };
     "/.fsroot" = {
