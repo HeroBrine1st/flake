@@ -16,7 +16,7 @@ in
     };
   };
 
-   security.sudo.wheelNeedsPassword = false;
+  security.sudo.wheelNeedsPassword = false;
 
   networking.hostName = "opi5";
   networking.networkmanager.enable = true;
@@ -48,45 +48,6 @@ in
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICs5D9zh4OUHN+wwHiNgiqC4Ec0Qi0qLAyA9oh515HJA herobrine1st@DESKTOP-IJK2GUG"
     ];
   };
-
-  environment.systemPackages = with pkgs; [
-    nano
-    wget
-    curl
-    hdparm
-    smartmontools
-    docker-compose
-    htop
-    udisks
-    tree
-    ffmpeg
-    yt-dlp
-    usbutils
-    git
-    tcpdump
-    lm_sensors
-    psmisc
-    duplicity
-    ctop
-    smartdnotify
-    (python3.withPackages(pythonPkgs: with pythonPkgs; [
-      rich
-    ]))
-    gnupg
-    rclone
-    gnumake
-    unzip
-    file
-    pv
-    sing-box
-    sing-geosite
-    sing-geoip
-  ];
-
-  programs.nano.nanorc = ''
-    set tabsize 4
-    set tabstospaces
-  '';
 
   services.openssh = {
     enable = true;
