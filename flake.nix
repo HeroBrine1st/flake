@@ -20,9 +20,10 @@
         nixpkgs.follows = "pkgs-unstable";
       };
     };
+    impermanence.url = "github:nix-community/impermanence";
   };
 
-  outputs = { self, pkgs-unstable, pkgs-stable, nixos-rk3588, pkgs-jetbrains-2022-3-3, home-manager, disko, ... }: {
+  outputs = { self, pkgs-unstable, pkgs-stable, nixos-rk3588, pkgs-jetbrains-2022-3-3, home-manager, disko, impermanence, ... }: {
     packages."x86_64-linux" = let
       pkgs = import pkgs-unstable {
         system = "x86_64-linux";
@@ -97,6 +98,7 @@
         modules = [
           home-manager.nixosModules.home-manager
           disko.nixosModules.disko
+          impermanence.nixosModules.impermanence
           ./modules/wrappers.nix
 
           ./common/unfree.nix
