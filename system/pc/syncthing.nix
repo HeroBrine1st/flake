@@ -6,6 +6,7 @@
     overrideDevices = true;
     overrideFolders = true;
     settings = {
+      # TODO modularize with exclusion of current machine
       devices = {
         "OPi5" = syncthing-devices.opi5;
         "MOBILE-DCV5AQD" = syncthing-devices.laptop;
