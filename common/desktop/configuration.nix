@@ -220,7 +220,7 @@
   hardware.pulseaudio.enable = false;
 
   services.openssh = {
-    enable = true;
+    # Enabled per-machine
     settings = {
       PermitRootLogin = "no";
       PasswordAuthentication = false;

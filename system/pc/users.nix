@@ -8,4 +8,6 @@
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMqqnT2Z4o9nZ81w9IbwYC6fkQvPfgGAwhgvBnp1VDWR herobrine1st@lynx"
     ];
   };
+
+  services.openssh.enable = true;
 }
