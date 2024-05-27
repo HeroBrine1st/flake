@@ -50,43 +50,11 @@ in
   };
 
   environment.systemPackages = with pkgs; [
-    nano
-    wget
-    curl
-    hdparm
-    smartmontools
-    docker-compose
-    htop
-    udisks
-    tree
-    ffmpeg
-    yt-dlp
-    usbutils
-    git
-    tcpdump
-    lm_sensors
-    psmisc
     duplicity
     ctop
     smartdnotify
-    (python3.withPackages(pythonPkgs: with pythonPkgs; [
-      rich
-    ]))
-    gnupg
     rclone
-    gnumake
-    unzip
-    file
-    pv
-    sing-box
-    sing-geosite
-    sing-geoip
   ];
-
-  programs.nano.nanorc = ''
-    set tabsize 4
-    set tabstospaces
-  '';
 
   services.openssh = {
     enable = true;
@@ -100,11 +68,6 @@ in
         "umac-128-etm@openssh.com"
       ];
     };
-# doesn't work
-#    extraConfig = ''
-#      Match Address 192.168.0.0/16
-#        PasswordAuthentication yes
-#    '';
   };
   services.udisks2.enable = true;
 
