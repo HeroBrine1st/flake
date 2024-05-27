@@ -3,30 +3,9 @@
 # https://search.nixos.org/options and in the NixOS manual (`nixos-help`).
 
 { config, lib, pkgs, fetchUrl, custom-pkgs, ... }: {
-  imports = [
-    ../../shared/firejail.nix
-    ../../modules/wrappers.nix
-  ];
-
   boot.tmp.useTmpfs = true;
 
   boot.kernelPackages = pkgs.linuxPackages_latest;
-
-  nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [
-    "nvidia-x11" "nvidia-settings" "nvidia-persistenced"
-    "spotify"
-    "android-studio-stable"
-    "idea-ultimate"
-    "pycharm-professional"
-    "webstorm"
-    "clion"
-    "rust-rover"
-    "steam" "steam-original"
-    "osu-lazer-bin"
-    "veracrypt"
-    "code" "vscode"
-    "winbox"
-  ];
 
   nix = {
     settings = {
@@ -36,9 +15,6 @@
   };
 
   # security.sudo.wheelNeedsPassword = false;
-
-  networking.hostName = "DESKTOP-IJK2GUG";
-  networking.networkmanager.enable = true;
 
   services.xserver.enable = true;
   services.xserver.displayManager.gdm.enable = true;
@@ -60,22 +36,6 @@
 #      "en_GB.UTF-8/UTF-8"
 #      "ru_RU.UTF-8/UTF-8"
 #    ];
-  };
-
-
-
-  users.users.herobrine1st = {
-    isNormalUser = true;
-    description = "HeroBrine1st Erquilenne";
-    extraGroups = [ "wheel" "docker" "libvirtd" "wireshark" ];
-  #  packages = with pkgs; [
-  #     firefox
-  #     tree
-  #  ];
-    openssh.authorizedKeys.keys = [
-      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDhbfIlo673pgcavZFZyKWoMf+Ak0ETfyD1Y89YJJnue solidexplorer@lynx"
-      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMqqnT2Z4o9nZ81w9IbwYC6fkQvPfgGAwhgvBnp1VDWR herobrine1st@lynx"
-    ];
   };
 
   programs.bash.enableCompletion = false;
@@ -102,40 +62,7 @@
 
 
   environment.systemPackages = with pkgs; [
-    nano
-    wget
-    curl
-    hdparm
-    smartmontools
-    docker-compose
-    htop
-    udisks
-    tree
-    ffmpeg
-    yt-dlp
-    usbutils
-    git
-    tcpdump
-    lm_sensors
-    psmisc
-    (python3.withPackages(pythonPkgs: with pythonPkgs; [
-      rich
-      ptpython
-      evdev
-    ]))
-    gnupg
-    gnumake
-    mangohud
-    gamescope
-    gamemode
-    sing-box
-    sing-geosite
-    sing-geoip
-    nodejs
-    jetbrains-mono
-    unzip
-    file
-    pv
+    # ../cli-packages.nix
 
     # gnome.gnome-themes-extra # Adwaita-dark
 
@@ -292,11 +219,6 @@
   hardware.opentabletdriver.enable = true;
   hardware.pulseaudio.enable = false;
 
-  programs.nano.nanorc = ''
-    set tabsize 4
-    set tabstospaces
-  '';
-
   services.openssh = {
     enable = true;
     settings = {
@@ -337,35 +259,7 @@
     ];
   };
 
-  services.syncthing = {
-    enable = true;
-    user = "herobrine1st";
-    configDir = "/home/herobrine1st/.config/Syncthing";
-    overrideDevices = true;
-    overrideFolders = true;
-    settings = {
-      devices = {
-        "OPi5" = {
-          id = "QDEHB5B-UGM2GQ6-3VG3RBL-JXOTGB2-OGNO5AL-H7KAFIC-MESTOWJ-O2YD3AO";
-        };
-        "MOBILE-DCV5AQD" = {
-          id = "NUNTZPB-Z4CHNKA-3B3NF3Y-CREPZRK-P753FR3-WLMECWN-LGUDDN2-SB2ECQF";
-        };
-      };
-      folders = {
-        "uf77h-ptigu" = {
-          label = "Secure";
-          path = "/mnt/secure";
-          devices = [ "OPi5" "MOBILE-DCV5AQD" ];
-        };
-        "yb6rg-qs9gm" = {
-          label = "Local Music";
-          path = "/home/herobrine1st/Music/Main";
-          devices = [ "OPi5" "MOBILE-DCV5AQD" ];
-        };
-      };
-    };
-  };
+
 
   programs.wrappedBinaries = {
     enable = true;
