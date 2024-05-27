@@ -23,7 +23,7 @@
     };
   };
 
-  networking.hostName = "DESKTOP-IJK2GUG";
+  networking.hostName = "MOBILE-DCV5AQD";
   networking.networkmanager.enable = true;
 #  networking.useDHCP = true; looks like not needed
 
@@ -40,7 +40,7 @@
 
   services.xserver.videoDrivers = [ "amdgpu" ];
 
-  hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
+  hardware.cpu.amd.updateMicrocode = config.hardware.enableRedistributableFirmware;
 
   hardware.xpadneo.enable = true;
 }

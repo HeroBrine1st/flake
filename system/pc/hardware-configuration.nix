@@ -4,10 +4,6 @@
 { config, lib, pkgs, modulesPath, ... }:
 
 {
-  imports = [
-    ./hardware-mitigations.nix
-  ];
-
   hardware.enableRedistributableFirmware = true;
 
   boot = {
@@ -113,11 +109,10 @@
 
   networking.hostName = "DESKTOP-IJK2GUG";
   networking.networkmanager.enable = true;
-#  networking.useDHCP = true; looks like not needed
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
 
-    # Enable OpenGL
+  # Enable OpenGL
   hardware.opengl = {
     enable = true;
     driSupport = true;
@@ -167,7 +162,7 @@
     options nvidia NVreg_TemporaryFilePath=/var/tmp
   '';
 
-  hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
+  hardware.cpu.amd.updateMicrocode = config.hardware.enableRedistributableFirmware;
 
   hardware.xpadneo.enable = true;
 
