@@ -25,31 +25,31 @@
     '';
 in {
   options.programs.wrappedBinaries = {
-    enable = mkEnableOption (lib.mdDoc "Enable simple wrapper");
+    enable = mkEnableOption "Enable simple wrapper";
 
     binaries = mkOption {
       type = types.attrsOf (types.submodule {
         options = {
           cmdline = mkOption {
             type = types.listOf types.str;
-            description = lib.mdDoc "List of command arguments";
+            description = "List of command arguments";
             example = literalExpression ''[ "''${lib.getBin pkgs.firefox}/bin/firefox" ]'';
           };
           desktop = mkOption {
             type = types.nullOr types.path;
             default = null;
-            description = lib.mkDoc ".desktop file to modify. Only necessary if it uses the absolute path to the executable.";
+            description = ".desktop file to modify. Only necessary if it uses the absolute path to the executable.";
             example = literalExpression ''"''${pkgs.firefox}/share/applications/firefox.desktop"'';
           };
           enableExec = mkOption {
             type = types.bool;
             default = true;
-            description = lib.mdDoc "Use exec before command";
+            description = "Use exec before command";
           };
         };
       });
       default = {};
-      description = lib.mdDoc ''
+      description = ''
         Wrap the binaries and place them in the global path.
       '';
     };
