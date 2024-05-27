@@ -14,9 +14,15 @@
         nixpkgs.follows = "pkgs-unstable";
       };
     };
+    disko = {
+      url = "github:nix-community/disko";
+      inputs = {
+        nixpkgs.follows = "pkgs-unstable";
+      };
+    };
   };
 
-  outputs = { self, pkgs-unstable, pkgs-stable, nixos-rk3588, pkgs-jetbrains-2022-3-3, home-manager, ... }: {
+  outputs = { self, pkgs-unstable, pkgs-stable, nixos-rk3588, pkgs-jetbrains-2022-3-3, home-manager, disko, ... }: {
     packages."x86_64-linux" = let
       pkgs = import pkgs-unstable {
         system = "x86_64-linux";
@@ -81,6 +87,32 @@
           ./system/pc/hardware-dconf.nix
           ./system/pc/hardware-home.nix
           ./system/pc/hardware-mitigations.nix
+        ];
+      };
+      MOBILE-DCV5AQD = pkgs-unstable.lib.nixosSystem {
+        specialArgs = {
+          custom-pkgs = self.packages."x86_64-linux";
+          syncthing-devices = import ./const/syncthing-devices.nix;
+        };
+        modules = [
+          home-manager.nixosModules.home-manager
+          disko.nixosModules.disko
+          ./modules/wrappers.nix
+
+          ./common/unfree.nix
+          ./common/cli-packages.nix
+
+          ./common/desktop/configuration.nix
+          ./common/desktop/firejail.nix
+
+          ./common/desktop/home.nix
+          ./common/desktop/dconf.nix
+
+          ./system/laptop/syncthing.nix
+          ./system/laptop/users.nix
+          ./system/laptop/hardware-configuration.nix
+          ./system/laptop/hardware-dconf.nix
+          ./system/laptop/hardware-home.nix
         ];
       };
     };

@@ -1,6 +1,61 @@
-{ config, lib, pkgs, modulesPath, ... }: {
+{ config, lib, pkgs, ... }: {
 
-  # TODO disko
+  disko.devices = {
+    disk = {
+      system = {
+        type = "disk";
+        device = "/dev/nvme0n1";
+        content = {
+          type = "gpt";
+          partitions = {
+            esp = {
+              size = "512M";
+              type = "EF00";
+              content = {
+                type = "filesystem";
+                format = "vfat";
+                mountpoint = "/boot";
+                mountOptions = [ "defaults" ];
+              };
+            };
+            root = {
+              size = "100%";
+              content = {
+                type = "luks";
+                settings = {
+                  allowDiscards = true;
+                };
+                content = {
+                  type = "btrfs";
+                  extraArgs = [ "-f" ];
+                  subvolumes = {
+                    "/root" = {
+                      mountpoint = "/";
+                      mountOptions = [ "defaults" "compress=zstd" "discard=async" ];
+                    };
+                    "/home" = {
+                      mountpoint = "/home";
+                      mountOptions = [ "defaults" "compress=zstd" "discard=async" ];
+                    };
+                    "/nix" = {
+                      mountpoint = "/nix";
+                      mountOptions = [ "defaults" "compress=zstd" "discard=async" ];
+                    };
+                    "/persistence" = {
+                      mountpoint = "/persistence";
+                      mountOptions = [ "defaults" "compress=zstd" "discard=async" ];
+                    };
+                  };
+                };
+              };
+            };
+          };
+        };
+      };
+    };
+  };
+
+  fileSystems."/persistence".neededForBoot = true;
 
   hardware.enableRedistributableFirmware = true;
 
@@ -14,18 +69,11 @@
     initrd = {
       availableKernelModules = [ "nvme" "xhci_pci" "rtsx_usb_sdmmc" ];
       kernelModules = [ "amdgpu" ];
-      luks.devices = {
-        "root" = {
-          device = "/dev/disk/by-uuid/e0a78f05-e0b6-4fbb-bf07-08b432b291d5"; # TODO
-          allowDiscards = true;
-        };
-      };
     };
   };
 
   networking.hostName = "MOBILE-DCV5AQD";
   networking.networkmanager.enable = true;
-#  networking.useDHCP = true; looks like not needed
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
 
@@ -34,7 +82,7 @@
     driSupport = true;
     driSupport32Bit = true;
     extraPackages = with pkgs; [
-      rocmPackages.clr.icd
+      rocmPackages.clr.icd # OpenCL
     ];
   };
 
