@@ -77,9 +77,9 @@
 
           ./system/pc/syncthing.nix
           ./system/pc/users.nix
-          ./system/pc/dconf-pc.nix
-          ./system/pc/home-pc.nix
           ./system/pc/hardware-configuration.nix
+          ./system/pc/hardware-dconf.nix
+          ./system/pc/hardware-home.nix
           ./system/pc/hardware-mitigations.nix
         ];
       };
