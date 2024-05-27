@@ -43,11 +43,11 @@
       in pkgs-stable.lib.nixosSystem {
         inherit system;
         specialArgs = {
-          rk3588 = { 
+          rk3588 = {
             inherit nixpkgs;
-            pkgsKernel = import nixpkgs { 
+            pkgsKernel = import nixpkgs {
               inherit system;
-            }; 
+            };
           };
         };
 
@@ -60,6 +60,7 @@
       DESKTOP-IJK2GUG = pkgs-unstable.lib.nixosSystem {
         specialArgs = {
           custom-pkgs = self.packages."x86_64-linux";
+          syncthing-devices = import ./const/syncthing-devices.nix;
         };
         modules = [
           home-manager.nixosModules.home-manager
