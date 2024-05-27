@@ -1,4 +1,4 @@
-{ ... }: {
+{ syncthing-devices, ... }: {
   services.syncthing = {
     enable = true;
     user = "herobrine1st";
@@ -7,12 +7,8 @@
     overrideFolders = true;
     settings = {
       devices = {
-        "OPi5" = {
-          id = "QDEHB5B-UGM2GQ6-3VG3RBL-JXOTGB2-OGNO5AL-H7KAFIC-MESTOWJ-O2YD3AO";
-        };
-        "MOBILE-DCV5AQD" = {
-          id = "NUNTZPB-Z4CHNKA-3B3NF3Y-CREPZRK-P753FR3-WLMECWN-LGUDDN2-SB2ECQF";
-        };
+        "OPi5" = syncthing-devices.opi5;
+        "MOBILE-DCV5AQD" = syncthing-devices.laptop;
       };
       folders = {
         "uf77h-ptigu" = {
