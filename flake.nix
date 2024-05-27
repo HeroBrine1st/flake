@@ -60,6 +60,8 @@
 
         modules = [
           nixos-rk3588.nixosModules.orangepi5.core
+          ./common/cli-packages.nix
+
           ./system/opi5/configuration.nix
           ./system/opi5/hardware-configuration.nix
         ];
