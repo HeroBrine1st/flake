@@ -23,14 +23,9 @@
     ]))
     gnupg
     gnumake
-    mangohud
-    gamescope
-    gamemode
     sing-box
     sing-geosite
     sing-geoip
-    nodejs
-    jetbrains-mono
     unzip
     file
     pv

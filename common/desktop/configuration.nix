@@ -62,7 +62,11 @@
 
 
   environment.systemPackages = with pkgs; [
-    # ../cli-packages.nix
+    mangohud
+    gamescope
+    gamemode
+    nodejs
+    jetbrains-mono
 
     # gnome.gnome-themes-extra # Adwaita-dark
 
