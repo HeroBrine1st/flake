@@ -29,19 +29,15 @@
                   type = "btrfs";
                   extraArgs = [ "-f" ];
                   subvolumes = {
-                    "/root" = {
-                      mountpoint = "/";
-                      mountOptions = [ "defaults" "compress=zstd" "discard=async" ];
-                    };
-                    "/home" = {
+                    "@home" = {
                       mountpoint = "/home";
                       mountOptions = [ "defaults" "compress=zstd" "discard=async" ];
                     };
-                    "/nix" = {
+                    "@nix" = {
                       mountpoint = "/nix";
                       mountOptions = [ "defaults" "compress=zstd" "discard=async" ];
                     };
-                    "/persistence" = {
+                    "@persistence" = {
                       mountpoint = "/persistence";
                       mountOptions = [ "defaults" "compress=zstd" "discard=async" ];
                     };
@@ -55,7 +51,16 @@
     };
   };
 
-  fileSystems."/persistence".neededForBoot = true;
+  fileSystems = {
+    "/" = {
+      device = "none";
+      fsType = "tmpfs";
+      options = [ "defaults" "size=25%" "mode=755" ];
+    };
+    "/persistence" = {
+      neededForBoot = true;
+    };
+  };
 
   hardware.enableRedistributableFirmware = true;
 
