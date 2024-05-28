@@ -267,8 +267,8 @@
       "org/gnome/desktop/background" = {
         color-shading-type = "solid";
         picture-options = "zoom";
-        picture-uri = "file://${../../wallpapers/no-mans-sky-atlas.png}";
-        picture-uri-dark = "file://${../../wallpapers/no-mans-sky-atlas.png}";
+        picture-uri = "file://${../../assets/no-mans-sky-atlas.png}";
+        picture-uri-dark = "file://${../../assets/no-mans-sky-atlas.png}";
         primary-color = "#000000000000";
         secondary-color = "#000000000000";
       };
