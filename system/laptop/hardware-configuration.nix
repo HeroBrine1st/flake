@@ -22,6 +22,7 @@
               size = "100%";
               content = {
                 type = "luks";
+                name = "root";
                 settings = {
                   allowDiscards = true;
                   keyFile = "/tmp/root.key";
