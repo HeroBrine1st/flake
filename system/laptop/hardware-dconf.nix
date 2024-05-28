@@ -34,7 +34,7 @@
         show-tooltip = false;
         thermal-display = true;
         thermal-refresh-time = 1000;
-        thermal-sensor-file = "/sys/class/hwmon/hwmon5/temp1_input";
+        thermal-sensor-file = "/sys/class/hwmon/hwmon3/temp1_input";
         thermal-sensor-label = "acpitz - 1";
         thermal-show-menu = true;
         thermal-show-text = false;
