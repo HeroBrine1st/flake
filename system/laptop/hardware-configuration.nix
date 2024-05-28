@@ -55,7 +55,7 @@
       fsType = "tmpfs";
       options = [ "defaults" "size=25%" "mode=755" ];
     };
-    "/persistence" = {
+    "/nix" = {
       neededForBoot = true;
     };
   };
