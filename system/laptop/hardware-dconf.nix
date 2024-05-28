@@ -1,7 +1,7 @@
 { ... }: {
   home-manager.users.herobrine1st = { lib, ... }: with lib.hm.gvariant; {
     dconf.settings = {
-      "/org/gnome/shell/extensions/system-monitor/" = {
+      "org/gnome/shell/extensions/system-monitor" = {
         battery-display = false;
         battery-hidesystem = false;
         battery-show-menu = true;
