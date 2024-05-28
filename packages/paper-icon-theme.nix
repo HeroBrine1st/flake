@@ -20,7 +20,7 @@
       echo -n "Symlinking "
       ln -vs disk-utility.png "$(dirname "$file")/org.gnome.Terminal.png"
     done
-    # LibreOffice is  patched to use icons without "libreoffice" for whatever reason
+    # LibreOffice is patched to use icons without "libreoffice" for whatever reason
     for file in Paper/*/apps/libreoffice-{base,calc,chart,draw,impress,main,math,startcenter,writer}.*; do
       base="$(basename $file)"
       echo -n "Symlinking "
