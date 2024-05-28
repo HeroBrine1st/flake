@@ -15,12 +15,12 @@
         "uf77h-ptigu" = {
           label = "Secure";
           path = "/mnt/secure";
-          devices = [ "OPi5" "MOBILE-DCV5AQD" ];
+          devices = [ "OPi5" "DESKTOP-IJK2GUG" ];
         };
         "yb6rg-qs9gm" = {
           label = "Local Music";
           path = "/home/herobrine1st/Music/Main";
-          devices = [ "OPi5" "MOBILE-DCV5AQD" ];
+          devices = [ "OPi5" "DESKTOP-IJK2GUG" ];
         };
       };
     };
