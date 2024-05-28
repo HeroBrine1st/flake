@@ -57,6 +57,11 @@
     "/nix" = {
       neededForBoot = true;
     };
+    "/.fsroot" = {
+      device = "/dev/mapper/root";
+      fsType = "btrfs";
+      options = [ "defaults" "compress=zstd" "discard=async" "nofail" ];
+    };
   };
 
   hardware.enableRedistributableFirmware = true;
