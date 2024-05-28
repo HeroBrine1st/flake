@@ -76,6 +76,7 @@
         set show-all-if-ambiguous on
         set bell-style audible
       '';
+      ".face".source = ../../assets/avatar.png;
     };
 
     systemd.user = {
