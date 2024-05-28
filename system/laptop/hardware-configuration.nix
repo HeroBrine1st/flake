@@ -25,7 +25,6 @@
                 name = "root";
                 settings = {
                   allowDiscards = true;
-                  keyFile = "/tmp/root.key";
                 };
                 content = {
                   type = "btrfs";
