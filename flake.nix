@@ -79,6 +79,7 @@
           ./common/desktop/configuration.nix
           ./common/desktop/firejail.nix
 
+          ./common/desktop/users.nix
           ./common/desktop/home.nix
           ./common/desktop/dconf.nix
 
@@ -107,14 +108,17 @@
           ./common/desktop/configuration.nix
           ./common/desktop/firejail.nix
 
+          ./common/desktop/users.nix
           ./common/desktop/home.nix
           ./common/desktop/dconf.nix
 
-          ./system/laptop/syncthing.nix
-          ./system/laptop/users.nix
+          ./system/laptop/configuration.nix
+
           ./system/laptop/hardware-configuration.nix
           ./system/laptop/hardware-dconf.nix
           ./system/laptop/hardware-home.nix
+          ./system/laptop/impermanence.nix
+          ./system/laptop/syncthing.nix
         ];
       };
     };

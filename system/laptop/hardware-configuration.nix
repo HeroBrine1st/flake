@@ -37,10 +37,6 @@
                       mountpoint = "/nix";
                       mountOptions = [ "defaults" "compress=zstd" "discard=async" ];
                     };
-                    "@persistence" = {
-                      mountpoint = "/persistence";
-                      mountOptions = [ "defaults" "compress=zstd" "discard=async" ];
-                    };
                   };
                 };
               };
