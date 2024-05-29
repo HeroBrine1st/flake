@@ -45,6 +45,6 @@
 
     WEBHOOK=$(cat /etc/smartdwebhook)
 
-    curl --header "Content-Type: application/json"  --request POST --data "$body" --silent --show-error $WEBHOOK
+    curl --header "Content-Type: application/json"  --request POST --data "$body" --silent --show-error "$WEBHOOK"
   '';
 }
