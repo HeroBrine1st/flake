@@ -67,11 +67,11 @@
       DESKTOP-IJK2GUG = pkgs-unstable.lib.nixosSystem {
         specialArgs = {
           custom-pkgs = self.packages."x86_64-linux";
-          syncthing-devices = import ./const/syncthing-devices.nix;
         };
         modules = [
           home-manager.nixosModules.home-manager
           ./modules/wrappers.nix
+          ./modules/syncthing.nix
 
           ./common/unfree.nix
           ./common/cli-packages.nix
@@ -94,13 +94,13 @@
       MOBILE-DCV5AQD = pkgs-unstable.lib.nixosSystem {
         specialArgs = {
           custom-pkgs = self.packages."x86_64-linux";
-          syncthing-devices = import ./const/syncthing-devices.nix;
         };
         modules = [
           home-manager.nixosModules.home-manager
           disko.nixosModules.disko
           impermanence.nixosModules.impermanence
           ./modules/wrappers.nix
+          ./modules/syncthing.nix
 
           ./common/unfree.nix
           ./common/cli-packages.nix
