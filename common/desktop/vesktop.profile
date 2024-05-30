@@ -6,6 +6,7 @@ ignore dbus-system none
 whitelist /mnt/tmp
 blacklist /dev/snd
 
+mkdir ${HOME}/.config/vesktop
 whitelist ${HOME}/.config/vesktop
 
 include electron.profile
