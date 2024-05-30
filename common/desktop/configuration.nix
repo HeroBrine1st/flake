@@ -72,7 +72,7 @@
 
     # Extensions
     gnomeExtensions.control-blur-effect-on-lock-screen
-    gnomeExtensions.panel-corners # outdated, available on EGO
+    gnomeExtensions.panel-corners
     gnomeExtensions.primary-input-on-lockscreen
     gnomeExtensions.quick-settings-tweaker
     # gnomeExtensions.removable-drive-menu # somehow already available
