@@ -8,6 +8,7 @@
         compact-display = false;
         cpu-display = true;
         cpu-individual-cores = false;
+        cpu-show-menu = true;
         cpu-show-text = false;
         cpu-style = "digit";
         disk-display = false;
@@ -18,7 +19,7 @@
         fan-display = false;
         fan-fan0-color = "#f2002eff";
         fan-refresh-time = 1000;
-        fan-sensor-file = "/sys/class/hwmon/hwmon1/fan2_input";
+        fan-sensor-label = "nct6779 - 2";
         fan-show-menu = true;
         fan-show-text = false;
         fan-style = "digit";
@@ -43,7 +44,7 @@
         thermal-display = true;
         thermal-fahrenheit-unit = false;
         thermal-refresh-time = 1000;
-        thermal-sensor-file = "/sys/class/hwmon/hwmon1/temp1_input";
+        thermal-sensor-label = "nct6779 - TSI0_TEMP";
         thermal-show-text = false;
         thermal-style = "digit";
         thermal-threshold = 70;
