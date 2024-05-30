@@ -1,5 +1,4 @@
-# License restrictions
-
-All files in this directory are probably owned by someone else (except where noted). Known creators are:
-
 - avatar.png: [Full by Johis](https://www.furaffinity.net/view/29784146/)
+- no-mans-sky-atlas.png: By me
+- no-mans-sky-portal.png: [From reddit](https://www.reddit.com/r/NoMansSkyTheGame/comments/hq2mm3/i_love_how_photo_mode_looks_like_concept_art_some/)
+- elite-dangerous-anaconda-in-the-blizzard.png: [From reddit](https://www.reddit.com/r/EliteDangerous/comments/1d3bdqq/in_the_blizzard/)
