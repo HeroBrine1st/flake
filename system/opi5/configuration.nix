@@ -100,9 +100,6 @@ in
   virtualisation.docker.storageDriver = "btrfs";
   virtualisation.docker.daemon.settings = {
     dns = [ "1.1.1.1" ];
-    proxies = {
-      "http-proxy" = "http://127.0.0.1:5555";
-    };
   };
 
   # Open ports in the firewall.
