@@ -139,7 +139,7 @@
 
 
     # "Development"
-    android-studio android-tools
+    android-studio
     (jetbrains.idea-ultimate.overrideAttrs {
       version = "2022.3.3";
       src = fetchurl {
@@ -279,6 +279,9 @@
 
   programs.wireshark.enable = true;
   programs.wireshark.package = pkgs.wireshark;
+
+  programs.adb.enable = true;
+
 
   environment.sessionVariables = rec {
     NAUTILUS_4_EXTENSION_DIR = "/run/current-system/sw/lib/nautilus/extensions-4/";
