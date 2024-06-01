@@ -3,7 +3,7 @@
 
   inputs = {
     pkgs-unstable.url = "nixpkgs/nixos-unstable";
-    pkgs-stable.url = "nixpkgs/nixos-23.11";
+    pkgs-stable.url = "nixpkgs/nixos-24.05";
     pkgs-jetbrains-2022-3-3.url = "github:NixOS/nixpkgs?rev=f6aa4144d0c38231d8c383facf40f63b13759bb5";
     nixos-rk3588 = {
       url = "github:ryan4yin/nixos-rk3588?rev=c4fef04d8c124146e6e99138283e0c57b2ad8e29";
