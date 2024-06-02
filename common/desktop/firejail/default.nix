@@ -117,6 +117,10 @@
         executable = "${custom-pkgs.vesktop}/bin/vesktop";
         profile = "${./vesktop.profile}";
       };
+      tlauncher = {
+        executable = "${custom-pkgs.tlauncher}/bin/tlauncher";
+        profile = "${./tlauncher.profile}";
+      };
     };
   };
 }
