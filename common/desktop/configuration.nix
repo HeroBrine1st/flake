@@ -182,7 +182,7 @@
     steam
     osu-lazer-bin
     lutris
-    # TLauncher unavailable
+    custom-pkgs.tlauncher
     # CKAN not needed yet
     # protontricks not needed yet
     (pkgs.wrapOBS {

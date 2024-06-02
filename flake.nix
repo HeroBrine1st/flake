@@ -41,6 +41,7 @@
       bash-completion = pkgs.callPackage packages/bash-completion.nix {};
       vesktop = pkgs.callPackage packages/vesktop {};
       organise-files = pkgs.callPackage packages/organise-files.nix {};
+      tlauncher = pkgs.callPackage packages/tlauncher {};
     };
     nixosConfigurations = {
       opi5 = let
