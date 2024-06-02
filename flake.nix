@@ -79,7 +79,7 @@
           ./common/cli-packages.nix
 
           ./common/desktop/configuration.nix
-          ./common/desktop/firejail.nix
+          ./common/desktop/firejail
 
           ./common/desktop/users.nix
           ./common/desktop/home.nix
@@ -108,7 +108,7 @@
           ./common/cli-packages.nix
 
           ./common/desktop/configuration.nix
-          ./common/desktop/firejail.nix
+          ./common/desktop/firejail
 
           ./common/desktop/users.nix
           ./common/desktop/home.nix
