@@ -207,7 +207,14 @@
     bytecode-viewer
   ];
 
-  virtualisation.libvirtd.enable = true;
+  # https://github.com/NixOS/nixpkgs/issues/175202#issuecomment-1862686319
+  virtualisation.libvirtd = {
+    enable = true;
+    qemu.ovmf.packages = [
+      pkgs.pkgsCross.aarch64-multiplatform.OVMF.fd # AAVMF
+      pkgs.OVMF.fd
+    ];
+  };
 
   security.rtkit.enable = true;
   services.pipewire = {
