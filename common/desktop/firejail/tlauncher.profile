@@ -10,6 +10,7 @@ noblacklist ${HOME}/.tlauncher
 whitelist ${HOME}/.minecraft
 whitelist ${HOME}/.tlauncher
 
+# bwrap
 noblacklist /proc/sys/kernel/overflowuid
 noblacklist /proc/sys/kernel/overflowgid
 
@@ -36,6 +37,7 @@ novideo
 notv
 nou2f
 protocol unix,inet,inet6
+# bwrap
 seccomp !mount,!pivot_root,!umount2
 
 disable-mnt
