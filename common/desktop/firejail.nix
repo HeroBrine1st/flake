@@ -4,6 +4,8 @@
       blacklist /.fsroot
     '';
     "firejail/lutris.local".text = ''
+      ignore restrict-namespaces
+
       ignore mkdir ''${HOME}/Games
       ignore whitelist ''${HOME}/Games
       ignore whitelist ''${DOWNLOADS}
