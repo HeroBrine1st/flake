@@ -282,6 +282,7 @@
 
   programs.adb.enable = true;
 
+  programs.gnupg.agent.enable = true;
 
   environment.sessionVariables = rec {
     NAUTILUS_4_EXTENSION_DIR = "/run/current-system/sw/lib/nautilus/extensions-4/";
