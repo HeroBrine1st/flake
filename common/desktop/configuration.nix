@@ -163,7 +163,7 @@
       };
     })
     gcc cmake
-    arduino
+    arduino-ide
     jetbrains.rust-rover
     jetbrains.idea-community-bin
     (vscode-with-extensions.override {
