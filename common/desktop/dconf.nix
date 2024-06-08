@@ -64,6 +64,7 @@
         show-trash = false;
         show-icons-emblems = false;
         show-dock-urgent-notify = false;
+        running-indicator-style = "DOTS";
       };
 
       "org/gnome/shell/extensions/panel-corners" = {
