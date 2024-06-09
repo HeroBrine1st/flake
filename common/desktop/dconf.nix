@@ -292,6 +292,9 @@
       "org/gnome/GWeather4" = {
         temperature-unit = "centigrade";
       };
+      "org/gnome/TextEditor" = {
+        show-line-numbers = true;
+      };
     };
   };
 }
