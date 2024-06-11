@@ -33,7 +33,7 @@
     "/" = {
       device = "/dev/mapper/root";
       fsType = "btrfs";
-      options = [ "defaults" "compress=zstd" "discard=async" "subvol=@nix" ];
+      options = [ "defaults" "compress=zstd" "discard=async" "subvol=@" ];
     };
     "/boot" = {
       device = "/dev/disk/by-uuid/FC4D-3317";
@@ -47,7 +47,7 @@
     "/home" = {
       device = "/dev/mapper/root";
       fsType = "btrfs";
-      options = [ "defaults" "compress=zstd" "discard=async" "subvol=@home-nix" ];
+      options = [ "defaults" "compress=zstd" "discard=async" "subvol=@home" ];
     };
 #    "/var/cache" = {
 #      device = "/dev/mapper/root";
