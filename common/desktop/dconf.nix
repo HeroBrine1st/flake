@@ -295,7 +295,7 @@
       "org/gnome/TextEditor" = {
         show-line-numbers = true;
         indent-style = "space";
-        tab-width = 2;
+        tab-width = mkUint32 2;
       };
     };
   };
