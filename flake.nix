@@ -37,8 +37,6 @@
       spotify = pkgs.callPackage packages/spotify.nix {};
       pycharm-professional = jb.jetbrains.pycharm-professional;
       debounce-keyboard = pkgs.callPackage packages/debounce-keyboard {};
-      # https://github.com/scop/bash-completion/issues/1157
-      bash-completion = pkgs.callPackage packages/bash-completion.nix {};
       vesktop = pkgs.callPackage packages/vesktop {};
       organise-files = pkgs.callPackage packages/organise-files.nix {};
       tlauncher = pkgs.callPackage packages/tlauncher {};
