@@ -191,6 +191,7 @@
     gnome-connections # RDP client
     feishin
     bytecode-viewer
+    audacity
   ];
 
   virtualisation.libvirtd.enable = true;
