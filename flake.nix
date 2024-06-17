@@ -41,6 +41,11 @@
       organise-files = pkgs.callPackage packages/organise-files.nix {};
       tlauncher = pkgs.callPackage packages/tlauncher {};
     };
+    packages."aarch64-linux" = let
+      pkgs = import pkgs-unstable { system = "aarch64-linux"; };
+    in {
+      mesa-latest = pkgs.mesa;
+    };
     nixosConfigurations = {
       opi5 = let
         # using the same nixpkgs as nixos-rk3588 to utilize the cross-compilation cache.
@@ -55,6 +60,7 @@
               inherit system;
             };
           };
+          custom-pkgs = self.packages."aarch64-linux";
         };
 
         modules = [
