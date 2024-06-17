@@ -62,7 +62,6 @@
           ./system/opi5/configuration.nix
           ./common/cli-packages.nix
           ./system/opi5/hardware-configuration.nix
-          ./system/opi5/graphics.nix
         ];
       };
       DESKTOP-IJK2GUG = pkgs-unstable.lib.nixosSystem {
