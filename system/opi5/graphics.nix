@@ -1,6 +1,6 @@
 { pkgs, lib, ... }: {
   hardware.opengl.enable = true;
-  hardware.opengl.package = lib.mkForce pkgs.mesa.drivers;
+  hardware.opengl.package = lib.mkForce pkgs.mesa;
   environment.systemPackages = [
     pkgs.mesa-demos
   ];
