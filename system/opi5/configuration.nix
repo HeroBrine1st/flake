@@ -59,6 +59,7 @@ in
   services.openssh = {
     enable = true;
     settings = {
+      X11Forwarding = true;
       PermitRootLogin = "without-password";
       PasswordAuthentication = false;
       Macs = [
