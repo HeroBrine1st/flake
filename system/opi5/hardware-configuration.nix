@@ -92,7 +92,6 @@
 
   hardware.opengl.enable = true;
   hardware.opengl.package = lib.mkForce custom-pkgs.mesa-latest.drivers;
-  environment.systemPackages = [ custom-pkgs.mesa-demos ];
 
   services.udev.extraRules = ''
     KERNEL=="mpp_service", MODE="0660", GROUP="video"
