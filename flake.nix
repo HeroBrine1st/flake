@@ -46,7 +46,7 @@
         # using the same nixpkgs as nixos-rk3588 to utilize the cross-compilation cache.
         inherit (nixos-rk3588.inputs) nixpkgs;
         system = "aarch64-linux";
-      in pkgs-stable.lib.nixosSystem {
+      in pkgs-unstable.lib.nixosSystem {
         inherit system;
         specialArgs = {
           rk3588 = {
