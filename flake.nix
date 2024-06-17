@@ -45,6 +45,7 @@
       pkgs = import pkgs-unstable { system = "aarch64-linux"; };
     in {
       mesa-latest = pkgs.mesa;
+      mesa-demos = pkgs.mesa-demos;
     };
     nixosConfigurations = {
       opi5 = let
