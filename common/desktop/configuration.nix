@@ -133,7 +133,7 @@
         sha256 = "c302bd84b48a56ef1b0f033e8e93a0da5590f80482eae172db6130da035314a6";
       };
     })
-    custom-pkgs.pycharm-professional
+    jetbrains.pycharm-community-bin
     (jetbrains.webstorm.overrideAttrs {
       version = "2022.3.4";
       src = fetchurl {
