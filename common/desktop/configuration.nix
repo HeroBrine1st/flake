@@ -261,6 +261,12 @@
           "${pkgs.jetbrains.idea-community-bin}/bin/idea-community"
         ];
       };
+      "pycharm-community" = {
+        cmdline = [
+          "${pkgs.callPackage ../../packages/pycharm-fhs-env.nix {}}/bin/pycharm-fhs-env"
+          "${pkgs.jetbrains.pycharm-community-bin}/bin/pycharm-community"
+        ];
+      };
     };
   };
 
