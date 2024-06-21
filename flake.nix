@@ -124,6 +124,8 @@
           ./system/laptop/hardware-home.nix
           ./system/laptop/impermanence.nix
           ./system/laptop/syncthing.nix
+
+          ./system/laptop/lanzaboote.nix
         ];
       };
     };
