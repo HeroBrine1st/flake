@@ -37,6 +37,7 @@
         "video/x-matroska" = ["vlc.desktop"];
         "text/plain" = ["org.gnome.TextEditor.desktop"];
         "video/webm"=["vlc.desktop"];
+        "audio/flac"=["mpv.desktop"];
       };
       associations.added = {
         "x-scheme-handler/http" = ["firefox.desktop"];
@@ -59,6 +60,7 @@
         "video/x-matroska" = ["vlc.desktop"];
         "text/plain" = ["org.gnome.TextEditor.desktop"];
         "video/webm"=["vlc.desktop"];
+        "audio/flac"=["mpv.desktop"];
       };
     };
 
