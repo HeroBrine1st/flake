@@ -21,9 +21,13 @@
       };
     };
     impermanence.url = "github:nix-community/impermanence";
+    lanzaboote = {
+      url = "github:nix-community/lanzaboote/v0.4.1";
+      inputs.nixpkgs.follows = "pkgs-unstable";
+    };
   };
 
-  outputs = { self, pkgs-unstable, pkgs-stable, nixos-rk3588, pkgs-jetbrains-2022-3-3, home-manager, disko, impermanence, ... }: {
+  outputs = { self, pkgs-unstable, pkgs-stable, nixos-rk3588, pkgs-jetbrains-2022-3-3, home-manager, disko, impermanence, lanzaboote, ... }: {
     packages."x86_64-linux" = let
       pkgs = import pkgs-unstable {
         system = "x86_64-linux";
@@ -99,6 +103,7 @@
           home-manager.nixosModules.home-manager
           disko.nixosModules.disko
           impermanence.nixosModules.impermanence
+          lanzaboote.nixosModules.lanzaboote
           ./modules/wrappers.nix
           ./modules/syncthing.nix
 
