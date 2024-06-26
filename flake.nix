@@ -109,6 +109,7 @@
           lanzaboote.nixosModules.lanzaboote
           ./modules/wrappers.nix
           ./modules/syncthing.nix
+          ./modules/nebula.nix
 
           ./common/unfree.nix
           ./common/cli-packages.nix
