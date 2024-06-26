@@ -1,8 +1,10 @@
 { config, lib, ... }: let
   hostname = config.networking.hostName;
   ipMap = {
+    # /24
     "DESKTOP-IJK2GUG" = "10.168.88.254";
     "opi5" = "10.168.88.72";
+    "lynx" = "10.168.88.153";
   };
   staticHosts = {
     "10.168.88.72" = ["109.106.137.208:4242"]; # opi5
