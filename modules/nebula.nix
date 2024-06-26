@@ -36,6 +36,6 @@ in {
     lighthouses = lib.mkIf (!isStatic) (builtins.attrNames staticHosts);
 
     isLighthouse = isStatic;
-#    isRelay = isStatic;
+    isRelay = isStatic;
   };
 }
