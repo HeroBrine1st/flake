@@ -8,7 +8,7 @@
     "MOBILE-DCV5AQD" = "10.168.88.96";
   };
   staticHosts = {
-    "10.168.88.72" = ["109.106.137.208:4242"]; # opi5
+    "10.168.88.72" = ["192.168.88.72:4242" "109.106.137.208:4242"]; # opi5
   };
   isStatic = builtins.hasAttr (ipMap."${hostname}") staticHosts;
 in {
