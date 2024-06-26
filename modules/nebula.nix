@@ -36,6 +36,7 @@ in {
     # remove current machine from list
     staticHostMap = builtins.removeAttrs staticHosts [ ipMap."${hostname}" ];
     lighthouses = lib.mkIf (!isStatic) (builtins.attrNames staticHosts);
+    relays = lib.mkIf (!isStatic) (builtins.attrNames staticHosts);
 
     isLighthouse = isStatic;
     isRelay = isStatic;
