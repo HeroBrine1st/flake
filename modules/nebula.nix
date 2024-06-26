@@ -25,7 +25,7 @@ in {
       {
         host = "any";
         port = "any";
-        proto = "icmp";
+        proto = if isStatic then "any" else "icmp";
       }
     ];
 
