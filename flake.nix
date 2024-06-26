@@ -63,6 +63,8 @@
 
         modules = [
           nixos-rk3588.nixosModules.orangepi5.core
+          ./modules/nebula.nix
+
           ./system/opi5/configuration.nix
           ./common/cli-packages.nix
           ./system/opi5/hardware-configuration.nix
@@ -76,6 +78,7 @@
           home-manager.nixosModules.home-manager
           ./modules/wrappers.nix
           ./modules/syncthing.nix
+          ./modules/nebula.nix
 
           ./common/unfree.nix
           ./common/cli-packages.nix
