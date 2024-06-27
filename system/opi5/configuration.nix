@@ -88,14 +88,14 @@ in
   };
 
   services.cron = {
-    enable = true;
+    enable = false; # TODO enable back
     systemCronJobs = [
       "*/15 * * * * root . /etc/profile; /home/herobrine1st/Docker/grafana/grafanaTask.sh 2>&1 > /root/grafanaTask.log"
     ];
   };
 
-  virtualisation.docker.enable = true;
-  virtualisation.docker.enableOnBoot = true;
+  virtualisation.docker.enable = false; # TODO enable back
+  virtualisation.docker.enableOnBoot = false; # TODO enable back
   virtualisation.docker.liveRestore = false;
   virtualisation.docker.storageDriver = "btrfs";
   virtualisation.docker.daemon.settings = {
