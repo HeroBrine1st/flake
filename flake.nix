@@ -63,7 +63,7 @@
 
         modules = [
           nixos-rk3588.nixosModules.orangepi5.core
-          ./modules/nebula.nix
+          ./modules/nebula
 
           ./system/opi5/configuration.nix
           ./common/cli-packages.nix
@@ -78,7 +78,7 @@
           home-manager.nixosModules.home-manager
           ./modules/wrappers.nix
           ./modules/syncthing.nix
-          ./modules/nebula.nix
+          ./modules/nebula
 
           ./common/unfree.nix
           ./common/cli-packages.nix
@@ -95,6 +95,7 @@
           ./system/pc/hardware-configuration.nix
           ./system/pc/hardware-dconf.nix
           ./system/pc/hardware-home.nix
+          ./system/pc/impermanence.nix
           ./system/pc/hardware-mitigations.nix
         ];
       };
@@ -109,7 +110,7 @@
           lanzaboote.nixosModules.lanzaboote
           ./modules/wrappers.nix
           ./modules/syncthing.nix
-          ./modules/nebula.nix
+          ./modules/nebula
 
           ./common/unfree.nix
           ./common/cli-packages.nix
