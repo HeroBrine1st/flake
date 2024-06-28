@@ -6,9 +6,13 @@
     "opi5" = "10.168.88.72";
     "lynx" = "10.168.88.153";
     "MOBILE-DCV5AQD" = "10.168.88.96";
+    "stark-feeling" = "10.168.88.25";
+    "defiant-canvas" = "10.168.88.57";
   };
   staticHosts = [
     "opi5"
+    "stark-feeling"
+    "defiant-canvas"
   ];
   isStatic = builtins.elem hostname staticHosts;
 in {
