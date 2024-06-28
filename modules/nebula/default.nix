@@ -40,7 +40,14 @@ in {
       {
         host = "any";
         port = "any";
-        proto = if isStatic then "any" else "icmp";
+        proto = "icmp";
+      }
+    ] ++ lib.optionals isStatic [
+      {
+        host = "any";
+        port = "any";
+        proto = "any";
+        group = "entryhost"; # entrypoint + host = entryhost
       }
     ];
 
