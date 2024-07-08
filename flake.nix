@@ -77,6 +77,7 @@
         };
         modules = [
           home-manager.nixosModules.home-manager
+          impermanence.nixosModules.impermanence
           ./modules/wrappers.nix
           ./modules/syncthing.nix
           ./modules/nebula
