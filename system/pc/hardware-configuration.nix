@@ -8,7 +8,7 @@
 
   boot = {
     kernelModules = [ "kvm-amd" "lm75" "nct6775" ];
-    kernelParams = [ "nvidia-drm.fbdev=1" ];
+    kernelParams = [ "nvidia-drm.fbdev=1" "nvidia.NVreg_EnableGpuFirmware=0" ];
     loader = {
       systemd-boot.enable = true;
       systemd-boot.consoleMode = "auto";
