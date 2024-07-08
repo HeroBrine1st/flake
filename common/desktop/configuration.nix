@@ -54,7 +54,7 @@
     nodejs
     jetbrains-mono
 
-    gnome.gnome-themes-extra # Adwaita-dark
+    gnome-themes-extra # Adwaita-dark
 
     # Extensions
     gnomeExtensions.control-blur-effect-on-lock-screen
@@ -73,8 +73,8 @@
     (callPackage ../../packages/arc-x-icons.nix {})
 
     # Dash
-    gnome.gnome-terminal
-    gnome.nautilus
+    gnome-terminal
+    nautilus
     firefox-bin
     custom-pkgs.vesktop
     element-desktop
@@ -82,7 +82,7 @@
 
     # "Personal"
     gnome.gnome-weather
-    gnome.gnome-calendar
+    gnome-calendar
     gnome.gnome-clocks
     gnome.gnome-maps
     xournalpp
@@ -91,12 +91,12 @@
     # "System maintenance"
     gnome.gnome-control-center
     # timeshift pointless
-    gnome.gnome-system-monitor
+    gnome-system-monitor
     # opentabletdriver inferred
     # gnome-extensions inferred from gnome-shell
     pavucontrol
     # grub-customizer not needed
-    gnome.gnome-tweaks
+    gnome-tweaks
     # nvidia x server settings inferred
     gnome.gnome-logs
     helvum
@@ -105,16 +105,16 @@
     # "Media"
     gthumb
     vlc
-    gnome.totem
+    totem # gnome
     picard
     mpv
     handbrake
 
     # "Utilities"
-    gnome.gnome-disk-utility
-    gnome.gnome-calculator
+    gnome-disk-utility
+    gnome-calculator
     baobab # Disk Usage Analyzer
-    gnome.file-roller
+    file-roller
     gparted
     evince # GNOME Document Viewer
     gnome-text-editor
@@ -180,12 +180,12 @@
     # "Security"
     veracrypt
     keepassxc
-    gnome.seahorse
+    seahorse # gnome
     # windscribe unavailable
 
     # Other desktop applications
     ungoogled-chromium
-    gnome.dconf-editor
+    dconf-editor
     winbox
     ventoy
     gnome-connections # RDP client
