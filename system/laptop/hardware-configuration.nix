@@ -55,7 +55,7 @@
               content = {
                 type = "luks";
                 name = "extra";
-                passwordFile = "/nix/persist/extra.key";
+                passwordFile = "/nix/persist/password/extra.key";
                 settings = {
                   allowDiscards = true;
                 };
