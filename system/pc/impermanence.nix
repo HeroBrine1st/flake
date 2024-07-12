@@ -12,6 +12,7 @@
       "/var/lib/AccountsService" # TODO there are only two files there and none of them are secret
       { directory = "/var/lib/colord"; user = "colord"; group = "colord"; mode = "u=rwx,g=rx,o="; }
       { directory = "/mnt/secure"; user = "herobrine1st"; group = "users"; }
+      "/var/lib/libvirt"
     ];
     files = [
       "/etc/machine-id"
