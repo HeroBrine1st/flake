@@ -35,7 +35,7 @@ in {
           devices = lib.lists.remove hostname [ "OPi5" "MOBILE-DCV5AQD" "DESKTOP-IJK2GUG" ];
         };
         "f665p-sm9kf" = let
-          devices = [ "MOBILE-DCV5AQD" "DESKTOP-IJK2GUG" ];
+          devices = [ "MOBILE-DCV5AQD" "DESKTOP-IJK2GUG" "lynx"];
           enabled = builtins.elem hostname devices;
         in lib.mkIf enabled {
           label = "Notes";
