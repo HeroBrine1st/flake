@@ -14,6 +14,7 @@
       id = "3HCNB6K-LJN74OU-TVIZNB4-RBWZA7T-JRPIMTW-6ZK5BRS-2WJEB5V-5AEVGQD";
     };
   } [ config.networking.hostName ];
+  hostname = config.networking.hostName;
 in {
   services.syncthing = {
     user = "herobrine1st";
@@ -26,12 +27,20 @@ in {
         "uf77h-ptigu" = {
           label = "Secure";
           path = "/mnt/secure";
-          devices = lib.lists.remove config.networking.hostName [ "OPi5" "MOBILE-DCV5AQD" "DESKTOP-IJK2GUG" ];
+          devices = lib.lists.remove hostname [ "OPi5" "MOBILE-DCV5AQD" "DESKTOP-IJK2GUG" ];
         };
         "yb6rg-qs9gm" = {
           label = "Local Music";
           path = "/home/herobrine1st/Music/Main";
-          devices = lib.lists.remove config.networking.hostName [ "OPi5" "MOBILE-DCV5AQD" "DESKTOP-IJK2GUG" ];
+          devices = lib.lists.remove hostname [ "OPi5" "MOBILE-DCV5AQD" "DESKTOP-IJK2GUG" ];
+        };
+        "f665p-sm9kf" = let
+          devices = [ "MOBILE-DCV5AQD" "DESKTOP-IJK2GUG" ];
+          enabled = builtins.elem hostname devices;
+        in lib.mkIf enabled {
+          label = "Notes";
+          path = "/home/herobrine1st/Documents/Notes";
+          devices = lib.lists.remove hostname devices;
         };
       };
     };
