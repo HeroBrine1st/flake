@@ -44,37 +44,12 @@
           };
         };
       };
-      extra = {
-        type = "disk";
-        device = "/dev/sda";
-        content = {
-          type = "gpt";
-          partitions = {
-            root = {
-              size = "100%";
-              content = {
-                type = "luks";
-                name = "extra";
-                passwordFile = "/nix/persist/password/extra.key";
-                settings = {
-                  allowDiscards = true;
-                };
-                content = {
-                  type = "btrfs";
-                  subvolumes = {
-                    "@user" = {
-                      mountpoint = "/mnt/extra";
-                      mountOptions = [ "defaults" "compress=zstd" "discard=async" ];
-                    };
-                  };
-                };
-              };
-            };
-          };
-        };
-      };
     };
   };
+
+  environment.etc.crypttab.text = ''
+    extra PARTLABEL=EXTRA /nix/persist/password/extra.key allow-discards,nofail
+  '';
 
   fileSystems = {
     "/" = {
@@ -89,6 +64,11 @@
       device = "/dev/mapper/root";
       fsType = "btrfs";
       options = [ "defaults" "compress=zstd" "discard=async" "nofail" ];
+    };
+    "/mnt/extra" = {
+      device = "/dev/mapper/extra";
+      fsType = "btrfs";
+      options = [ "defaults" "compress=zstd" "discard=async" "subvol=@user" "nofail" ];
     };
     "/mnt/extra/.fsroot" = {
       device = "/dev/mapper/extra";
