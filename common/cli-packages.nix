@@ -29,6 +29,10 @@
     unzip
     file
     pv
+    
+    speedtest-cli
+    pwgen
+    dig
   ];
 
   programs.nano.nanorc = ''
