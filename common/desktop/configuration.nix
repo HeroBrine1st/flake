@@ -6,6 +6,7 @@
   boot.tmp.useTmpfs = true;
 
   boot.kernelPackages = pkgs.linuxPackages_latest;
+  boot.blacklistedKernelModules = [ "hid_nintendo" ];
 
   nix = {
     settings = {
