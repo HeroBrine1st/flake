@@ -8,7 +8,7 @@
     "webstorm"
     "clion"
     "rust-rover"
-    "steam" "steam-original"
+    "steam" "steam-original" "steam-run"
     "osu-lazer-bin"
     "veracrypt"
     "code" "vscode"
