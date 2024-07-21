@@ -35,7 +35,7 @@
         thermal-display = true;
         thermal-refresh-time = 1000;
         thermal-sensor-file = "/sys/class/hwmon/hwmon4/temp1_input";
-        thermal-sensor-label = "acpitz - 1";
+        thermal-sensor-label = "k10temp - Tctl";
         thermal-show-menu = true;
         thermal-show-text = false;
         thermal-style = "digit";
