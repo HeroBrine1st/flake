@@ -102,7 +102,9 @@
     enable32Bit = true;
     extraPackages = with pkgs; [
       rocmPackages.clr.icd # OpenCL
+      amdvlk
     ];
+    extraPackages32 = [ pkgs.driversi686Linux.amdvlk ];
   };
 
   services.xserver.videoDrivers = [ "amdgpu" ];
