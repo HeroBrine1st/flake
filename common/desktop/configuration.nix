@@ -166,7 +166,7 @@
     libreoffice-fresh
 
     # "Games"
-    steam
+    # steam inferred by programs.steam.enable = true
     osu-lazer-bin
     lutris
     custom-pkgs.tlauncher
@@ -277,6 +277,7 @@
   programs.adb.enable = true;
 
   programs.gnupg.agent.enable = true;
+  programs.steam.enable = true;
 
   environment.sessionVariables = rec {
     NAUTILUS_4_EXTENSION_DIR = "/run/current-system/sw/lib/nautilus/extensions-4/";
