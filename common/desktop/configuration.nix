@@ -275,6 +275,7 @@
   programs.gnupg.agent.enable = true;
   programs.steam = {
     enable = true;
+    extest.enable = true;
     localNetworkGameTransfers.openFirewall = true;
   };
 
