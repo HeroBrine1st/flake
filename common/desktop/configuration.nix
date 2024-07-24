@@ -273,7 +273,10 @@
   programs.adb.enable = true;
 
   programs.gnupg.agent.enable = true;
-  programs.steam.enable = true;
+  programs.steam = {
+    enable = true;
+    localNetworkGameTransfers.openFirewall = true;
+  };
 
   environment.sessionVariables = rec {
     NAUTILUS_4_EXTENSION_DIR = "/run/current-system/sw/lib/nautilus/extensions-4/";
