@@ -231,8 +231,13 @@
     trustedInterfaces = [
       "sing-box-tun"
     ];
-    allowedTCPPorts = [ 8384 22000 8080 ];
-    allowedUDPPorts = [ 22000 21027 ];
+    allowedTCPPorts = [ 
+      22000 # syncthing
+      8080 # idk
+    ];
+    allowedUDPPorts = [ 
+      22000 21027 # syncthing
+    ];
     allowedTCPPortRanges = [
       { from = 1714; to = 1764; } # KDE Connect
     ];
