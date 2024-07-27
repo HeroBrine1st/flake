@@ -135,6 +135,16 @@
           ./system/laptop/lanzaboote.nix
         ];
       };
+
+      unite-shell-debug-vm = pkgs-unstable.lib.nixosSystem {
+        specialArgs = {
+          custom-pkgs = self.packages."x86_64-linux";
+        };
+        modules = [
+          home-manager.nixosModules.home-manager
+          ./system/unite-shell-debug-vm/configuration.nix
+        ];
+      };
     };
     devShells."x86_64-linux" = let
       pkgs = import pkgs-unstable { system = "x86_64-linux"; };
