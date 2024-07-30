@@ -92,7 +92,7 @@
     # nvidia x server settings inferred
     gnome.gnome-logs
     helvum
-    easyeffects
+    # easyeffects can't pass tests
 
     # "Media"
     gthumb
