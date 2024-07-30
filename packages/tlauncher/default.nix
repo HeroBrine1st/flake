@@ -20,7 +20,6 @@
       giflib
       glib
       gnome2.GConf
-      gnome2.gnome_vfs
       gtk2
       libjpeg
       libGL
