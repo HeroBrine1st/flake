@@ -159,9 +159,7 @@
     package = config.boot.kernelPackages.nvidiaPackages.stable;
   };
 
-  # Deprecated without full support for replacement
-  # Replace with hardware.nvidia-container-toolkit.enable = true; when there's info about CDI in compose
-  virtualisation.docker.enableNvidia = true;
+  hardware.nvidia-container-toolkit.enable = true;
 
   boot.extraModprobeConfig = ''
     options nvidia NVreg_TemporaryFilePath=/var/tmp
