@@ -33,16 +33,14 @@
 
   i18n = {
     defaultLocale = "en_GB.UTF-8";
-#    supportedLocales = [
-#      "en_GB.UTF-8/UTF-8"
-#      "ru_RU.UTF-8/UTF-8"
-#    ];
+    supportedLocales = [
+      "en_GB.UTF-8/UTF-8"
+      "ru_RU.UTF-8/UTF-8"
+    ];
   };
 
   environment.systemPackages = with pkgs; [
     mangohud
-    gamescope
-    gamemode
     nodejs
     jetbrains-mono
 
@@ -277,6 +275,11 @@
     enable = true;
     extest.enable = true;
     localNetworkGameTransfers.openFirewall = true;
+  };
+  programs.gamemode.enable = true;
+  programs.gamescope = {
+    enable = true;
+    capSysNice = true;
   };
 
   environment.sessionVariables = rec {
