@@ -159,8 +159,8 @@
     package = config.boot.kernelPackages.nvidiaPackages.stable;
   };
 
-  # Deprecated without a replacement (https://github.com/NixOS/nixpkgs/blob/nixpkgs-unstable/nixos/modules/virtualisation/docker.nix#L257-L262)
-  # Replace with hardware.nvidia-container-toolkit.enable = true; when docker 25 arrives
+  # Deprecated without full support for replacement
+  # Replace with hardware.nvidia-container-toolkit.enable = true; when there's info about CDI in compose
   virtualisation.docker.enableNvidia = true;
 
   boot.extraModprobeConfig = ''
