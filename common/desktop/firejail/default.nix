@@ -106,11 +106,11 @@
         profile = "${pkgs.firejail}/etc/firejail/spotify.profile";
       };
       steam = {
-        executable = "${pkgs.steam}/bin/steam";
+        executable = "${config.programs.steam.package}/bin/steam";
         profile = "${pkgs.firejail}/etc/firejail/steam.profile";
       };
       steam-runtime = {
-        executable = "${pkgs.steam}/bin/steam-runtime";
+        executable = "${config.programs.steam.package}/bin/steam-runtime";
         profile = "${pkgs.firejail}/etc/firejail/steam.profile";
       };
       vesktop = {
