@@ -277,10 +277,7 @@
     localNetworkGameTransfers.openFirewall = true;
   };
   programs.gamemode.enable = true;
-  programs.gamescope = {
-    enable = true;
-    capSysNice = true;
-  };
+  programs.gamescope.enable = true;
 
   environment.sessionVariables = rec {
     NAUTILUS_4_EXTENSION_DIR = "/run/current-system/sw/lib/nautilus/extensions-4/";
