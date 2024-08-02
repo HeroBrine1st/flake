@@ -273,6 +273,9 @@
   programs.gnupg.agent.enable = true;
   programs.steam = {
     enable = true;
+    package = pkgs.steam.override {
+      extraBwrapArgs = [ "--ro-bind /etc/egl /etc/egl" ];
+    };
     extest.enable = true;
     localNetworkGameTransfers.openFirewall = true;
   };
