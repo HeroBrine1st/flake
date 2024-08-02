@@ -78,6 +78,7 @@
       whitelist /mnt/extra/Steam
 
       caps.keep sys_nice
+      deterministic-shutdown
       join-or-start steam
 
       # Factorio
