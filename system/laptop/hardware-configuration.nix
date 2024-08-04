@@ -1,47 +1,18 @@
 { config, lib, pkgs, ... }: {
-
-  disko.devices = {
-    disk = {
-      system = {
-        type = "disk";
-        device = "/dev/nvme0n1";
-        content = {
-          type = "gpt";
-          partitions = {
-            esp = {
-              size = "512M";
-              type = "EF00";
-              content = {
-                type = "filesystem";
-                format = "vfat";
-                mountpoint = "/boot";
-                mountOptions = [ "defaults" ];
-              };
-            };
-            root = {
-              size = "100%";
-              content = {
-                type = "luks";
-                name = "root";
-                settings = {
-                  allowDiscards = true;
-                };
-                content = {
-                  type = "btrfs";
-                  subvolumes = {
-                    "@home" = {
-                      mountpoint = "/home";
-                      mountOptions = [ "defaults" "compress=zstd" "discard=async" ];
-                    };
-                    "@nix" = {
-                      mountpoint = "/nix";
-                      mountOptions = [ "defaults" "compress=zstd" "discard=async" ];
-                    };
-                  };
-                };
-              };
-            };
-          };
+  boot = {
+    kernelModules = [ "kvm-amd" ];
+    loader = {
+      systemd-boot.enable = true;
+      systemd-boot.consoleMode = "auto";
+      efi.canTouchEfiVariables = true;
+    };
+    initrd = {
+      availableKernelModules = [ "nvme" "xhci_pci" "rtsx_usb_sdmmc" ];
+      kernelModules = [ "amdgpu" ];
+      luks.devices = {
+        "root" = {
+          device = "/dev/disk/by-uuid/1b1c44b5-cca0-42dc-a6ab-94f8e49b0617";
+          allowDiscards = true;
         };
       };
     };
@@ -58,12 +29,24 @@
       options = [ "defaults" "size=25%" "mode=755" ];
     };
     "/nix" = {
+      device = "/dev/mapper/root";
+      fsType = "btrfs";
+      options = [ "defaults" "compress=zstd" "discard=async" "subvol=@nix" ];
       neededForBoot = true;
+    };
+    "/boot" = {
+      device = "/dev/disk/by-uuid/16B4-C9D3";
+      fsType = "vfat";
     };
     "/.fsroot" = {
       device = "/dev/mapper/root";
       fsType = "btrfs";
-      options = [ "defaults" "compress=zstd" "discard=async" "nofail" ];
+      options = [ "defaults" "compress=zstd" "discard=async" ];
+    };
+    "/home" = {
+      device = "/dev/mapper/root";
+      fsType = "btrfs";
+      options = [ "defaults" "compress=zstd" "discard=async" "subvol=@home" ];
     };
     "/mnt/extra" = {
       device = "/dev/mapper/extra";
@@ -78,19 +61,6 @@
   };
 
   hardware.enableRedistributableFirmware = true;
-
-  boot = {
-    kernelModules = [ "kvm-amd" ];
-    loader = {
-      systemd-boot.enable = true;
-      systemd-boot.consoleMode = "auto";
-      efi.canTouchEfiVariables = true;
-    };
-    initrd = {
-      availableKernelModules = [ "nvme" "xhci_pci" "rtsx_usb_sdmmc" ];
-      kernelModules = [ "amdgpu" ];
-    };
-  };
 
   networking.hostName = "MOBILE-DCV5AQD";
   networking.networkmanager.enable = true;

@@ -107,7 +107,6 @@
         };
         modules = [
           home-manager.nixosModules.home-manager
-          disko.nixosModules.disko
           impermanence.nixosModules.impermanence
           lanzaboote.nixosModules.lanzaboote
           ./modules/wrappers.nix
