@@ -276,7 +276,7 @@
     package = pkgs.steam.override {
       extraBwrapArgs = [ "--ro-bind-try /etc/egl /etc/egl" ];
     };
-    extest.enable = true;
+    #extest.enable = true;
     localNetworkGameTransfers.openFirewall = true;
   };
   programs.gamemode.enable = true;
