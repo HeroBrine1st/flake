@@ -89,6 +89,11 @@
       fsType = "btrfs";
       options = [ "defaults" "compress=zstd" "autodefrag"  "nofail" "subvol=@movies" ];
     };
+    "/mnt/basic/.docker_data" = {
+      device = "/dev/mapper/basic";
+      fsType = "btrfs";
+      options = [ "defaults" "compress=zstd" "autodefrag"  "nofail" "subvol=@docker_data" ];
+    };
     "/mnt/basic/.fsroot" = {
       device = "/dev/mapper/basic";
       fsType = "btrfs";
