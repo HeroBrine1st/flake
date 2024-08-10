@@ -32,7 +32,7 @@ in {
         "yb6rg-qs9gm" = {
           label = "Local Music";
           path = "/home/herobrine1st/Music/Main";
-          devices = lib.lists.remove hostname [ "OPi5" "MOBILE-DCV5AQD" "DESKTOP-IJK2GUG" ];
+          devices = lib.lists.remove hostname [ "OPi5" "MOBILE-DCV5AQD" "DESKTOP-IJK2GUG" "lynx" ];
         };
         "f665p-sm9kf" = let
           devices = [ "MOBILE-DCV5AQD" "DESKTOP-IJK2GUG" "lynx"];
