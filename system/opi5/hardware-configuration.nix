@@ -82,22 +82,22 @@
     "/mnt/basic" = {
       device = "/dev/mapper/basic";
       fsType = "btrfs";
-      options = [ "defaults" "compress=zstd" "autodefrag"  "nofail" "subvol=@" ];
+      options = [ "defaults" "compress=zstd" "autodefrag" "nofail" "noatime" "subvol=@" ];
     };
     "/mnt/basic/Downloads/Movies" = {
       device = "/dev/mapper/basic";
       fsType = "btrfs";
-      options = [ "defaults" "compress=zstd" "autodefrag"  "nofail" "subvol=@movies" ];
+      options = [ "defaults" "compress=zstd" "autodefrag" "nofail" "noatime" "subvol=@movies" ];
     };
     "/mnt/basic/.docker_data" = {
       device = "/dev/mapper/basic";
       fsType = "btrfs";
-      options = [ "defaults" "compress=zstd" "autodefrag"  "nofail" "subvol=@docker_data" ];
+      options = [ "defaults" "compress=zstd" "autodefrag" "nofail" "noatime" "subvol=@docker_data" ];
     };
     "/mnt/basic/.fsroot" = {
       device = "/dev/mapper/basic";
       fsType = "btrfs";
-      options = [ "defaults" "compress=zstd" "autodefrag"  "nofail" ];
+      options = [ "defaults" "compress=zstd" "autodefrag" "nofail" "noatime" ];
     };
   };
 
