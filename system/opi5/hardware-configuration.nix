@@ -29,6 +29,11 @@
     };
   };
 
+  environment.etc.crypttab.text = ''
+    basic PARTLABEL=BASIC /etc/keyfile/basic.key nofail
+  '';
+
+
   fileSystems = {
     "/" = {
       device = "/dev/mapper/root";
@@ -75,9 +80,14 @@
       options = [ "defaults" "compress=zstd" "discard=async" "subvol=@docker_data" ];
     };
     "/mnt/basic" = {
-      device = "/dev/disk/by-uuid/1f0da7fa-b215-4d25-9d57-a91744a5589c";
-      fsType = "ext4";
-      options = [ "defaults" "nofail" ];
+      device = "/dev/mapper/basic";
+      fsType = "btrfs";
+      options = [ "defaults" "compress=zstd" "autodefrag"  "nofail" "subvol=@" ];
+    };
+    "/mnt/basic/.fsroot" = {
+      device = "/dev/mapper/basic";
+      fsType = "btrfs";
+      options = [ "defaults" "compress=zstd" "autodefrag"  "nofail" ];
     };
   };
 
