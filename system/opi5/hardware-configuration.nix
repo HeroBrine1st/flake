@@ -84,6 +84,11 @@
       fsType = "btrfs";
       options = [ "defaults" "compress=zstd" "autodefrag"  "nofail" "subvol=@" ];
     };
+    "/mnt/basic/Downloads/Movies" = {
+      device = "/dev/mapper/basic";
+      fsType = "btrfs";
+      options = [ "defaults" "compress=zstd" "autodefrag"  "nofail" "subvol=@movies" ];
+    };
     "/mnt/basic/.fsroot" = {
       device = "/dev/mapper/basic";
       fsType = "btrfs";
