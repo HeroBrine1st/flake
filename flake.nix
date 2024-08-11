@@ -92,6 +92,8 @@
           ./common/desktop/home.nix
           ./common/desktop/dconf.nix
 
+          ./common/desktop/hyprland.nix          
+
           ./system/pc/syncthing.nix
           ./system/pc/users.nix
           ./system/pc/hardware-configuration.nix
