@@ -2,7 +2,7 @@
   environment.systemPackages = with pkgs; [
     nano
     wget
-    curl
+    curlHTTP3
     hdparm
     smartmontools
     docker-compose
