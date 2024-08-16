@@ -1,0 +1,35 @@
+--- a/bdfr/resource.py	2024-08-16 16:44:54.409866460 +0300
++++ b/bdfr/resource.py	2024-08-16 18:02:40.442105001 +0300
+@@ -8,7 +8,9 @@
+ import urllib.parse
+ from collections.abc import Callable
+ from typing import Optional
++from urllib.parse import urlparse
+
++import fnmatch
+ import _hashlib
+ import requests
+ from praw.models import Submission
+@@ -60,7 +62,14 @@
+
+     @staticmethod
+     def http_download(url: str, download_parameters: dict) -> Optional[bytes]:
+-        headers = download_parameters.get("headers")
++        domain = urlparse(url).hostname
++        if fnmatch.fnmatch(domain, "*.imgur.com"):
++            headers = {
++                "user-agent": "curl/8.1.1",
++                "accept": "*/*"
++            }
++        else:
++            headers = download_parameters.get("headers")
+         current_wait_time = 60
+         if "max_wait_time" in download_parameters:
+             max_wait_time = download_parameters["max_wait_time"]
+@@ -84,4 +93,4 @@
+                     current_wait_time += 60
+                 else:
+                     logger.error(f"Max wait time exceeded for resource at url {url}")
+-                    raise
++                    raise
+\ No newline at end of file
