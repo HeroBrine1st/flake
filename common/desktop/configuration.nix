@@ -182,6 +182,7 @@
     feishin
     bytecode-viewer
     audacity
+    lrcget
   ];
 
   virtualisation.libvirtd.enable = true;
