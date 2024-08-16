@@ -116,28 +116,11 @@
 
     # "Development"
     android-studio
-    (jetbrains.idea-ultimate.overrideAttrs {
-      version = "2022.3.3";
-      src = fetchurl {
-        url = "https://download.jetbrains.com/idea/ideaIU-2022.3.3.tar.gz";
-        sha256 = "c302bd84b48a56ef1b0f033e8e93a0da5590f80482eae172db6130da035314a6";
-      };
-    })
+    custom-pkgs.jetbrains.idea-ultimate
+    #custom-pkgs.jetbrains.pycharm-professional
     jetbrains.pycharm-community-bin
-    (jetbrains.webstorm.overrideAttrs {
-      version = "2022.3.4";
-      src = fetchurl {
-        url = "https://download.jetbrains.com/webstorm/WebStorm-2022.3.4.tar.gz";
-        sha256 = "c33f72b5e26f347983b7bae92608d9b4343dcbb400736addb0793407aedc3260";
-      };
-    })
-    (jetbrains.clion.overrideAttrs {
-      version = "2022.3.3";
-      src = fetchurl {
-        url = "https://download.jetbrains.com/cpp/CLion-2022.3.3.tar.gz";
-        sha256 = "1b46ff0791bcb38ecb39c5f4a99941f99ed73d4f6d924a2042fdb55afc5fc03d";
-      };
-    })
+    custom-pkgs.jetbrains.webstorm
+    custom-pkgs.jetbrains.clion
     gcc cmake
     arduino-ide
     jetbrains.rust-rover
