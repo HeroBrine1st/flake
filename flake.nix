@@ -4,7 +4,7 @@
   inputs = {
     pkgs-unstable.url = "nixpkgs/nixos-unstable";
     pkgs-stable.url = "nixpkgs/nixos-24.05";
-    pkgs-jetbrains-2022-3-3.url = "github:NixOS/nixpkgs?rev=f6aa4144d0c38231d8c383facf40f63b13759bb5";
+    pkgs-jetbrains-2022.url = "github:NixOS/nixpkgs?rev=e1fa54a56982c5874f6941703c8b760541e40db1";
     nixos-rk3588 = {
       url = "github:ryan4yin/nixos-rk3588?rev=c4fef04d8c124146e6e99138283e0c57b2ad8e29";
     };
@@ -27,19 +27,19 @@
     };
   };
 
-  outputs = { self, pkgs-unstable, pkgs-stable, nixos-rk3588, pkgs-jetbrains-2022-3-3, home-manager, disko, impermanence, lanzaboote, ... }: {
+  outputs = { self, pkgs-unstable, pkgs-stable, nixos-rk3588, pkgs-jetbrains-2022, home-manager, disko, impermanence, lanzaboote, ... }: {
     packages."x86_64-linux" = let
       pkgs = import pkgs-unstable {
         system = "x86_64-linux";
         config.allowUnfreePredicate = pkg: builtins.elem (pkgs.lib.getName pkg) [ "spotify" ];
       };
-      jb = import pkgs-jetbrains-2022-3-3 {
+      jb = import pkgs-jetbrains-2022 {
         system = "x86_64-linux";
-        config.allowUnfreePredicate = pkg: builtins.elem (pkgs.lib.getName pkg) [ "pycharm-professional" ];
+        config.allowUnfreePredicate = pkg: builtins.elem (pkgs.lib.getName pkg) [ "idea-ultimate" "pycharm-professional" "webstorm" "clion" ];
       };
     in {
       spotify = pkgs.callPackage packages/spotify.nix {};
-      pycharm-professional = jb.jetbrains.pycharm-professional;
+      jetbrains = jb.jetbrains;
       debounce-keyboard = pkgs.callPackage packages/debounce-keyboard {};
       vesktop = pkgs.callPackage packages/vesktop {};
       organise-files = pkgs.callPackage packages/organise-files.nix {};
