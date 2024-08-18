@@ -216,6 +216,7 @@
     allowedTCPPorts = [ 
       22000 # syncthing
       8080 # idk
+      57621 # spotify connect
     ];
     allowedUDPPorts = [ 
       22000 21027 # syncthing
