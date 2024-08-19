@@ -92,7 +92,9 @@
           ./common/desktop/home.nix
           ./common/desktop/dconf.nix
 
-          ./common/desktop/hyprland.nix          
+          ./common/desktop/hyprland.nix
+
+          ./system/pc/configuration.nix
 
           ./system/pc/syncthing.nix
           ./system/pc/users.nix
