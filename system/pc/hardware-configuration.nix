@@ -63,31 +63,6 @@
       fsType = "btrfs";
       options = [ "defaults" "compress=zstd" "discard=async" "subvol=@home" ];
     };
-#    "/var/cache" = {
-#      device = "/dev/mapper/root";
-#      fsType = "btrfs";
-#      options = [ "defaults" "compress=zstd" "discard=async" "subvol=@var_cache" ];
-#    };
-#    "/var/log" = {
-#      device = "/dev/mapper/root";
-#      fsType = "btrfs";
-#      options = [ "defaults" "compress=zstd" "discard=async" "subvol=@var_log" ];
-#    };
-#    "/var/run" = {
-#      device = "/dev/mapper/root";
-#      fsType = "btrfs";
-#      options = [ "defaults" "compress=zstd" "discard=async" "subvol=@var_run" ];
-#    };
-#    "/var/tmp" = {
-#      device = "/dev/mapper/root";
-#      fsType = "btrfs";
-#      options = [ "defaults" "compress=zstd" "discard=async" "subvol=@var_tmp" ];
-#    };
-#    "/var/lib/docker" = {
-#      device = "/dev/mapper/root";
-#      fsType = "btrfs";
-#      options = [ "defaults" "compress=zstd" "discard=async" "subvol=@var_lib_docker" ];
-#    };
     "/mnt/extra" = {
       device = "/dev/mapper/ssd";
       fsType = "btrfs";
@@ -113,11 +88,6 @@
       fsType = "tmpfs";
       options = [ "rw" "noexec" "nodev" "nosuid" "uid=1000" "gid=1000" "mode=1700" ];
     };
-#    "/home/herobrine1st/.cache" = {
-#      device = "/var/cache/user/1000";
-#      fsType = "none";
-#      options = [ "defaults" "bind" ];
-#    };
   };
 
 
