@@ -65,7 +65,7 @@
   networking.hostName = "MOBILE-DCV5AQD";
   networking.networkmanager.enable = true;
 
-  nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
+  nixpkgs.hostPlatform = "x86_64-linux";
 
   hardware.graphics = {
     enable = true;
