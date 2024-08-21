@@ -7,8 +7,15 @@
   hardware.enableRedistributableFirmware = true;
 
   boot = {
-    kernelModules = [ "kvm-amd" "lm75" "nct6775" ];
-    kernelParams = [ "nvidia-drm.fbdev=1" "nvidia.NVreg_EnableGpuFirmware=0" ];
+    kernelModules = [
+      "kvm-amd"
+      "lm75" # temperature sensors
+      "nct6775" # temperature sensors
+    ];
+    kernelParams = [
+      "nvidia-drm.fbdev=1" # disable additional dummy display
+      "nvidia.NVreg_EnableGpuFirmware=0" # https://github.com/NVIDIA/open-gpu-kernel-modules/issues/538
+    ];
     loader = {
       systemd-boot.enable = true;
       systemd-boot.consoleMode = "auto";
@@ -203,7 +210,6 @@
     binaries = {
       "firefox" = {
         cmdline = [
-
           "/usr/bin/env"
           "LIBVA_DRIVER_NAME=nvidia"
           "MOZ_X11_EGL=1"
