@@ -103,7 +103,6 @@
 
   networking.hostName = "opi5";
   networking.networkmanager.enable = true;
-  networking.useDHCP = true;
 
   nixpkgs.hostPlatform = "aarch64-linux";
 
