@@ -94,7 +94,7 @@
   networking.hostName = "DESKTOP-IJK2GUG";
   networking.networkmanager.enable = true;
 
-  nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
+  nixpkgs.hostPlatform = "x86_64-linux";
 
   # Enable OpenGL
   hardware.graphics.enable = true;

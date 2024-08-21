@@ -16,10 +16,7 @@ in
     };
   };
 
-   security.sudo.wheelNeedsPassword = false;
-
-  networking.hostName = "opi5";
-  networking.networkmanager.enable = true;
+  security.sudo.wheelNeedsPassword = false;
 
   # Set your time zone.
   time.timeZone = "Europe/Moscow";
@@ -31,10 +28,6 @@ in
   users.users.herobrine1st = {
     isNormalUser = true;
     extraGroups = [ "wheel" "docker" ];
-  #  packages = with pkgs; [
-  #     firefox
-  #     tree
-  #  ];
     openssh.authorizedKeys.keys = [
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICs5D9zh4OUHN+wwHiNgiqC4Ec0Qi0qLAyA9oh515HJA herobrine1st@DESKTOP-IJK2GUG"
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMvg7OeMT5A85IBk9G4Y7utsVVw/B5L4J3F7BPizwFET herobrine1st@MOBILE-DCV5AQD"
@@ -102,7 +95,6 @@ in
     dns = [ "1.1.1.1" ];
   };
 
-  # Open ports in the firewall.
   networking.firewall = {
     trustedInterfaces = [
       "sing-box-tun"
@@ -115,6 +107,5 @@ in
   };
 
   system.stateVersion = "23.11"; # Do not change
-
 }
 
