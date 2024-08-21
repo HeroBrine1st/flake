@@ -2,7 +2,7 @@
   description = "NixOS configuration";
 
   inputs = {
-    pkgs-unstable.url = "nixpkgs/nixos-unstable-small";
+    pkgs-unstable.url = "nixpkgs/nixos-unstable";
     pkgs-stable.url = "nixpkgs/nixos-24.05";
     pkgs-jetbrains-2022.url = "github:NixOS/nixpkgs?rev=e1fa54a56982c5874f6941703c8b760541e40db1";
     nixos-rk3588 = {
