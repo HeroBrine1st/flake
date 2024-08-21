@@ -65,7 +65,7 @@
     # Dash
     gnome-terminal
     nautilus
-    firefox-bin
+    firefox
     custom-pkgs.vesktop
     element-desktop
     custom-pkgs.spotify
