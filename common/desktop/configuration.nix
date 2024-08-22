@@ -166,6 +166,7 @@
     bytecode-viewer
     audacity
     lrcget
+    finamp
   ];
 
   virtualisation.libvirtd.enable = true;
