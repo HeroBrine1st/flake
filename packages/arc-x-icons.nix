@@ -13,13 +13,13 @@ in stdenvNoCC.mkDerivation rec {
 
   patchPhase = ''
     rm -rf ./src/Paper*
+
+    sed -i 's|Name=Arc|Name=Arc-X-D|' "./src/Arc-OSX-D/index.theme"
+    sed -i 's|Name=Arc|Name=Arc-X-P|' "./src/Arc-OSX-P/index.theme"
   '';
 
   installPhase = ''
     runHook preInstall
-
-    sed -i 's|Name=Arc|Name=Arc-X-D|' "src/Arc-OSX-D/index.theme"
-    sed -i 's|Name=Arc|Name=Arc-X-P|' "src/Arc-OSX-P/index.theme"
 
     mkdir -p $out/share/icons/
     ln -s ${paper-icon-theme}/share/icons/Paper $out/share/icons/
