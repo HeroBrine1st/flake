@@ -122,6 +122,10 @@
         executable = "${custom-pkgs.tlauncher}/bin/tlauncher";
         profile = "${./tlauncher.profile}";
       };
+      bottles = {
+        executable = "${pkgs.bottles}/bin/bottles";
+        profile = "${./bottles.profile}";
+      };
     };
   };
 }

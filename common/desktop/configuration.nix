@@ -167,6 +167,7 @@
     audacity
     lrcget
     finamp
+    bottles
   ];
 
   virtualisation.libvirtd.enable = true;
