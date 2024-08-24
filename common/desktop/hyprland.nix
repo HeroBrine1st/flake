@@ -11,7 +11,6 @@
     ];
   };
 
-
   home-manager.users.herobrine1st = {
     wayland.windowManager.hyprland = {
       enable = true;
@@ -32,6 +31,9 @@
           "${pkgs.eww}/bin/eww" # https://github.com/elkowar/eww
         
           "hyprctl setcursor oreo_spark_purple_cursors 32"
+
+          # TODO https://github.com/H3rmt/hyprswitch
+          # TODO https://github.com/kennylevinsen/wlsunset
         ];
 
         bind = [
@@ -47,6 +49,14 @@
         windowrule = [
           "float, (.*)"
         ];
+      };
+    };
+
+    services.hyprpaper = {
+      enable = true;
+      settings = {
+        preload = [ "${../../assets/no-mans-sky-portal.png}" ];
+        wallpaper = [ ", ${../../assets/no-mans-sky-portal.png}" ];
       };
     };
   };
