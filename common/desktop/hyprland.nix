@@ -43,6 +43,10 @@
           "XCURSOR_THEME,oreo_spark_purple_cursors"
           "XCURSOR_SIZE,32"
         ];
+
+        windowrule = [
+          "float, (.*)"
+        ];
       };
     };
   };
