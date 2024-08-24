@@ -21,6 +21,9 @@
           sensitivity = "0.0";
           accel_profile = "flat";
         };
+
+        # TODO move all that to systemd units
+
         exec-once = [
           "${pkgs.swaynotificationcenter}/bin/swaync"
 
@@ -34,8 +37,9 @@
 
           "${pkgs.wl-clip-persist}/bin/wl-clip-persist --clipboard regular --all-mime-type-regex '^(?!x-kde-passwordManagerHint).+'"
 
+          "${pkgs.wlsunset}/bin/wlsunset -l 51.7164 -L 39.1849"
+
           # TODO https://github.com/H3rmt/hyprswitch
-          # TODO https://github.com/kennylevinsen/wlsunset
         ];
 
         bind = [
