@@ -22,7 +22,7 @@
           accel_profile = "flat";
         };
 
-        # TODO move all that to systemd units
+        # TODO move all that to systemd units (because exec-once does not track updates)
 
         exec-once = [
           "${pkgs.swaynotificationcenter}/bin/swaync"
