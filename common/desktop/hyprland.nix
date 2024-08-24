@@ -2,6 +2,16 @@
   programs.hyprland.enable = true;
   programs.dconf.enable = true;
 
+  xdg.portal = {
+    enable = true;
+    extraPortals = lib.mkForce [
+      pkgs.xdg-desktop-portal-gtk # For both
+      pkgs.xdg-desktop-portal-hyprland # For Hyprland
+      pkgs.xdg-desktop-portal-gnome # For GNOME
+    ];
+  };
+
+
   home-manager.users.herobrine1st = {
     wayland.windowManager.hyprland = {
       enable = true;
