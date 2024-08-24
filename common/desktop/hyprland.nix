@@ -32,6 +32,8 @@
         
           "hyprctl setcursor oreo_spark_purple_cursors 32"
 
+          "${pkgs.wl-clip-persist}/bin/wl-clip-persist --clipboard regular --all-mime-type-regex '^(?!x-kde-passwordManagerHint).+'"
+
           # TODO https://github.com/H3rmt/hyprswitch
           # TODO https://github.com/kennylevinsen/wlsunset
         ];
