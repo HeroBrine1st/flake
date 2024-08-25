@@ -92,7 +92,7 @@
           ./common/desktop/home.nix
           ./common/desktop/dconf.nix
 
-          ./common/desktop/hyprland.nix
+          ./common/desktop/hyprland
 
           ./system/pc/configuration.nix
 
