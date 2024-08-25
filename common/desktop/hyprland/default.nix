@@ -71,8 +71,6 @@
         # TODO move all that to systemd units (because exec-once does not track updates)
 
         exec-once = [
-          "${pkgs.swaynotificationcenter}/bin/swaync"
-
           # "${pkgs.xdg-desktop-portal-hyprland}/libexec/xdg-desktop-portal-hyprland" systemd-enabled
           # xdg-desktop-portal-gtk is also systemd-enabled, but may be disabled once gnome is removed
 
