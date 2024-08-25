@@ -77,7 +77,7 @@
           # xdg-desktop-portal-gtk is also systemd-enabled, but may be disabled once gnome is removed
 
           "${pkgs.kdePackages.polkit-kde-agent-1}/libexec/polkit-kde-authentication-agent-1"
-          "${pkgs.eww}/bin/eww" # https://github.com/elkowar/eww
+          "${pkgs.ags}/bin/ags -c ${./ags/config.js}" # https://github.com/Aylur/ags
         
           "hyprctl setcursor oreo_spark_purple_cursors 32"
 
