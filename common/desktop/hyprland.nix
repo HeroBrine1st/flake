@@ -15,11 +15,57 @@
     wayland.windowManager.hyprland = {
       enable = true;
       settings = {
+        general = {
+          resize_on_border = true;
+        };
+
         input = {
           kb_layout = "us,ru";
           kb_options = "grp:alt_shift_toggle";
           sensitivity = "0.0";
           accel_profile = "flat";
+
+          touchpad = {
+            natural_scroll = true;
+            disable_while_typing = true;
+            tap-and-drag = true;
+#            scroll_factor = 0.5;
+          };
+
+          follow_mouse = 0; # click on focus
+        };
+
+        decoration = {
+          rounding = 20;
+
+          blur = {
+            enabled = true;
+            xray = true;
+            special = false;
+            new_optimizations = true;
+            size = 5;
+            passes = 4;
+            brightness = 1;
+            noise = 1.0e-2;
+            contrast = 1;
+          };
+
+          drop_shadow = false;
+          shadow_ignore_window = true;
+          shadow_range = 20;
+          shadow_offset = "0 2";
+          shadow_render_power = 2;
+          "col.shadow" = "rgba(0000001A)";
+
+          inactive_opacity = 0.5;
+        };
+
+        misc = {
+          vfr = 1; # idk what is that
+          vrr = 1;
+          always_follow_on_dnd = true; # drag-on-drop follow focus
+
+          focus_on_activate = false; # TODO forward such request to notification
         };
 
         # TODO move all that to systemd units (because exec-once does not track updates)
