@@ -107,8 +107,8 @@
     services.hyprpaper = {
       enable = true;
       settings = {
-        preload = [ "${../../assets/no-mans-sky-portal.png}" ];
-        wallpaper = [ ", ${../../assets/no-mans-sky-portal.png}" ];
+        preload = [ "${../../../assets/no-mans-sky-portal.png}" ];
+        wallpaper = [ ", ${../../../assets/no-mans-sky-portal.png}" ];
       };
     };
   };
