@@ -16,6 +16,10 @@ in {
   };
 
   home-manager.users.herobrine1st = {
+    imports = [
+      plugins/hyprbar.nix
+    ];
+
     wayland.windowManager.hyprland = {
       enable = true;
       settings = {
