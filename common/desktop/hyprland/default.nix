@@ -1,4 +1,8 @@
-{ lib, pkgs, ... }: {
+{ lib, pkgs, ... }: let
+  ags = pkgs.ags.overrideAttrs (old: {
+    buildInputs = old.buildInputs ++ [ pkgs.libdbusmenu-gtk3 ];
+  });
+in {
   programs.hyprland.enable = true;
   programs.dconf.enable = true;
 
@@ -75,7 +79,7 @@
           # xdg-desktop-portal-gtk is also systemd-enabled, but may be disabled once gnome is removed
 
           "${pkgs.kdePackages.polkit-kde-agent-1}/libexec/polkit-kde-authentication-agent-1"
-          "${pkgs.ags}/bin/ags -c ${./ags/config.js}" # https://github.com/Aylur/ags
+          "${ags}/bin/ags -c ${./ags/config.js}" # https://github.com/Aylur/ags
         
           "hyprctl setcursor oreo_spark_purple_cursors 32"
 
