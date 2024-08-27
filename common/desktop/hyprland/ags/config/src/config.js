@@ -1,6 +1,5 @@
 const hyprland = await Service.import("hyprland")
 const notifications = await Service.import("notifications")
-const mpris = await Service.import("mpris")
 const audio = await Service.import("audio")
 const battery = await Service.import("battery")
 const systemtray = await Service.import("systemtray")
@@ -64,24 +63,24 @@ function Notification() {
 }
 
 
-function Media() {
-    const label = Utils.watch("", mpris, "player-changed", () => {
-        if (mpris.players[0]) {
-            const { track_artists, track_title } = mpris.players[0]
-            return `${track_artists.join(", ")} - ${track_title}`
-        } else {
-            return "Nothing is playing"
-        }
-    })
-
-    return Widget.Button({
-        class_name: "media",
-        on_primary_click: () => mpris.getPlayer("")?.playPause(),
-        on_scroll_up: () => mpris.getPlayer("")?.next(),
-        on_scroll_down: () => mpris.getPlayer("")?.previous(),
-        child: Widget.Label({ label }),
-    })
-}
+// function Media() {
+//     const label = Utils.watch("", mpris, "player-changed", () => {
+//         if (mpris.players[0]) {
+//             const { track_artists, track_title } = mpris.players[0]
+//             return `${track_artists.join(", ")} - ${track_title}`
+//         } else {
+//             return "Nothing is playing"
+//         }
+//     })
+//
+//     return Widget.Button({
+//         class_name: "media",
+//         on_primary_click: () => mpris.getPlayer("")?.playPause(),
+//         on_scroll_up: () => mpris.getPlayer("")?.next(),
+//         on_scroll_down: () => mpris.getPlayer("")?.previous(),
+//         child: Widget.Label({ label }),
+//     })
+// }
 
 
 function Volume() {
@@ -100,8 +99,13 @@ function Volume() {
         return `audio-volume-${icons[icon]}-symbolic`
     }
 
+    //{
+    //         icon: Utils.watch(getIcon(), audio.speaker, getIcon),
+    //     }
     const icon = Widget.Icon({
-        icon: Utils.watch(getIcon(), audio.speaker, getIcon),
+        setup: self => self.hook(audio.speaker, () => {
+            self.icon = getIcon()
+        })
     })
 
     const slider = Widget.Slider({
@@ -116,7 +120,7 @@ function Volume() {
     return Widget.Box({
         class_name: "volume",
         css: "min-width: 180px",
-        children: [icon, slider],
+        children: [slider],
     })
 }
 
@@ -182,7 +186,6 @@ function Right() {
         hpack: "end",
         spacing: 8,
         children: [
-            Media(),
             Volume(),
             SysTray(),
             BatteryLabel(),

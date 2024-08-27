@@ -2,17 +2,16 @@
   "compilerOptions": {
     "target": "ES2022",
     "module": "ES2022",
-    "lib": [
-      "ES2022"
-    ],
+    "lib": ["ES2022"],
     "allowJs": true,
     "checkJs": true,
     "strict": true,
     "noImplicitAny": false,
-    "baseUrl": ".",
+    "baseUrl": "./src",
+    "skipLibCheck": true,
     "typeRoots": [
       "./types"
-    ],
-    "skipLibCheck": true
-  }
+    ]
+  },
+  "include": ["src/**/*", "types-nix/**/*.d.ts"]
 }
