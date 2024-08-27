@@ -6,7 +6,7 @@
     settings = {
       plugin = {
         hyprbars = {
-          bar_text_font = "Jetbrains Mono";
+          bar_text_font = "JetBrains Mono";
           bar_height = 30;
           bar_padding = 10;
           bar_button_padding = 5;
