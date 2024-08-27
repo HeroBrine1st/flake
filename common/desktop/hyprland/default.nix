@@ -44,7 +44,7 @@ in {
         };
 
         decoration = {
-          rounding = 5;
+          rounding = 4;
 
           blur = {
             enabled = true;
