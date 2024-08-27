@@ -77,6 +77,7 @@ in {
         };
 
         # TODO move all that to systemd units (because exec-once does not track updates)
+        #      https://github.com/Vladimir-csp/uwsm
 
         exec-once = [
           # "${pkgs.xdg-desktop-portal-hyprland}/libexec/xdg-desktop-portal-hyprland" systemd-enabled
