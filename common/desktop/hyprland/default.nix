@@ -3,6 +3,10 @@
     buildInputs = old.buildInputs ++ [ pkgs.libdbusmenu-gtk3 ];
   });
 in {
+  imports = [
+    ./hyprlock.nix
+  ];
+
   programs.hyprland.enable = true;
   programs.dconf.enable = true;
 
