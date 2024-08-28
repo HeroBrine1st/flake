@@ -30,6 +30,8 @@ in {
       settings = {
         general = {
           resize_on_border = true;
+          gaps_in = 0;
+          gaps_out = 0;
         };
 
         input = {
@@ -96,6 +98,10 @@ in {
           "${pkgs.wl-clip-persist}/bin/wl-clip-persist --clipboard regular --all-mime-type-regex '^(?!x-kde-passwordManagerHint).+'"
 
           "${pkgs.wlsunset}/bin/wlsunset -l 51.7164 -L 39.1849"
+          
+          # fix unite interfering with gtk
+          "rm $HOME/.config/gtk-3.0/gtk.css"
+          "rm $HOME/.config/gtk-4.0/gtk.css"
 
           # TODO https://github.com/H3rmt/hyprswitch
         ];
@@ -104,7 +110,10 @@ in {
           "SUPER, 1, exec, gnome-terminal"
           "SUPER_SHIFT, A, exec, ${pkgs.anyrun}/bin/anyrun" # https://github.com/anyrun-org/anyrun
           "SUPER, C, killactive, "
-          "SUPER, up, fullscreen 1"
+          "SUPER, up, fullscreenstate, 1"
+          "SUPER, down, fullscreenstate, 0"
+          "ALT, Tab, cyclenext"
+          "ALT, Tab, bringactivetotop" # deprecated in favor of alterzorder, but it requires zheight. alterzorder can't replace bringactivetotop
         ];
         env = [
           "XCURSOR_THEME,oreo_spark_purple_cursors"
