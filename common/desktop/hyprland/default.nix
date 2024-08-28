@@ -22,7 +22,7 @@ in {
 
   home-manager.users.herobrine1st = {
     imports = [
-      plugins/hyprbar.nix
+      # plugins/hyprbar.nix
     ];
 
     wayland.windowManager.hyprland = {
@@ -104,6 +104,7 @@ in {
           "SUPER, 1, exec, gnome-terminal"
           "SUPER_SHIFT, A, exec, ${pkgs.anyrun}/bin/anyrun" # https://github.com/anyrun-org/anyrun
           "SUPER, C, killactive, "
+          "SUPER, up, fullscreen 1"
         ];
         env = [
           "XCURSOR_THEME,oreo_spark_purple_cursors"
