@@ -72,12 +72,19 @@ in
         options = "-H -p -f -t -l error -l selftest -l selfteststs -C 197 -U 198 -m noemail@example.com -M test -M exec ${smartdnotify}/bin/smartdnotify";
       }
       {
+        device = "/dev/disk/by-id/ata-ST1000LM035-1RK172_WQ9C5SMW";
+        options = "-H -p -f -t -l error -l selftest -l selfteststs -C 197 -U 198 -m noemail@example.com -M test -M exec ${smartdnotify}/bin/smartdnotify";
+      }
+      {
         device = "/dev/nvme0";
         options = "-d nvme -H -l error -W 5,60,80 -m noemail@example.com -M test -M exec ${smartdnotify}/bin/smartdnotify";
       }
     ];
     notifications.test = true;
     notifications.wall.enable = false;
+    extraOptions = [
+      "--savestates=/nix/persist/smartd/"
+    ];
   };
 
   services.cron = {
