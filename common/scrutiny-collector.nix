@@ -33,8 +33,6 @@
           # hash = ""; # invalid hash to verify version pinning
         };
 
-
-
         # External direct dependencies as of 0.8.1
         # https://github.com/stretchr/testify
         # https://github.com/sirupsen/logrus
