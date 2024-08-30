@@ -65,6 +65,8 @@
           nixos-rk3588.nixosModules.orangepi5.core
           ./modules/nebula
 
+          ./common/scrutiny-collector.nix
+
           ./system/opi5/configuration.nix
           ./common/cli-packages.nix
           ./system/opi5/hardware-configuration.nix
