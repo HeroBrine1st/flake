@@ -84,6 +84,7 @@
 
           ./common/unfree.nix
           ./common/cli-packages.nix
+          ./common/scrutiny-collector.nix
 
           ./common/desktop/configuration.nix
           ./common/desktop/firejail
