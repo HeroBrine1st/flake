@@ -108,6 +108,7 @@
     audacity
     lrcget
     finamp
+    freecad
   ];
 
   # Place IDE in FHS
