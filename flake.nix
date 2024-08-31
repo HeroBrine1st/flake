@@ -91,7 +91,6 @@
           ./system/pc/users.nix
           ./system/pc/hardware-configuration.nix
           ./system/pc/hardware-dconf.nix
-          ./system/pc/hardware-home.nix
           ./system/pc/impermanence.nix
           ./system/pc/hardware-mitigations.nix
         ];
@@ -117,7 +116,6 @@
 
           ./system/laptop/hardware-configuration.nix
           ./system/laptop/hardware-dconf.nix
-          ./system/laptop/hardware-home.nix
           ./system/laptop/impermanence.nix
           ./system/laptop/syncthing.nix
 
