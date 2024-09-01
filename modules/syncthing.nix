@@ -15,10 +15,10 @@
     };
   } [ config.networking.hostName ];
   hostname = config.networking.hostName;
-  mkRestricted = devices: folder: let
-    enabled = builtins.elem hostname devices;
+  mkFolder = folder: let
+    enabled = builtins.elem hostname folder.devices;
   in folder // {
-    devices = lib.lists.remove hostname devices;
+    devices = lib.lists.remove hostname folder.devices;
   };
 in {
   services.syncthing = {
@@ -29,23 +29,25 @@ in {
     settings = {
       devices = deviceIds;
       folders = {
-        "uf77h-ptigu" = {
+        "uf77h-ptigu" = mkFolder {
           label = "Secure";
           path = "/mnt/secure";
-          devices = lib.lists.remove hostname [ "OPi5" "MOBILE-DCV5AQD" "DESKTOP-IJK2GUG" ];
+          devices = [ "OPi5" "MOBILE-DCV5AQD" "DESKTOP-IJK2GUG" ];
         };
-        "yb6rg-qs9gm" = {
+        "yb6rg-qs9gm" = mkFolder {
           label = "Local Music";
           path = "/home/herobrine1st/Music/Main";
-          devices = lib.lists.remove hostname [ "OPi5" "MOBILE-DCV5AQD" "DESKTOP-IJK2GUG" "lynx" ];
+          devices = [ "OPi5" "MOBILE-DCV5AQD" "DESKTOP-IJK2GUG" "lynx" ];
         };
-        "f665p-sm9kf" = mkRestricted [ "MOBILE-DCV5AQD" "DESKTOP-IJK2GUG" "lynx"] {
+        "f665p-sm9kf" = mkFolder {
           label = "Notes";
           path = "/home/herobrine1st/Documents/Notes";
+          devices = [ "MOBILE-DCV5AQD" "DESKTOP-IJK2GUG" "lynx"];
         };
-        "desktop" = mkRestricted [ "MOBILE-DCV5AQD" "DESKTOP-IJK2GUG" "lynx"] {
+        "desktop" = mkFolder {
           label = "Desktop";
           path = "/home/herobrine1st/Desktop";
+          devices = [ "MOBILE-DCV5AQD" "DESKTOP-IJK2GUG" "lynx"];
         };
       };
     };
