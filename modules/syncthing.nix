@@ -15,6 +15,11 @@
     };
   } [ config.networking.hostName ];
   hostname = config.networking.hostName;
+  mkRestricted = devices: folder: let
+    enabled = builtins.elem hostname devices;
+  in folder // {
+    devices = lib.lists.remove hostname devices;
+  };
 in {
   services.syncthing = {
     user = "herobrine1st";
@@ -34,13 +39,9 @@ in {
           path = "/home/herobrine1st/Music/Main";
           devices = lib.lists.remove hostname [ "OPi5" "MOBILE-DCV5AQD" "DESKTOP-IJK2GUG" "lynx" ];
         };
-        "f665p-sm9kf" = let
-          devices = [ "MOBILE-DCV5AQD" "DESKTOP-IJK2GUG" "lynx"];
-          enabled = builtins.elem hostname devices;
-        in lib.mkIf enabled {
+        "f665p-sm9kf" = mkRestricted [ "MOBILE-DCV5AQD" "DESKTOP-IJK2GUG" "lynx"] {
           label = "Notes";
           path = "/home/herobrine1st/Documents/Notes";
-          devices = lib.lists.remove hostname devices;
         };
       };
     };
