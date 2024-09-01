@@ -1,6 +1,5 @@
 { config, lib, ... }: let
-  # Remove this machine from config
-  deviceIds = builtins.removeAttrs {
+  deviceIds = {
     "OPi5" = {
       id = "QDEHB5B-UGM2GQ6-3VG3RBL-JXOTGB2-OGNO5AL-H7KAFIC-MESTOWJ-O2YD3AO";
     };
@@ -13,12 +12,12 @@
     "lynx" = {
       id = "3HCNB6K-LJN74OU-TVIZNB4-RBWZA7T-JRPIMTW-6ZK5BRS-2WJEB5V-5AEVGQD";
     };
-  } [ config.networking.hostName ];
+  };
   hostname = config.networking.hostName;
   mkFolder = folder: let
     enabled = builtins.elem hostname folder.devices;
   in folder // {
-    devices = lib.lists.remove hostname folder.devices;
+    devices = lib.lists.remove hostname folder.devices;   # Remove this machine from config
   };
 in {
   services.syncthing = {
@@ -27,7 +26,7 @@ in {
     overrideDevices = true;
     overrideFolders = false;
     settings = {
-      devices = deviceIds;
+      devices = builtins.removeAttrs deviceIds [ hostname ]; # Remove this machine from config
       folders = {
         "uf77h-ptigu" = mkFolder {
           label = "Secure";
