@@ -55,7 +55,6 @@ python3.pkgs.buildPythonApplication rec {
     description = "Downloads and archives content from reddit";
     homepage = "https://github.com/Serene-Arc/bulk-downloader-for-reddit/";
     license = lib.licenses.gpl3Only;
-    maintainers = with lib.maintainers; [ skamdart ];
     mainProgram = "bdfr";
   };
 }
