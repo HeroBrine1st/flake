@@ -43,6 +43,10 @@ in {
           label = "Notes";
           path = "/home/herobrine1st/Documents/Notes";
         };
+        "desktop" = mkRestricted [ "MOBILE-DCV5AQD" "DESKTOP-IJK2GUG" "lynx"] {
+          label = "Desktop";
+          path = "/home/herobrine1st/Desktop";
+        };
       };
     };
   };
