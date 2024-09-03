@@ -6,10 +6,9 @@
     "lynx".id = "3HCNB6K-LJN74OU-TVIZNB4-RBWZA7T-JRPIMTW-6ZK5BRS-2WJEB5V-5AEVGQD";
   };
   hostname = config.networking.hostName;
-  mkFolder = folder: let
-    enabled = builtins.elem hostname folder.devices;
-  in folder // {
-    devices = lib.lists.remove hostname folder.devices;   # Remove this machine from config
+  mkFolder = folder: folder // {
+    enable = builtins.elem hostname folder.devices; # Disable if restricted
+    devices = lib.lists.remove hostname folder.devices; # Remove this machine from config
   };
 in {
   services.syncthing = {
