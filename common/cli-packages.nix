@@ -20,6 +20,7 @@
       rich
       ptpython
       evdev
+      requests
     ]))
     gnupg
     gnumake
