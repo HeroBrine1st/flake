@@ -74,7 +74,10 @@
 
   services.ollama = {
     acceleration = "rocm";
-    #environmentVariables.HCC_AMDGPU_TARGET = "gfx90c";
+    environmentVariables = {
+      # HCC_AMDGPU_TARGET = "gfx90c";
+      HSA_ENABLE_SDMA = "0";
+    };
     rocmOverrideGfx = "9.0.0";
   };
 
