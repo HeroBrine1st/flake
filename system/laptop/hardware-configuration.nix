@@ -82,7 +82,7 @@
     environmentVariables = {
       #HCC_AMDGPU_TARGET = "gfx90c";
       #HSA_ENABLE_SDMA = "0";
-      OLLAMA_VRAM_OVERRIDE = "${1024 * 1024 * 1024 * 7}"; # 7 GB
+      OLLAMA_VRAM_OVERRIDE = "${toString (1024 * 1024 * 1024 * 7)}"; # 7 GB
     };
     rocmOverrideGfx = "9.0.0";
   };
