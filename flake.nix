@@ -109,6 +109,7 @@
 
           ./common/unfree.nix
           ./common/cli-packages.nix
+          ./common/scrutiny-collector.nix
 
           ./common/desktop
 
