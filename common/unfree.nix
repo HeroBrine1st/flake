@@ -1,5 +1,5 @@
-{ lib, ... }: {
-  nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [
+{
+  nixpkgs.allowedUnfreePackages = [
     "nvidia-x11" "nvidia-settings" "nvidia-persistenced"
     "cuda_nvcc" "cuda_cudart" "libcublas" "cuda_cccl" # ollama nvidia
     "spotify"
