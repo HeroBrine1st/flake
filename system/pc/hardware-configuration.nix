@@ -137,6 +137,7 @@
   };
 
   hardware.nvidia-container-toolkit.enable = true;
+  services.ollama.acceleration = "cuda";
 
   boot.extraModprobeConfig = ''
     options nvidia NVreg_TemporaryFilePath=/var/tmp
