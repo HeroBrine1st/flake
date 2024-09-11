@@ -77,6 +77,7 @@
           ./modules/wrappers.nix
           ./modules/syncthing.nix
           ./modules/nebula
+          ./modules/unfree.nix
 
           ./common/unfree.nix
           ./common/cli-packages.nix
@@ -106,6 +107,7 @@
           ./modules/wrappers.nix
           ./modules/syncthing.nix
           ./modules/nebula
+          ./modules/unfree.nix
 
           ./common/unfree.nix
           ./common/cli-packages.nix
