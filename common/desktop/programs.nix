@@ -12,15 +12,15 @@
     custom-pkgs.spotify
 
     # "Personal"
-    gnome.gnome-weather
+    gnome-weather
     gnome-calendar
-    gnome.gnome-clocks
-    gnome.gnome-maps
+    gnome-clocks
+    gnome-maps
     xournalpp
     krita
 
     # "System maintenance"
-    gnome.gnome-control-center
+    gnome-control-center
     # timeshift pointless
     gnome-system-monitor
     # opentabletdriver inferred
@@ -29,7 +29,7 @@
     # grub-customizer not needed
     gnome-tweaks
     # nvidia x server settings inferred
-    gnome.gnome-logs
+    gnome-logs
     helvum
     # easyeffects can't pass tests
 
@@ -52,7 +52,7 @@
     virt-manager
     lshw
     # wireshark inferred
-    gnome.gnome-nettool
+    gnome-nettool
 
 
     # "Development"
