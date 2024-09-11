@@ -77,6 +77,9 @@
       patches = old.patches ++ [
         ./ollama-vram-override.patch
       ];
+      preBuild = ''
+        export AMDGPU_TARGETS="gfx90c"
+      '' + old.preBuild;
     });
     acceleration = "rocm";
     environmentVariables = {
