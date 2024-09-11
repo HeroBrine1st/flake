@@ -9,6 +9,7 @@
     # ./hyprland # WIP
     ./programs.nix
     ./users.nix
+    ./ollama.nix
   ];
 
   boot.tmp.useTmpfs = true;

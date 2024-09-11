@@ -64,7 +64,7 @@
     custom-pkgs.jetbrains.clion
     gcc cmake
     arduino-ide
-    jetbrains.rust-rover
+    #jetbrains.rust-rover
     jetbrains.idea-community-bin
     (vscode-with-extensions.override {
       vscode = vscodium.fhsWithPackages (ps: [ ps.nixd ]);

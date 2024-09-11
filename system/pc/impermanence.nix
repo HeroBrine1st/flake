@@ -14,6 +14,8 @@
       { directory = "/var/lib/colord"; user = "colord"; group = "colord"; mode = "u=rwx,g=rx,o="; }
       { directory = "/mnt/secure"; user = "herobrine1st"; group = "users"; }
       "/var/lib/libvirt"
+      { directory = "/var/lib/ollama"; user = "ollama"; group = "ollama"; }
+      "/var/lib/open-webui"
     ];
     files = [
       "/etc/machine-id"
