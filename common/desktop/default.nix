@@ -93,19 +93,6 @@
   networking.firewall = {
     enable = true;
     trustedInterfaces = [ "sing-box-tun" ];
-    allowedTCPPorts = [ 
-      22000 # syncthing
-      57621 # spotify connect
-    ];
-    allowedUDPPorts = [
-      22000 21027 # syncthing
-    ];
-    allowedTCPPortRanges = [
-      { from = 1714; to = 1764; } # KDE Connect
-    ];
-    allowedUDPPortRanges = [
-      { from = 1714; to = 1764; } # KDE Connect
-    ];
   };
 
   system.stateVersion = "23.11"; # Do not change

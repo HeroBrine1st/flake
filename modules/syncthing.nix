@@ -42,4 +42,13 @@ in {
       };
     };
   };
+
+  networking.firewall = lib.mkIf config.services.syncthing.enable {
+    allowedTCPPorts = [
+      22000 # syncthing
+    ];
+    allowedUDPPorts = [
+      22000 21027 # syncthing
+    ];
+  };
 }

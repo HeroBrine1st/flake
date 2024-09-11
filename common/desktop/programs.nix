@@ -161,4 +161,10 @@
 
   programs.gamemode.enable = true;
   programs.gamescope.enable = true;
+
+  networking.firewall = {
+    allowedTCPPorts = [
+      57621 # spotify connect
+    ];
+  };
 }
