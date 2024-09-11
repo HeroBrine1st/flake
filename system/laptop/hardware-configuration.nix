@@ -75,6 +75,8 @@
     ];
   };
 
+  services.ollama.acceleration = "rocm";
+
   services.xserver.videoDrivers = [ "amdgpu" ];
 
   hardware.cpu.amd.updateMicrocode = config.hardware.enableRedistributableFirmware;
