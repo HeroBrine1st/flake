@@ -72,23 +72,24 @@
     enable32Bit = true;
   };
 
-  services.ollama = {
-    package = pkgs.ollama.overrideAttrs (old: {
-      patches = old.patches ++ [
-        ./ollama-vram-override.patch
-      ];
-      preBuild = ''
-        export AMDGPU_TARGETS="gfx90c"
-      '' + old.preBuild;
-    });
-    acceleration = "rocm";
-    environmentVariables = {
-      #HCC_AMDGPU_TARGET = "gfx90c";
-      #HSA_ENABLE_SDMA = "0";
-      OLLAMA_VRAM_OVERRIDE = "${toString (1024 * 1024 * 1024 * 7)}"; # 7 GB
-    };
-    rocmOverrideGfx = "9.0.0";
-  };
+  # "ring sdma0 timeout", leading to driver recovery via iGPU reset
+#  services.ollama = {
+#    package = pkgs.ollama.overrideAttrs (old: {
+#      patches = old.patches ++ [
+#        ./ollama-vram-override.patch
+#      ];
+#      preBuild = ''
+#        export AMDGPU_TARGETS="gfx90c"
+#      '' + old.preBuild;
+#    });
+#    acceleration = "rocm";
+#    environmentVariables = {
+#      #HCC_AMDGPU_TARGET = "gfx90c";
+#      #HSA_ENABLE_SDMA = "0";
+#      OLLAMA_VRAM_OVERRIDE = "${toString (1024 * 1024 * 1024 * 11)}"; # 11 GB
+#    };
+#    rocmOverrideGfx = "9.0.0";
+#  };
 
   services.xserver.videoDrivers = [ "amdgpu" ];
 
