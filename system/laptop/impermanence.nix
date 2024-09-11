@@ -13,8 +13,8 @@
       { directory = "/var/lib/colord"; user = "colord"; group = "colord"; mode = "u=rwx,g=rx,o="; }
       { directory = "/mnt/secure"; user = "herobrine1st"; group = "users"; }
       "/var/lib/libvirt"
-      { directory = "/var/lib/ollama"; user = "ollama"; group = "ollama"; }
-      "/var/lib/open-webui"
+      { directory = "/var/lib/private/ollama"; mode = "700"; }
+      { directory = "/var/lib/private/open-webui"; mode = "700"; }
     ];
     files = [
       "/etc/machine-id"
