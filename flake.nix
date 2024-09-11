@@ -79,7 +79,6 @@
           ./modules/nebula
           ./modules/unfree.nix
 
-          ./common/unfree.nix
           ./common/cli-packages.nix
           ./common/scrutiny-collector.nix
 
@@ -109,7 +108,6 @@
           ./modules/nebula
           ./modules/unfree.nix
 
-          ./common/unfree.nix
           ./common/cli-packages.nix
           ./common/scrutiny-collector.nix
 

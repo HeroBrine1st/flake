@@ -111,6 +111,17 @@
     freecad
   ];
 
+  nixpkgs.allowedUnfreePackages = [
+    "spotify"
+    "android-studio-stable"
+    "rust-rover"
+    "steam" "steam-original" "steam-run"
+    "osu-lazer-bin"
+    "veracrypt"
+    "code" "vscode"
+    "winbox"
+  ];
+
   # Place IDE in FHS
   programs.wrappedBinaries = {
     enable = true;

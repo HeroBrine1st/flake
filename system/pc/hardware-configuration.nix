@@ -139,6 +139,11 @@
   hardware.nvidia-container-toolkit.enable = true;
   services.ollama.acceleration = "cuda";
 
+  nixpkgs.allowedUnfreePackages = [
+    "nvidia-x11" "nvidia-settings" "nvidia-persistenced" # drivers
+    "cuda_nvcc" "cuda_cudart" "libcublas" "cuda_cccl" # ollama
+  ];
+
   boot.extraModprobeConfig = ''
     options nvidia NVreg_TemporaryFilePath=/var/tmp
   '';
