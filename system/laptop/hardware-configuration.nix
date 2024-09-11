@@ -72,7 +72,11 @@
     enable32Bit = true;
   };
 
-  services.ollama.acceleration = "rocm";
+  services.ollama = {
+    acceleration = "rocm";
+    #environmentVariables.HCC_AMDGPU_TARGET = "gfx90c";
+    rocmOverrideGfx = "9.0.0";
+  };
 
   services.xserver.videoDrivers = [ "amdgpu" ];
 
