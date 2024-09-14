@@ -122,6 +122,10 @@
         executable = "${custom-pkgs.tlauncher}/bin/tlauncher";
         profile = "${./tlauncher.profile}";
       };
+      android-studio = {
+        executable = "${pkgs.android-studio}/bin/android-studio";
+        profile = "${./android-studio.profile}";
+      };
     };
   };
 }
