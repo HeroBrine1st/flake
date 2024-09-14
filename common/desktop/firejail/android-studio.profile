@@ -31,6 +31,7 @@ whitelist ${HOME}/.local/share/Google
 whitelist ${HOME}/.tooling
 whitelist ${HOME}/.cache/Android/Sdk
 whitelist ${HOME}/Git
+whitelist ${HOME}/.jdks
 
 # Allows files commonly used by IDEs
 include allow-common-devel.inc
