@@ -3,6 +3,7 @@
   targetPkgs = pkgs: (with pkgs;
     [
       libGL
+      libz
    ]);
   runScript = "env";
 }
