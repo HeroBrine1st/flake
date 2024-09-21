@@ -4,6 +4,7 @@
     [
       libGL
       libz
+      xorg.libXext # jetpack compose
    ]);
   runScript = "env";
 }
