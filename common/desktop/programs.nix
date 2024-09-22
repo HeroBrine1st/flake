@@ -128,8 +128,7 @@
     binaries = {
       "idea-community" = {
         cmdline = [
-          "${pkgs.callPackage ../../packages/android-fhs-env.nix {}}/bin/android-fhs-env"
-          "LD_LIBRARY_PATH=${pkgs.libGL}/lib"
+          "${pkgs.callPackage ../../packages/idea-fhs-env.nix {}}/bin/idea-fhs-env"
           "${pkgs.jetbrains.idea-community-bin}/bin/idea-community"
         ];
       };
