@@ -1,5 +1,5 @@
 { pkgs }: pkgs.buildFHSUserEnv {
-  name = "android-fhs-env";
+  name = "idea-fhs-env";
   targetPkgs = pkgs: (with pkgs;
     [
       libGL
