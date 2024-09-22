@@ -39,6 +39,11 @@ whitelist ${HOME}/.ssh/known_hosts
 # standartised path on all machines
 whitelist ${HOME}/.ssh/keys/github
 
+read-only ${HOME}/.ssh/config
+read-only ${HOME}/.ssh/known_hosts
+read-only ${HOME}/.ssh/keys/github
+
+
 
 # Allows files commonly used by IDEs
 include allow-common-devel.inc
