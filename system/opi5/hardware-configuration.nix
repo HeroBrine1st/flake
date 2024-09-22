@@ -31,6 +31,7 @@
 
   environment.etc.crypttab.text = ''
     basic PARTLABEL=BASIC /etc/keyfile/basic.key nofail
+    romeo-papa-alfa PARTLABEL=ROMEO-PAPA-ALFA /nix/persist/keyfile/romeo-papa-alfa.key nofail
   '';
 
 
