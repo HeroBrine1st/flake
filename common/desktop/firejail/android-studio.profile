@@ -17,6 +17,7 @@ noblacklist ${HOME}/.local/share/JetBrains
 noblacklist ${HOME}/.local/share/Google
 noblacklist ${HOME}/.tooling
 noblacklist ${HOME}/.cache/Android/Sdk
+noblacklist ${HOME}/.gitconfig
 
 whitelist ${HOME}/.config/Google
 whitelist ${HOME}/.cache/Google
@@ -32,12 +33,18 @@ whitelist ${HOME}/.tooling
 whitelist ${HOME}/.cache/Android/Sdk
 whitelist ${HOME}/Git
 whitelist ${HOME}/.jdks
+whitelist ${HOME}/.gitconfig
+whitelist ${HOME}/.ssh/config
+whitelist ${HOME}/.ssh/known_hosts
+# standartised path
+whitelist ${HOME}/.ssh/keys/github
+
 
 # Allows files commonly used by IDEs
 include allow-common-devel.inc
 
 # Allow ssh (blacklisted by disable-common.inc)
-#include allow-ssh.inc
+include allow-ssh.inc
 
 include disable-common.inc
 include disable-programs.inc
