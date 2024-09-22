@@ -28,9 +28,7 @@
       };
     };
   };
-
   environment.etc.crypttab.text = ''
-    basic PARTLABEL=BASIC /etc/keyfile/basic.key nofail
     romeo-papa-alfa PARTLABEL=ROMEO-PAPA-ALFA /nix/persist/keyfile/romeo-papa-alfa.key nofail
   '';
 
@@ -81,22 +79,22 @@
       options = [ "defaults" "compress=zstd" "discard=async" "subvol=@docker_data" ];
     };
     "/mnt/basic" = {
-      device = "/dev/mapper/basic";
+      device = "/dev/mapper/romeo-papa-alfa";
       fsType = "btrfs";
-      options = [ "defaults" "compress=zstd" "autodefrag" "nofail" "noatime" "subvol=@" ];
+      options = [ "defaults" "compress=zstd" "autodefrag" "nofail" "noatime" "subvol=@basic" ];
     };
     "/mnt/basic/Downloads/Movies" = {
-      device = "/dev/mapper/basic";
+      device = "/dev/mapper/romeo-papa-alfa";
       fsType = "btrfs";
       options = [ "defaults" "compress=zstd" "autodefrag" "nofail" "noatime" "subvol=@movies" ];
     };
     "/mnt/basic/.docker_data" = {
-      device = "/dev/mapper/basic";
+      device = "/dev/mapper/romeo-papa-alfa";
       fsType = "btrfs";
       options = [ "defaults" "compress=zstd" "autodefrag" "nofail" "noatime" "subvol=@docker_data" ];
     };
     "/mnt/basic/.fsroot" = {
-      device = "/dev/mapper/basic";
+      device = "/dev/mapper/romeo-papa-alfa";
       fsType = "btrfs";
       options = [ "defaults" "compress=zstd" "autodefrag" "nofail" "noatime" ];
     };
