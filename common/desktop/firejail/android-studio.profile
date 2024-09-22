@@ -60,7 +60,7 @@ noroot
 notv
 novideo
 protocol unix,inet,inet6
-#bwrap
+# bwrap
 seccomp !mount,!pivot_root,!umount2
 
 #private-cache
