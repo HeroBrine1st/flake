@@ -327,6 +327,21 @@
         "type": "github"
       }
     },
+    "pkgs-small": {
+      "locked": {
+        "lastModified": 1727370556,
+        "narHash": "sha256-Js+2pRZ8x/6KbaQW9UM3AvspEb8vI2VKrKUYtGrdCe8=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "0bb3991dc8ea788e6584b26b9a340f589ce3f876",
+        "type": "github"
+      },
+      "original": {
+        "id": "nixpkgs",
+        "ref": "nixos-unstable-small",
+        "type": "indirect"
+      }
+    },
     "pkgs-stable": {
       "locked": {
         "lastModified": 1727129439,
@@ -425,6 +440,7 @@
         "lanzaboote": "lanzaboote",
         "nixos-rk3588": "nixos-rk3588",
         "pkgs-jetbrains-2022": "pkgs-jetbrains-2022",
+        "pkgs-small": "pkgs-small",
         "pkgs-stable": "pkgs-stable",
         "pkgs-unstable": "pkgs-unstable"
       }
