@@ -27,6 +27,7 @@
         "root" = {
           device = "/dev/disk/by-uuid/e0a78f05-e0b6-4fbb-bf07-08b432b291d5";
           allowDiscards = true;
+          bypassWorkqueues = true;
         };
       };
     };
@@ -34,7 +35,7 @@
 
   environment.etc.crypttab.text = ''
     hdd PARTLABEL=HDD /etc/keyfile/hdd.key nofail
-    ssd PARTLABEL=SSD /etc/keyfile/ssd.key allow-discards
+    ssd PARTLABEL=SSD /etc/keyfile/ssd.key allow-discards,no-read-workqueue,no-write-workqueue
   '';
 
   fileSystems = {
