@@ -21,6 +21,7 @@
         "root" = {
           device = "/dev/disk/by-uuid/c5e66bf4-f786-4b59-af76-1286766d2d50";
           allowDiscards = true;
+          bypassWorkqueues = true;
           keyFile = "/dev/mmcblk1";
           keyFileSize = 2048;
           fallbackToPassword = true;

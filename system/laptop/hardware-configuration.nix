@@ -13,13 +13,14 @@
         "root" = {
           device = "/dev/disk/by-uuid/1b1c44b5-cca0-42dc-a6ab-94f8e49b0617";
           allowDiscards = true;
+          bypassWorkqueues = true;
         };
       };
     };
   };
 
   environment.etc.crypttab.text = ''
-    extra PARTLABEL=EXTRA /nix/persist/password/extra.key allow-discards,nofail
+    extra PARTLABEL=EXTRA /nix/persist/password/extra.key allow-discards,nofail,no-read-workqueue,no-write-workqueue
   '';
 
   fileSystems = {
