@@ -68,13 +68,9 @@ in
     enable = true;
     devices = [
       {
-        device = "/dev/disk/by-id/ata-ST1000LM035-1RK172_WQ9C5SMW";
+        device = "/dev/disk/by-id/ata-WDC_WD20EFPX-68C4TN0_WD-WX52DC3LP7JF";
         options = "-H -p -f -t -l error -l selftest -l selfteststs -C 197 -U 198 -m noemail@example.com -M test -M exec ${smartdnotify}/bin/smartdnotify";
       }
-#      {
-#        device = "/dev/disk/by-id/ata-WDC_WD10EALX-009BA0_WD-WCATR9846787";
-#        options = "-H -p -f -t -l error -l selftest -l selfteststs -C 197 -U 198 -m noemail@example.com -M test -M exec ${smartdnotify}/bin/smartdnotify";
-#      }
       {
         device = "/dev/nvme0";
         options = "-d nvme -H -l error -W 5,60,80 -m noemail@example.com -M test -M exec ${smartdnotify}/bin/smartdnotify";
