@@ -83,12 +83,7 @@ in
     ];
   };
 
-  services.cron = {
-    enable = true;
-    systemCronJobs = [
-      "*/15 * * * * root . /etc/profile; /home/herobrine1st/Docker/grafana/grafanaTask.sh 2>&1 > /root/grafanaTask.log"
-    ];
-  };
+  services.cron.enable = true;
 
   virtualisation.docker.enable = true;
   virtualisation.docker.enableOnBoot = true;
