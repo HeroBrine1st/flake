@@ -188,7 +188,7 @@
       "firefox" = {
         cmdline = [
           "/usr/bin/env"
-          "MOZ_ENABLE_WAYLAND=0"
+          # "MOZ_ENABLE_WAYLAND=0"
           "LIBVA_DRIVER_NAME=nvidia"
           "MOZ_X11_EGL=1"
           "__EGL_VENDOR_LIBRARY_FILENAMES=${config.hardware.nvidia.package}/share/glvnd/egl_vendor.d/10_nvidia.json"
