@@ -1,4 +1,4 @@
-{ pkgs, modulesPath, ... }: let
+{ pkgs, modulesPath, config, options, ... }: let
   oh-my-bash = pkgs.fetchFromGitHub {
     owner = "ohmybash";
     repo = "oh-my-bash";
@@ -8,14 +8,11 @@
   # TODO shellcheck
   omb-init = pkgs.writeScript "oh-my-bash-rc" ''
     # Enable the subsequent settings only in interactive sessions
+    # (probably not needed as used only in promptInit, which is in turn used only in interactiveShellInit)
     case $- in
       *i*) ;;
         *) return;;
     esac
-
-    if [[ "$USER" == "root" ]]; then
-      return
-    fi
 
     # Path to your oh-my-bash installation.
     export OSH=${oh-my-bash}
@@ -92,7 +89,11 @@
   '';
 in {
   programs.bash.promptInit = ''
-    source ${omb-init}
+    if [[ "$USER" != "root" ]]; then # oh-my-bash
+      source ${omb-init}
+    else # default prompt if root
+      ${options.programs.bash.promptInit.default}
+    fi
   '';
 
   environment.etc.inputrc.text = builtins.readFile (modulesPath + "/programs/bash/inputrc") + ''
