@@ -14,7 +14,7 @@
             snapshot_preserve_min = "2d";
             target_preserve = "12h 7d 4w 12m 2y";
             target_preserve_min = "2d";
-            subvolume."@docker_data/forgejo" = {
+            subvolume."@docker_data/*" = {
 
             };
           };
