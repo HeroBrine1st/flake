@@ -104,6 +104,8 @@ in
     allowedUDPPorts = [ 22000 21027 ];
   };
 
+  environment.etc."htoprc".source = ./htoprc;
+
   system.stateVersion = "23.11"; # Do not change
 }
 
