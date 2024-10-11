@@ -1,3 +1,6 @@
+# Persistent global definitions
+include globals.local
+
 ignore whitelist ${DOWNLOADS}
 ignore disable-mnt
 ignore dbus-user none
