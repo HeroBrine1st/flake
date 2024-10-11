@@ -34,7 +34,7 @@
     speedtest-cli
     pwgen
     dig
-    (pkgs.callPackage ../packages/bdfr {})
+    (pkgs.callPackage ../../packages/bdfr {})
   ];
 
   programs.nano.nanorc = ''

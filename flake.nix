@@ -64,10 +64,10 @@
           nixos-rk3588.nixosModules.orangepi5.core
           ./modules/nebula
 
+          ./common/cli
           ./common/scrutiny-collector.nix
 
           ./system/opi5/configuration.nix
-          ./common/cli-packages.nix
           ./system/opi5/hardware-configuration.nix
           ./system/opi5/impermanence.nix
         ];
@@ -84,7 +84,7 @@
           ./modules/nebula
           ./modules/unfree.nix
 
-          ./common/cli-packages.nix
+          ./common/cli
           ./common/scrutiny-collector.nix
 
           ./common/desktop
@@ -113,7 +113,7 @@
           ./modules/nebula
           ./modules/unfree.nix
 
-          ./common/cli-packages.nix
+          ./common/cli
           ./common/scrutiny-collector.nix
 
           ./common/desktop
