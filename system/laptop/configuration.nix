@@ -4,4 +4,6 @@
   environment.systemPackages = with pkgs; [
     wirelesstools
   ];
+
+  environment.etc."htoprc".source = ./htoprc;
 }
