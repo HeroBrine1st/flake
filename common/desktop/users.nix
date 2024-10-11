@@ -95,10 +95,6 @@
     };
 
     home.file = {
-      ".inputrc".text = ''
-        set show-all-if-ambiguous on
-        set bell-style audible
-      '';
       ".face".source = ../../assets/avatar.png;
     };
 
