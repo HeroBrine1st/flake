@@ -7,6 +7,7 @@
           # stream_compress = "zstd";
 
           volume."/.fsroot" = { # base directory
+            snapshot_create = "onchange";
             subvolume."@docker_data/*" = {
               target = "/mnt/basic/.fsroot/docker_data_snapshots/"; # btrfs send-receive target
               snapshot_dir = "@docker_data/snapshots/";
