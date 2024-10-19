@@ -327,19 +327,20 @@
         "type": "github"
       }
     },
-    "pkgs-small": {
+    "pkgs-open-webui": {
       "locked": {
-        "lastModified": 1729308112,
-        "narHash": "sha256-Ap+cPeiluam2KFZO+OWuFTl/IkIJfyGYGMgkT2pVCRY=",
+        "lastModified": 1728793251,
+        "narHash": "sha256-5STQv4BBpOmHUkzV0fXN5uLAbHttG30dBDfS04j+ypI=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "61253596816c4cd65e2a0f474cbc0ac0c6e0f7cf",
+        "rev": "476bcb4bf099a04ad41e3c0590445ef0e1dea5d4",
         "type": "github"
       },
       "original": {
-        "id": "nixpkgs",
-        "ref": "nixos-unstable-small",
-        "type": "indirect"
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "476bcb4bf099a04ad41e3c0590445ef0e1dea5d4",
+        "type": "github"
       }
     },
     "pkgs-stable": {
@@ -440,7 +441,7 @@
         "lanzaboote": "lanzaboote",
         "nixos-rk3588": "nixos-rk3588",
         "pkgs-jetbrains-2022": "pkgs-jetbrains-2022",
-        "pkgs-small": "pkgs-small",
+        "pkgs-open-webui": "pkgs-open-webui",
         "pkgs-stable": "pkgs-stable",
         "pkgs-unstable": "pkgs-unstable"
       }
