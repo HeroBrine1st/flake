@@ -3,8 +3,8 @@
 
   inputs = {
     pkgs-unstable.url = "nixpkgs/nixos-unstable";
-    pkgs-small.url = "nixpkgs/nixos-unstable-small";
     pkgs-stable.url = "nixpkgs/nixos-24.05";
+    pkgs-open-webui.url = "github:NixOS/nixpkgs?rev=476bcb4bf099a04ad41e3c0590445ef0e1dea5d4";
     pkgs-jetbrains-2022.url = "github:NixOS/nixpkgs?rev=e1fa54a56982c5874f6941703c8b760541e40db1";
     nixos-rk3588.url = "github:ryan4yin/nixos-rk3588?rev=c4fef04d8c124146e6e99138283e0c57b2ad8e29"; # pinned
     home-manager = {
@@ -22,13 +22,13 @@
     };
   };
 
-  outputs = { self, pkgs-unstable, pkgs-stable, nixos-rk3588, pkgs-jetbrains-2022, home-manager, disko, impermanence, lanzaboote, pkgs-small, ... }: {
+  outputs = { self, pkgs-unstable, pkgs-stable, nixos-rk3588, pkgs-jetbrains-2022, home-manager, disko, impermanence, lanzaboote, pkgs-open-webui, ... }: {
     packages."x86_64-linux" = let
       pkgs = import pkgs-unstable {
         system = "x86_64-linux";
         config.allowUnfreePredicate = pkg: builtins.elem (pkgs.lib.getName pkg) [ "spotify" ];
       };
-      small = import pkgs-small {
+      open-webui = import pkgs-open-webui {
         system = "x86_64-linux";
       };
       jb = import pkgs-jetbrains-2022 {
@@ -42,7 +42,7 @@
       vesktop = pkgs.callPackage packages/vesktop {};
       organise-files = pkgs.callPackage packages/organise-files.nix {};
       tlauncher = pkgs.callPackage packages/tlauncher {};
-      open-webui = small.open-webui;
+      open-webui = open-webui.open-webui;
     };
     nixosConfigurations = {
       opi5 = let
