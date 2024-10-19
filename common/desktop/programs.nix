@@ -115,7 +115,7 @@
     "spotify"
     "android-studio-stable"
     "rust-rover"
-    "steam" "steam-original" "steam-run"
+    "steam" "steam-original" "steam-run" "steam-unwrapped"
     "osu-lazer-bin"
     "veracrypt"
     "code" "vscode"
