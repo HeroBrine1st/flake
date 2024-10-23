@@ -113,7 +113,5 @@
         };
       };
     };
-
-    services.arrpc.enable = true;
   };
 }
