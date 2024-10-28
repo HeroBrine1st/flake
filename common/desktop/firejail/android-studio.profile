@@ -64,7 +64,7 @@ nonewprivs
 noroot
 notv
 novideo
-protocol unix,inet,inet6
+protocol unix,inet,inet6,netlink
 # bwrap
 seccomp !mount,!pivot_root,!umount2
 
