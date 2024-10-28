@@ -78,3 +78,4 @@ seccomp !mount,!pivot_root,!umount2
 join-or-start android-studio
 
 deterministic-shutdown
+tab
