@@ -129,6 +129,7 @@
       "idea-community" = {
         cmdline = [
           "${pkgs.callPackage ../../packages/idea-fhs-env.nix {}}/bin/idea-fhs-env"
+          "LD_LIBRARY_PATH=${pkgs.libGL}/lib"
           "${pkgs.jetbrains.idea-community-bin}/bin/idea-community"
         ];
       };
