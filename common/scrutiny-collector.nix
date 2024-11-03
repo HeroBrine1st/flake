@@ -11,7 +11,7 @@
       # https://github.com/AnalogJ/scrutiny/blob/49108bd1efabf206453455f9c20785a2d83f9a98/example.collector.yaml#L79-L83
     };
 
-    schedule = "*:0/15";
+    schedule = "*:0/10";
 
     # pin version to review on upgrade
     package = let
