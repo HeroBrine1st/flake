@@ -30,7 +30,8 @@
     };
   };
   environment.etc.crypttab.text = ''
-    romeo-papa-alfa PARTLABEL=ROMEO-PAPA-ALFA /nix/persist/keyfile/romeo-papa-alfa.key nofail
+    romeo-papa-alfa  PARTLABEL=ROMEO-PAPA-ALFA  /nix/persist/keyfile/romeo-papa-alfa.key  nofail
+    romeo-papa-bravo PARTLABEL=ROMEO-PAPA-BRAVO /nix/persist/keyfile/romeo-papa-bravo.key nofail
   '';
 
 
@@ -96,6 +97,11 @@
     };
     "/mnt/basic/.fsroot" = {
       device = "/dev/mapper/romeo-papa-alfa";
+      fsType = "btrfs";
+      options = [ "defaults" "compress=zstd" "autodefrag" "nofail" "noatime" ];
+    };
+    "/mnt/brp" = { # bravo-romeo-papa
+      device = "/dev/mapper/romeo-papa-bravo";
       fsType = "btrfs";
       options = [ "defaults" "compress=zstd" "autodefrag" "nofail" "noatime" ];
     };
