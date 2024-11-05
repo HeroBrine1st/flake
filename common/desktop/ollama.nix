@@ -1,11 +1,10 @@
-{ pkgs, custom-pkgs, ... }: {
+{ pkgs, ... }: {
   services.ollama = {
     enable = true;
   };
 
   services.open-webui = {
     enable = true;
-    package = custom-pkgs.open-webui;
     environment = {
       # defconf #
       SCARF_NO_ANALYTICS = "True";
