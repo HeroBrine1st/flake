@@ -53,10 +53,11 @@
       organise-files = pkgs.callPackage packages/organise-files.nix {};
       tlauncher = pkgs.callPackage packages/tlauncher {};
       open-webui = open-webui.open-webui;
-      rust-with-src = rust.fenix.stable.withComponents [
-        "cargo"
-        "rustc"
-        "rust-src"
+      rust-with-src = with rust.fenix; combine [
+        stable.cargo
+        stable.rustc
+        stable.rust-src
+        targets."riscv32imc-unknown-none-elf".stable.rust-std
       ];
     };
     nixosConfigurations = {
