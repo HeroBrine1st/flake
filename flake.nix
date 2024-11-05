@@ -22,9 +22,13 @@
       url = "github:nix-community/lanzaboote/v0.4.1";
       inputs.nixpkgs.follows = "pkgs-unstable";
     };
+    fenix = {
+      url = "github:nix-community/fenix";
+      inputs.nixpkgs.follows = "pkgs-unstable";
+    };
   };
 
-  outputs = { self, pkgs-unstable, pkgs-stable, nixos-rk3588, pkgs-jetbrains-2022, home-manager, disko, impermanence, lanzaboote, pkgs-open-webui, ... }: {
+  outputs = { self, pkgs-unstable, pkgs-stable, nixos-rk3588, pkgs-jetbrains-2022, home-manager, disko, impermanence, lanzaboote, pkgs-open-webui, fenix, ... }: {
     packages."x86_64-linux" = let
       pkgs = import pkgs-unstable {
         system = "x86_64-linux";
@@ -37,6 +41,10 @@
         system = "x86_64-linux";
         config.allowUnfreePredicate = pkg: builtins.elem (pkgs.lib.getName pkg) [ "idea-ultimate" "pycharm-professional" "webstorm" "clion" ];
       };
+      rust = import pkgs-unstable {
+        system = "x86_64-linux";
+        overlays = [ fenix.overlays.default ];
+      };
     in {
       spotify = pkgs.callPackage packages/spotify.nix {};
       jetbrains = jb.jetbrains;
@@ -45,6 +53,11 @@
       organise-files = pkgs.callPackage packages/organise-files.nix {};
       tlauncher = pkgs.callPackage packages/tlauncher {};
       open-webui = open-webui.open-webui;
+      rust-with-src = rust.fenix.stable.withComponents [
+        "cargo"
+        "rustc"
+        "rust-src"
+      ];
     };
     nixosConfigurations = {
       opi5 = let
@@ -92,6 +105,8 @@
 
           ./common/desktop
           ./common/desktop/hyprland
+
+          ./common/development
 
           ./system/pc/configuration.nix
 
