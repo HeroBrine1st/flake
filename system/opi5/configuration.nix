@@ -86,7 +86,7 @@ in
   services.cron.enable = true;
 
   virtualisation.docker.enable = true;
-  virtualisation.docker.enableOnBoot = false;
+  virtualisation.docker.enableOnBoot = true;
   virtualisation.docker.liveRestore = false;
   virtualisation.docker.storageDriver = "btrfs";
   virtualisation.docker.daemon.settings = {
