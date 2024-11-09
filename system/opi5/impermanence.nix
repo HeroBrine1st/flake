@@ -7,6 +7,7 @@
       "/var/lib/nixos"
       "/var/lib/systemd/coredump"
       { directory = "/var/lib/docker"; mode = "0710"; }
+      "/var/docker_data"
 #      { directory = "/etc/NetworkManager/system-connections"; mode = "0700"; } empty as connected via ethernet
 #      "/var/lib/AccountsService" is empty
 #      { directory = "/var/lib/colord"; user = "colord"; group = "colord"; mode = "u=rwx,g=rx,o="; } headless
