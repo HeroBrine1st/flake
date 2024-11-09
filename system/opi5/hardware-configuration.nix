@@ -37,9 +37,9 @@
 
   fileSystems = {
     "/" = {
-      device = "/dev/mapper/root";
-      fsType = "btrfs";
-      options = [ "defaults" "compress=zstd" "discard=async" "subvol=@" ];
+      device = "none";
+      fsType = "tmpfs";
+      options = [ "defaults" "size=25%" "mode=755" ];
     };
     "/nix" = {
       device = "/dev/mapper/root";
