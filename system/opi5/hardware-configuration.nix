@@ -41,6 +41,12 @@
       fsType = "btrfs";
       options = [ "defaults" "compress=zstd" "discard=async" "subvol=@" ];
     };
+    "/nix" = {
+      device = "/dev/mapper/root";
+      fsType = "btrfs";
+      options = [ "defaults" "compress=zstd" "discard=async" "subvol=@nix" ];
+      neededForBoot = true;
+    };
     "/boot" = {
       device = "/dev/disk/by-uuid/C9F0-41F7";
       fsType = "vfat";
