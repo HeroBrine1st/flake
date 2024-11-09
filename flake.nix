@@ -66,6 +66,7 @@
 
         modules = [
           nixos-rk3588.nixosModules.orangepi5.core
+          impermanence.nixosModules.impermanence
           ./modules/nebula
 
           ./common/cli
