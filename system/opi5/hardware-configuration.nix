@@ -61,31 +61,6 @@
       fsType = "btrfs";
       options = [ "defaults" "compress=zstd" "discard=async" "subvol=@home" ];
     };
-    "/var/log" = {
-      device = "/dev/mapper/root";
-      fsType = "btrfs";
-      options = [ "defaults" "compress=zstd" "discard=async" "subvol=@var_log" ];
-    };
-    "/var/run" = {
-      device = "/dev/mapper/root";
-      fsType = "btrfs";
-      options = [ "defaults" "compress=zstd" "discard=async" "subvol=@var_run" ];
-    };
-    "/var/tmp" = {
-      device = "/dev/mapper/root";
-      fsType = "btrfs";
-      options = [ "defaults" "compress=zstd" "discard=async" "subvol=@var_tmp" ];
-    };
-    "/var/lib/docker" = {
-      device = "/dev/mapper/root";
-      fsType = "btrfs";
-      options = [ "defaults" "compress=zstd" "discard=async" "subvol=@var_lib_docker" ];
-    };
-    "/var/docker_data" = {
-      device = "/dev/mapper/root";
-      fsType = "btrfs";
-      options = [ "defaults" "compress=zstd" "discard=async" "subvol=@docker_data" ];
-    };
     "/mnt/basic" = {
       device = "/dev/mapper/romeo-papa-alfa";
       fsType = "btrfs";
