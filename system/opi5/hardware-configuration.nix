@@ -74,27 +74,27 @@
     "/mnt/basic" = {
       device = "/dev/mapper/romeo-papa-alfa";
       fsType = "btrfs";
-      options = [ "defaults" "compress=zstd" "autodefrag" "nofail" "noatime" "subvol=@basic" ];
+      options = [ "defaults" "compress=zstd" "autodefrag" "nofail" "noatime" "x-systemd.before=local-fs.target" "subvol=@basic" ];
     };
     "/mnt/basic/Downloads/Movies" = {
       device = "/dev/mapper/romeo-papa-alfa";
       fsType = "btrfs";
-      options = [ "defaults" "compress=zstd" "autodefrag" "nofail" "noatime" "subvol=@movies" ];
+      options = [ "defaults" "compress=zstd" "autodefrag" "nofail" "noatime" "x-systemd.before=local-fs.target" "subvol=@movies" ];
     };
     "/mnt/basic/.docker_data" = {
       device = "/dev/mapper/romeo-papa-alfa";
       fsType = "btrfs";
-      options = [ "defaults" "compress=zstd" "autodefrag" "nofail" "noatime" "subvol=@docker_data" ];
+      options = [ "defaults" "compress=zstd" "autodefrag" "nofail" "noatime" "x-systemd.before=local-fs.target" "subvol=@docker_data" ];
     };
     "/mnt/basic/.fsroot" = {
       device = "/dev/mapper/romeo-papa-alfa";
       fsType = "btrfs";
-      options = [ "defaults" "compress=zstd" "autodefrag" "nofail" "noatime" ];
+      options = [ "defaults" "compress=zstd" "autodefrag" "nofail" "noatime" "x-systemd.before=local-fs.target" ];
     };
     "/mnt/brp" = { # bravo-romeo-papa
       device = "/dev/mapper/romeo-papa-bravo";
       fsType = "btrfs";
-      options = [ "defaults" "compress=zstd" "autodefrag" "nofail" "noatime" ];
+      options = [ "defaults" "compress=zstd" "autodefrag" "nofail" "noatime" "x-systemd.before=local-fs.target" ];
     };
   };
 
