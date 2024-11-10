@@ -92,6 +92,10 @@ in
   virtualisation.docker.daemon.settings = {
     dns = [ "1.1.1.1" ];
   };
+  systemd.services.docker = {
+    after = [ "local-fs.target" ];
+    requires = [ "local-fs.target" ];
+  };
 
   networking.firewall = {
     trustedInterfaces = [
