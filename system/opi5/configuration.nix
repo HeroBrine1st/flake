@@ -2,11 +2,7 @@
 # your system. Help is available in the configuration.nix(5) man page, on
 # https://search.nixos.org/options and in the NixOS manual (`nixos-help`).
 
-{ config, lib, pkgs, ... }:
-let
-  smartdnotify = pkgs.callPackage ../../packages/smartdnotify.nix {};
-in
-{
+{ config, lib, pkgs, ... }: {
   boot.tmp.useTmpfs = true;
 
   nix = {
@@ -45,7 +41,6 @@ in
   environment.systemPackages = with pkgs; [
     duplicity
     ctop
-    smartdnotify
     rclone
   ];
 
@@ -63,25 +58,6 @@ in
     };
   };
   services.udisks2.enable = true;
-
-  services.smartd = {
-    enable = true;
-    devices = [
-      {
-        device = "/dev/disk/by-id/ata-WDC_WD20EFPX-68C4TN0_WD-WX52DC3LP7JF";
-        options = "-H -p -f -t -l error -l selftest -l selfteststs -C 197 -U 198 -m noemail@example.com -M test -M exec ${smartdnotify}/bin/smartdnotify";
-      }
-      {
-        device = "/dev/nvme0";
-        options = "-d nvme -H -l error -W 5,60,80 -m noemail@example.com -M test -M exec ${smartdnotify}/bin/smartdnotify";
-      }
-    ];
-    notifications.test = true;
-    notifications.wall.enable = false;
-    extraOptions = [
-      "--savestates=/nix/persist/smartd/"
-    ];
-  };
 
   services.cron.enable = true;
 
