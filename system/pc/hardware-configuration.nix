@@ -185,7 +185,14 @@
   programs.wrappedBinaries = {
     enable = true;
     binaries = {
-      "firefox" = {
+      "firefox" = let
+        # it is the dirtiest code of my life
+        # but it works yay
+        # find the package that firefox module has added to environment.systemPackages
+        matching = builtins.filter (p: p.name == config.programs.firefox.package.name) config.environment.systemPackages;
+        # ensure it is only one package
+        finalPackage = assert (builtins.length matching == 1); builtins.head matching;
+      in lib.mkIf config.programs.firefox.enable {
         cmdline = [
           "/usr/bin/env"
           # "MOZ_ENABLE_WAYLAND=0"
@@ -194,7 +201,7 @@
           "__EGL_VENDOR_LIBRARY_FILENAMES=${config.hardware.nvidia.package}/share/glvnd/egl_vendor.d/10_nvidia.json"
           "NVD_BACKEND=direct"
           "MOZ_DISABLE_RDD_SANDBOX=1"
-          "${pkgs.firefox-bin}/bin/firefox"
+          "${finalPackage}/bin/firefox"
         ];
       };
     };

@@ -6,7 +6,7 @@
     # Dash
     gnome-terminal
     nautilus
-    firefox-bin
+    # firefox-bin inferred from programs.firefox.enable
     custom-pkgs.vesktop
     element-desktop
     custom-pkgs.spotify
@@ -161,6 +161,15 @@
 
   programs.gamemode.enable = true;
   programs.gamescope.enable = true;
+
+  programs.firefox = {
+    enable = true;
+    package = pkgs.firefox-bin;
+    autoConfig = ''
+      lockPref("cookiebanners.service.mode", 1);
+      lockPref("cookiebanners.service.mode.privateBrowsing", 1);
+    '';
+  };
 
   networking.firewall = {
     allowedTCPPorts = [
