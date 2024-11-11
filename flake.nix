@@ -126,6 +126,8 @@
 
           ./common/desktop
 
+          ./common/development
+
           ./system/laptop/configuration.nix
 
           ./system/laptop/hardware-configuration.nix
