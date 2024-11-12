@@ -11,6 +11,7 @@
         icon-theme = "Arc-OSX-D";
         monospace-font-name = "JetBrains Mono 10";
         enable-hot-corners = true;
+        accent-color = "orange";
       };
 
       "org/gnome/desktop/peripherals/mouse" = {
