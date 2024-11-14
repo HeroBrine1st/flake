@@ -1,0 +1,40 @@
+diff --git a/pipenv/project.py b/pipenv/project.py
+index 45b387c8..4f721f84 100644
+--- a/pipenv/project.py
++++ b/pipenv/project.py
+@@ -405,7 +405,7 @@ class Project:
+             return False
+         return self.s.PIPENV_VENV_IN_PROJECT or (
+             self.project_directory
+-            and os.path.isdir(os.path.join(self.project_directory, ".venv"))
++            and os.path.isdir(os.path.join(self.project_directory, "venv"))
+         )
+
+     @property
+@@ -423,22 +423,22 @@ class Project:
+         # If there's no project yet, set location based on config.
+         if not self.project_directory:
+             if self.is_venv_in_project():
+-                return os.path.abspath(".venv")
++                return os.path.abspath("venv")
+             return str(get_workon_home().joinpath(self.virtualenv_name))
+
+-        dot_venv = os.path.join(self.project_directory, ".venv")
++        dot_venv = os.path.join(self.project_directory, "venv")
+
+-        # If there's no .venv in project root or it is a folder, set location based on config.
++        # If there's no venv in project root or it is a folder, set location based on config.
+         if not os.path.exists(dot_venv) or os.path.isdir(dot_venv):
+             if self.is_venv_in_project():
+                 return dot_venv
+             return str(get_workon_home().joinpath(self.virtualenv_name))
+
+-        # Now we assume .venv in project root is a file. Use its content.
++        # Now we assume venv in project root is a file. Use its content.
+         with open(dot_venv) as f:
+             name = f.read().strip()
+
+-        # If .venv file is empty, set location based on config.
++        # If venv file is empty, set location based on config.
+         if not name:
+             return str(get_workon_home().joinpath(self.virtualenv_name))
