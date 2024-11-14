@@ -136,6 +136,8 @@
       "pycharm-community" = {
         cmdline = [
           "${pkgs.callPackage ../../packages/pycharm-fhs-env.nix {}}/bin/pycharm-fhs-env"
+          "PIPENV_VENV_IN_PROJECT=1"
+          # "PIPENV_CUSTOM_VENV_NAME=venv" does not work with venv in project
           "${pkgs.jetbrains.pycharm-community-bin}/bin/pycharm-community"
         ];
       };
