@@ -26,6 +26,12 @@
         tap-to-click = true;
       };
 
+      "org/gnome/desktop/privacy" = {
+        remove-old-trash-files = true;
+        remove-old-temp-files = true;
+        old-files-age = 7;
+      };
+
       "org/gnome/desktop/wm/keybindings" = {
         show-desktop = [ "<Super>d" ];
         switch-input-source = [ "<Alt>Shift_L" "<Shift>Alt_L" "<Alt>Shift_R" "<Shift>Alt_R" "<Super>space" ];
