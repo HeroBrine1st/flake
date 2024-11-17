@@ -31,6 +31,7 @@
         onCalendar = "daily";
         settings = {
           volume."/mnt/arp" = {
+            snapshot_create = "onchange";
             subvolume."@basic" = {
               snapshot_dir = "snapshots/";
               snapshot_preserve = "24h 7d 4w 12m 2y";
