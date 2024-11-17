@@ -27,6 +27,18 @@
           };
         };
       };
+      "basic" = {
+        onCalendar = "daily";
+        settings = {
+          volume."/mnt/arp" = {
+            subvolume."@basic" = {
+              snapshot_dir = "snapshots/";
+              snapshot_preserve = "24h 7d 4w 12m 2y";
+              snapshot_preserve_min = "14d";
+            };
+          };
+        };
+      };
     };
   };
 }
