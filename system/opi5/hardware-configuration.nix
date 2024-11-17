@@ -91,6 +91,11 @@
       fsType = "btrfs";
       options = [ "defaults" "compress=zstd" "autodefrag" "nofail" "noatime" "x-systemd.before=local-fs.target" ];
     };
+    "/mnt/arp" = { # alfa-romeo-papa
+      device = "/dev/mapper/romeo-papa-alfa";
+      fsType = "btrfs";
+      options = [ "defaults" "compress=zstd" "autodefrag" "nofail" "noatime" "x-systemd.before=local-fs.target" ];
+    };
     "/mnt/brp" = { # bravo-romeo-papa
       device = "/dev/mapper/romeo-papa-bravo";
       fsType = "btrfs";
