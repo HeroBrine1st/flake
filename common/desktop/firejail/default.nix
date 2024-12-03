@@ -114,10 +114,6 @@
         executable = "${config.programs.steam.package}/bin/steam-runtime";
         profile = "${pkgs.firejail}/etc/firejail/steam.profile";
       };
-      vesktop = {
-        executable = "${custom-pkgs.vesktop}/bin/vesktop";
-        profile = "${./vesktop.profile}";
-      };
       tlauncher = {
         executable = "${custom-pkgs.tlauncher}/bin/tlauncher";
         profile = "${./tlauncher.profile}";

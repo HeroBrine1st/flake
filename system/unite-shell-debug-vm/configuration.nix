@@ -46,13 +46,12 @@
     gnomeExtensions.unite xorg.xprop
     gnomeExtensions.dash-to-dock # otherwise it's impossible to launch apps
 
-    custom-pkgs.vesktop
+    vesktop
 
     pkgs.xorg.xf86videoqxl
 
     gnome-terminal
   ];
-
 
   security.rtkit.enable = true;
   services.pipewire = {
