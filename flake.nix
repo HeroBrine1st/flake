@@ -43,7 +43,6 @@
       spotify = pkgs.callPackage packages/spotify.nix {};
       jetbrains = jb.jetbrains;
       debounce-keyboard = pkgs.callPackage packages/debounce-keyboard {};
-      vesktop = pkgs.callPackage packages/vesktop {};
       organise-files = pkgs.callPackage packages/organise-files.nix {};
       tlauncher = pkgs.callPackage packages/tlauncher {};
       fenix = rust.fenix;
