@@ -169,6 +169,7 @@
     autoConfig = ''
       lockPref("cookiebanners.service.mode", 1);
       lockPref("cookiebanners.service.mode.privateBrowsing", 1);
+      lockPref("network.trr.allow-rfc1918", true);
     '';
   };
 
