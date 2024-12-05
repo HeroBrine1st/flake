@@ -3,7 +3,7 @@
 
   inputs = {
     pkgs-unstable.url = "nixpkgs/nixos-unstable";
-    pkgs-stable.url = "nixpkgs/nixos-24.05";
+    pkgs-stable.url = "nixpkgs/nixos-24.11";
     pkgs-jetbrains-2022.url = "github:NixOS/nixpkgs?rev=e1fa54a56982c5874f6941703c8b760541e40db1";
     nixos-rk3588.url = "github:ryan4yin/nixos-rk3588?rev=c4fef04d8c124146e6e99138283e0c57b2ad8e29"; # pinned
     home-manager = {
