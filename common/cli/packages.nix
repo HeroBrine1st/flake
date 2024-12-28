@@ -1,4 +1,4 @@
-{ pkgs, ... }: {
+{ pkgs, custom-pkgs, ... }: {
   environment.systemPackages = with pkgs; [
     nano
     wget
@@ -34,7 +34,7 @@
     speedtest-cli
     pwgen
     dig
-    (pkgs.callPackage ../../packages/bdfr {})
+    custom-pkgs.bdfr
   ];
 
   programs.nano.nanorc = ''
