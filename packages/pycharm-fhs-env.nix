@@ -1,4 +1,4 @@
-{ pkgs }: pkgs.buildFHSUserEnv {
+{ pkgs }: pkgs.buildFHSEnv {
   name = "pycharm-fhs-env";
   targetPkgs = pkgs: (with pkgs;
     [

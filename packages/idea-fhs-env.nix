@@ -1,4 +1,4 @@
-{ pkgs }: pkgs.buildFHSUserEnv {
+{ pkgs }: pkgs.buildFHSEnv {
   name = "idea-fhs-env";
   targetPkgs = pkgs: (with pkgs;
     [
