@@ -1,11 +1,11 @@
-{ lib, stdenv, openjdk8, buildFHSUserEnv, fetchzip, fetchurl, copyDesktopItems, makeDesktopItem }: let
+{ lib, stdenv, openjdk8, buildFHSEnv, fetchzip, fetchurl, copyDesktopItems, makeDesktopItem }: let
   version = "1.0";
   src = fetchurl {
     name = "tlauncher.jar";
     url = "https://llaun.ch/jar";
     sha256 = "sha256-3y0lFukFzch6aOxFb4gWZKWxWLqBCTQlHXtwp0BnlYg=";
   };
-  fhs = buildFHSUserEnv {
+  fhs = buildFHSEnv {
     name = "tlauncher";
     runScript = ''
       ${openjdk8}/bin/java -jar "${src}" "$@"
