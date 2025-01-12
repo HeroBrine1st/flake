@@ -75,6 +75,7 @@
               inherit system;
             };
           };
+          custom-pkgs = self.packages."aarch64-linux";
         };
 
         modules = [
