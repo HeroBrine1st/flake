@@ -117,4 +117,7 @@
     KERNEL=="system-uncached-dma32", MODE="0666", GROUP="video", RUN+="${pkgs.coreutils}/bin/chmod a+rw /dev/dma_heap"
   '';
 
+  services.watchdogd = {
+    enable = true;
+  };
 }
