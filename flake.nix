@@ -35,7 +35,7 @@
         };
         jb = import pkgs-jetbrains-2022 {
           system = "x86_64-linux";
-          config.allowUnfreePredicate = pkg: builtins.elem (pkgs.lib.getName pkg) [ "idea-ultimate" "pycharm-professional" "webstorm" "clion" ];
+          config.allowUnfreePredicate = pkg: builtins.elem (pkgs.lib.getName pkg) [ "idea-ultimate" "pycharm-professional" "clion" ];
         };
         rust = import pkgs-unstable {
           system = "x86_64-linux";
