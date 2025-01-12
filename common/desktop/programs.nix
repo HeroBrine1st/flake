@@ -59,7 +59,7 @@
     custom-pkgs.jetbrains.idea-ultimate
     #custom-pkgs.jetbrains.pycharm-professional
     jetbrains.pycharm-community-bin
-    custom-pkgs.jetbrains.webstorm
+    jetbrains.webstorm
     custom-pkgs.jetbrains.clion
     gcc cmake
     arduino-ide
@@ -114,6 +114,7 @@
     "spotify"
     "android-studio-stable"
     "rust-rover"
+    "webstorm"
     "steam" "steam-original" "steam-run" "steam-unwrapped"
     "osu-lazer-bin"
     "veracrypt"
