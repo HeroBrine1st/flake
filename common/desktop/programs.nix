@@ -102,7 +102,7 @@
     winbox
     ventoy
     gnome-connections # RDP client
-    feishin
+    (feishin.override { electron_31 = electron_33; })
     bytecode-viewer
     audacity
     lrcget
