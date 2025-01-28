@@ -134,7 +134,7 @@
 
     # Optionally, you may need to select the appropriate driver version for your specific GPU.
     # https://github.com/NixOS/nixpkgs/blob/nixos-unstable/pkgs/os-specific/linux/nvidia-x11/default.nix
-    package = config.boot.kernelPackages.nvidiaPackages.beta;
+    package = config.boot.kernelPackages.nvidiaPackages.latest;
   };
 
   hardware.nvidia-container-toolkit.enable = true;
