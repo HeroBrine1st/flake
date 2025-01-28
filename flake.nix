@@ -108,7 +108,7 @@
           ./common/scrutiny-collector.nix
 
           ./common/desktop
-          ./common/desktop/hyprland
+#          ./common/desktop/hyprland
 
           ./common/development
 
