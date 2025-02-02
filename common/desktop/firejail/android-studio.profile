@@ -38,10 +38,13 @@ whitelist ${HOME}/.ssh/config
 whitelist ${HOME}/.ssh/known_hosts
 # standartised path on all machines
 whitelist ${HOME}/.ssh/keys/github
+# standartised path on all machines
+whitelist ${HOME}/.ssh/keys/forgejo
 
 read-only ${HOME}/.ssh/config
 read-only ${HOME}/.ssh/known_hosts
 read-only ${HOME}/.ssh/keys/github
+read-only ${HOME}/.ssh/keys/forgejo
 
 
 
