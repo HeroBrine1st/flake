@@ -50,7 +50,10 @@
     (callPackage ../../packages/arc-x-icons.nix {})
   ];
 
-  virtualisation.libvirtd.enable = true;
+  virtualisation.libvirtd = {
+    enable = true;
+    qemu.vhostUserPackages = with pkgs; [ virtiofsd ];
+  };
 
   security.rtkit.enable = true;
   services.pipewire = {
