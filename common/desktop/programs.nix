@@ -70,6 +70,8 @@
       vscodeExtensions = with vscode-extensions; [
         jnoortheen.nix-ide
         k--kato.intellij-idea-keybindings
+        ms-python.python
+        ms-toolsai.jupyter
       ];
     })
     # fleet unavailable
