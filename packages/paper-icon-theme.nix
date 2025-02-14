@@ -27,7 +27,7 @@
       ln -vsf "$base" "''${file/libreoffice-/}"
     done
     # Also I like default icons on my IDEs
-    rm -v Paper/*/apps/{intellij,pycharm,android-std,android-studio}*
+    rm -v Paper/*/apps/{intellij,pycharm,android-std,android-studio,idea,jetbrains}*
   '';
 
   installPhase = ''
