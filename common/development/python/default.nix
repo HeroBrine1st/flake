@@ -6,4 +6,14 @@
       ];
     }))
   ];
+
+  environment.python = {
+    enable = true;
+    modules = pythonPkgs: with pythonPkgs; [
+      jupyter
+      notebook
+      numpy
+      pandas
+    ];
+  };
 }

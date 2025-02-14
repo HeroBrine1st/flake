@@ -16,12 +16,6 @@
     tcpdump
     lm_sensors
     psmisc
-    (python3.withPackages(pythonPkgs: with pythonPkgs; [
-      rich
-      ptpython
-      evdev
-      requests
-    ]))
     gnupg
     gnumake
     sing-box
@@ -36,6 +30,16 @@
     dig
     custom-pkgs.bdfr
   ];
+
+  environment.python = {
+    enable = true;
+    modules = pythonPkgs: with pythonPkgs; [
+      rich
+      ptpython
+      evdev
+      requests
+    ];
+  };
 
   programs.nano.nanorc = ''
     set tabsize 4
