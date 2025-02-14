@@ -7,7 +7,7 @@
     }))
   ];
 
-  environment.python = {
+  programs.python = {
     enable = true;
     modules = pythonPkgs: with pythonPkgs; [
       jupyter
