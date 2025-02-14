@@ -8,7 +8,7 @@
       pythonPkgs: concatMap (def: def.value pythonPkgs) defs;
   };
 in {
-  options.environment.python = {
+  options.programs.python = {
     enable = lib.mkEnableOption "python environment";
     package = lib.mkPackageOption pkgs "python3" {};
     modules = mkOption {
@@ -18,9 +18,9 @@ in {
       example = lib.literalExpression "pythonPkgs: with pythonPkgs; [ rich ]";
     };
   };
-  config = lib.mkIf config.environment.python.enable {
+  config = lib.mkIf config.programs.python.enable {
     environment.systemPackages = [
-      (config.environment.python.package.withPackages config.environment.python.modules)
+      (config.programs.python.package.withPackages config.programs.python.modules)
     ];
   };
 }

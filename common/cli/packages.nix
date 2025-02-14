@@ -31,7 +31,7 @@
     custom-pkgs.bdfr
   ];
 
-  environment.python = {
+  programs.python = {
     enable = true;
     modules = pythonPkgs: with pythonPkgs; [
       rich
