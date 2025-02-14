@@ -16,6 +16,8 @@ in stdenvNoCC.mkDerivation rec {
 
     sed -i 's|Name=Arc|Name=Arc-X-D|' "./src/Arc-OSX-D/index.theme"
     sed -i 's|Name=Arc|Name=Arc-X-P|' "./src/Arc-OSX-P/index.theme"
+
+    rm -rf ./src/Arc-OSX-*/mimetypes/*/application-x-keepass2.svg
   '';
 
   installPhase = ''
