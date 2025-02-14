@@ -82,6 +82,7 @@
           nixos-rk3588.nixosModules.orangepi5.core
           impermanence.nixosModules.impermanence
           ./modules/nebula
+          ./modules/python.nix
 
           ./common/cli
           ./common/scrutiny-collector.nix
@@ -103,6 +104,7 @@
           ./modules/syncthing.nix
           ./modules/nebula
           ./modules/unfree.nix
+          ./modules/python.nix
 
           ./common/cli
           ./common/scrutiny-collector.nix
@@ -134,6 +136,7 @@
           ./modules/syncthing.nix
           ./modules/nebula
           ./modules/unfree.nix
+          ./modules/python.nix
 
           ./common/cli
           ./common/scrutiny-collector.nix
