@@ -175,6 +175,18 @@
           })
         ];
       };
+
+      foxtrot = pkgs-stable.lib.nixosSystem {
+        specialArgs = {
+          custom-pkgs = self.packages."x86_64-linux";
+        };
+        modules = [
+          impermanence.nixosModules.impermanence
+          ./modules/python.nix
+          ./common/cli
+          ./system/foxtrot
+        ];
+      };
     };
     devShells."x86_64-linux" = let
       pkgs = import pkgs-unstable { system = "x86_64-linux"; };
