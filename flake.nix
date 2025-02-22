@@ -165,6 +165,16 @@
           ./system/unite-shell-debug-vm/configuration.nix
         ];
       };
+
+      iso = pkgs-stable.lib.nixosSystem {
+        system = "x86_64-linux";
+        modules = [
+          "${pkgs-stable}/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix"
+          ({ pkgs, ... }: {
+            isoImage.forceTextMode = true;
+          })
+        ];
+      };
     };
     devShells."x86_64-linux" = let
       pkgs = import pkgs-unstable { system = "x86_64-linux"; };
