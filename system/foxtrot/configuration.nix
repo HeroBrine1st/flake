@@ -14,7 +14,7 @@
     isNormalUser = true;
     extraGroups = [ "wheel" "docker" ];
     openssh.authorizedKeys.keys = [
-      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICs5D9zh4OUHN+wwHiNgiqC4Ec0Qi0qLAyA9oh515HJA herobrine1st@DESKTOP-IJK2GUG" # FIXME the same as on opi5, change urgently
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINyZILdbeUexMmf6aJcKnP8Rbv2hkDqv9xeGOnNjs20G herobrine1st@DESKTOP-IJK2GUG"
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAID0zqkL/3T1RkNOV2F8QSR+yy6GPcNeufSWJi6FFsLs4 herobrine1st@MOBILE-DCV5AQD"
     ];
   };
