@@ -40,4 +40,6 @@
       dns = ["1.1.1.1"];
     };
   };
+
+  system.stateVersion = "24.11";
 }
