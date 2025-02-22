@@ -43,7 +43,6 @@
 
   networking.hostName = "foxtrot";
   networking.networkmanager.enable = true;
-  networking.useDHCP = true;
 
   nixpkgs.hostPlatform = "x86_64-linux";
   hardware.enableRedistributableFirmware = true;
