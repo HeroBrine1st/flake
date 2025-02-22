@@ -1,13 +1,6 @@
 { config, lib, pkgs, ... }: {
   boot.tmp.useTmpfs = true;
 
-  nix = {
-    settings = {
-      experimental-features = [ "flakes" "nix-command" ];
-      auto-optimise-store = true;
-    };
-  };
-
   security.sudo.wheelNeedsPassword = false;
 
   # Set your time zone.
