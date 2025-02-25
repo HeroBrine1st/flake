@@ -18,6 +18,14 @@
         name = "htop";
         noDisplay = true;
       };
+      "jupyterlab" = {
+        name = "jupyterlab";
+        nodisplay = true;
+      };
+      "jupyter-notebook" = {
+        name = "jupyter-notebook";
+        nodisplay = true;
+      };
     };
 
     xdg.configFile."mimeapps.list".force = true;
