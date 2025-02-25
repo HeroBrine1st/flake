@@ -166,6 +166,7 @@
         ];
       };
 
+      # nix build .#nixosConfigurations.iso.config.system.build.isoImage
       iso = pkgs-stable.lib.nixosSystem {
         system = "x86_64-linux";
         modules = [
