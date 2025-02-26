@@ -20,11 +20,11 @@
       };
       "jupyterlab" = {
         name = "jupyterlab";
-        nodisplay = true;
+        noDisplay = true;
       };
       "jupyter-notebook" = {
         name = "jupyter-notebook";
-        nodisplay = true;
+        noDisplay = true;
       };
     };
 
