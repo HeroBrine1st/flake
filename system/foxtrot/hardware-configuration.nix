@@ -41,7 +41,11 @@
       fsType = "btrfs";
       options = [ "defaults" "compress=zstd" "discard=async" ];
     };
-    # /home moved to impermanence
+    "/home" = {
+      device = "/dev/mapper/root";
+      fsType = "btrfs";
+      options = [ "defaults" "compress=zstd" "discard=async" "subvol=@home" ];
+    };
     # /var/lib/docker moved to impermanence
     # /var/docker_data moved to impermanence
   };
