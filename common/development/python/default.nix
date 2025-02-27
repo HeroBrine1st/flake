@@ -14,6 +14,8 @@
       notebook
       numpy
       pandas
+      seaborn
+      matplotlib
     ];
   };
 }
