@@ -16,6 +16,7 @@
       pandas
       seaborn
       matplotlib
+      scipy
     ];
   };
 }
