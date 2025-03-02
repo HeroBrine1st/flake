@@ -12,6 +12,8 @@
 #      { directory = "/var/lib/colord"; user = "colord"; group = "colord"; mode = "u=rwx,g=rx,o="; } headless
       { directory = "/var/lib/docker"; mode = "0710"; }
       "/var/docker_data"
+      { directory = "/var/lib/private/ollama"; mode = "700"; }
+#      { directory = "/var/lib/private/open-webui"; mode = "700"; }
     ];
     files = [
       "/etc/machine-id"
