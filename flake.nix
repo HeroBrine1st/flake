@@ -6,7 +6,6 @@
     pkgs-stable.url = "nixpkgs/nixos-24.11";
     pkgs-jetbrains-2022.url = "github:NixOS/nixpkgs?rev=e1fa54a56982c5874f6941703c8b760541e40db1";
     pkgs-bdfr.url = "github:NixOS/nixpkgs?rev=59b1aef59071cae6e87859dc65de973d2cc595c0"; # pinned
-    pkgs-working-element.url = "github:NixOS/nixpkgs?rev=2ff53fe64443980e139eaa286017f53f88336dd0";
     nixos-rk3588.url = "github:ryan4yin/nixos-rk3588?rev=c4fef04d8c124146e6e99138283e0c57b2ad8e29"; # pinned
     home-manager = {
       url = "github:nix-community/home-manager";
@@ -27,7 +26,7 @@
     };
   };
 
-  outputs = { self, pkgs-unstable, pkgs-stable, nixos-rk3588, pkgs-jetbrains-2022, home-manager, disko, impermanence, lanzaboote, fenix, pkgs-bdfr, pkgs-working-element, ... }: {
+  outputs = { self, pkgs-unstable, pkgs-stable, nixos-rk3588, pkgs-jetbrains-2022, home-manager, disko, impermanence, lanzaboote, fenix, pkgs-bdfr, ... }: {
     packages = {
       "x86_64-linux" = let
         pkgs = import pkgs-unstable {
@@ -45,9 +44,6 @@
         bdfr = import pkgs-bdfr {
           system = "x86_64-linux";
         };
-        working-element = import pkgs-working-element {
-          system = "x86_64-linux";
-        };
       in {
         spotify = pkgs.callPackage packages/spotify.nix {};
         jetbrains = jb.jetbrains;
@@ -56,7 +52,6 @@
         tlauncher = pkgs.callPackage packages/tlauncher {};
         fenix = rust.fenix;
         bdfr = bdfr.callPackage packages/bdfr {};
-        element-desktop = working-element.element-desktop;
       };
       "aarch64-linux" = let
         bdfr = import pkgs-bdfr {
