@@ -369,22 +369,6 @@
         "type": "indirect"
       }
     },
-    "pkgs-working-element": {
-      "locked": {
-        "lastModified": 1739446958,
-        "narHash": "sha256-+/bYK3DbPxMIvSL4zArkMX0LQvS7rzBKXnDXLfKyRVc=",
-        "owner": "NixOS",
-        "repo": "nixpkgs",
-        "rev": "2ff53fe64443980e139eaa286017f53f88336dd0",
-        "type": "github"
-      },
-      "original": {
-        "owner": "NixOS",
-        "repo": "nixpkgs",
-        "rev": "2ff53fe64443980e139eaa286017f53f88336dd0",
-        "type": "github"
-      }
-    },
     "pre-commit-hooks": {
       "inputs": {
         "flake-compat": [
@@ -456,8 +440,7 @@
         "pkgs-bdfr": "pkgs-bdfr",
         "pkgs-jetbrains-2022": "pkgs-jetbrains-2022",
         "pkgs-stable": "pkgs-stable",
-        "pkgs-unstable": "pkgs-unstable",
-        "pkgs-working-element": "pkgs-working-element"
+        "pkgs-unstable": "pkgs-unstable"
       }
     },
     "rust-analyzer-src": {

@@ -7,7 +7,7 @@
     gnome-terminal
     nautilus
     # firefox-bin inferred from programs.firefox.enable
-    custom-pkgs.element-desktop
+    element-desktop
     custom-pkgs.spotify
 
     # "Personal"
