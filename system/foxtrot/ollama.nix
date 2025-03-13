@@ -1,10 +1,12 @@
-{ pkgs, ... } : {
+{ pkgs, unstable-pkgs, ... } : {
   services.ollama = {
     enable = true;
+    package = unstable-pkgs.ollama;
   };
 
   services.open-webui = {
     enable = true;
+    package = unstable-pkgs.open-webui;
     environment = {
       # defconf #
       SCARF_NO_ANALYTICS = "True";
