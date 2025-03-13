@@ -180,6 +180,10 @@
       foxtrot = pkgs-stable.lib.nixosSystem {
         specialArgs = {
           custom-pkgs = self.packages."x86_64-linux";
+          unstable-pkgs = {
+            open-webui = pkgs-unstable.legacyPackages."x86_64-linux".open-webui;
+            ollama = pkgs-unstable.legacyPackages."x86_64-linux".ollama;
+          };
         };
         modules = [
           impermanence.nixosModules.impermanence
