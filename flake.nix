@@ -192,6 +192,19 @@
           ./system/foxtrot
         ];
       };
+
+      bravo = pkgs-stable.lib.nixosSystem {
+        specialArgs = {
+          custom-pkgs = self.packages."x86_64-linux";
+        };
+        modules = [
+          disko.nixosModules.disko
+          impermanence.nixosModules.impermanence
+          ./modules/python.nix
+          ./common/cli
+          ./system/bravo
+        ];
+      };
     };
     devShells."x86_64-linux" = let
       pkgs = import pkgs-unstable { system = "x86_64-linux"; };
