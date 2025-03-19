@@ -72,6 +72,7 @@
         k--kato.intellij-idea-keybindings
         ms-python.python
         ms-toolsai.jupyter
+        continue.continue
       ];
     })
     # fleet unavailable
