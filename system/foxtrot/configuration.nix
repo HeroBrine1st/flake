@@ -1,4 +1,4 @@
-{ ... }: {
+{ custom-pkgs, ... }: {
   boot.tmp.useTmpfs = true;
 
   security.sudo.wheelNeedsPassword = false;
@@ -42,4 +42,8 @@
   };
 
   system.stateVersion = "24.11";
+
+  environment.systemPackages = [
+    custom-pkgs.llama-cpp-rpc
+  ];
 }
