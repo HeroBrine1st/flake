@@ -52,7 +52,6 @@
         tlauncher = pkgs.callPackage packages/tlauncher {};
         fenix = rust.fenix;
         bdfr = bdfr.callPackage packages/bdfr {};
-        llama-cpp-rpc = pkgs.llama-cpp.override { rpcSupport = true; };
       };
       "aarch64-linux" = let
         bdfr = import pkgs-bdfr {
