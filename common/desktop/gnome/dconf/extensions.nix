@@ -87,23 +87,6 @@
         window-buttons-placement = "right";
       };
 
-      "org/gnome/shell/extensions/sp-tray" = {
-        album-max-length = 174;
-        artist-max-length = 145;
-        display-format = "{track} by {artist} ({album})";
-        display-mode = 0;
-        hidden-when-inactive = true;
-        hidden-when-paused = true;
-        hidden-when-stopped = true;
-        logo-position = 0;
-        marquee-interval = 100;
-        marquee-length = 180;
-        marquee-tail = " |";
-        metadata-when-paused = true;
-        position = 2;
-        title-max-length = 136;
-      };
-
       "org/gnome/shell" = {
         enabled-extensions = [
           # IDK what are those

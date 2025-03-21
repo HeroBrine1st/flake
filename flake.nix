@@ -31,7 +31,6 @@
       "x86_64-linux" = let
         pkgs = import pkgs-unstable {
           system = "x86_64-linux";
-          config.allowUnfreePredicate = pkg: builtins.elem (pkgs.lib.getName pkg) [ "spotify" ];
         };
         jb = import pkgs-jetbrains-2022 {
           system = "x86_64-linux";
@@ -45,7 +44,6 @@
           system = "x86_64-linux";
         };
       in {
-        spotify = pkgs.callPackage packages/spotify.nix {};
         jetbrains = jb.jetbrains;
         debounce-keyboard = pkgs.callPackage packages/debounce-keyboard {};
         organise-files = pkgs.callPackage packages/organise-files.nix {};
