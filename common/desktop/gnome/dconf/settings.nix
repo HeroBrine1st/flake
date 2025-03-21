@@ -54,7 +54,7 @@
       };
 
       "org/gnome/shell" = {
-        favorite-apps = [ "org.gnome.Terminal.desktop" "org.gnome.Nautilus.desktop" "firefox.desktop" "element-desktop.desktop" "spotify.desktop" ];
+        favorite-apps = [ "org.gnome.Terminal.desktop" "org.gnome.Nautilus.desktop" "firefox.desktop" "element-desktop.desktop" "feishin.desktop" ];
       };
 
       "org/gnome/desktop/background" = {

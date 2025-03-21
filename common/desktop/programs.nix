@@ -8,7 +8,7 @@
     nautilus
     # firefox-bin inferred from programs.firefox.enable
     element-desktop
-    custom-pkgs.spotify
+    (feishin.override { electron_31 = electron_33; })
 
     # "Personal"
     gnome-weather
@@ -105,7 +105,6 @@
     winbox
     ventoy
     gnome-connections # RDP client
-    (feishin.override { electron_31 = electron_33; })
     bytecode-viewer
     audacity
     lrcget
@@ -114,7 +113,6 @@
   ];
 
   nixpkgs.allowedUnfreePackages = [
-    "spotify"
     "android-studio-stable"
     "rust-rover"
     "webstorm"
@@ -175,11 +173,5 @@
       lockPref("cookiebanners.service.mode.privateBrowsing", 1);
       lockPref("network.trr.allow-rfc1918", true);
     '';
-  };
-
-  networking.firewall = {
-    allowedTCPPorts = [
-      57621 # spotify connect
-    ];
   };
 }

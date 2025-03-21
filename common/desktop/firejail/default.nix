@@ -54,10 +54,6 @@
       whitelist ''${HOME}/Git
       include whitelist-common.inc
     '';
-    "firejail/spotify.local".text = ''
-      join-or-start spotify
-      whitelist ''${HOME}/Music/Main
-    '';
     "firejail/steam.local".text = ''
       ignore private-etc
       ignore restrict-namespaces
@@ -101,10 +97,6 @@
       node = {
         executable = "${pkgs.nodejs}/bin/node";
         profile = "${pkgs.firejail}/etc/firejail/node.profile";
-      };
-      spotify = {
-        executable = "${custom-pkgs.spotify}/bin/spotify";
-        profile = "${pkgs.firejail}/etc/firejail/spotify.profile";
       };
       steam = {
         executable = "${config.programs.steam.package}/bin/steam";

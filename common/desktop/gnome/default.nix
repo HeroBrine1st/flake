@@ -17,7 +17,6 @@
     gnomeExtensions.primary-input-on-lockscreen
     gnomeExtensions.quick-settings-tweaker
     # gnomeExtensions.removable-drive-menu # somehow already available
-    gnomeExtensions.spotify-tray
     gnomeExtensions.system-monitor-next
     gnomeExtensions.dash-to-dock
     gnomeExtensions.unite xorg.xprop
