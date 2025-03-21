@@ -102,7 +102,6 @@
           # External
           "panel-corners@aunetx"
           "unite@hardpixel.eu"
-          "sp-tray@sp-tray.esenliyim.github.com"
           "gsconnect@andyholmes.github.io"
           "ControlBlurEffectOnLockScreen@pratap.fastmail.fm"
           "drive-menu@gnome-shell-extensions.gcampax.github.com"
