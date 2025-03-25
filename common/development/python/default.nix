@@ -17,6 +17,7 @@
       seaborn
       matplotlib
       scipy
+      scikit-learn
     ];
   };
 }
