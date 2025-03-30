@@ -23,6 +23,13 @@ in {
     ];
   };
 
+  systemd.user.services."gnome-terminal-server" = {
+    environment = {
+      "XDG_CURRENT_DESKTOP" = "GNOME";
+    };
+    overrideStrategy = "asDropin";
+  };
+
   home-manager.users.herobrine1st = {
     imports = [
       # plugins/hyprbar.nix
