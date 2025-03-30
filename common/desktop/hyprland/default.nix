@@ -28,6 +28,12 @@ in {
       # plugins/hyprbar.nix
     ];
 
+    dconf.settings = {
+      "org/gnome/Terminal/Legacy/Settings" = {
+        headerbar = true;
+      };
+    };
+
     wayland.windowManager.hyprland = {
       enable = true;
       settings = {
