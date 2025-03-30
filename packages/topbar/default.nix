@@ -4,5 +4,5 @@
   name = "topbar";
   entry = "app.ts";
   gtk4 = false;
-  extraPackages = builtins.attrValues (builtins.removeAttrs ags.packages.${pkgs.system} ["docs"]);
+  extraPackages = with ags.packages.${system}; [ hyprland mpris battery wireplumber network tray ];
 }
