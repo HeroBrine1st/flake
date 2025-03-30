@@ -25,6 +25,7 @@ in {
 
   systemd.user.services."gnome-terminal-server" = {
     environment = {
+      # TODO remove close/minimize buttons via css when maximized (see unite extension)
       "XDG_CURRENT_DESKTOP" = "GNOME";
     };
     overrideStrategy = "asDropin";
