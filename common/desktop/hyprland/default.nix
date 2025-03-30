@@ -128,6 +128,7 @@ in {
 
         windowrule = [
           "float, class:(.*)"
+          "noborder, class:(.*)"
         ];
 
         monitor = [
