@@ -69,7 +69,7 @@ in {
           };
 
           shadow = {
-            enable = false;
+            enabled = false;
             range = 20;
             render_power = 2;
             ignore_window = true;
@@ -127,7 +127,7 @@ in {
         ];
 
         windowrule = [
-          "float, (.*)"
+          "float, class:(.*)"
         ];
       };
     };
