@@ -110,7 +110,6 @@ in {
 
           "${pkgs.kdePackages.polkit-kde-agent-1}/libexec/polkit-kde-authentication-agent-1"
           "${custom-pkgs.topbar}/bin/topbar"
-          "${pkgs.nwg-dock-hyprland}/bin/nwg-dock-hyprland -d"
         
           "hyprctl setcursor oreo_spark_purple_cursors 32"
 
