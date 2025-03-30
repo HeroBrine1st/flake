@@ -124,6 +124,7 @@ in {
         env = [
           "XCURSOR_THEME,oreo_spark_purple_cursors"
           "XCURSOR_SIZE,32"
+          "GTK_CSD,1"
         ];
 
         windowrule = [
