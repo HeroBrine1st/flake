@@ -3,6 +3,6 @@
   src = ./.;
   name = "topbar";
   entry = "app.ts";
-  gtk4 = true;
+  gtk4 = false;
   extraPackages = builtins.attrValues (builtins.removeAttrs ags.packages.${pkgs.system} ["docs"]);
 }
