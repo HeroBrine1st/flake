@@ -1,8 +1,11 @@
-{ lib, pkgs, ... }: let
-  ags = pkgs.ags.overrideAttrs (old: {
-    buildInputs = old.buildInputs ++ [ pkgs.libdbusmenu-gtk3 ];
-  });
-  ags-config = pkgs.callPackage ./ags/config.nix { inherit ags; };
+{ lib, pkgs, custom-pkgs, ... }: let
+  ags = pkgs.ags.override {
+    # required for ags init -g 4
+    extraPackages = [
+      # pkgs.graphene # is not confirmed
+      pkgs.gtk4
+    ];
+  };
 in {
   imports = [
     ./hyprlock.nix
@@ -91,7 +94,7 @@ in {
           # xdg-desktop-portal-gtk is also systemd-enabled, but may be disabled once gnome is removed
 
           "${pkgs.kdePackages.polkit-kde-agent-1}/libexec/polkit-kde-authentication-agent-1"
-          "${ags}/bin/ags -c ${ags-config}/config.js" # https://github.com/Aylur/ags
+          "${custom-pkgs.topbar}/bin/topbar"
         
           "hyprctl setcursor oreo_spark_purple_cursors 32"
 

@@ -24,9 +24,13 @@
       url = "github:nix-community/fenix";
       inputs.nixpkgs.follows = "pkgs-unstable";
     };
+    ags = {
+      url = "github:aylur/ags";
+      inputs.nixpkgs.follows = "pkgs-unstable";
+    };
   };
 
-  outputs = { self, pkgs-unstable, pkgs-stable, nixos-rk3588, pkgs-jetbrains-2022, home-manager, disko, impermanence, lanzaboote, fenix, pkgs-bdfr, ... }: {
+  outputs = { self, pkgs-unstable, pkgs-stable, nixos-rk3588, pkgs-jetbrains-2022, home-manager, disko, impermanence, lanzaboote, fenix, pkgs-bdfr, ags, ... }: {
     packages = {
       "x86_64-linux" = let
         pkgs = import pkgs-unstable {
@@ -50,6 +54,7 @@
         tlauncher = pkgs.callPackage packages/tlauncher {};
         fenix = rust.fenix;
         bdfr = bdfr.callPackage packages/bdfr {};
+        topbar = import packages/topbar { inherit pkgs ags; };
       };
       "aarch64-linux" = let
         bdfr = import pkgs-bdfr {
@@ -108,7 +113,6 @@
           ./common/scrutiny-collector.nix
 
           ./common/desktop
-#          ./common/desktop/hyprland
 
           ./common/development
 
@@ -140,6 +144,7 @@
           ./common/scrutiny-collector.nix
 
           ./common/desktop
+          ./common/desktop/hyprland
 
           ./common/development
 
