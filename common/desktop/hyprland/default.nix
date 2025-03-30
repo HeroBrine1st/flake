@@ -129,6 +129,10 @@ in {
         windowrule = [
           "float, class:(.*)"
         ];
+
+        monitor = [
+          ", preferred, auto, 1"
+        ];
       };
     };
 
