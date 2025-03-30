@@ -68,12 +68,14 @@ in {
             contrast = 1;
           };
 
-          drop_shadow = false;
-          shadow_ignore_window = true;
-          shadow_range = 20;
-          shadow_offset = "0 2";
-          shadow_render_power = 2;
-          "col.shadow" = "rgba(0000001A)";
+          shadow = {
+            enable = false;
+            range = 20;
+            render_power = 2;
+            ignore_window = true;
+#            color = "rgba(0000001A)";
+            offset = "0 2";
+          };
 
           inactive_opacity = 0.5;
         };
