@@ -108,10 +108,9 @@ in {
             "/etc/group:/etc/group:ro"
           ];
           entrypoint = "${pkgs.bash}/bin/bash";
-          cmd = ["-c" "exec ${traefikModule.config.systemd.services.traefik.serviceConfig.ExecStart}"];
+          cmd = ["-c" "exec ${pkgs.su-exec}/bin/su-exec traefik:${config.services.traefik.group} ${traefikModule.config.systemd.services.traefik.serviceConfig.ExecStart}"];
           extraOptions = [
             "--network=${network}"
-            "--user=traefik:${config.services.traefik.group}"
           ];
         };
       };
