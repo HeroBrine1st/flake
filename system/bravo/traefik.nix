@@ -53,7 +53,7 @@ in {
       serviceConfig = {
         Type = "oneshot";
         RemainAfterExit = true;
-        ExecStart = ''
+        ExecStart = pkgs.writeShellScript "create-traefik-network" ''
           ${pkgs.docker}/bin/docker network inspect ${network} >/dev/null 2>&1 || \
           ${pkgs.docker}/bin/docker network create ${network}
         '';
