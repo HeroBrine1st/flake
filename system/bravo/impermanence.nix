@@ -9,9 +9,9 @@
       "/var/cron"
       { directory = "/var/lib/docker"; mode = "0710"; }
       "/var/docker_data"
-    ] ++ lib.mkIf config.services.traefik.enable [
+    ] ++ (if lib.mkIf config.services.traefik.enableInDocker then [
       { directory = config.services.traefik.dataDir; inherit (config.services.traefik) user group; }
-    ];
+    ] else []);
     files = [
       "/etc/machine-id"
       "/etc/ssh/ssh_host_ed25519_key"
