@@ -9,7 +9,7 @@
       "/var/cron"
       { directory = "/var/lib/docker"; mode = "0710"; }
       "/var/docker_data"
-    ] ++ (if (config.services.traefik ? enableInDocker) && config.services.traefik.enableInDocker then [
+    ] ++ (if (config.services.traefik ? docker) && config.services.traefik.docker.enable || config.services.traefik.enable then [
       { directory = config.services.traefik.dataDir; user = "traefik"; inherit (config.services.traefik) group; }
     ] else []);
     files = [
