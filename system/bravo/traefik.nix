@@ -25,7 +25,7 @@
                 sniStrict = true;
                 clientAuth = {
                   clientAuthType = "RequireAndVerifyClientCert";
-                  caFiles = [ ./cloudflare-origin-ca.pem ];
+                  caFiles = [ "${./cloudflare-origin-ca.pem}" ];
                 };
               };
             };
@@ -111,7 +111,7 @@ in {
           cmd = ["-c" "exec ${traefikModule.config.systemd.services.traefik.serviceConfig.ExecStart}"];
           extraOptions = [
             "--network=${network}"
-            "--user=${config.services.traefik.user}:${config.services.traefik.group}"
+            "--user=traefik:${config.services.traefik.group}"
           ];
         };
       };
@@ -138,5 +138,14 @@ in {
         };
       };
     };
+
+    users.users.traefik = {
+      group = "traefik";
+      home = config.services.traefik.dataDir;
+      createHome = true;
+      isSystemUser = true;
+    };
+
+    users.groups.traefik = {};
   };
 }
