@@ -60,6 +60,7 @@
                 address = ":443";
                 AsDefault = true;
                 http2.maxConcurrentStreams = 250;
+                http.tls = {};
                 forwardedHeaders.trustedIPs = [
                   "173.245.48.0/20"
                   "103.21.244.0/22"
