@@ -9,7 +9,10 @@
 
   services.traefik = {
     # TODO move traefik to module and move that out of here
-    enableInDocker = true;
+    docker = {
+      enable = true;
+      ports = [ "[::]:443:443" ];
+    };
     group = "docker";
   };
 }

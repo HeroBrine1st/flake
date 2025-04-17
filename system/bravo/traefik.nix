@@ -87,9 +87,17 @@
   };
 in {
   options = {
-    services.traefik.enableInDocker = lib.mkEnableOption "traefik in docker";
+    services.traefik.docker = {
+      enable = lib.mkEnableOption "traefik in docker";
+      ports = lib.mkOption {
+        type = with lib.types; listOf str;
+        default = [];
+        description = "Alias to virtualisation.oci-containers.containers.<name>.ports";
+      };
+    };
+
   };
-  config = lib.mkIf config.services.traefik.enableInDocker {
+  config = lib.mkIf config.services.traefik.docker.enable {
     virtualisation.oci-containers = {
       backend = "docker";
       containers = {
@@ -112,6 +120,7 @@ in {
           extraOptions = [
             "--network=${network}"
           ];
+          inherit (config.services.traefik.docker) ports;
         };
       };
     };
