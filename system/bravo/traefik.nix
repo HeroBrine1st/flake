@@ -27,6 +27,7 @@ in {
         image = "almost-scratch";
         imageStream = pkgs.dockerTools.streamLayeredImage {
           name = "almost-scratch";
+          tag = "latest";
         };
         volumes = [
           "/nix/store:/nix/store:ro"
