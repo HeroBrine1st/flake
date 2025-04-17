@@ -1,4 +1,4 @@
-{ config, ... }: {
+{ config, lib, ... }: {
   environment.persistence."/nix/persist/system" = {
     hideMounts = true;
     directories = [
