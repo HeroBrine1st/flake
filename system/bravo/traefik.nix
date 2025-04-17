@@ -24,7 +24,7 @@ in {
     containers = {
       traefik = {
         # do not build image, use /nix/store instead to reuse nixpkgs modules
-        image = "stratch";
+        image = "scratch";
         volumes = [
           "/nix/store:/nix/store:ro"
           #"/var/run/docker.sock:/var/run/docker.sock"
