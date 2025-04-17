@@ -7,5 +7,9 @@
     ./traefik.nix
   ];
 
-  services.traefik.enableInDocker = true; # TODO tmp
+  services.traefik = {
+    # TODO move traefik to module and move that out of here
+    enableInDocker = true;
+    group = "docker";
+  };
 }
