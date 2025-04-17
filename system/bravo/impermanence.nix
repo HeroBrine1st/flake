@@ -1,4 +1,4 @@
-{ ... }: {
+{ config, ... }: {
   environment.persistence."/nix/persist/system" = {
     hideMounts = true;
     directories = [
@@ -9,6 +9,8 @@
       "/var/cron"
       { directory = "/var/lib/docker"; mode = "0710"; }
       "/var/docker_data"
+    ] ++ lib.mkIf config.services.traefik.enable [
+      { directory = config.services.traefik.dataDir; inherit (config.services.traefik) user group; }
     ];
     files = [
       "/etc/machine-id"

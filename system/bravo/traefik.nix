@@ -1,4 +1,4 @@
-{ pkgs, modulesPath, lib, config, ... }@host: let
+{ pkgs, modulesPath, lib, config, options, ... }@host: let
   network = "traefik";
   traefikModule = lib.evalModules {
     modules = import (modulesPath + "/module-list.nix") ++ [
@@ -10,59 +10,133 @@
           { localSystem = host.pkgs.stdenv.hostPlatform; };
       })
       {
+        # TODO simply copy from host and set enable=true
         services.traefik = {
           enable = true;
-          staticConfigOptions.entryPoints.web.address = ":80";
+          dynamicConfigOptions = {
+            tls = {
+              certificates = [{
+                certFile="${host.config.services.traefik.dataDir}/tls.cert";
+                keyFile="${host.config.services.traefik.dataDir}/tls.key";
+              }];
+
+              # that's for cloudflare. the actual default (without cloudflare) is sniStrict=true only.
+              options.default = {
+                sniStrict = true;
+                clientAuth = {
+                  clientAuthType = "RequireAndVerifyClientCert";
+                  caFiles = [ ./cloudflare-origin-ca.pem ];
+                };
+              };
+            };
+          };
+          staticConfigOptions = {
+            providers.docker = {
+              network = "${network}";
+              exposedByDefault = false;
+              allowEmptyServices = true;
+            };
+            log = {
+              format = "common";
+              level = "INFO";
+            };
+            accessLog = {
+              filePath = "${host.config.services.traefik.dataDir}/logs/access.log";
+              format = "json";
+              fields = {
+                names = {
+                  StartUTC = "drop";
+                };
+                headers = {
+                  names = {
+                    "CF-Connecting-IP" = "keep";
+                    "User-Agent" = "keep";
+                  };
+                };
+              };
+            };
+            entryPoints = {
+              https = {
+                address = ":443";
+                AsDefault = true;
+                http2.maxConcurrentStreams = 250;
+                forwardedHeaders.trustedIPs = [
+                  "173.245.48.0/20"
+                  "103.21.244.0/22"
+                  "103.22.200.0/22"
+                  "103.31.4.0/22"
+                  "141.101.64.0/18"
+                  "108.162.192.0/18"
+                  "190.93.240.0/20"
+                  "188.114.96.0/20"
+                  "197.234.240.0/22"
+                  "198.41.128.0/17"
+                  "162.158.0.0/15"
+                  "104.16.0.0/13"
+                  "104.24.0.0/14"
+                  "172.64.0.0/13"
+                  "131.0.72.0/22"
+                ];
+              };
+            };
+          };
         };
         system.stateVersion = host.config.system.stateVersion;
       }
     ];
   };
 in {
-  virtualisation.oci-containers = {
-    backend = "docker";
-    containers = {
-      traefik = {
-        # do not build image, use /nix/store instead to reuse nixpkgs modules
-        image = "almost-scratch";
-        imageStream = pkgs.dockerTools.streamLayeredImage {
-          name = "almost-scratch";
-          tag = "latest";
+  options = {
+    services.traefik.enableInDocker = lib.mkEnableOption "traefik in docker";
+  };
+  config = lib.mkIf config.services.traefik.enableInDocker {
+    virtualisation.oci-containers = {
+      backend = "docker";
+      containers = {
+        traefik = assert !config.services.traefik.enable; {
+          # do not build image, use /nix/store instead to reuse nixpkgs modules
+          image = "almost-scratch";
+          imageStream = pkgs.dockerTools.streamLayeredImage {
+            name = "almost-scratch";
+            tag = "latest";
+          };
+          volumes = [
+            "/nix/store:/nix/store:ro"
+            "/var/run/docker.sock:/var/run/docker.sock"
+            "${config.services.traefik.dataDir}:${config.services.traefik.dataDir}"
+            "/etc/passwd"
+            "/etc/group"
+          ];
+          entrypoint = "${pkgs.bash}/bin/bash";
+          cmd = ["-c" "exec ${traefikModule.config.systemd.services.traefik.serviceConfig.ExecStart}"];
+          extraOptions = [
+            "--network=${network}"
+            "--user=${config.services.traefik.user}:${config.services.traefik.group}"
+          ];
         };
-        volumes = [
-          "/nix/store:/nix/store:ro"
-          #"/var/run/docker.sock:/var/run/docker.sock"
-          #"/var/log/traefik/:/var/log/traefik/"
-        ];
-        entrypoint = "${pkgs.bash}/bin/bash";
-        cmd = ["-c" "exec ${traefikModule.config.systemd.services.traefik.serviceConfig.ExecStart}"];
-        extraOptions = [
-          "--network=${network}"
-        ];
+      };
+    };
+
+    # TODO logrotate
+
+    systemd.services = {
+      docker-traefik = {
+        after = [ "docker-traefik-network.service" ];
+        requires = [ "docker-traefik-network.service" ];
+      };
+      docker-traefik-network = {
+        wantedBy = [ "multi-user.target" ];
+        after = [ "docker.service" ];
+        requires = [ "docker.service" ];
+        serviceConfig = {
+          Type = "oneshot";
+          RemainAfterExit = true;
+          ExecStart = pkgs.writeShellScript "create-traefik-network" ''
+            ${pkgs.docker}/bin/docker network inspect ${network} >/dev/null 2>&1 || \
+            ${pkgs.docker}/bin/docker network create ${network}
+          '';
+        };
       };
     };
   };
-
-  # TODO logrotate
-
-  systemd.services = {
-    docker-traefik = {
-      after = [ "docker-traefik-network.service" ];
-      requires = [ "docker-traefik-network.service" ];
-    };
-    docker-traefik-network = {
-      wantedBy = [ "multi-user.target" ];
-      after = [ "docker.service" ];
-      requires = [ "docker.service" ];
-      serviceConfig = {
-        Type = "oneshot";
-        RemainAfterExit = true;
-        ExecStart = pkgs.writeShellScript "create-traefik-network" ''
-          ${pkgs.docker}/bin/docker network inspect ${network} >/dev/null 2>&1 || \
-          ${pkgs.docker}/bin/docker network create ${network}
-        '';
-      };
-    };
-  };
-
 }
