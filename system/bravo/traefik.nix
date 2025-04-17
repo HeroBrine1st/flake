@@ -24,6 +24,7 @@ in {
     containers = {
       traefik = {
         # do not build image, use /nix/store instead to reuse nixpkgs modules
+        image = "almost-scratch";
         imageStream = pkgs.dockerTools.streamLayeredImage {
           name = "almost-scratch";
         };
