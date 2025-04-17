@@ -104,8 +104,8 @@ in {
             "/nix/store:/nix/store:ro"
             "/var/run/docker.sock:/var/run/docker.sock"
             "${config.services.traefik.dataDir}:${config.services.traefik.dataDir}"
-            "/etc/passwd"
-            "/etc/group"
+            "/etc/passwd:/etc/passwd/:ro"
+            "/etc/group:/etc/group:ro"
           ];
           entrypoint = "${pkgs.bash}/bin/bash";
           cmd = ["-c" "exec ${traefikModule.config.systemd.services.traefik.serviceConfig.ExecStart}"];
