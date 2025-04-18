@@ -29,6 +29,7 @@
     };
 
     xdg.configFile."mimeapps.list".force = true;
+    xdg.configFile."gtk-3.0/bookmarks".force = true;
     xdg.mimeApps = {
       enable = true;
       defaultApplications = {
