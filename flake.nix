@@ -186,6 +186,9 @@
           impermanence.nixosModules.impermanence
           ./modules/python.nix
           ./common/cli
+          ./common/network/overlay
+          ./common/scrutiny-collector.nix
+
           ./system/foxtrot
         ];
       };
