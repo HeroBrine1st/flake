@@ -16,51 +16,62 @@
     "bravo"
   ];
   isStatic = builtins.elem hostname staticHosts;
+  isEnabled = builtins.elem hostname (builtins.attrNames ipMap);
 in {
-  options.network.overlay.configAppendixFile = lib.mkOption {
-    type = lib.types.nullOr lib.types.path;
-    description = "Activation-time config file to be merged into build-time config file";
-    default = null;
+  options.network.overlay = {
+    configAppendixFile = lib.mkOption {
+      type = lib.types.nullOr lib.types.path;
+      description = "Activation-time config file to be merged into build-time config file";
+      default = null;
+    };
+    enabled = lib.mkOption {
+      type = lib.types.bool;
+      description = "Set to true if overlay network enable condition is true";
+      readOnly = true;
+    };
   };
 
-  config.services.nebula.networks.overlay = lib.mkIf (builtins.elem hostname (builtins.attrNames ipMap)) {
-    enable = true;
+  config = {
+    network.overlay.enabled = isEnabled;
+    services.nebula.networks.overlay = lib.mkIf isEnabled {
+      enable = true;
 
-    package = lib.mkIf (config.network.overlay.configAppendixFile != null) (pkgs.callPackage ./wrapper.nix {
-      configAppendixFile = config.network.overlay.configAppendixFile;
-    });
+      package = lib.mkIf (config.network.overlay.configAppendixFile != null) (pkgs.callPackage ./wrapper.nix {
+        configAppendixFile = config.network.overlay.configAppendixFile;
+      });
 
-    firewall.outbound = [
-      {
-        host = "any";
-        port = "any";
-        proto = "any";
-      }
-    ];
-    firewall.inbound = [
-      {
-        host = "any";
-        port = "any";
-        proto = "icmp";
-      }
-    ] ++ lib.optionals isStatic [
-      {
-        host = "any";
-        port = "any";
-        proto = "any";
-        group = "entryhost"; # entrypoint + host = entryhost
-      }
-    ];
+      firewall.outbound = [
+        {
+          host = "any";
+          port = "any";
+          proto = "any";
+        }
+      ];
+      firewall.inbound = [
+        {
+          host = "any";
+          port = "any";
+          proto = "icmp";
+        }
+      ] ++ lib.optionals isStatic [
+        {
+          host = "any";
+          port = "any";
+          proto = "any";
+          group = "entryhost"; # entrypoint + host = entryhost
+        }
+      ];
 
-    # TODO change with impermanence on every host
-    ca = "/nix/persist/nebula/ca.crt";
-    cert = "/nix/persist/nebula/${hostname}.crt";
-    key = "/nix/persist/nebula/${hostname}.key";
+      # TODO change with impermanence on every host
+      ca = "/nix/persist/nebula/ca.crt";
+      cert = "/nix/persist/nebula/${hostname}.crt";
+      key = "/nix/persist/nebula/${hostname}.key";
 
-    lighthouses = lib.mkIf (!isStatic) (builtins.map (name: ipMap."${name}") staticHosts);
-    relays = lib.mkIf (!isStatic) (builtins.map (name: ipMap."${name}") staticHosts);
+      lighthouses = lib.mkIf (!isStatic) (builtins.map (name: ipMap."${name}") staticHosts);
+      relays = lib.mkIf (!isStatic) (builtins.map (name: ipMap."${name}") staticHosts);
 
-    isLighthouse = isStatic;
-    isRelay = isStatic;
+      isLighthouse = isStatic;
+      isRelay = isStatic;
+    };
   };
 }
