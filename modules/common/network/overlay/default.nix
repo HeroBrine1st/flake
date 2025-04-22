@@ -15,7 +15,9 @@
     "stark-feeling"
     "bravo"
   ];
+  servers = staticHosts ++ [ "foxtrot" ];
   isStatic = builtins.elem hostname staticHosts;
+  isServer = builtins.elem hostname servers;
   isEnabled = builtins.elem hostname (builtins.attrNames ipMap);
 in {
   options.network.overlay = {
@@ -53,7 +55,7 @@ in {
           port = "any";
           proto = "icmp";
         }
-      ] ++ lib.optionals isStatic [
+      ] ++ lib.optionals isServer [
         {
           host = "any";
           port = "any";
