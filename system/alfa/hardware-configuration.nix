@@ -103,7 +103,7 @@
     };
   };
 
-  networking.hostName = "opi5";
+  networking.hostName = "alfa";
   networking.networkmanager.enable = true;
 
   nixpkgs.hostPlatform = "aarch64-linux";

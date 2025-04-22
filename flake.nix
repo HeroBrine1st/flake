@@ -75,9 +75,8 @@
       };
     };
     nixosConfigurations = {
-      opi5 = let
-        # using the same nixpkgs as nixos-rk3588 to utilize the cross-compilation cache.
-        inherit (nixos-rk3588.inputs) nixpkgs;
+      alfa = let
+        inherit (nixos-rk3588.inputs) nixpkgs; # pinning nixpkgs so that kernel is not rebuilt due to system update
         system = "aarch64-linux";
       in pkgs-stable.lib.nixosSystem {
         inherit system;
