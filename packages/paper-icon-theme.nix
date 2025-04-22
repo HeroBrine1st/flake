@@ -38,4 +38,7 @@
 
     runHook postInstall
   '';
+
+  outputHashMode = "recursive";
+  outputHash = "sha256-7f1u06XZI0I6Xa+lvBWE+1LJU/llhpYmLQvenKo64b0=";
 }
