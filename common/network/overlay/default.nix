@@ -8,6 +8,7 @@
     "MOBILE-DCV5AQD" = "10.168.88.96";
     "stark-feeling" = "10.168.88.25";
     "bravo" = "10.168.88.57";
+    "foxtrot" = "10.168.88.10";
   };
   staticHosts = [
     "opi5"
