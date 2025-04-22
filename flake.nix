@@ -30,7 +30,9 @@
     };
   };
 
-  outputs = { self, pkgs-unstable, pkgs-stable, nixos-rk3588, pkgs-jetbrains-2022, home-manager, disko, impermanence, lanzaboote, fenix, pkgs-bdfr, ags, ... }: {
+  outputs = { self, pkgs-unstable, pkgs-stable, nixos-rk3588, pkgs-jetbrains-2022, home-manager, disko, impermanence, lanzaboote, fenix, pkgs-bdfr, ags, ... }: let
+    forAllSystems = f: pkgs-stable.lib.genAttrs [ "x86_64-linux" "aarch64-linux" ] (system: f system);
+  in {
     nixosModules = {
       optionals = ./modules/optionals; # "optionals" means that they require an option to be enabled
       basic = ./modules/common;
@@ -40,40 +42,33 @@
       development = ./modules/common/development;
       hyprland = ./modules/common/desktop/hyprland;
     };
-    packages = {
-      "x86_64-linux" = let
-        pkgs = import pkgs-unstable {
-          system = "x86_64-linux";
+    packages = pkgs-stable.lib.recursiveUpdate
+      (forAllSystems (system: let bdfr = import pkgs-bdfr { system = system; }; in {
+          bdfr = bdfr.callPackage packages/bdfr {};
+      }))
+      {
+        "x86_64-linux" = let
+          pkgs = import pkgs-unstable {
+            system = "x86_64-linux";
+          };
+          jb = import pkgs-jetbrains-2022 {
+            system = "x86_64-linux";
+            config.allowUnfreePredicate = pkg: builtins.elem (pkgs.lib.getName pkg) [ "idea-ultimate" "pycharm-professional" "clion" ];
+          };
+          rust = import pkgs-unstable {
+            system = "x86_64-linux";
+            overlays = [ fenix.overlays.default ];
+          };
+        in {
+          jetbrains = jb.jetbrains;
+          debounce-keyboard = pkgs.callPackage packages/debounce-keyboard {};
+          organise-files = pkgs.callPackage packages/organise-files.nix {};
+          tlauncher = pkgs.callPackage packages/tlauncher {};
+          fenix = rust.fenix;
+          topbar = import packages/topbar { inherit pkgs ags; };
+          arc-x-icon-theme = pkgs.callPackage packages/arc-x-icons.nix {};
         };
-        jb = import pkgs-jetbrains-2022 {
-          system = "x86_64-linux";
-          config.allowUnfreePredicate = pkg: builtins.elem (pkgs.lib.getName pkg) [ "idea-ultimate" "pycharm-professional" "clion" ];
-        };
-        rust = import pkgs-unstable {
-          system = "x86_64-linux";
-          overlays = [ fenix.overlays.default ];
-        };
-        bdfr = import pkgs-bdfr {
-          system = "x86_64-linux";
-        };
-      in {
-        jetbrains = jb.jetbrains;
-        debounce-keyboard = pkgs.callPackage packages/debounce-keyboard {};
-        organise-files = pkgs.callPackage packages/organise-files.nix {};
-        tlauncher = pkgs.callPackage packages/tlauncher {};
-        fenix = rust.fenix;
-        bdfr = bdfr.callPackage packages/bdfr {};
-        topbar = import packages/topbar { inherit pkgs ags; };
-        arc-x-icon-theme = pkgs.callPackage packages/arc-x-icons.nix {};
       };
-      "aarch64-linux" = let
-        bdfr = import pkgs-bdfr {
-          system = "aarch64-linux";
-        };
-      in {
-        bdfr = bdfr.callPackage packages/bdfr {};
-      };
-    };
     nixosConfigurations = {
       alfa = let
         inherit (nixos-rk3588.inputs) nixpkgs; # pinning nixpkgs so that kernel is not rebuilt due to system update
