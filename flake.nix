@@ -31,6 +31,9 @@
   };
 
   outputs = { self, pkgs-unstable, pkgs-stable, nixos-rk3588, pkgs-jetbrains-2022, home-manager, disko, impermanence, lanzaboote, fenix, pkgs-bdfr, ags, ... }: {
+    nixosModules = {
+      optionals = ./modules/all-modules.nix; # "optionals" means that they require an option to be enabled
+    };
     packages = {
       "x86_64-linux" = let
         pkgs = import pkgs-unstable {
@@ -84,7 +87,7 @@
         modules = [
           nixos-rk3588.nixosModules.orangepi5.core
           impermanence.nixosModules.impermanence
-          ./modules/python.nix
+          self.nixosModules.optionals
 
           ./common/cli
           ./common/scrutiny-collector.nix
@@ -103,9 +106,7 @@
         modules = [
           home-manager.nixosModules.home-manager
           impermanence.nixosModules.impermanence
-          ./modules/wrappers.nix
-          ./modules/unfree.nix
-          ./modules/python.nix
+          self.nixosModules.optionals
 
           ./common/cli
           ./common/scrutiny-collector.nix
@@ -131,9 +132,7 @@
           home-manager.nixosModules.home-manager
           impermanence.nixosModules.impermanence
           lanzaboote.nixosModules.lanzaboote
-          ./modules/wrappers.nix
-          ./modules/unfree.nix
-          ./modules/python.nix
+          self.nixosModules.optionals
 
           ./common/cli
           ./common/scrutiny-collector.nix
@@ -184,7 +183,7 @@
         };
         modules = [
           impermanence.nixosModules.impermanence
-          ./modules/python.nix
+          self.nixosModules.optionals
           ./common/cli
           ./common/network/overlay
           ./common/scrutiny-collector.nix
@@ -200,8 +199,7 @@
         modules = [
           disko.nixosModules.disko
           impermanence.nixosModules.impermanence
-          ./modules/python.nix
-          ./modules/traefik-in-docker.nix
+          self.nixosModules.optionals
 
           ./common/cli
           ./common/network/overlay
