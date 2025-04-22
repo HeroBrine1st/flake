@@ -101,6 +101,7 @@
         ];
       };
       DESKTOP-IJK2GUG = pkgs-unstable.lib.nixosSystem {
+        system = "x86_64-linux";
         specialArgs = {
           custom-pkgs = self.packages."x86_64-linux";
           assets = ./assets;
@@ -119,6 +120,7 @@
         ];
       };
       MOBILE-DCV5AQD = pkgs-unstable.lib.nixosSystem {
+        system = "x86_64-linux";
         specialArgs = {
           custom-pkgs = self.packages."x86_64-linux";
           assets = ./assets;
@@ -161,6 +163,7 @@
       };
 
       foxtrot = pkgs-stable.lib.nixosSystem {
+        system = "x86_64-linux";
         specialArgs = {
           custom-pkgs = self.packages."x86_64-linux";
           unstable-pkgs = {
@@ -179,6 +182,7 @@
       };
 
       bravo = pkgs-stable.lib.nixosSystem {
+        system = "x86_64-linux";
         specialArgs = {
           custom-pkgs = self.packages."x86_64-linux";
         };
