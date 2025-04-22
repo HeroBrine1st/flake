@@ -92,7 +92,7 @@
           self.nixosModules.basic
           self.nixosModules.scrutiny-collector
 
-          ./system/opi5
+          ./system/alfa
         ];
       };
       DESKTOP-IJK2GUG = pkgs-unstable.lib.nixosSystem {

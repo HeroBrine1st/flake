@@ -23,12 +23,12 @@ in {
         "uf77h-ptigu" = mkFolder {
           label = "Secure";
           path = "/mnt/secure";
-          devices = [ "OPi5" "MOBILE-DCV5AQD" "DESKTOP-IJK2GUG" ];
+          devices = [ "alfa" "MOBILE-DCV5AQD" "DESKTOP-IJK2GUG" ];
         };
         "yb6rg-qs9gm" = mkFolder {
           label = "Local Music";
           path = "/home/herobrine1st/Music/Main";
-          devices = [ "OPi5" "MOBILE-DCV5AQD" "DESKTOP-IJK2GUG" "lynx" ];
+          devices = [ "alfa" "MOBILE-DCV5AQD" "DESKTOP-IJK2GUG" "lynx" ];
         };
         "f665p-sm9kf" = mkFolder {
           label = "Notes";
