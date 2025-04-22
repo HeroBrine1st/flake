@@ -22,7 +22,7 @@ in {
     default = null;
   };
 
-  config.services.nebula.networks.overlay = {
+  config.services.nebula.networks.overlay = lib.mkIf builtins.elem hostname (builtins.attrNames ipMap) {
     enable = true;
 
     package = lib.mkIf (config.network.overlay.configAppendixFile != null) (pkgs.callPackage ./wrapper.nix {
