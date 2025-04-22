@@ -1,5 +1,5 @@
-{ pkgs, config, ... }: {
-  services.scrutiny.collector = {
+{ pkgs, config, lib, ... }: {
+  services.scrutiny.collector = lib.mkIf config.network.overlay.enabled {
     enable = true;
 
     settings = {
