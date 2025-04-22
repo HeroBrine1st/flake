@@ -32,7 +32,7 @@
 
   outputs = { self, pkgs-unstable, pkgs-stable, nixos-rk3588, pkgs-jetbrains-2022, home-manager, disko, impermanence, lanzaboote, fenix, pkgs-bdfr, ags, ... }: {
     nixosModules = {
-      optionals = ./modules/all-modules.nix; # "optionals" means that they require an option to be enabled
+      optionals = ./modules/optionals; # "optionals" means that they require an option to be enabled
     };
     packages = {
       "x86_64-linux" = let
@@ -58,6 +58,7 @@
         fenix = rust.fenix;
         bdfr = bdfr.callPackage packages/bdfr {};
         topbar = import packages/topbar { inherit pkgs ags; };
+        arc-x-icon-theme = pkgs.callPackage packages/arc-x-icons.nix {};
       };
       "aarch64-linux" = let
         bdfr = import pkgs-bdfr {
@@ -89,9 +90,9 @@
           impermanence.nixosModules.impermanence
           self.nixosModules.optionals
 
-          ./common/cli
-          ./common/scrutiny-collector.nix
-          ./common/network/overlay
+          ./modules/common/cli
+          ./modules/common/scrutiny-collector.nix
+          ./modules/common/network/overlay
 
           ./system/opi5/configuration.nix
           ./system/opi5/hardware-configuration.nix
@@ -102,18 +103,19 @@
       DESKTOP-IJK2GUG = pkgs-unstable.lib.nixosSystem {
         specialArgs = {
           custom-pkgs = self.packages."x86_64-linux";
+          assets = ./assets;
         };
         modules = [
           home-manager.nixosModules.home-manager
           impermanence.nixosModules.impermanence
           self.nixosModules.optionals
 
-          ./common/cli
-          ./common/scrutiny-collector.nix
-          ./common/network/overlay
-          ./common/syncthing.nix
-          ./common/desktop
-          ./common/development
+          ./modules/common/cli
+          ./modules/common/scrutiny-collector.nix
+          ./modules/common/network/overlay
+          ./modules/common/syncthing.nix
+          ./modules/common/desktop
+          ./modules/common/development
 
           ./system/pc/configuration.nix
 
@@ -127,6 +129,7 @@
       MOBILE-DCV5AQD = pkgs-unstable.lib.nixosSystem {
         specialArgs = {
           custom-pkgs = self.packages."x86_64-linux";
+          assets = ./assets;
         };
         modules = [
           home-manager.nixosModules.home-manager
@@ -134,13 +137,13 @@
           lanzaboote.nixosModules.lanzaboote
           self.nixosModules.optionals
 
-          ./common/cli
-          ./common/scrutiny-collector.nix
-          ./common/network/overlay
-          ./common/syncthing.nix
-          ./common/desktop
-          ./common/desktop/hyprland
-          ./common/development
+          ./modules/common/cli
+          ./modules/common/scrutiny-collector.nix
+          ./modules/common/network/overlay
+          ./modules/common/syncthing.nix
+          ./modules/common/desktop
+          ./modules/common/desktop/hyprland
+          ./modules/common/development
 
           ./system/laptop/configuration.nix
 
@@ -184,9 +187,9 @@
         modules = [
           impermanence.nixosModules.impermanence
           self.nixosModules.optionals
-          ./common/cli
-          ./common/network/overlay
-          ./common/scrutiny-collector.nix
+          ./modules/common/cli
+          ./modules/common/network/overlay
+          ./modules/common/scrutiny-collector.nix
 
           ./system/foxtrot
         ];
@@ -201,8 +204,8 @@
           impermanence.nixosModules.impermanence
           self.nixosModules.optionals
 
-          ./common/cli
-          ./common/network/overlay
+          ./modules/common/cli
+          ./modules/common/network/overlay
 
           ./system/bravo
         ];

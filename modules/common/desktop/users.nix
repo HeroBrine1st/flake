@@ -1,4 +1,4 @@
-{ custom-pkgs, ... }: {
+{ custom-pkgs, assets, ... }: {
   users.users.herobrine1st = {
     isNormalUser = true;
     description = "HeroBrine1st Erquilenne";
@@ -104,7 +104,7 @@
     };
 
     home.file = {
-      ".face".source = ../../assets/avatar.png;
+      ".face".source = assets + "/avatar.png";
     };
 
     systemd.user = {

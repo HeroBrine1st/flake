@@ -47,7 +47,7 @@
     gnome-themes-extra # Adwaita-dark
 
     oreo-cursors-plus
-    (callPackage ../../packages/arc-x-icons.nix {})
+    custom-pkgs.arc-x-icon-theme
   ];
 
   virtualisation.libvirtd = {

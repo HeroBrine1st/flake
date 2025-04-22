@@ -128,15 +128,34 @@
     enable = true;
     binaries = {
       "idea-community" = {
-        cmdline = [
-          "${pkgs.callPackage ../../packages/idea-fhs-env.nix {}}/bin/idea-fhs-env"
+        cmdline = let
+          env = pkgs.buildFHSEnv {
+            name = "idea-fhs-env";
+            targetPkgs = pkgs: (with pkgs;
+              [
+                libGL
+                libz
+             ]);
+            runScript = "env";
+          };
+        in [
+          "${env}/bin/idea-fhs-env"
           "LD_LIBRARY_PATH=${pkgs.libGL}/lib"
           "${pkgs.jetbrains.idea-community-bin}/bin/idea-community"
         ];
       };
       "pycharm-community" = {
-        cmdline = [
-          "${pkgs.callPackage ../../packages/pycharm-fhs-env.nix {}}/bin/pycharm-fhs-env"
+        cmdline = let
+          env = pkgs.buildFHSEnv {
+            name = "pycharm-fhs-env";
+            targetPkgs = pkgs: (with pkgs;
+              [
+                libz # llama-index, numpy, or something, idk
+             ]);
+            runScript = "env";
+          };
+        in [
+          "${env}/bin/pycharm-fhs-env"
           "PIPENV_VENV_IN_PROJECT=1"
           # "PIPENV_CUSTOM_VENV_NAME=venv" does not work with venv in project
           "${pkgs.jetbrains.pycharm-community-bin}/bin/pycharm-community"
