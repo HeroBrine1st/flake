@@ -3,7 +3,7 @@
   ipMap = {
     # /24
     "DESKTOP-IJK2GUG" = "10.168.88.254";
-    "opi5" = "10.168.88.72";
+    "alfa" = "10.168.88.72";
     "lynx" = "10.168.88.153";
     "MOBILE-DCV5AQD" = "10.168.88.96";
     "stark-feeling" = "10.168.88.25";
@@ -11,7 +11,7 @@
     "foxtrot" = "10.168.88.10";
   };
   staticHosts = [
-    "opi5"
+    "alfa"
     "stark-feeling"
     "bravo"
   ];
