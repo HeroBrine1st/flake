@@ -104,21 +104,18 @@
           home-manager.nixosModules.home-manager
           impermanence.nixosModules.impermanence
           ./modules/wrappers.nix
-          ./modules/syncthing.nix
           ./modules/unfree.nix
           ./modules/python.nix
 
           ./common/cli
           ./common/scrutiny-collector.nix
           ./common/network/overlay
-
+          ./common/syncthing.nix
           ./common/desktop
-
           ./common/development
 
           ./system/pc/configuration.nix
 
-          ./system/pc/syncthing.nix
           ./system/pc/users.nix
           ./system/pc/hardware-configuration.nix
           ./system/pc/hardware-dconf.nix
@@ -135,18 +132,15 @@
           impermanence.nixosModules.impermanence
           lanzaboote.nixosModules.lanzaboote
           ./modules/wrappers.nix
-          ./modules/syncthing.nix
-
           ./modules/unfree.nix
           ./modules/python.nix
 
           ./common/cli
           ./common/scrutiny-collector.nix
           ./common/network/overlay
-
+          ./common/syncthing.nix
           ./common/desktop
           ./common/desktop/hyprland
-
           ./common/development
 
           ./system/laptop/configuration.nix
@@ -154,7 +148,6 @@
           ./system/laptop/hardware-configuration.nix
           ./system/laptop/hardware-dconf.nix
           ./system/laptop/impermanence.nix
-          ./system/laptop/syncthing.nix
 
           ./system/laptop/lanzaboote.nix
         ];

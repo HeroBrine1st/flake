@@ -11,7 +11,8 @@
     devices = lib.lists.remove hostname folder.devices; # Remove this machine from config
   };
 in {
-  services.syncthing = {
+  services.syncthing = lib.mkIf (builtins.elem hostname (builtins.attrNames deviceIds)) {
+    enable = true;
     user = "herobrine1st";
     configDir = "/home/herobrine1st/.config/Syncthing";
     overrideDevices = true;
