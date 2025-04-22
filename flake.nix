@@ -33,6 +33,12 @@
   outputs = { self, pkgs-unstable, pkgs-stable, nixos-rk3588, pkgs-jetbrains-2022, home-manager, disko, impermanence, lanzaboote, fenix, pkgs-bdfr, ags, ... }: {
     nixosModules = {
       optionals = ./modules/optionals; # "optionals" means that they require an option to be enabled
+      basic = ./modules/common;
+      scrutiny-collector = ./modules/common/scrutiny-collector.nix;
+      syncthing = ./modules/common/syncthing.nix;
+      desktop = ./modules/common/desktop;
+      development = ./modules/common/development;
+      hyprland = ./modules/common/desktop/hyprland;
     };
     packages = {
       "x86_64-linux" = let
@@ -89,10 +95,8 @@
           nixos-rk3588.nixosModules.orangepi5.core
           impermanence.nixosModules.impermanence
           self.nixosModules.optionals
-
-          ./modules/common/cli
-          ./modules/common/scrutiny-collector.nix
-          ./modules/common/network/overlay
+          self.nixosModules.basic
+          self.nixosModules.scrutiny-collector
 
           ./system/opi5/configuration.nix
           ./system/opi5/hardware-configuration.nix
@@ -109,13 +113,11 @@
           home-manager.nixosModules.home-manager
           impermanence.nixosModules.impermanence
           self.nixosModules.optionals
-
-          ./modules/common/cli
-          ./modules/common/scrutiny-collector.nix
-          ./modules/common/network/overlay
-          ./modules/common/syncthing.nix
-          ./modules/common/desktop
-          ./modules/common/development
+          self.nixosModules.basic
+          self.nixosModules.scrutiny-collector
+          self.nixosModules.syncthing
+          self.nixosModules.desktop
+          self.nixosModules.development
 
           ./system/pc/configuration.nix
 
@@ -136,14 +138,12 @@
           impermanence.nixosModules.impermanence
           lanzaboote.nixosModules.lanzaboote
           self.nixosModules.optionals
-
-          ./modules/common/cli
-          ./modules/common/scrutiny-collector.nix
-          ./modules/common/network/overlay
-          ./modules/common/syncthing.nix
-          ./modules/common/desktop
-          ./modules/common/desktop/hyprland
-          ./modules/common/development
+          self.nixosModules.basic
+          self.nixosModules.scrutiny-collector
+          self.nixosModules.syncthing
+          self.nixosModules.desktop
+          self.nixosModules.hyprland
+          self.nixosModules.development
 
           ./system/laptop/configuration.nix
 
@@ -187,9 +187,8 @@
         modules = [
           impermanence.nixosModules.impermanence
           self.nixosModules.optionals
-          ./modules/common/cli
-          ./modules/common/network/overlay
-          ./modules/common/scrutiny-collector.nix
+          self.nixosModules.basic
+          self.nixosModules.scrutiny-collector
 
           ./system/foxtrot
         ];
@@ -203,9 +202,7 @@
           disko.nixosModules.disko
           impermanence.nixosModules.impermanence
           self.nixosModules.optionals
-
-          ./modules/common/cli
-          ./modules/common/network/overlay
+          self.nixosModules.basic
 
           ./system/bravo
         ];
