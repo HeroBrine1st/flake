@@ -198,7 +198,10 @@
           disko.nixosModules.disko
           impermanence.nixosModules.impermanence
           ./modules/python.nix
+
           ./common/cli
+          ./common/network/overlay
+
           ./system/bravo
         ];
       };
