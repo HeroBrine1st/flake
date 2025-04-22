@@ -98,10 +98,7 @@
           self.nixosModules.basic
           self.nixosModules.scrutiny-collector
 
-          ./system/opi5/configuration.nix
-          ./system/opi5/hardware-configuration.nix
-          ./system/opi5/impermanence.nix
-          ./system/opi5/btrbk.nix
+          ./system/opi5
         ];
       };
       DESKTOP-IJK2GUG = pkgs-unstable.lib.nixosSystem {
@@ -119,13 +116,7 @@
           self.nixosModules.desktop
           self.nixosModules.development
 
-          ./system/pc/configuration.nix
-
-          ./system/pc/users.nix
-          ./system/pc/hardware-configuration.nix
-          ./system/pc/hardware-dconf.nix
-          ./system/pc/impermanence.nix
-          ./system/pc/hardware-mitigations.nix
+          ./system/pc
         ];
       };
       MOBILE-DCV5AQD = pkgs-unstable.lib.nixosSystem {
@@ -145,13 +136,7 @@
           self.nixosModules.hyprland
           self.nixosModules.development
 
-          ./system/laptop/configuration.nix
-
-          ./system/laptop/hardware-configuration.nix
-          ./system/laptop/hardware-dconf.nix
-          ./system/laptop/impermanence.nix
-
-          ./system/laptop/lanzaboote.nix
+          ./system/laptop
         ];
       };
 
