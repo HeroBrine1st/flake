@@ -1,4 +1,4 @@
-{ lib, pkgs, custom-pkgs, ... }: let
+{ lib, pkgs, custom-pkgs, assets, ... }: let
   ags = pkgs.ags.override {
     # required for ags init -g 4
     extraPackages = [
@@ -153,8 +153,8 @@ in {
     services.hyprpaper = {
       enable = true;
       settings = {
-        preload = [ "${../../../assets/no-mans-sky-portal.png}" ];
-        wallpaper = [ ", ${../../../assets/no-mans-sky-portal.png}" ];
+        preload = [ "${assets + "/no-mans-sky-portal.png"}" ];
+        wallpaper = [ ", ${assets + "/no-mans-sky-portal.png"}" ];
       };
     };
   };
