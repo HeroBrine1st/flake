@@ -201,6 +201,7 @@
           disko.nixosModules.disko
           impermanence.nixosModules.impermanence
           ./modules/python.nix
+          ./modules/traefik-in-docker.nix
 
           ./common/cli
           ./common/network/overlay
