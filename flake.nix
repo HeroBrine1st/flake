@@ -84,11 +84,11 @@
         modules = [
           nixos-rk3588.nixosModules.orangepi5.core
           impermanence.nixosModules.impermanence
-          ./modules/nebula
           ./modules/python.nix
 
           ./common/cli
           ./common/scrutiny-collector.nix
+          ./common/network/overlay
 
           ./system/opi5/configuration.nix
           ./system/opi5/hardware-configuration.nix
@@ -105,12 +105,12 @@
           impermanence.nixosModules.impermanence
           ./modules/wrappers.nix
           ./modules/syncthing.nix
-          ./modules/nebula
           ./modules/unfree.nix
           ./modules/python.nix
 
           ./common/cli
           ./common/scrutiny-collector.nix
+          ./common/network/overlay
 
           ./common/desktop
 
@@ -136,12 +136,13 @@
           lanzaboote.nixosModules.lanzaboote
           ./modules/wrappers.nix
           ./modules/syncthing.nix
-          ./modules/nebula
+
           ./modules/unfree.nix
           ./modules/python.nix
 
           ./common/cli
           ./common/scrutiny-collector.nix
+          ./common/network/overlay
 
           ./common/desktop
           ./common/desktop/hyprland
