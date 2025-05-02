@@ -183,7 +183,9 @@
     };
 
     hydraJobs = {
-      machines = builtins.mapAttrs (_: node: node.config.system.build.toplevel) self.nixosConfigurations;
+      machines = builtins.filterAttrs (name: _: name != "iso") (
+        builtins.mapAttrs (_: node: node.config.system.build.toplevel) self.nixosConfigurations
+      );
       desktops = { # To later allow updating only if every machine can be updated
         type = "hydraAggregate"; # not sure, copied from https://github.com/NixOS/hydra/issues/715
         constituents = [
