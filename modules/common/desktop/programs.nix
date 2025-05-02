@@ -8,7 +8,7 @@
     nautilus
     # firefox-bin inferred from programs.firefox.enable
     element-desktop
-    (feishin.override { electron_31 = electron_33; })
+    (feishin.override { electron_33 = electron_34; })
 
     # "Personal"
     gnome-weather
