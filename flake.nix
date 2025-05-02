@@ -191,6 +191,18 @@
         ];
       };
     };
+
+    hydraJobs = {
+      machines = builtins.mapAttrs (_: node: node.config.system.build.toplevel) self.nixosConfigurations;
+      desktops = { # To later allow updating only if every machine can be updated
+        type = "hydraAggregate"; # not sure, copied from https://github.com/NixOS/hydra/issues/715
+        constituents = [
+          "DESKTOP-IJK2GUG"
+          "MOBILE-DCV5AQD"
+        ];
+      };
+    };
+
     devShells."x86_64-linux" = let
       pkgs = import pkgs-unstable { system = "x86_64-linux"; };
     in {
