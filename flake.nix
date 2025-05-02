@@ -202,11 +202,5 @@
         ];
       };
     };
-
-    devShells."x86_64-linux" = let
-      pkgs = import pkgs-unstable { system = "x86_64-linux"; };
-    in {
-      opengl = pkgs.callPackage shells/opengl {};
-    };
   };
 }
