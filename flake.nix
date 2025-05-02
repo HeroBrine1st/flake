@@ -136,16 +136,6 @@
         ];
       };
 
-      unite-shell-debug-vm = pkgs-unstable.lib.nixosSystem {
-        specialArgs = {
-          custom-pkgs = self.packages."x86_64-linux";
-        };
-        modules = [
-          home-manager.nixosModules.home-manager
-          ./system/unite-shell-debug-vm/configuration.nix
-        ];
-      };
-
       # nix build .#nixosConfigurations.iso.config.system.build.isoImage
       iso = pkgs-stable.lib.nixosSystem {
         system = "x86_64-linux";
