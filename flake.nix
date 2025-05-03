@@ -183,7 +183,7 @@
     };
 
     hydraJobs = let
-      pkgs = import pkgs-stable {};
+      pkgs = import pkgs-stable { system = "x86_64-linux"; };
     in {
       machines = pkgs.lib.filterAttrs (name: _: name != "iso") (
         builtins.mapAttrs (_: node: node.config.system.build.toplevel) self.nixosConfigurations
