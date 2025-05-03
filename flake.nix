@@ -182,12 +182,14 @@
       };
     };
 
-    hydraJobs = {
-      machines = pkgs-stable.lib.filterAttrs (name: _: name != "iso") (
+    hydraJobs = let
+      pkgs = import pkgs-stable {};
+    in {
+      machines = pkgs.lib.filterAttrs (name: _: name != "iso") (
         builtins.mapAttrs (_: node: node.config.system.build.toplevel) self.nixosConfigurations
       );
-      desktops = { # To later allow updating only if every machine can be updated
-        type = "hydraAggregate"; # not sure, copied from https://github.com/NixOS/hydra/issues/715
+      desktops = pkgs.releaseTools.aggregate { # To later allow updating only if every machine can be updated
+        name = "All desktops";
         constituents = [
           "DESKTOP-IJK2GUG"
           "MOBILE-DCV5AQD"
