@@ -191,8 +191,8 @@
       desktops = pkgs.releaseTools.aggregate { # To later allow updating only if every machine can be updated
         name = "All desktops";
         constituents = [
-          "DESKTOP-IJK2GUG"
-          "MOBILE-DCV5AQD"
+          "machines.DESKTOP-IJK2GUG"
+          "machines.MOBILE-DCV5AQD"
         ];
       };
     };
