@@ -1,4 +1,9 @@
 { pkgs, config, ... }: {
+  nix.settings.allowed-uris = [
+    "github:"
+#    "git+https://github.com/"
+  ];
+
   services.hydra = {
     enable = true;
     hydraURL = "http://10.168.88.10:3000";
