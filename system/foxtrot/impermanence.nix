@@ -14,6 +14,7 @@
       "/var/docker_data"
       { directory = "/var/lib/private/ollama"; mode = "700"; }
       { directory = "/var/lib/private/open-webui"; mode = "700"; }
+      { directory = "/var/lib/hydra"; mode = "750"; user = "hydra"; group = "hydra"; }
     ];
     files = [
       "/etc/machine-id"
