@@ -5,5 +5,6 @@
     ./hardware-configuration.nix
 
     ./ollama.nix
+    ./hydra.nix
   ];
 }
