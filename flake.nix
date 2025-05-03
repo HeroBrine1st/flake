@@ -183,7 +183,7 @@
     };
 
     hydraJobs = {
-      machines = builtins.filterAttrs (name: _: name != "iso") (
+      machines = pkgs-stable.lib.filterAttrs (name: _: name != "iso") (
         builtins.mapAttrs (_: node: node.config.system.build.toplevel) self.nixosConfigurations
       );
       desktops = { # To later allow updating only if every machine can be updated
