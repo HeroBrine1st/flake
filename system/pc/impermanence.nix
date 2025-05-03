@@ -16,10 +16,6 @@
       "/var/lib/libvirt"
       { directory = "/var/lib/private/ollama"; mode = "700"; }
       { directory = "/var/lib/private/open-webui"; mode = "700"; }
-      # for some reason /var/lib/private is 0755 after nixos-rebuild switch, probably this will help
-      # systemd.tmpfiles.rules = [
-      #  "d /var/lib/private 0700 root root"
-      #];
     ];
     files = [
       "/etc/machine-id"
