@@ -43,29 +43,25 @@
       hyprland = ./modules/common/desktop/hyprland;
     };
     packages = pkgs-stable.lib.recursiveUpdate
-      (forAllSystems (system: let bdfr = import pkgs-bdfr { system = system; }; in {
+      (forAllSystems (system: let bdfr = pkgs-bdfr.legacyPackages."${system}"; in {
           bdfr = bdfr.callPackage packages/bdfr {};
       }))
       {
         "x86_64-linux" = let
-          pkgs = import pkgs-unstable {
-            system = "x86_64-linux";
-          };
-          jb = import pkgs-jetbrains-2022 {
+          pkgs = pkgs-unstable.legacyPackages."x86_64-linux";
+        in {
+          jetbrains = (import pkgs-jetbrains-2022 {
             system = "x86_64-linux";
             config.allowUnfreePredicate = pkg: builtins.elem (pkgs.lib.getName pkg) [ "idea-ultimate" "pycharm-professional" "clion" ];
-          };
-          rust = import pkgs-unstable {
+          }).jetbrains;
+          fenix = (import pkgs-unstable {
             system = "x86_64-linux";
             overlays = [ fenix.overlays.default ];
-          };
-        in {
-          jetbrains = jb.jetbrains;
+          }).fenix;
+          topbar = import packages/topbar { inherit pkgs ags; };
           debounce-keyboard = pkgs.callPackage packages/debounce-keyboard {};
           organise-files = pkgs.callPackage packages/organise-files.nix {};
           tlauncher = pkgs.callPackage packages/tlauncher {};
-          fenix = rust.fenix;
-          topbar = import packages/topbar { inherit pkgs ags; };
           arc-x-icon-theme = pkgs.callPackage packages/arc-x-icons.nix {};
         };
       };
@@ -78,9 +74,7 @@
         specialArgs = {
           rk3588 = {
             inherit nixpkgs;
-            pkgsKernel = import nixpkgs {
-              inherit system;
-            };
+            pkgsKernel = nixpkgs.legacyPackages."${system}";
           };
           custom-pkgs = self.packages."aarch64-linux";
         };
@@ -182,13 +176,11 @@
       };
     };
 
-    hydraJobs = let
-      pkgs = import pkgs-unstable { system = "x86_64-linux"; };
-    in {
-      machines = pkgs.lib.filterAttrs (name: _: name != "iso") (
+    hydraJobs = {
+      machines = pkgs-stable.lib.filterAttrs (name: _: name != "iso") (
         builtins.mapAttrs (_: node: node.config.system.build.toplevel) self.nixosConfigurations
       );
-      desktops = pkgs.releaseTools.aggregate { # To later allow updating only if every machine can be updated
+      desktops = pkgs-stable.legacyPackages."x86_64-linux".releaseTools.aggregate { # To later allow updating only if every machine can be updated
         name = "All desktops";
         constituents = [
           "machines.DESKTOP-IJK2GUG"
@@ -200,6 +192,7 @@
         overrideMirror = drv: drv.overrideAttrs(old: {
           urls = builtins.map (oldUrl: builtins.replaceStrings ["https://download.jetbrains.com"] ["http://10.168.88.57:8000"] oldUrl) old.urls;
         });
+        pkgs = pkgs-unstable.legacyPackages."x86_64-linux";
       in {
         rust-rover = overrideMirror pkgs.jetbrains.rust-rover.src;
         webstorm = overrideMirror pkgs.jetbrains.webstorm.src;
