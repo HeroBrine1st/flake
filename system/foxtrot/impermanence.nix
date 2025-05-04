@@ -15,6 +15,7 @@
       { directory = "/var/lib/private/ollama"; mode = "700"; }
       { directory = "/var/lib/private/open-webui"; mode = "700"; }
       { directory = "/var/lib/hydra"; mode = "750"; user = "hydra"; group = "hydra"; }
+      { directory = "/var/lib/postgresql"; mode = "750"; user = "postgres"; group = "postgres"; }
     ];
     files = [
       "/etc/machine-id"
