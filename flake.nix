@@ -183,7 +183,7 @@
     };
 
     hydraJobs = let
-      pkgs = import pkgs-stable { system = "x86_64-linux"; };
+      pkgs = import pkgs-unstable { system = "x86_64-linux"; };
     in {
       machines = pkgs.lib.filterAttrs (name: _: name != "iso") (
         builtins.mapAttrs (_: node: node.config.system.build.toplevel) self.nixosConfigurations
@@ -194,6 +194,15 @@
           "machines.DESKTOP-IJK2GUG"
           "machines.MOBILE-DCV5AQD"
         ];
+      };
+      # fix transient errors in hydra regarding these two IDEs
+      ide-prefetch = let
+        overrideMirror = drv: drv.overrideAttrs(old: {
+          urls = builtins.map (oldUrl: builtins.replaceStrings ["https://download.jetbrains.com"] ["http://10.168.88.57:8000"] oldUrl) old.urls;
+        });
+      in {
+        rust-rover = overrideMirror pkgs.jetbrains.rust-rover.src;
+        webstorm = overrideMirror pkgs.jetbrains.webstorm.src;
       };
     };
   };
