@@ -24,5 +24,15 @@
     listenHost = "10.168.88.10";
   };
 
-  networking.firewall.interfaces."nebula.overlay".allowedTCPPorts = [ config.services.hydra.port ];
+  services.nix-serve = {
+    enable = true;
+    secretKeyFile = "/nix/persist/foxtrot-cache.key";
+    bindAddress = "10.168.88.10";
+    openFirewall = false;
+  };
+
+  networking.firewall.interfaces."nebula.overlay".allowedTCPPorts = [
+    config.services.hydra.port
+    config.services.nix-serve.port
+  ];
 }
