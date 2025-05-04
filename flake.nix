@@ -185,7 +185,7 @@
     hydraJobs = let
       pkgs = import pkgs-stable { system = "x86_64-linux"; };
     in {
-      machines = pkgs.lib.filterAttrs (name: _: name != "iso" && name != "alfa") (
+      machines = pkgs.lib.filterAttrs (name: _: name != "iso") (
         builtins.mapAttrs (_: node: node.config.system.build.toplevel) self.nixosConfigurations
       );
       desktops = pkgs.releaseTools.aggregate { # To later allow updating only if every machine can be updated
