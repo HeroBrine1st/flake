@@ -4,6 +4,17 @@
 #    "git+https://github.com/"
   ];
 
+  boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
+
+  nix.buildMachines = [
+    {
+      hostName = "localhost";
+      protocol = null;
+      systems = [ "x86_64-linux" "aarch64-linux" ] ;
+      supportedFeatures = [ "kvm" "nixos-test" "big-parallel" "benchmark" ];
+    }
+  ];
+
   services.hydra = {
     enable = true;
     hydraURL = "http://10.168.88.10:3000";
