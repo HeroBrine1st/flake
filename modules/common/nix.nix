@@ -1,5 +1,5 @@
 { lib, config, ... }: {
-  nix.settings = lib.mkIf network.overlay.enabled {
+  nix.settings = lib.mkIf config.network.overlay.enabled {
     substituters = [
       "http://10.168.88.10:5000"
     ];
