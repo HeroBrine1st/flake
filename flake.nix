@@ -74,7 +74,10 @@
         specialArgs = {
           rk3588 = {
             inherit nixpkgs;
-            pkgsKernel = nixpkgs.legacyPackages."${system}";
+            pkgsKernel = import nixpkgs {
+              localSystem = "x86_64-linux";
+              crossSystem = "aarch64-linux";
+            };
           };
           custom-pkgs = self.packages."aarch64-linux";
         };
