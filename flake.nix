@@ -6,7 +6,7 @@
     pkgs-stable.url = "nixpkgs/nixos-24.11";
     pkgs-jetbrains-2022.url = "github:NixOS/nixpkgs?rev=e1fa54a56982c5874f6941703c8b760541e40db1";
     pkgs-bdfr.url = "github:NixOS/nixpkgs?rev=59b1aef59071cae6e87859dc65de973d2cc595c0"; # pinned
-    nixos-rk3588.url = "github:HeroBrine1st/nixos-rk3588?rev=139370dd09a51b35748b0b75f6b93423d025c867"; # pinned
+    nixos-rk3588.url = "github:HeroBrine1st/nixos-rk3588?rev=74fa6122e8248fa9af0a7fa6a6e5f949b73be963"; # pinned
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "pkgs-unstable";
