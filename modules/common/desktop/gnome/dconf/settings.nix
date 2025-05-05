@@ -14,6 +14,10 @@
         accent-color = "orange";
       };
 
+      "org/gnome/desktop/session" = {
+        idle-delay = 300; # 0 to disable
+      };
+
       "org/gnome/desktop/peripherals/mouse" = {
         accel-profile = "flat";
         left-handed = false;
@@ -35,6 +39,10 @@
       "org/gnome/desktop/wm/keybindings" = {
         show-desktop = [ "<Super>d" ];
         switch-input-source = [ "<Alt>Shift_L" "<Shift>Alt_L" "<Alt>Shift_R" "<Shift>Alt_R" "<Super>space" ];
+      };
+
+      "org/gnome/settings-daemon/plugins/power" = {
+        power-button-action = "interactive";
       };
 
       "org/gnome/settings-daemon/plugins/media-keys" = {
@@ -80,8 +88,6 @@
         dynamic-workspaces = true;
         edge-tiling = true;
       };
-
-
     };
   };
 }
