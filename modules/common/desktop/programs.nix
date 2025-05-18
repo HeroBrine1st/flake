@@ -103,7 +103,6 @@
     ungoogled-chromium
     dconf-editor
     winbox
-    ventoy
     gnome-connections # RDP client
     bytecode-viewer
     audacity
