@@ -28,10 +28,10 @@
         topbar-preview-size = 15;
       };
 
-      "org/gnome/shell/extensions/control-blur-effect-on-lockscreen" = {
-        brightness = 1.0;
-        sigma = 0;
-      };
+#      "org/gnome/shell/extensions/control-blur-effect-on-lockscreen" = {
+#        brightness = 1.0;
+#        sigma = 0;
+#      };
 
       "org/gnome/shell/extensions/dash-to-dock" = {
         apply-custom-theme = false;
