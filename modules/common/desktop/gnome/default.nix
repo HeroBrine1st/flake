@@ -12,11 +12,13 @@
 
   # Extensions
   environment.systemPackages = with pkgs; [
-    gnomeExtensions.control-blur-effect-on-lock-screen
+    # removed, gnomeExtensions.lockscreen-extension is a replacement but is not available on gnome 48
+    # https://github.com/PRATAP-KUMAR/gse-lockscreen-extension
+    #gnomeExtensions.control-blur-effect-on-lock-screen
     gnomeExtensions.panel-corners
     gnomeExtensions.primary-input-on-lockscreen
     gnomeExtensions.quick-settings-tweaker
-    # gnomeExtensions.removable-drive-menu # somehow already available
+    #gnomeExtensions.removable-drive-menu # somehow already available
     gnomeExtensions.system-monitor-next
     gnomeExtensions.dash-to-dock
     gnomeExtensions.unite xorg.xprop
