@@ -186,7 +186,13 @@
 
   programs.firefox = {
     enable = true;
-    package = pkgs.firefox-bin;
+    package = pkgs.firefox-bin.overrideAttrs {
+      version = "138.0.4";
+      src = pkgs.fetchurl {
+        url = "https://archive.mozilla.org/pub/firefox/releases/138.0.4/linux-x86_64/en-GB/firefox-138.0.4.tar.xz";
+        sha256 = "02aeccd3ee42da245fcedfa6cac2ca9ea90ff025a0ee12992a3ef8f2cd214ec7";
+      };
+    };
     autoConfig = ''
       lockPref("cookiebanners.service.mode", 1);
       lockPref("cookiebanners.service.mode.privateBrowsing", 1);
