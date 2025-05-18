@@ -31,6 +31,10 @@
     NAUTILUS_4_EXTENSION_DIR = "/run/current-system/sw/lib/nautilus/extensions-4/";
   };
 
+  fonts.packages = with pkgs; [
+    cantarell-fonts
+  ];
+
   networking.firewall = {
     allowedTCPPortRanges = [
       { from = 1714; to = 1764; } # KDE Connect

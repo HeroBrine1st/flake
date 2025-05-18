@@ -5,6 +5,8 @@
         color-scheme = "prefer-dark";
         cursor-size = 32;
         cursor-theme = "oreo_spark_purple_cursors";
+        font-name = "Cantarell 11";
+        document-font-name = "Cantarell 11";
         font-antialiasing = "rgba";
         font-hinting = "slight";
         gtk-theme = "Adwaita";
