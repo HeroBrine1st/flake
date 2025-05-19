@@ -28,8 +28,6 @@
       };
     };
 
-    xdg.configFile."mimeapps.list".force = true;
-    xdg.configFile."gtk-3.0/bookmarks".force = true;
     xdg.mimeApps = {
       enable = true;
       defaultApplications = {
@@ -101,6 +99,8 @@
         sftp://10.168.88.72/mnt/basic Seagate Basic on Orange Pi 5
       '';
       "ptpython/config.py".source = ./ptpython-config.py;
+      "mimeapps.list".force = true;
+      "gtk-3.0/bookmarks".force = true;
     };
 
     home.file = {
