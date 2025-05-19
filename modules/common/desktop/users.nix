@@ -105,6 +105,7 @@
 
     home.file = {
       ".face".source = assets + "/avatar.png";
+      "Templates/Empty file".text = "";
     };
 
     systemd.user = {
