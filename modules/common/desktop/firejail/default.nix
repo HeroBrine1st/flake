@@ -100,7 +100,9 @@
       };
       steam = {
         executable = "${config.programs.steam.package}/bin/steam";
-        profile = "${pkgs.firejail}/etc/firejail/steam.profile";
+        profile = pkgs.runCommand "steam.profile" {} ''
+          patch "${pkgs.firejail}/etc/firejail/steam.profile" "${./steam.profile.patch}" -o - > "$out"
+        '';
       };
       steam-runtime = {
         executable = "${config.programs.steam.package}/bin/steam-runtime";
