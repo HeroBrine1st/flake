@@ -1,12 +1,10 @@
---- /nix/store/af07q3shdlkywaqbkdyyv7bxxa96sd84-firejail-0.9.74/etc/firejail/steam.profile	1970-01-01 03:00:01.000000000 +0300
-+++ steam.profile	2025-05-23 19:41:33.180190587 +0300
-@@ -6,46 +6,11 @@
+@@ -6,46 +6,12 @@
  # Persistent global definitions
  include globals.local
 
 -noblacklist ${HOME}/.config/Epic
 -noblacklist ${HOME}/.config/Loop_Hero
--noblacklist ${HOME}/.config/MangoHud
+ noblacklist ${HOME}/.config/MangoHud
 -noblacklist ${HOME}/.config/ModTheSpire
 -noblacklist ${HOME}/.config/RogueLegacy
 -noblacklist ${HOME}/.config/RogueLegacyStorageContainer
@@ -47,7 +45,7 @@
  # needed for STEAM_RUNTIME_PREFER_HOST_LIBRARIES=1 to work
  noblacklist /sbin
  noblacklist /usr/sbin
-@@ -62,86 +27,19 @@
+@@ -62,86 +28,19 @@
  include disable-interpreters.inc
  include disable-programs.inc
 
