@@ -18,6 +18,11 @@
 
   services.hydra = {
     enable = true;
+    package = pkgs.hydra.overrideAttrs(old: {
+      patches = (old.patches or []) ++ [
+        ./hydra-ignore-query-params-in-flake-uri.patch
+      ];
+    });
     hydraURL = "http://10.168.88.10:3000";
     notificationSender = "hydra@localhost";
     useSubstitutes = true;
