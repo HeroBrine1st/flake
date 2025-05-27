@@ -24,6 +24,10 @@
     listenHost = "10.168.88.10";
   };
 
+  services.hydra.extraConfig = ''
+    Include /nix/persist/hydra.xml
+  '';
+
   services.nix-serve = {
     enable = true;
     secretKeyFile = "/nix/persist/foxtrot-cache.key";
