@@ -1,0 +1,35 @@
+{
+  "enabled": 1,
+  "hidden": false,
+  "description": "Flake description",
+  "nixexprinput": "flake",
+  "nixexprpath": ".hydra/jobsets.nix",
+  "checkinterval": 3600,
+  "schedulingshares": 1,
+  "enableemail": false,
+  "emailoverride": "",
+  "keepnr": 3,
+  "type": 0,
+  "inputs": {
+    "flake": {
+      "type": "git",
+      "value": "https://github.com/HeroBrine1st/flake master",
+      "emailresponsible": false
+    },
+    "nixpkgs": {
+      "type": "git",
+      "value": "https://github.com/NixOS/nixpkgs d0afebfe3e464cf20f0952275f8220a9502af465 timeout=3600",
+      "emailresponsible": false
+    },
+    "pulls": {
+      "type": "githubpulls",
+      "value": "HeroBrine1st flake",
+      "emailresponsible": false
+    },
+    "refs": {
+      "type": "github_refs",
+      "value": "HeroBrine1st flake heads",
+      "emailresponsible": false
+    }
+  }
+}
