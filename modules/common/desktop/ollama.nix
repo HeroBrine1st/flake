@@ -16,4 +16,8 @@
       WEBUI_AUTH = "False";
     };
   };
+
+  nixpkgs.allowedUnfreePackages = [
+    "open-webui"
+  ];
 }
