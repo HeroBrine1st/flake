@@ -2,7 +2,7 @@
   imports = [
     ./python.nix
     ./traefik-in-docker.nix
-    ./unfree.nix
+    ./nixpkgs-predicates.nix
     ./wrappers.nix
   ];
 }

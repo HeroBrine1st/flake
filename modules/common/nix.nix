@@ -7,4 +7,8 @@
       "foxtrot-cache:K5TJ723kF9QLxanfPFj0tHCHMEtKwnKkY56cAtOTg6Y="
     ];
   };
+
+  nixpkgs.config = {
+    allowNonSource = false;
+  };
 }
