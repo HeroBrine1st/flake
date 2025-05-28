@@ -145,6 +145,11 @@
     "cuda_nvcc" "cuda_cudart" "libcublas" "cuda_cccl" # ollama
   ];
 
+  nixpkgs.allowedNonSourcePackages = [
+    "nvidia-x11" "nvidia-settings" "nvidia-persistenced" # drivers
+    "cuda_nvcc" "cuda_cudart" "libcublas" "cuda_cccl" # ollama
+  ];
+
   boot.extraModprobeConfig = ''
     options nvidia NVreg_TemporaryFilePath=/var/tmp
   '';

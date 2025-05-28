@@ -16,4 +16,8 @@
       WEBUI_AUTH = "False";
     };
   };
+
+  nixpkgs.allowedNonSourcePackages = [
+    "temurin-bin" # transitive dependency of open-webui (pydub -> ffmpeg -> jdk_headless)
+  ];
 }

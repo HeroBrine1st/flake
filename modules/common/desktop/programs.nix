@@ -122,6 +122,28 @@
     "winbox"
   ];
 
+  nixpkgs.allowedNonSourcePackages = [
+    "android-studio-stable"
+    "rust-rover"
+    "webstorm"
+    "steam" "steam-original" "steam-run" "steam-unwrapped"
+    "osu-lazer-bin"
+#    "veracrypt"
+    "code" "vscode"
+    "winbox" "wine-wow"
+
+    "pycharm-community"
+    "idea-community"
+    "ant" "maven"
+    "arduino-ide"
+    "codium-with-extensions" "codium" "vscodium"
+    "libreoffice"
+    "cef-binary"
+    "bytecode-viewer" # TODO remove
+    "dart" # from finamp
+    "firefox-bin" "firefox-release-bin-unwrapped"
+  ];
+
   # Place IDE in FHS
   programs.wrappedBinaries = {
     enable = true;

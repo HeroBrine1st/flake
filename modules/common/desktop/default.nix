@@ -68,6 +68,16 @@
 
   hardware.opentabletdriver.enable = true;
 
+  nixpkgs.allowedNonSourcePackages = [
+    # from opentabletdriver
+    "dotnet-sdk" "Microsoft.AspNetCore.App.Ref" "Microsoft.NETCore.DotNetAppHost" "Microsoft.NETCore.App.Ref"
+    "Microsoft.NETCore.DotNetHost" "Microsoft.NETCore.DotNetHostPolicy" "Microsoft.NETCore.DotNetHostResolver"
+    "Microsoft.DotNet.ILCompiler" "Microsoft.NET.ILLink.Tasks" "Microsoft.NETCore.App.Crossgen2.linux-x64"
+    "runtime.linux-x64.Microsoft.DotNet.ILCompiler" "Microsoft.AspNetCore.App.Runtime.linux-x64"
+    "Microsoft.NETCore.App.Host.linux-x64" "Microsoft.NETCore.App.Runtime.linux-x64"
+    # TODO there's more
+  ];
+
   services.openssh = {
     # Enabled per-machine
     settings = {
