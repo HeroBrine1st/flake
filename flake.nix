@@ -148,9 +148,12 @@
         system = "x86_64-linux";
         specialArgs = {
           custom-pkgs = self.packages."x86_64-linux";
-          unstable-pkgs = {
-            open-webui = pkgs-unstable.legacyPackages."x86_64-linux".open-webui;
-            ollama = pkgs-unstable.legacyPackages."x86_64-linux".ollama;
+          unstable-pkgs = let pkgs = import pkgs-unstable {
+            system = "x86_64-linux";
+            config.allowUnfreePredicate = pkg: builtins.elem (pkgs.lib.getName pkg) [ "open-webui" ];
+          }; in {
+            open-webui = pkgs.open-webui;
+            ollama = pkgs.ollama;
           };
         };
         modules = [
