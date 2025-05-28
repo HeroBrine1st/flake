@@ -26,7 +26,7 @@
     )
     prs;
   mkFlakeJobset = branch: {
-    description = "Build ${branch} (fixed revision)";
+    description = "Build ${branch}";
     checkinterval = 3600;
     enabled = "1";
     schedulingshares = 100;
