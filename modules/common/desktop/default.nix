@@ -14,7 +14,7 @@
 
   boot.tmp.useTmpfs = true;
 
-  boot.kernelPackages = pkgs.linuxPackages_6_14;
+  boot.kernelPackages = pkgs.linuxPackages_latest;
 
   nix = {
     settings = {
