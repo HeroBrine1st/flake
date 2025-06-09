@@ -31,7 +31,8 @@
   };
 
   outputs = { self, pkgs-unstable, pkgs-stable, nixos-rk3588, pkgs-jetbrains-2022, home-manager, disko, impermanence, lanzaboote, fenix, pkgs-bdfr, ags, ... }: let
-    forAllSystems = f: pkgs-stable.lib.genAttrs [ "x86_64-linux" "aarch64-linux" ] (system: f system);
+    lib = pkgs-unstable.lib;
+    forAllSystems = f: lib.genAttrs [ "x86_64-linux" "aarch64-linux" ] (system: f system);
   in {
     nixosModules = {
       optionals = ./modules/optionals; # "optionals" means that they require an option to be enabled
@@ -42,7 +43,21 @@
       development = ./modules/common/development;
       hyprland = ./modules/common/desktop/hyprland;
     };
-    packages = pkgs-stable.lib.recursiveUpdate
+    # I'm sick of "flake attribute '...' is not a derivation"
+    legacyPackages."x86_64-linux" = let
+      pkgs = pkgs-unstable.legacyPackages."x86_64-linux";
+    in {
+      jetbrains = (import pkgs-jetbrains-2022 {
+        system = "x86_64-linux";
+        config.allowUnfreePredicate = pkg: builtins.elem (pkgs.lib.getName pkg) [ "idea-ultimate" "pycharm-professional" "clion" ];
+      }).jetbrains;
+      fenix = (import pkgs-unstable {
+        system = "x86_64-linux";
+        overlays = [ fenix.overlays.default ];
+      }).fenix;
+      topbar = import packages/topbar { inherit pkgs ags; };
+    };
+    packages = lib.recursiveUpdate
       (forAllSystems (system: let bdfr = pkgs-bdfr.legacyPackages."${system}"; in {
           bdfr = bdfr.callPackage packages/bdfr {};
       }))
@@ -50,22 +65,18 @@
         "x86_64-linux" = let
           pkgs = pkgs-unstable.legacyPackages."x86_64-linux";
         in {
-          jetbrains = (import pkgs-jetbrains-2022 {
-            system = "x86_64-linux";
-            config.allowUnfreePredicate = pkg: builtins.elem (pkgs.lib.getName pkg) [ "idea-ultimate" "pycharm-professional" "clion" ];
-          }).jetbrains;
-          fenix = (import pkgs-unstable {
-            system = "x86_64-linux";
-            overlays = [ fenix.overlays.default ];
-          }).fenix;
-          topbar = import packages/topbar { inherit pkgs ags; };
           debounce-keyboard = pkgs.callPackage packages/debounce-keyboard {};
           organise-files = pkgs.callPackage packages/organise-files.nix {};
           tlauncher = pkgs.callPackage packages/tlauncher {};
           arc-x-icon-theme = pkgs.callPackage packages/arc-x-icons.nix {};
         };
       };
-    nixosConfigurations = {
+    nixosConfigurations = let
+      commonSpecialArgs = system: {
+        custom-pkgs = self.packages."${system}" // (if system == "x86_64-linux" then self.legacyPackages."${system}" else {});
+        assets = ./assets;
+      };
+    in {
       alfa = let
         inherit (nixos-rk3588.inputs) nixpkgs; # pinning nixpkgs so that kernel is not rebuilt due to system update
         system = "aarch64-linux";
@@ -79,8 +90,7 @@
               crossSystem = "aarch64-linux";
             };
           };
-          custom-pkgs = self.packages."aarch64-linux";
-        };
+        } // commonSpecialArgs system;
 
         modules = [
           nixos-rk3588.nixosModules.orangepi5.core
@@ -92,12 +102,9 @@
           ./system/alfa
         ];
       };
-      DESKTOP-IJK2GUG = pkgs-unstable.lib.nixosSystem {
+      DESKTOP-IJK2GUG = pkgs-unstable.lib.nixosSystem rec {
         system = "x86_64-linux";
-        specialArgs = {
-          custom-pkgs = self.packages."x86_64-linux";
-          assets = ./assets;
-        };
+        specialArgs = commonSpecialArgs system;
         modules = [
           home-manager.nixosModules.home-manager
           impermanence.nixosModules.impermanence
@@ -111,12 +118,9 @@
           ./system/pc
         ];
       };
-      MOBILE-DCV5AQD = pkgs-unstable.lib.nixosSystem {
+      MOBILE-DCV5AQD = pkgs-unstable.lib.nixosSystem rec {
         system = "x86_64-linux";
-        specialArgs = {
-          custom-pkgs = self.packages."x86_64-linux";
-          assets = ./assets;
-        };
+        specialArgs = commonSpecialArgs system;
         modules = [
           home-manager.nixosModules.home-manager
           impermanence.nixosModules.impermanence
@@ -144,10 +148,9 @@
         ];
       };
 
-      foxtrot = pkgs-stable.lib.nixosSystem {
+      foxtrot = pkgs-stable.lib.nixosSystem rec {
         system = "x86_64-linux";
         specialArgs = {
-          custom-pkgs = self.packages."x86_64-linux";
           unstable-pkgs = let pkgs = import pkgs-unstable {
             system = "x86_64-linux";
             config.allowUnfreePredicate = pkg: builtins.elem (pkgs.lib.getName pkg) [ "open-webui" ];
@@ -155,7 +158,7 @@
             open-webui = pkgs.open-webui;
             ollama = pkgs.ollama;
           };
-        };
+        } // commonSpecialArgs system;
         modules = [
           impermanence.nixosModules.impermanence
           self.nixosModules.optionals
@@ -166,11 +169,9 @@
         ];
       };
 
-      bravo = pkgs-stable.lib.nixosSystem {
+      bravo = pkgs-stable.lib.nixosSystem rec {
         system = "x86_64-linux";
-        specialArgs = {
-          custom-pkgs = self.packages."x86_64-linux";
-        };
+        specialArgs = commonSpecialArgs system;
         modules = [
           disko.nixosModules.disko
           impermanence.nixosModules.impermanence
