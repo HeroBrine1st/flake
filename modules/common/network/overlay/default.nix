@@ -1,24 +1,9 @@
-{ config, lib, options, pkgs, ... }: let
+{ config, lib, options, pkgs, systems, ... }: let
   hostname = config.networking.hostName;
-  ipMap = {
-    # /24
-    "DESKTOP-IJK2GUG" = "10.168.88.254";
-    "alfa" = "10.168.88.72";
-    "lynx" = "10.168.88.153";
-    "MOBILE-DCV5AQD" = "10.168.88.96";
-    "stark-feeling" = "10.168.88.25";
-    "bravo" = "10.168.88.57";
-    "foxtrot" = "10.168.88.10";
-  };
-  staticHosts = [
-    "alfa"
-    "stark-feeling"
-    "bravo"
-  ];
-  servers = staticHosts ++ [ "foxtrot" ];
-  isStatic = builtins.elem hostname staticHosts;
-  isServer = builtins.elem hostname servers;
-  isEnabled = builtins.elem hostname (builtins.attrNames ipMap);
+  staticHosts = map (e: e.networks.overlay.address) (builtins.filter (e: e.isStatic && e.networks ? overlay) (builtins.attrValues systems));
+  isStatic = systems."${hostname}".isStatic;
+  isServer = systems."${hostname}".isServer;
+  isEnabled = systems."${hostname}".networks ? overlay;
 in {
   options.network.overlay = {
     configAppendixFile = lib.mkOption {
@@ -68,8 +53,8 @@ in {
       cert = "/nix/persist/nebula/${hostname}.crt";
       key = "/nix/persist/nebula/${hostname}.key";
 
-      lighthouses = lib.mkIf (!isStatic) (builtins.map (name: ipMap."${name}") staticHosts);
-      relays = lib.mkIf (!isStatic) (builtins.map (name: ipMap."${name}") staticHosts);
+      lighthouses = staticHosts;
+      relays = staticHosts;
 
       isLighthouse = isStatic;
       isRelay = isStatic;

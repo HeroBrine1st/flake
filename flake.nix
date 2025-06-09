@@ -75,6 +75,7 @@
       commonSpecialArgs = system: {
         custom-pkgs = self.packages."${system}" // (if system == "x86_64-linux" then self.legacyPackages."${system}" else {});
         assets = ./assets;
+        systems = import ./systems.nix;
       };
     in {
       alfa = let
