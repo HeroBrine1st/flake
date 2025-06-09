@@ -38,7 +38,6 @@
       optionals = ./modules/optionals; # "optionals" means that they require an option to be enabled
       basic = ./modules/common;
       scrutiny-collector = ./modules/common/scrutiny-collector.nix;
-      syncthing = ./modules/common/syncthing.nix;
       desktop = ./modules/common/desktop;
       development = ./modules/common/development;
       hyprland = ./modules/common/desktop/hyprland;
@@ -112,7 +111,6 @@
           self.nixosModules.optionals
           self.nixosModules.basic
           self.nixosModules.scrutiny-collector
-          self.nixosModules.syncthing
           self.nixosModules.desktop
           self.nixosModules.development
 
@@ -129,7 +127,6 @@
           self.nixosModules.optionals
           self.nixosModules.basic
           self.nixosModules.scrutiny-collector
-          self.nixosModules.syncthing
           self.nixosModules.desktop
           self.nixosModules.hyprland
           self.nixosModules.development
