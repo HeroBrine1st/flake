@@ -25,6 +25,14 @@
               target_preserve_min = "14d";
             };
           };
+          volume."/mnt/arp" = {
+            snapshot_create = "onchange";
+            subvolume."@docker_data/*" = {
+              snapshot_dir = "@docker_data/snapshots/";
+              snapshot_preserve = "24h 7d 4w 12m 2y";
+              snapshot_preserve_min = "14d";
+            };
+          };
         };
       };
       "basic" = {
