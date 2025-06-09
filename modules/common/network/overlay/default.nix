@@ -1,6 +1,6 @@
 { config, lib, options, pkgs, systems, ... }: let
   hostname = config.networking.hostName;
-  staticHosts = map (e: e.networks.overlay.address) (builtins.filter (e: e.isStatic && e.networks ? overlay) (builtins.attrValues systems));
+  staticHosts = map (e: e.networks.overlay.address) (builtins.attrValues (lib.attrsets.filterAttrs (k: v: v.isStatic && v.networks ? overlay && k != hostname) systems));
   isStatic = systems."${hostname}".isStatic;
   isServer = systems."${hostname}".isServer;
   isEnabled = systems."${hostname}".networks ? overlay;
