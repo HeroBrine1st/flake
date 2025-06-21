@@ -53,6 +53,18 @@
   networking.hostName = "foxtrot";
   networking.networkmanager.enable = true;
 
+  environment.etc."systemd/network/99-default.link.d/wake-on-lan.conf".text = ''
+    [Link]
+    WakeOnLan=magic
+  '';
+
+  system.checks = [
+    (pkgs.runCommand "check-systemd-link-unit-presence" {} ''
+      test -f "${config.systemd.package}/lib/systemd/network/99-default.link"
+      touch $out
+    '')
+  ];
+
   nixpkgs.hostPlatform = "x86_64-linux";
   hardware.enableRedistributableFirmware = true;
   hardware.cpu.intel.updateMicrocode = config.hardware.enableRedistributableFirmware;
