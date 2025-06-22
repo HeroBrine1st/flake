@@ -185,7 +185,7 @@
 
   programs.firefox = {
     enable = true;
-    package = pkgs.firefox-bin;
+    package = pkgs.firefox;
     autoConfig = ''
       lockPref("cookiebanners.service.mode", 1);
       lockPref("cookiebanners.service.mode.privateBrowsing", 1);
