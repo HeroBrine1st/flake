@@ -52,6 +52,11 @@
 
   virtualisation.libvirtd = {
     enable = true;
+    package = pkgs.libvirt.override {
+      # Is not substituted (allowing me to spot that) and is not needed.
+      # 4 minute build compared to 7 minute kernel build both on my best build machine is too much
+      enableXen = false;
+    };
     qemu.vhostUserPackages = with pkgs; [ virtiofsd ];
   };
 
