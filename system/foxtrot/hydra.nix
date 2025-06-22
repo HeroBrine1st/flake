@@ -13,6 +13,7 @@
       systems = [ "x86_64-linux" "aarch64-linux" ];
       # I am a 'x86_64-linux' with features {benchmark, big-parallel, kvm, nixos-test}
       supportedFeatures = [ "kvm" "nixos-test" "big-parallel" "benchmark" ];
+      maxJobs = 32;
     }
   ];
 
