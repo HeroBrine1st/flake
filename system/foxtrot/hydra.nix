@@ -31,6 +31,10 @@
   };
 
   services.hydra.extraConfig = ''
+    <githubstatus>
+      jobs = .*
+      useShortContext = true
+    </githubstatus>
     Include /nix/persist/hydra.xml
   '';
 
