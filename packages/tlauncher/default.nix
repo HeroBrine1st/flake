@@ -19,7 +19,7 @@
       freetype
       giflib
       glib
-      gnome2.GConf
+      #gnome2.GConf  # broken due to 2to3 removal
       gtk2
       libjpeg
       libGL
