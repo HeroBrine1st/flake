@@ -45,6 +45,14 @@
     openFirewall = false;
   };
 
+  services.nebula.networks.overlay.firewall.inbound = [
+    {
+      host = "any";
+      port = toString config.services.nix-serve.port;
+      proto = "any";
+    }
+  ];
+
   networking.firewall.interfaces."nebula.overlay".allowedTCPPorts = [
     config.services.hydra.port
     config.services.nix-serve.port
