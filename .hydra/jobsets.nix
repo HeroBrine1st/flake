@@ -2,6 +2,7 @@
   nixpkgs,
   pulls,
   refs,
+  #declInput,  # a derivation which points to (most probably) the input from where this file is fetched
   ...
 }@inputs: let
   pkgs = import inputs.nixpkgs {};

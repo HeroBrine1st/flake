@@ -30,6 +30,10 @@
       "type": "github_refs",
       "value": "HeroBrine1st flake heads",
       "emailresponsible": false
+    },
+    "githubstatus": {
+      "type": "boolean",
+      "value": "true"
     }
   }
 }
