@@ -45,6 +45,7 @@ in {
           host = "any";
           port = "any";
           proto = "any";
+          group = "entryhost"; # entrypoint + host = entryhost
         }
       ];
 
