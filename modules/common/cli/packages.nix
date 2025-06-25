@@ -24,6 +24,7 @@
     unzip
     file
     pv
+    yq-go
     
     speedtest-cli
     pwgen
