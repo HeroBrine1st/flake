@@ -148,15 +148,7 @@
 
       foxtrot = pkgs-stable.lib.nixosSystem rec {
         system = "x86_64-linux";
-        specialArgs = {
-          unstable-pkgs = let pkgs = import pkgs-unstable {
-            system = "x86_64-linux";
-            config.allowUnfreePredicate = pkg: builtins.elem (pkgs.lib.getName pkg) [ "open-webui" ];
-          }; in {
-            open-webui = pkgs.open-webui;
-            ollama = pkgs.ollama;
-          };
-        } // commonSpecialArgs system;
+        specialArgs = commonSpecialArgs system;
         modules = [
           impermanence.nixosModules.impermanence
           self.nixosModules.optionals

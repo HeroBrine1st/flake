@@ -5,7 +5,6 @@
     ./hardware-configuration.nix
     ./nvidia.nix
 
-    ./ollama.nix
     ./hydra.nix
   ];
 }
