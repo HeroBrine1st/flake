@@ -54,8 +54,8 @@ in {
       cert = "/nix/persist/nebula/${hostname}.crt";
       key = "/nix/persist/nebula/${hostname}.key";
 
-      lighthouses = staticHosts;
-      relays = staticHosts;
+      lighthouses = lib.mkIf (!isStatic) staticHosts;
+      relays = lib.mkIf (!isStatic) staticHosts;
 
       isLighthouse = isStatic;
       isRelay = isStatic;
