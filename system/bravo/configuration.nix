@@ -3,7 +3,6 @@
 
   security.sudo.wheelNeedsPassword = false;
 
-  # Set your time zone.
   time.timeZone = "Europe/Moscow";
 
   zramSwap.enable = true;
@@ -23,15 +22,13 @@
     };
   };
 
-  services.udisks2.enable = true;
-
   services.cron.enable = true;
 
   virtualisation.docker = {
     enable = true;
     enableOnBoot = true;
     liveRestore = false;
-    storageDriver = "btrfs";
+    storageDriver = "overlay2";
     daemon.settings = {
       dns = ["1.1.1.1"];
     };

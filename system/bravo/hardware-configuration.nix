@@ -6,11 +6,9 @@
     efiInstallAsRemovable = true;
   };
 
-#  boot.initrd.availableKernelModules = [ "ata_piix" "uhci_hcd" "virtio_pci" "virtio_blk" ];
-
   disko.devices.disk = {
     root = {
-      device = "/dev/vda";
+      device = "/dev/sda";
       type = "disk";
       content = {
         type = "gpt";
@@ -28,27 +26,12 @@
               mountpoint = "/boot";
             };
           };
-          root = {
+          nix = {
             size = "100%";
             content = {
-              type = "btrfs";
-              mountpoint = "/.fsroot";
-              subvolumes = {
-                "@nix" = {
-                  mountpoint = "/nix";
-                  mountOptions = [
-                    "compress=zstd"
-                    "noatime"
-                  ];
-                };
-                "@home" = {
-                  mountpoint = "/home";
-                  mountOptions = [
-                    "compress=zstd"
-                    "noatime"
-                  ];
-                };
-              };
+              type = "filesystem";
+              format = "ext4";
+              mountpoint = "/nix";
             };
           };
         };
@@ -65,8 +48,20 @@
     "/nix".neededForBoot = true;
   };
 
-  systemd.network.enable = true;
-  networking.useDHCP = false; # static condiguration provided in impermanence.nix
+  systemd.network = {
+    enable = true;
+    networks."10-wan" = {
+      matchConfig.Name = "ens3";
+      networkConfig = {
+        DHCP = "yes";
+      };
+      dhcpV6Config = {
+        DUIDType = "link-layer-time";
+      };
+    };
+  };
+  networking.useDHCP = false; # is not read at all! Only emits warning if true with systemd-network
+
   networking.hostName = "bravo";
   nixpkgs.hostPlatform = "x86_64-linux";
 }
