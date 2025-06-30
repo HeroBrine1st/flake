@@ -56,6 +56,7 @@ in {
             "${config.services.traefik.dataDir}:${config.services.traefik.dataDir}"
             "/etc/passwd:/etc/passwd/:ro"
             "/etc/group:/etc/group:ro"
+            "/etc/ssl/certs:/etc/ssl/certs:ro" "/etc/static/ssl/certs:/etc/static/ssl/certs:ro"
           ] ++ builtins.map (x: "${x}:${x}:ro") config.services.traefik.environmentFiles;
           entrypoint = "${pkgs.bash}/bin/bash";
           cmd = let
