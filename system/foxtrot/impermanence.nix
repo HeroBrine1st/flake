@@ -1,4 +1,4 @@
-{ ... }: {
+{ config, ... }: {
   environment.persistence."/nix/persist/system" = {
     hideMounts = true;
     directories = [
@@ -16,7 +16,9 @@
       { directory = "/var/lib/private/open-webui"; mode = "700"; }
       { directory = "/var/lib/hydra"; mode = "750"; user = "hydra"; group = "hydra"; }
       { directory = "/var/lib/postgresql"; mode = "750"; user = "postgres"; group = "postgres"; }
-    ];
+    ] ++ (if (config.services.traefik ? docker) && config.services.traefik.docker.enable || config.services.traefik.enable then [
+      { directory = config.services.traefik.dataDir; user = "traefik"; inherit (config.users.users.traefik) group; }
+    ] else []);
     files = [
       "/etc/machine-id"
       "/etc/ssh/ssh_host_ed25519_key"

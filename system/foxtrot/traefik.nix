@@ -1,0 +1,84 @@
+{ pkgs, modulesPath, lib, config, options, systems, ... }: {
+  services.traefik = let
+    dataDir = config.services.traefik.dataDir;
+  in {
+    docker = {
+      enable = true;
+      network = "traefik";
+      ports = [
+        # FIXME Violating no system configuration external dependencies principle
+        #       Docker can't bind to specific interfaces
+        #       Traefik can't too and also routes from host to docker networks are not documented, so traefik must be in docker
+        #       Moving this to impermanence is possible, but requires TODO replacing `virtualisation.oci-containers` with own implementation
+        # Leaving as-is for now
+        "192.168.88.10:443:443"
+        "${systems."${config.networking.hostName}".networks.overlay.address}:443:4443"
+      ];
+      environmentFiles = [
+        "${dataDir}/traefik.env"
+      ];
+    };
+    group = "docker";
+    # TODO combine nix and impermanence configs with yq-go
+    dynamicConfigFile = "${dataDir}/dynamic.yml";
+    environmentFiles = [
+      "${dataDir}/traefik.env"
+    ];
+    staticConfigOptions = {
+      providers.docker = {
+        exposedByDefault = false;
+        allowEmptyServices = true;
+      };
+      certificatesResolvers.letsencrypt.acme = {
+        email = "\${LETSENCRYPT_EMAIL}";
+        storage = "${dataDir}/acme.json";
+        dnsChallenge.provider = "\${DNS_PROVIDER}"; # requires corresponding environment variables
+      };
+      log = {
+        format = "common";
+        level = "INFO";
+      };
+      accessLog = {
+        filePath = "${dataDir}/logs/access.log";
+        format = "json";
+        fields = {
+          names.StartUTC = "drop";
+          headers.names = {
+            "CF-Connecting-IP" = "keep";
+            "User-Agent" = "keep";
+          };
+        };
+      };
+      entryPoints = {
+        https = {
+          address = ":443";
+          AsDefault = true;
+          http2.maxConcurrentStreams = 250;
+          http.tls = {}; # this enables TLS, idk whether it is still needed
+          forwardedHeaders.trustedIPs = [ # TODO https://www.cloudflare.com/ips-v4/ , IFD is avoidable via staticConfigFile
+            "173.245.48.0/20"
+            "103.21.244.0/22"
+            "103.22.200.0/22"
+            "103.31.4.0/22"
+            "141.101.64.0/18"
+            "108.162.192.0/18"
+            "190.93.240.0/20"
+            "188.114.96.0/20"
+            "197.234.240.0/22"
+            "198.41.128.0/17"
+            "162.158.0.0/15"
+            "104.16.0.0/13"
+            "104.24.0.0/14"
+            "172.64.0.0/13"
+            "131.0.72.0/22"
+          ];
+        };
+        nebula = {
+          address = ":4443";
+          http2.maxConcurrentStreams = 250;
+          http.tls = {}; # this enables TLS, idk whether it is still needed
+        };
+      };
+    };
+  };
+}
