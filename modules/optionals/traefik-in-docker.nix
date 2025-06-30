@@ -32,8 +32,12 @@ in {
         default = [];
         description = "Alias to virtualisation.oci-containers.containers.<name>.ports";
       };
+      environmentFiles = lib.mkOption {
+        type = with lib.types; listOf path;
+        default = [ ];
+        description = "Alias to virtualisation.oci-containers.containers.<name>.environmentFiles";
+      };
     };
-
   };
   config = lib.mkIf config.services.traefik.docker.enable {
     virtualisation.oci-containers = {
@@ -52,13 +56,19 @@ in {
             "${config.services.traefik.dataDir}:${config.services.traefik.dataDir}"
             "/etc/passwd:/etc/passwd/:ro"
             "/etc/group:/etc/group:ro"
-          ];
+          ] ++ builtins.map (x: "${x}:${x}:ro") config.services.traefik.environmentFiles;
           entrypoint = "${pkgs.bash}/bin/bash";
-          cmd = ["-c" "exec ${pkgs.su-exec}/bin/su-exec traefik:${config.services.traefik.group} ${traefikModule.config.systemd.services.traefik.serviceConfig.ExecStart}"];
+          cmd = let
+            su-exec = "${pkgs.su-exec}/bin/su-exec traefik:${config.services.traefik.group}";
+          in ["-c" ''
+            ${lib.strings.concatStrings (builtins.map (x: "${su-exec} ${x};") traefikModule.config.systemd.services.traefik.serviceConfig.ExecStartPre)}
+            exec ${su-exec} ${traefikModule.config.systemd.services.traefik.serviceConfig.ExecStart}
+          ''];
           extraOptions = [
             "--network=${network}"
+            "--tmpfs=/run/traefik"
           ];
-          inherit (config.services.traefik.docker) ports;
+          inherit (config.services.traefik.docker) ports environmentFiles;
         };
       };
     };
