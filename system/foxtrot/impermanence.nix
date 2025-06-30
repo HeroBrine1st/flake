@@ -12,8 +12,6 @@
 #      { directory = "/var/lib/colord"; user = "colord"; group = "colord"; mode = "u=rwx,g=rx,o="; } headless
       { directory = "/var/lib/docker"; mode = "0710"; }
       "/var/docker_data"
-      { directory = "/var/lib/private/ollama"; mode = "700"; }
-      { directory = "/var/lib/private/open-webui"; mode = "700"; }
       { directory = "/var/lib/hydra"; mode = "750"; user = "hydra"; group = "hydra"; }
       { directory = "/var/lib/postgresql"; mode = "750"; user = "postgres"; group = "postgres"; }
     ] ++ (if (config.services.traefik ? docker) && config.services.traefik.docker.enable || config.services.traefik.enable then [
