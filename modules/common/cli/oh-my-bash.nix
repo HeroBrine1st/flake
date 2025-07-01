@@ -1,9 +1,35 @@
 { pkgs, modulesPath, config, options, ... }: let
-  oh-my-bash = pkgs.fetchFromGitHub {
-    owner = "ohmybash";
-    repo = "oh-my-bash";
-    rev = "86efbf1bdcf53da302bb2ae3cdce281ddabdd18d";
-    hash = "sha256-TinljV9Q72xoAZoh9KaTv9DlfsrnuBGSdyZhtXWbQAg=";
+  oh-my-bash = pkgs.stdenvNoCC.mkDerivation {
+    name = "oh-my-bash";
+
+    src = pkgs.fetchFromGitHub {
+      owner = "ohmybash";
+      repo = "oh-my-bash";
+      rev = "86efbf1bdcf53da302bb2ae3cdce281ddabdd18d";
+      hash = "sha256-TinljV9Q72xoAZoh9KaTv9DlfsrnuBGSdyZhtXWbQAg=";
+    };
+
+    patches = [(builtins.toFile "xterm-remove-leading-y.patch" ''
+      diff --git a/plugins/xterm/xterm.plugin.bash b/plugins/xterm/xterm.plugin.bash
+      index 3496a6f..e6fccc3 100644
+      --- a/plugins/xterm/xterm.plugin.bash
+      +++ b/plugins/xterm/xterm.plugin.bash
+      @@ -34,7 +34,7 @@ function _omb_plugin_xterm_set_title {
+       function _omb_plugin_xterm_precmd_title {
+         local user=''${OMB_PLUGIN_XTERM_SHORT_USER:-$USER}
+         local host=''${OMB_PLUGIN_XTERM_SHORT_HOSTNAME:-$HOSTNAME}
+      -  _omb_plugin_xterm_set_title "$user@$host $(_omb_plugin_xterm_short_dirname) ''${PROMPT_CHAR:-\$}"
+      +  _omb_plugin_xterm_set_title "$user@$host $(_omb_plugin_xterm_short_dirname)"
+       }
+
+       function _omb_plugin_xterm_preexec_title {
+    '')];
+
+    phases = [ "unpackPhase" "patchPhase" "installPhase" ];
+
+    installPhase = ''
+      cp -r . $out
+    '';
   };
   # TODO shellcheck
   omb-init = pkgs.writeScript "oh-my-bash-rc" ''
@@ -62,6 +88,7 @@
     plugins=(
       git
       bashmarks
+      xterm
     )
 
     source "$OSH"/oh-my-bash.sh
