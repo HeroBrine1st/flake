@@ -46,4 +46,10 @@
     set tabsize 4
     set tabstospaces
   '';
+
+  security.sudo.enable = false;
+  security.sudo-rs = {
+    enable = true;
+    execWheelOnly = true;
+  };
 }

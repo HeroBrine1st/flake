@@ -1,7 +1,7 @@
 { ... }: {
   boot.tmp.useTmpfs = true;
 
-  security.sudo.wheelNeedsPassword = false;
+  security.sudo-rs.wheelNeedsPassword = false;
 
   # Set your time zone.
   time.timeZone = "Europe/Moscow";
