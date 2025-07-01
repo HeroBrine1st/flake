@@ -23,7 +23,7 @@
     };
   };
 
-  # security.sudo.wheelNeedsPassword = false;
+  # security.sudo-rs.wheelNeedsPassword = false;
 
   services.displayManager.gdm.enable = true;
   documentation.nixos.enable = false;
