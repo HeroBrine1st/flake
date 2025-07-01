@@ -1,3 +1,6 @@
+# THIS MODULE IS NOT TO BE DELETED UNTIL DOCKER 28 ARRIVES
+# See systems/foxtrot/traefik.nix for details
+
 { pkgs, modulesPath, lib, config, options, ... }@host: let
   network = "traefik";
   traefikModule = lib.evalModules {

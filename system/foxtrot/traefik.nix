@@ -1,23 +1,14 @@
-{ pkgs, modulesPath, lib, config, options, systems, ... }: {
+{ pkgs, modulesPath, lib, config, options, systems, ... }: let
+  network = "traefik";
+in {
   services.traefik = let
     dataDir = config.services.traefik.dataDir;
   in {
-    docker = {
-      enable = true;
-      network = "traefik";
-      ports = [
-        # FIXME Violating no system configuration external dependencies principle
-        #       Docker can't bind to specific interfaces
-        #       Traefik can't too and also routes from host to docker networks are not documented, so traefik must be in docker
-        #       Moving this to impermanence is possible, but requires TODO replacing `virtualisation.oci-containers` with own implementation
-        # Leaving as-is for now
-        "192.168.88.10:443:443"
-        "${systems."${config.networking.hostName}".networks.overlay.address}:443:4443"
-      ];
-      environmentFiles = [
-        "${dataDir}/traefik.env"
-      ];
-    };
+    # It is directly confirmed that containers are accessible from host by their IP address in docker network
+    # https://github.com/moby/moby/discussions/49497
+    # "Unpublished container ports continue to be directly accessible from the Docker host via the container's IP address.
+    # If it is violated in docker 28, revert first commit after b93636678821afcdff87692416fd1980523d132e
+    enable = true;
     group = "docker";
     # TODO combine nix and impermanence configs with yq-go
     dynamicConfigFile = "${dataDir}/dynamic.yml";
@@ -28,6 +19,7 @@
       providers.docker = {
         exposedByDefault = false;
         allowEmptyServices = true;
+        inherit network;
       };
       certificatesResolvers.letsencrypt.acme = {
         email = "\${LETSENCRYPT_EMAIL}";
@@ -51,7 +43,7 @@
       };
       entryPoints = {
         https = {
-          address = ":443";
+          address = "\${PHYSICAL_INTERFACE_IP}:443";
           AsDefault = true;
           http2.maxConcurrentStreams = 250;
           http.tls = {}; # this enables TLS, idk whether it is still needed
@@ -74,11 +66,33 @@
           ];
         };
         nebula = {
-          address = ":4443";
+          address = "${systems."${config.networking.hostName}".networks.overlay.address}:443";
           http2.maxConcurrentStreams = 250;
           http.tls = {}; # this enables TLS, idk whether it is still needed
         };
       };
     };
   };
+
+  systemd.services = {
+    traefik = {
+      after = [ "docker-traefik-network.service" ];
+      requires = [ "docker-traefik-network.service" ];
+    };
+    docker-traefik-network = {
+      wantedBy = [ "multi-user.target" ];
+      after = [ "docker.service" ];
+      requires = [ "docker.service" ];
+      serviceConfig = {
+        Type = "oneshot";
+        RemainAfterExit = true;
+        ExecStart = pkgs.writeShellScript "create-traefik-network" ''
+          ${pkgs.docker}/bin/docker network inspect ${network} >/dev/null 2>&1 || \
+          ${pkgs.docker}/bin/docker network create ${network}
+        '';
+      };
+    };
+  };
+
+  networking.firewall.allowedTCPPorts = [ 443 ];
 }
