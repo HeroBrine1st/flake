@@ -16,7 +16,7 @@
     tcpdump
     lm_sensors
     psmisc
-    gnupg
+    gnupg age
     gnumake
     sing-box
     sing-geosite
