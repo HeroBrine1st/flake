@@ -20,6 +20,11 @@
       efi.canTouchEfiVariables = true;
     };
   };
+
+  environment.etc.crypttab.text = ''
+    romeo-papa-bravo  PARTLABEL=ROMEO-PAPA-BRAVO  /nix/persist/keyfile/romeo-papa-bravo.key  nofail
+  '';
+
   fileSystems = {
     "/" = {
       device = "none";
@@ -48,6 +53,11 @@
     };
     # /var/lib/docker moved to impermanence
     # /var/docker_data moved to impermanence
+    "/mnt/brp" = { # bravo-romeo-papa
+      device = "/dev/mapper/romeo-papa-bravo";
+      fsType = "btrfs";
+      options = [ "defaults" "compress=zstd" "autodefrag" "noatime" "nofail" "x-systemd.before=local-fs.target" ];
+    };
   };
 
   networking.hostName = "foxtrot";
