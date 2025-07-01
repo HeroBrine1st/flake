@@ -41,5 +41,7 @@
     };
   };
 
+  environment.etc."htoprc".source = ./htoprc;
+
   system.stateVersion = "24.11";
 }
