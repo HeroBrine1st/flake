@@ -1,4 +1,4 @@
-{ ... }: {
+{ pkgs, ... }: {
   boot.tmp.useTmpfs = true;
 
   security.sudo-rs.wheelNeedsPassword = false;
@@ -18,6 +18,11 @@
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAID0zqkL/3T1RkNOV2F8QSR+yy6GPcNeufSWJi6FFsLs4 herobrine1st@MOBILE-DCV5AQD"
     ];
   };
+
+  environment.systemPackages = with pkgs; [
+    ctop
+    rclone
+  ];
 
   services.openssh = {
     enable = true;
