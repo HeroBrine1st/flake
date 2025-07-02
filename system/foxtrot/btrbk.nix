@@ -35,4 +35,8 @@
       };
     };
   };
+
+  users.users.btrbk = {
+    extraGroups = [ "wheel" ];
+  };
 }
