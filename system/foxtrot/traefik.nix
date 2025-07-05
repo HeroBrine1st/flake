@@ -70,6 +70,9 @@ in {
           http2.maxConcurrentStreams = 250;
           http.tls = {}; # this enables TLS, idk whether it is still needed
         };
+        dot = {
+          address = ":853";
+        };
       };
     };
   };
@@ -94,5 +97,5 @@ in {
     };
   };
 
-  networking.firewall.allowedTCPPorts = [ 443 ];
+  networking.firewall.allowedTCPPorts = [ 443 853 ];
 }
