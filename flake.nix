@@ -26,12 +26,10 @@
     };
     ags = {
       # ags is broken on at least e5e2efaf2e05e077190cfddabf5b827edae5ef8b
-      # ags bundle requires astal/gtk3/jsx-runtime on gtk4 projects
-      # no packages including astal3, astal4 and agsFull provide jsx-runtime
-      # jsx-runtime is found on npm https://www.npmjs.com/package/jsx-runtime
-      # however it requires exactly astal/gtk3/jsx-runtime
-      # The only solution is to install another shell (aylurs-gtk-shell) using Arch Linux: https://github.com/Jas-SinghFSU/HyprPanel/issues/1033#issuecomment-3031248116
-      # I don't want neither Arch Linux nor another shell
+      # ags bundle requires astal/gtk3/jsx-runtime on gtk4 projects, including both derivations listed in example and https://aylur.github.io/ags/guide/nix.html
+      # no packages including astal3, astal4 and agsFull provide it
+      # It was resolved on Arch Linux by using older ags: https://github.com/Jas-SinghFSU/HyprPanel/issues/1033#issuecomment-3031248116
+      # Also it looks like ags v3 is released? https://github.com/Aylur/ags/issues/716
       url = "github:aylur/ags?rev=3ed9737bdbc8fc7a7c7ceef2165c9109f336bff6";
       inputs.nixpkgs.follows = "pkgs-unstable";
     };
