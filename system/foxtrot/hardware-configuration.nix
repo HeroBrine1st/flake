@@ -19,6 +19,7 @@
       systemd-boot.consoleMode = "auto";
       efi.canTouchEfiVariables = true;
     };
+    kernelParams = [ "intel_iommu=on" ];
   };
 
   environment.etc.crypttab.text = ''
