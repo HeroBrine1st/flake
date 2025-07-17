@@ -13,6 +13,7 @@
       jupyter
       notebook
       numpy
+      scipy
     ];
   };
 }
