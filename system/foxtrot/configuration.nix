@@ -49,4 +49,10 @@
   environment.etc."htoprc".source = ./htoprc;
 
   system.stateVersion = "24.11";
+
+   # run0 still does not work on nixos 25.05
+   security.sudo-rs = {
+     enable = true;
+     execWheelOnly = true;
+   };
 }
