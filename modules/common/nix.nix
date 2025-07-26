@@ -2,7 +2,6 @@
   nix.settings = lib.mkMerge [
     {
       auto-optimise-store = true;
-      always-allow-substitutes = true;
     }
     (lib.mkIf config.network.overlay.enabled {
       substituters = [
