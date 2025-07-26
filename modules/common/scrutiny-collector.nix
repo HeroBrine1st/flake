@@ -1,10 +1,10 @@
-{ pkgs, config, lib, ... }: {
+{ pkgs, config, lib, systems, ... }: {
   services.scrutiny.collector = lib.mkIf config.network.overlay.enabled {
     enable = true;
 
     settings = {
       host.id = config.networking.hostName;
-      api.endpoint = "http://10.168.88.72:31821";
+      api.endpoint = "http://${systems.foxtrot.networks.overlay.address}:31821";
 
       # TODO it is possible to sandbox collector and use systemd-run (or socket-based application, anyway systemd stuff)
       #      to properly sandbox this colletor
