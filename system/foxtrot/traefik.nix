@@ -6,8 +6,7 @@ in {
   in {
     # It is directly confirmed that containers are accessible from host by their IP address in docker network
     # https://github.com/moby/moby/discussions/49497
-    # "Unpublished container ports continue to be directly accessible from the Docker host via the container's IP address.
-    # If it is violated in docker 28, revert first commit after b93636678821afcdff87692416fd1980523d132e
+    # "Unpublished container ports continue to be directly accessible from the Docker host via the container's IP address"
     enable = true;
     group = "docker";
     # TODO combine nix and impermanence configs with yq-go
