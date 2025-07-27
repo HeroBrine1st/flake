@@ -89,8 +89,8 @@ in {
         Type = "oneshot";
         RemainAfterExit = true;
         ExecStart = pkgs.writeShellScript "create-traefik-network" ''
-          ${pkgs.docker}/bin/docker network inspect ${network} >/dev/null 2>&1 || \
-          ${pkgs.docker}/bin/docker network create ${network}
+          ${config.virtualisation.docker.package}/bin/docker network inspect ${network} >/dev/null 2>&1 || \
+          ${config.virtualisation.docker.package}/bin/docker network create ${network}
         '';
       };
     };
