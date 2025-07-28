@@ -21,7 +21,7 @@ in {
         "uf77h-ptigu" = mkFolder {
           label = "Secure";
           path = "/mnt/secure";
-          devices = [ "alfa" "foxtrot" "MOBILE-DCV5AQD" "DESKTOP-IJK2GUG" ];
+          devices = [ "alfa" "foxtrot" "MOBILE-DCV5AQD" "DESKTOP-IJK2GUG" "lynx" ];
         };
         "yb6rg-qs9gm" = mkFolder {
           label = "Local Music";
