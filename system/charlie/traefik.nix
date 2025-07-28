@@ -1,10 +1,8 @@
-{ pkgs, modulesPath, lib, config, options, ... }: {
+{ pkgs, modulesPath, lib, config, options, ... }: let
+  network = "traefik";
+in {
   services.traefik = {
-    docker = {
-      enable = true;
-      network = "traefik";
-      ports = [ "[::]:443:443" ];
-    };
+    enable = true;
     group = "docker";
     dynamicConfigOptions = {
       tls = {
@@ -49,7 +47,7 @@
       };
       entryPoints = {
         https = {
-          address = ":443";
+          address = "[::]:443";
           AsDefault = true;
           http2.maxConcurrentStreams = 250;
           http.tls = {};
@@ -71,6 +69,26 @@
             "131.0.72.0/22"
           ];
         };
+      };
+    };
+  };
+
+  systemd.services = {
+    traefik = {
+      after = [ "docker-traefik-network.service" ];
+      requires = [ "docker-traefik-network.service" ];
+    };
+    docker-traefik-network = {
+      wantedBy = [ "multi-user.target" ];
+      after = [ "docker.service" ];
+      requires = [ "docker.service" ];
+      serviceConfig = {
+        Type = "oneshot";
+        RemainAfterExit = true;
+        ExecStart = pkgs.writeShellScript "create-traefik-network" ''
+          ${config.virtualisation.docker.package}/bin/docker network inspect ${network} >/dev/null 2>&1 || \
+          ${config.virtualisation.docker.package}/bin/docker network create ${network}
+        '';
       };
     };
   };
