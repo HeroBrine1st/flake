@@ -14,6 +14,7 @@
       "/var/docker_data"
       { directory = "/var/lib/hydra"; mode = "750"; user = "hydra"; group = "hydra"; }
       { directory = "/var/lib/postgresql"; mode = "750"; user = "postgres"; group = "postgres"; }
+      { directory = "/var/lib/syncthing"; mode = "0700"; user = "syncthing"; group = "syncthing"; }
     ] ++ (if (config.services.traefik ? docker) && config.services.traefik.docker.enable || config.services.traefik.enable then [
       { directory = config.services.traefik.dataDir; user = "traefik"; inherit (config.users.users.traefik) group; }
     ] else []);

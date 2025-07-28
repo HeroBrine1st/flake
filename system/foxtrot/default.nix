@@ -8,5 +8,6 @@
     ./btrbk.nix
 
     ./hydra.nix
+    ./syncthing.nix
   ];
 }

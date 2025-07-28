@@ -11,7 +11,7 @@
 in {
   services.syncthing = lib.mkIf (currentSystem ? syncthing) {
     enable = true;
-    user = "herobrine1st";
+    user = lib.mkDefault "herobrine1st";
     configDir = lib.mkDefault "/home/herobrine1st/.config/Syncthing";
     overrideDevices = true;
     overrideFolders = lib.mkDefault false;
@@ -21,7 +21,7 @@ in {
         "uf77h-ptigu" = mkFolder {
           label = "Secure";
           path = "/mnt/secure";
-          devices = [ "alfa" "MOBILE-DCV5AQD" "DESKTOP-IJK2GUG" ];
+          devices = [ "alfa" "foxtrot" "MOBILE-DCV5AQD" "DESKTOP-IJK2GUG" ];
         };
         "yb6rg-qs9gm" = mkFolder {
           label = "Local Music";
