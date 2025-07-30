@@ -1,11 +1,10 @@
-{ pkgs, custom-pkgs, ... }: {
+{ pkgs, custom-pkgs, lib, config, ... }: {
   environment.systemPackages = with pkgs; [
     nano
     wget
     curlHTTP3
     hdparm
     smartmontools
-    docker-compose
     htop
     udisks
     tree
@@ -19,18 +18,15 @@
     gnupg age
     gnumake
     sing-box
-    sing-geosite
-    sing-geoip
     unzip
     file
     pv
     yq-go
-    
-    speedtest-cli
+
     pwgen
     dig
     custom-pkgs.bdfr
-  ];
+  ] ++ lib.optionals config.virtualisation.docker.enable [ pkgs.docker-compose ];
 
   programs.python = {
     enable = true;
