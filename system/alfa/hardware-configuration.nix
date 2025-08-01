@@ -29,10 +29,6 @@
       };
     };
   };
-  environment.etc.crypttab.text = ''
-    romeo-papa-alfa  PARTLABEL=ROMEO-PAPA-ALFA  /nix/persist/keyfile/romeo-papa-alfa.key  nofail
-  '';
-
 
   fileSystems = {
     "/" = {
@@ -69,31 +65,6 @@
       device = "/dev/mapper/root";
       fsType = "btrfs";
       options = [ "defaults" "compress=zstd" "discard=async" "subvol=@docker_data" ];
-    };
-    "/mnt/basic" = {
-      device = "/dev/mapper/romeo-papa-alfa";
-      fsType = "btrfs";
-      options = [ "defaults" "compress=zstd" "autodefrag" "nofail" "noatime" "x-systemd.before=local-fs.target" "subvol=@basic" ];
-    };
-    "/mnt/basic/Downloads/Movies" = {
-      device = "/dev/mapper/romeo-papa-alfa";
-      fsType = "btrfs";
-      options = [ "defaults" "compress=zstd" "autodefrag" "nofail" "noatime" "x-systemd.before=local-fs.target" "subvol=@movies" ];
-    };
-    "/mnt/basic/.docker_data" = {
-      device = "/dev/mapper/romeo-papa-alfa";
-      fsType = "btrfs";
-      options = [ "defaults" "compress=zstd" "autodefrag" "nofail" "noatime" "x-systemd.before=local-fs.target" "subvol=@docker_data" ];
-    };
-    "/mnt/basic/.fsroot" = {
-      device = "/dev/mapper/romeo-papa-alfa";
-      fsType = "btrfs";
-      options = [ "defaults" "compress=zstd" "autodefrag" "nofail" "noatime" "x-systemd.before=local-fs.target" ];
-    };
-    "/mnt/arp" = { # alfa-romeo-papa
-      device = "/dev/mapper/romeo-papa-alfa";
-      fsType = "btrfs";
-      options = [ "defaults" "compress=zstd" "autodefrag" "nofail" "noatime" "x-systemd.before=local-fs.target" ];
     };
   };
 
