@@ -103,6 +103,14 @@
     trustedInterfaces = [ "sing-box-tun" ];
   };
 
+  fileSystems = {
+    "/mnt/tmp" = {
+      device = "tmpfs";
+      fsType = "tmpfs";
+      options = [ "rw" "noexec" "nodev" "nosuid" "uid=1000" "gid=1000" "mode=1700" ];
+    };
+  };
+
   system.stateVersion = "23.11"; # Do not change
 }
 

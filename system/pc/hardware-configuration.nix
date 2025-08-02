@@ -84,11 +84,6 @@
       fsType = "btrfs";
       options = [ "defaults" "compress=zstd" "autodefrag" ];
     };
-    "/mnt/tmp" = {
-      device = "tmpfs";
-      fsType = "tmpfs";
-      options = [ "rw" "noexec" "nodev" "nosuid" "uid=1000" "gid=1000" "mode=1700" ];
-    };
   };
 
 
