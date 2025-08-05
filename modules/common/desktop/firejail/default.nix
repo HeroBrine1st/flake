@@ -85,6 +85,30 @@
       env DOTNET_BUNDLE_EXTRACT_BASE_DIR=/mnt/extra/Steam/.dotnet_bundle_extract
       whitelist ''${HOME}/.config/min-ed-launcher
     '';
+    "firejail/whitelist-run-common.local".text = ''
+      # /nix/store is anyway world-readable
+      whitelist /run/current-system
+      # SUID binaries are in /run/wrappers
+    '';
+    "firejail/firefox-common.local".text = ''
+      # Unite extension
+      noblacklist ''${HOME}/.config/gtk-4.0
+      whitelist ''${HOME}/.config/gtk-4.0
+      # Add the next line to firefox-common.local to enable native notifications.
+      dbus-user.talk org.freedesktop.Notifications
+      # Add the next line to firefox-common.local to allow inhibiting screensavers.
+      dbus-user.talk org.freedesktop.ScreenSaver
+      # Add the next line to firefox-common.local to allow screensharing under
+      # Wayland.
+      dbus-user.talk org.freedesktop.portal.Desktop
+      # Also add the next line to firefox-common.local if screensharing does not work
+      # with the above lines (depends on the portal implementation).
+      #ignore noroot
+
+      ignore disable-mnt
+      # TODO not a mountpoint, needs to be moved somewhere
+      blacklist /mnt/secure
+    '';
   };
 
   programs.firejail = {
@@ -115,6 +139,17 @@
       android-studio = {
         executable = "${pkgs.android-studio}/bin/android-studio";
         profile = "${./android-studio.profile}";
+      };
+      firefox = let
+        # it is the dirtiest code of my life
+        # but it works yay
+        # find the package that firefox module has added to environment.systemPackages
+        matching = builtins.filter (p: p.name == config.programs.firefox.package.name) config.environment.systemPackages;
+        # ensure it is only one package
+        finalPackage = assert (builtins.length matching == 1); builtins.head matching;
+      in {
+        executable = "${finalPackage}/bin/firefox";
+        profile = "${pkgs.firejail}/etc/firejail/firefox.profile";
       };
     };
   };
