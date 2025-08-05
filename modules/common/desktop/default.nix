@@ -110,6 +110,8 @@
     };
   };
 
+  networking.firewall.logReversePathDrops = true;
+
   system.stateVersion = "23.11"; # Do not change
 }
 
