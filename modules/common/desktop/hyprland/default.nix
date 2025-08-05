@@ -157,5 +157,9 @@ in {
         wallpaper = [ ", ${assets + "/no-mans-sky-portal.png"}" ];
       };
     };
+
+    systemd.user.services."hyprpaper" = {
+      Unit.ConditionEnvironment = lib.mkForce [ "WAYLAND_DISPLAY" "XDG_CURRENT_DESKTOP=hyprland" ];
+    };
   };
 }
