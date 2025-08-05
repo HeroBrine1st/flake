@@ -31,7 +31,7 @@
   "foxtrot" = {
     networks.overlay.address = "10.168.88.10";
     isServer = true;
-    isStatic = false;
+    isStatic = true;
     syncthing.id = "VODY2JZ-EXHCH54-ESZKRJE-ATXYN5S-AXAY5UG-75Q7H2Q-P6RKFOG-QJ3CPQX";
   };
   "lynx" = {
