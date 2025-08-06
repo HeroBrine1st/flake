@@ -78,6 +78,7 @@
       join-or-start steam
 
       # Factorio
+      mkdir ''${HOME}/.factorio
       noblacklist ''${HOME}/.factorio
       whitelist ''${HOME}/.factorio
 
