@@ -15,7 +15,6 @@
     extraGroups = [ "wheel" "docker" ];
     openssh.authorizedKeys.keys = [
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICs5D9zh4OUHN+wwHiNgiqC4Ec0Qi0qLAyA9oh515HJA herobrine1st@DESKTOP-IJK2GUG"
-      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMvg7OeMT5A85IBk9G4Y7utsVVw/B5L4J3F7BPizwFET herobrine1st@MOBILE-DCV5AQD"
 
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPLcsUaFdbPeGO0HPSqsivuaw+/vyCNwChNaQ75d70/y herobrine1st@lynx"
     ];
