@@ -7,6 +7,9 @@ in {
     # It is directly confirmed that containers are accessible from host by their IP address in docker network
     # https://github.com/moby/moby/discussions/49497
     # "Unpublished container ports continue to be directly accessible from the Docker host via the container's IP address"
+    # Now documented: https://docs.docker.com/reference/cli/docker/network/create/#internal , however only for internal networks
+    # "and the host may communicate with any container IP directly"
+    # (also a reason to finally use internal networks)
     enable = true;
     group = "docker";
     # TODO combine nix and impermanence configs with yq-go
@@ -88,9 +91,36 @@ in {
       serviceConfig = {
         Type = "oneshot";
         RemainAfterExit = true;
-        ExecStart = pkgs.writeShellScript "create-traefik-network" ''
-          ${config.virtualisation.docker.package}/bin/docker network inspect ${network} >/dev/null 2>&1 || \
-          ${config.virtualisation.docker.package}/bin/docker network create ${network}
+        ExecStart = let
+          docker = "${config.virtualisation.docker.package}/bin/docker";
+        in pkgs.writeShellScript "create-traefik-network" ''
+          set -e
+
+          if ! ${docker} network inspect "${network}" &>/dev/null; then
+            ${docker} network create --internal "${network}"
+            exit 0
+          fi
+
+          if ${docker} network inspect -f '{{.Internal}}' "${network}" | grep -q '^true$'; then
+            exit 0
+          fi
+
+          CONTAINERS=$(${docker} network inspect -f '{{range .Containers}}{{.Name}} {{end}}' "${network}")
+          for c in $CONTAINERS; do
+            ${docker} network disconnect "${network}" "$c" || true
+          done
+
+          failed=0
+          { ${docker} network rm "${network}" && ${docker} network create --internal "${network}"; } || {
+            echo "Failed to update docker network ${network}" >&2
+            failed=1
+          }
+
+          for c in $CONTAINERS; do
+            ${docker} network connect "${network}" "$c" || true
+          done
+
+          exit $failed
         '';
       };
     };
