@@ -118,46 +118,108 @@
     '';
   };
 
-  programs.firejail = {
-    enable = true;
-    wrappedBinaries = {
-      lutris = {
-        executable = "${pkgs.lutris}/bin/lutris";
-        profile = "${pkgs.firejail}/etc/firejail/lutris.profile";
-      };
-      node = {
-        executable = "${pkgs.nodejs}/bin/node";
-        profile = "${pkgs.firejail}/etc/firejail/node.profile";
-      };
-      steam = {
-        executable = "${config.programs.steam.package}/bin/steam";
-        profile = pkgs.runCommand "steam.profile" {} ''
-          patch "${pkgs.firejail}/etc/firejail/steam.profile" "${./steam.profile.patch}" -o - > "$out"
-        '';
-      };
-      steam-runtime = {
-        executable = "${config.programs.steam.package}/bin/steam-runtime";
-        profile = "${pkgs.firejail}/etc/firejail/steam.profile";
-      };
-      tlauncher = {
-        executable = "${custom-pkgs.tlauncher}/bin/tlauncher";
-        profile = "${./tlauncher.profile}";
-      };
-      android-studio = {
-        executable = "${pkgs.android-studio}/bin/android-studio";
-        profile = "${./android-studio.profile}";
-      };
-      firefox = let
-        # it is the dirtiest code of my life
-        # but it works yay
-        # find the package that firefox module has added to environment.systemPackages
-        matching = builtins.filter (p: p.name == config.programs.firefox.package.name) config.environment.systemPackages;
-        # ensure it is only one package
-        finalPackage = assert (builtins.length matching == 1); builtins.head matching;
-      in {
-        executable = "${finalPackage}/bin/firefox";
-        profile = "${pkgs.firejail}/etc/firejail/firefox.profile";
+  # TODO wrap in environment.systemPackages because lib.getExe is unsafe
+  # TODO use nixpak or bubblejail (anything bwrap-based because firejail disallows bind mounts)
+  programs.firejail = let
+    # environemnt is interpreted literally and allows interpolation!
+    sandboxJetbrains = { package, prefix ? null, environment ? {} }: let
+      exe = lib.getExe package;
+      # SAFETY: the resulting string is not a path
+      name = builtins.unsafeDiscardStringContext (builtins.baseNameOf exe);
+      executable = let
+        sortedKeys = builtins.sort builtins.lessThan (builtins.attrNames environment);
+      in if prefix == null then exe else pkgs.writeShellScript "${name}-wrapped" ''
+        ${lib.strings.concatMapStringsSep "\n" (key: ''export ${key}="${environment."${key}"}"'') sortedKeys}
+        exec ${lib.escapeShellArgs (prefix ++ [ exe ])}
+      '';
+    in assert builtins.elem package config.environment.systemPackages; {
+      "${name}" = {
+        executable = executable;
+        profile = "${pkgs.callPackage ./jetbrains-profile.nix { ideName = name; }}";
       };
     };
+  in {
+    enable = true;
+    wrappedBinaries = lib.mkMerge [
+      {
+        lutris = {
+          executable = "${pkgs.lutris}/bin/lutris";
+          profile = "${pkgs.firejail}/etc/firejail/lutris.profile";
+        };
+        node = {
+          executable = "${pkgs.nodejs}/bin/node";
+          profile = "${pkgs.firejail}/etc/firejail/node.profile";
+        };
+        steam = {
+          executable = "${config.programs.steam.package}/bin/steam";
+          profile = pkgs.runCommand "steam.profile" {} ''
+            patch "${pkgs.firejail}/etc/firejail/steam.profile" "${./steam.profile.patch}" -o - > "$out"
+          '';
+        };
+        steam-runtime = {
+          executable = "${config.programs.steam.package}/bin/steam-runtime";
+          profile = "${pkgs.firejail}/etc/firejail/steam.profile";
+        };
+        tlauncher = {
+          executable = "${custom-pkgs.tlauncher}/bin/tlauncher";
+          profile = "${./tlauncher.profile}";
+        };
+        firefox = let
+          # it is the dirtiest code of my life
+          # but it works yay
+          # find the package that firefox module has added to environment.systemPackages
+          matching = builtins.filter (p: p.name == config.programs.firefox.package.name) config.environment.systemPackages;
+          # ensure it is only one package
+          finalPackage = assert (builtins.length matching == 1); builtins.head matching;
+        in {
+          executable = "${finalPackage}/bin/firefox";
+          profile = "${pkgs.firejail}/etc/firejail/firefox.profile";
+        };
+      }
+      (sandboxJetbrains { 
+        package = pkgs.android-studio; 
+        environment = { GRADLE_USER_HOME = "$HOME/.cache/Gradle"; };
+        prefix = [ "env" ];
+      })
+      (sandboxJetbrains { package = custom-pkgs.jetbrains.idea-ultimate; })
+      (sandboxJetbrains {
+        package = pkgs.jetbrains.pycharm-community-bin;
+        prefix = let
+          env = pkgs.buildFHSEnv {
+            name = "pycharm-fhs-env";
+            targetPkgs = pkgs: (with pkgs;
+              [
+                libz # llama-index, numpy, or something, idk
+             ]);
+            runScript = "env";
+          };
+        in [
+          "${env}/bin/pycharm-fhs-env"
+          "PIPENV_VENV_IN_PROJECT=1"
+          # "PIPENV_CUSTOM_VENV_NAME=venv" does not work with venv in project
+        ];
+      })
+      (sandboxJetbrains { package = pkgs.jetbrains.webstorm; })
+      (sandboxJetbrains { package = custom-pkgs.jetbrains.clion; })
+      (sandboxJetbrains { package = pkgs.jetbrains.rust-rover; })
+      (sandboxJetbrains {
+        package = pkgs.jetbrains.idea-community-bin;
+        environment = { GRADLE_USER_HOME = "$HOME/.cache/Gradle"; };
+        prefix = let
+          env = pkgs.buildFHSEnv {
+            name = "idea-fhs-env";
+            targetPkgs = pkgs: (with pkgs;
+              [
+                libGL
+                libz
+             ]);
+            runScript = "env";
+          };
+        in [
+          "${env}/bin/idea-fhs-env"
+          "LD_LIBRARY_PATH=${pkgs.libGL}/lib"
+        ];
+      })
+    ];
   };
 }
