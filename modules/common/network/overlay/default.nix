@@ -63,6 +63,7 @@ in {
       settings = {
         pki.blocklist = [
           "c62d955157786559bfb2f468f14b10c8e17cbbf232b6d2d2fa3be8ee8b4b8b89"
+          "7b1ccb588a7dfbe050434a552e3293b8564455c3437086fcea8586ee29dd9e03"
         ];
       };
     };
