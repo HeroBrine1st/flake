@@ -109,6 +109,12 @@
       ignore disable-mnt
       # TODO not a mountpoint, needs to be moved somewhere
       blacklist /mnt/secure
+
+      ignore private-tmp
+    '';
+    "firejail/firefox.local".text = ''
+      # --name=firefox (the default) is entirely ignored
+      join-or-start firefox
     '';
   };
 
