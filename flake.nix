@@ -73,6 +73,7 @@
           organise-files = pkgs.callPackage packages/organise-files.nix {};
           tlauncher = pkgs.callPackage packages/tlauncher {};
           arc-x-icon-theme = pkgs.callPackage packages/arc-x-icons.nix {};
+          auditor = pkgs.callPackage packages/auditor {};
         };
       };
     nixosConfigurations = let
@@ -141,12 +142,15 @@
       };
 
       # nix build .#nixosConfigurations.iso.config.system.build.isoImage
-      iso = pkgs-stable.lib.nixosSystem {
+      iso = pkgs-stable.lib.nixosSystem rec {
         system = "x86_64-linux";
         modules = [
           "${pkgs-stable}/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix"
           ({ pkgs, ... }: {
             isoImage.forceTextMode = true;
+            environment.systemPackages = [
+              self.packages."${system}".auditor
+            ];
           })
         ];
       };
