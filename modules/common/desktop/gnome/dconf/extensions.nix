@@ -119,8 +119,14 @@
   #    "org/gnome/shell/extensions/auto-move-windows" = {
   #      application-list = [ "android-studio.desktop:2" "code-oss.desktop:2" "pycharm.desktop:2" "postman.desktop:2" "recaf.desktop:2" "jetbrains-webstorm.desktop:2" "idea.desktop:2" "jetbrains-idea.desktop:2" ];
   #    };
+    };
 
-
+    home.file = {
+      ".local/share/gnome-shell/extensions" = {
+        source = pkgs.emptyDirectory;
+        recursive = false;
+        force = true;
+      };
     };
   };
 }
