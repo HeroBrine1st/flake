@@ -99,13 +99,6 @@
 
       "org/gnome/shell" = {
         enabled-extensions = [
-          # IDK what are those
-          "volume-mixer@evermiss.net"
-          "tweaks-system-menu@extensions.gnome-shell.fifi.org"
-          "sound-output-device-chooser@kgshank.net"
-          "ding@rastersoft.com"
-          "gnomebedtime@ionutbortis.gmail.com"
-
           # Internal
           "auto-move-windows@gnome-shell-extensions.gcampax.github.com"
 
