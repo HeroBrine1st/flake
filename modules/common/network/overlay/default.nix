@@ -59,6 +59,12 @@ in {
 
       isLighthouse = isStatic;
       isRelay = isStatic;
+
+      settings = {
+        pki.blocklist = [
+          "c62d955157786559bfb2f468f14b10c8e17cbbf232b6d2d2fa3be8ee8b4b8b89"
+        ];
+      };
     };
   };
 }
