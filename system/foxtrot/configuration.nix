@@ -1,4 +1,4 @@
-{ pkgs, ... }: {
+{ pkgs, lib, config, ... }: {
   boot.tmp.useTmpfs = true;
 
   security.sudo-rs.wheelNeedsPassword = false;
@@ -26,10 +26,43 @@
   services.openssh = {
     enable = true;
     settings = {
-      PermitRootLogin = "without-password";
+      PermitRootLogin = "no";
       PasswordAuthentication = false;
+      AllowUsers = [ "herobrine1st" ];
+      AuthenticationMethods = "publickey,keyboard-interactive";
     };
   };
+
+  # TODO move to run0 and use only googleAuthenticator factor there
+  security.pam.services.sshd = {
+    # does not work
+    #googleAuthenticator.enable = true;
+    #unixAuth = lib.mkForce false; # without that it isn't even added
+    # This works
+    rules = {
+      auth = {
+        "google_authenticator" = {
+          enable = true;
+          control = "required";
+          modulePath = "${pkgs.google-authenticator}/lib/security/pam_google_authenticator.so";
+          order = 11000;
+          settings = {
+            no_increment_hotp = false;
+            forward_pass = false;
+            nullok = false;
+            echo_verification_code = true;
+          };
+        };
+
+        # that was the only rule in auth section
+        deny.control = let
+          actualModulePath = config.security.pam.services.sshd.rules.auth.deny.modulePath;
+          expectedModulePath = "${config.security.pam.package}/lib/security/pam_deny.so";
+        in assert actualModulePath == expectedModulePath; lib.mkForce "optional";
+      };
+    };
+  };
+
 
   services.udisks2.enable = true;
 
