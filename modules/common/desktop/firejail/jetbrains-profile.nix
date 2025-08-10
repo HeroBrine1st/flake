@@ -31,6 +31,7 @@ in writeTextFile {
       "${HOME}/.cache/Android/Sdk"
       "${HOME}/Git"
       "${HOME}/.jdks"
+      "${HOME}/.skiko"
     ] ++ (if ideName == "android-studio" then [
       "${HOME}/.config/Google"
       "${HOME}/.cache/Google"
@@ -65,6 +66,12 @@ in writeTextFile {
     include allow-ssh.inc
 
     include disable-common.inc
+    
+    ignore blacklist ${HOME}/.cache/JetBrains/CLion*
+    ignore blacklist ${HOME}/.cache/JetBrains/PyCharm*
+    ignore blacklist ${HOME}/.config/JetBrains/CLion*
+    ignore blacklist ${HOME}/.config/JetBrains/PyCharm*
+    ignore blacklist ${HOME}/.local/share/JetBrains
     include disable-programs.inc
 
     include whitelist-common.inc
