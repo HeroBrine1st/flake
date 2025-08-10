@@ -206,13 +206,41 @@
         package = pkgs.jetbrains.idea-community-bin;
         environment = { GRADLE_USER_HOME = "$HOME/.cache/Gradle"; };
         prefix = let
+          isUnfree = licenses: lib.lists.any (l: !l.free or true) licenses;
           env = pkgs.buildFHSEnv {
             name = "idea-fhs-env";
-            targetPkgs = pkgs: (with pkgs;
-              [
-                libGL
-                libz
-             ]);
+            # There's only two cases
+            # Either you are a nixpkgs maintainger, or that's something you've never seen
+            # MORE THAN ONE HUNDRED LIBRARIES! And all of that for android!
+            targetPkgs = pkgs: (with pkgs; ([
+              libGL
+              libz
+              xorg.libX11 # required by android plugin on wayland. By android plugin itself, not by AVD.
+              # AVD, and this all can be replaced by building android sdk with nix
+              # looking at the fact they use patchelf without buildInputs (from where I tried to copy this list) makes me doubt AVD will work with nix SDK..
+              libpulseaudio
+              libpng
+              nss
+              nspr
+              expat
+              libdrm
+              util-linux.lib # that's libuuid! Try guess it!
+              libbsd
+            ] ++ (lib.pipe pkgs.xorg [ # ALL xorg libraries! AVD is insatiable! Probably not all of them are needed but that's 96 paths 23.25 MiB in total
+              builtins.attrValues
+              (builtins.filter lib.attrsets.isDerivation) # some are functions
+              (builtins.filter (pkg: # free
+                if pkg.meta ? "licenses" then !(isUnfree pkg.meta.licenses)
+                else if pkg.meta ? "license" then !(isUnfree [ pkg.meta.license ])
+                else true
+              ))
+              (builtins.filter (pkg: !(pkg.meta ? "broken") || pkg.meta.broken == false)) # non-broken
+              (builtins.filter (pkg: !(pkg.meta ? "platforms") # supported by platform
+                || builtins.length pkg.meta.platforms == 0
+                || builtins.elem pkgs.stdenv.hostPlatform.system pkg.meta.platforms))
+              (builtins.filter (pkg: (builtins.substring 0 4 pkg.name) != "xf86")) # not drivers
+            ]))
+          );
             runScript = "env";
           };
         in [
