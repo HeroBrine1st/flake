@@ -41,6 +41,8 @@ in writeTextFile {
       "${HOME}/.config/JetBrains"
       "${HOME}/.cache/JetBrains"
       "${HOME}/.java" # that's where settings are stored at least for intellij idea!
+    ]) ++ (lib.optionals (ideName == "android-studio" || ideName == "idea-community") [
+      "${HOME}/.pub-cache"
     ]))}
     ${ownFiles [
       "${HOME}/.gitconfig"
@@ -99,7 +101,12 @@ in writeTextFile {
     dbus-user filter
     dbus-user.talk org.freedesktop.secrets.*
 
-    join-or-start ${ideName}
+    # IDE somehow breaks EGL libraries (running in the same profile without IDE works)
+    # I am finamp contributor
+    #${lib.optionalString (ideName == "android-studio" || ideName == "idea-community") "dbus-user.own com.unicornsonlsd.finamp"}
+    #${lib.optionalString (ideName == "android-studio" || ideName == "idea-community") "dbus-user.own org.mpris.MediaPlayer2.*"}
+
+    name ${ideName}
 
     tab
   '';
