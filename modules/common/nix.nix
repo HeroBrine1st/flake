@@ -8,7 +8,7 @@
         "http://10.168.88.10:5000"
       ];
       trusted-public-keys = [
-        "foxtrot-cache:isnE29hG3jme1XXeNhOVNQ9AaO/gk6GgZBDUWVhwheM="
+        "foxtrot-cache:X8r3Ux9DlsIqkM0uMIw6gAlwCUCW324gm2VZn7eMJr0="
       ];
     })
   ];
