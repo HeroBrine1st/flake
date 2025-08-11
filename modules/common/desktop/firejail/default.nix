@@ -113,8 +113,15 @@
       ignore private-tmp
     '';
     "firejail/firefox.local".text = ''
-      # --name=firefox (the default) is entirely ignored
-      join-or-start firefox
+      name firefox
+    '';
+    # https://github.com/netblue30/firejail/blob/master/etc/firejail.config
+    "firejail/firejail.config".text = ''
+      # Force use of nonewprivs.  This mitigates the possibility of
+      # a user abusing firejail's features to trick a privileged (suid
+      # or file capabilities) process into loading code or configuration
+      # that is partially under their control.  Default disabled
+      force-nonewprivs yes
     '';
   };
 
