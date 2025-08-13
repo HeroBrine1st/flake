@@ -32,6 +32,7 @@ in writeTextFile {
       "${HOME}/Git"
       "${HOME}/.jdks"
       "${HOME}/.skiko"
+      "${HOME}/.continue"
     ] ++ (if ideName == "android-studio" then [
       "${HOME}/.config/Google"
       "${HOME}/.cache/Google"
@@ -88,8 +89,9 @@ in writeTextFile {
     notv
     novideo
     protocol unix,inet,inet6,netlink
-    # bwrap
-    seccomp !mount,!pivot_root,!umount2
+    # bwrap: !mount,!pivot_root,!umount2
+    # chromium (extensions): !chroot
+    seccomp !mount,!pivot_root,!umount2,!chroot
 
     #private-cache
     # private-tmp
