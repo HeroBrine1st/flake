@@ -88,12 +88,14 @@
 
   services.udisks2.enable = true;
 
-  virtualisation.docker = {
+  virtualisation.docker.rootless = {
     enable = true;
-    enableOnBoot = false;
-    liveRestore = false;
-    storageDriver = "btrfs";
-    daemon.settings.dns = [ "1.1.1.1" ];
+    setSocketVariable = true;
+    daemon.settings = {
+      dns = [ "1.1.1.1" ];
+      live-restore = false;
+      storage-driver = "btrfs";
+    };
   };
 
   # Open ports in the firewall.

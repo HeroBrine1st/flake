@@ -2,6 +2,7 @@
   environment.etc = {
     "firejail/globals.local".text = ''
       blacklist /.fsroot
+      blacklist ''${RUNUSER}/docker.sock
     '';
     "firejail/lutris.local".text = ''
       ignore restrict-namespaces
