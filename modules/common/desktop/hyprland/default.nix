@@ -11,7 +11,13 @@ in {
     ./hyprlock.nix
   ];
 
-  programs.hyprland.enable = true;
+  programs.hyprland = {
+    enable = true;
+    # FIXME this drastically increases attack surface
+    #       `uwsm run` allows any application to run any command outside of its namespace
+    #       Most probably this command talks directly to PID 1 or user daemon, allowing restricting slice creation to everything except application launcher.
+    withUWSM = true;
+  };
   programs.dconf.enable = true;
 
   xdg.portal = {
@@ -23,15 +29,45 @@ in {
     ];
   };
 
-  systemd.user.services."gnome-terminal-server" = {
-    environment = {
-      # TODO remove close/minimize buttons via css when maximized (see unite extension)
-      "XDG_CURRENT_DESKTOP" = "GNOME";
+  systemd.user.services = let
+    mkHyprlandService = service: {
+      enable = true;
+      wantedBy = [ "wayland-session@hyprland.target" ];
+      requires = [ "wayland-wm@hyprland.target" ];
+      after = [ "wayland-wm@hyprland.target" ];
+    } // service;
+    # A convenient replacement to exec-once which supports restarting on config changes
+    mkSimpleHyprlandService = execStart: mkHyprlandService {
+      serviceConfig.ExecStart = execStart;
     };
-    overrideStrategy = "asDropin";
+    mkOneshotHyprlandService = execStart: mkHyprlandService {
+      serviceConfig = {
+        Type = "oneshot";
+        ExecStart = execStart;
+      };
+    };
+  in {
+    hyprpolkitagent = mkSimpleHyprlandService "${pkgs.hyprpolkitagent}/libexec/v";
+    hyprland-status-bar = mkSimpleHyprlandService "${custom-pkgs.topbar}/bin/topbar";
+    hyprland-cursor = mkOneshotHyprlandService "hyprctl setcursor oreo_spark_purple_cursors 32";
+    wl-clip-persist = mkSimpleHyprlandService "${pkgs.wl-clip-persist}/bin/wl-clip-persist --clipboard regular --all-mime-type-regex '^(?!x-kde-passwordManagerHint).+'";
+    wlsunset = mkSimpleHyprlandService "${pkgs.wlsunset}/bin/wlsunset -l 51.7 -L 39.1";
+    # uses systemd-run by default, no patch needed
+    # https://github.com/H3rmt/hyprshell/blob/601c7eb1a61854d0d70b257447e9ddc044810855/exec-lib/src/run.rs#L57-L60
+    hyprshell = mkSimpleHyprlandService "${custom-pkgs.hyprshell}/bin/hyprshell run";
+
+    "gnome-terminal-server" = {
+      environment = {
+        # TODO remove close/minimize buttons via css when maximized (see unite extension)
+        "XDG_CURRENT_DESKTOP" = "GNOME";
+      };
+      overrideStrategy = "asDropin";
+    };
   };
 
   home-manager.users.herobrine1st = {
+    wayland.windowManager.hyprland.systemd.enable = false;
+
     imports = [
       # plugins/hyprbar.nix
     ];
@@ -102,37 +138,21 @@ in {
           focus_on_activate = false; # TODO forward such request to notification
         };
 
-        # TODO move all that to systemd units (because exec-once does not track updates)
-        #      https://github.com/Vladimir-csp/uwsm
-
         exec-once = [
-          # "${pkgs.xdg-desktop-portal-hyprland}/libexec/xdg-desktop-portal-hyprland" systemd-enabled
-          # xdg-desktop-portal-gtk is also systemd-enabled, but may be disabled once gnome is removed
-
-          "${pkgs.kdePackages.polkit-kde-agent-1}/libexec/polkit-kde-authentication-agent-1"
-          "${custom-pkgs.topbar}/bin/topbar"
-        
-          "hyprctl setcursor oreo_spark_purple_cursors 32"
-
-          "${pkgs.wl-clip-persist}/bin/wl-clip-persist --clipboard regular --all-mime-type-regex '^(?!x-kde-passwordManagerHint).+'"
-
-          "${pkgs.wlsunset}/bin/wlsunset -l 51.7164 -L 39.1849"
-          
           # fix unite interfering with gtk
           "rm $HOME/.config/gtk-3.0/gtk.css"
           "rm $HOME/.config/gtk-4.0/gtk.css"
-
-          # TODO https://github.com/H3rmt/hyprswitch
         ];
 
         bind = [
-          "SUPER, 1, exec, gnome-terminal"
-          "SUPER_SHIFT, A, exec, ${pkgs.anyrun}/bin/anyrun" # https://github.com/anyrun-org/anyrun
+          "SUPER, 1, exec, uwsm app -- gnome-terminal"
+#          "SUPER_SHIFT, A, exec, uwsm app -- ${pkgs.anyrun}/bin/anyrun" # https://github.com/anyrun-org/anyrun
           "SUPER, C, killactive, "
           "SUPER, up, fullscreenstate, 1"
           "SUPER, down, fullscreenstate, 0"
-          "ALT, Tab, cyclenext"
-          "ALT, Tab, bringactivetotop" # deprecated in favor of alterzorder, but it requires zheight. alterzorder can't replace bringactivetotop
+          "SUPER, L, exec, pidof hyprlock || hyprlock"
+          #"ALT, Tab, cyclenext"
+          #"ALT, Tab, bringactivetotop" # deprecated in favor of alterzorder, but it requires zheight. alterzorder can't replace bringactivetotop
         ];
         env = [
           "XCURSOR_THEME,oreo_spark_purple_cursors"
@@ -158,8 +178,28 @@ in {
       };
     };
 
-    systemd.user.services."hyprpaper" = {
-      Unit.ConditionEnvironment = lib.mkForce [ "WAYLAND_DISPLAY" "XDG_CURRENT_DESKTOP=hyprland" ];
+    systemd.user.services = {
+      hyprpaper = {
+        Install = {
+          WantedBy = lib.mkForce [ "wayland-session@hyprland.target" ];
+        };
+        Unit = {
+          Requires = [ "wayland-wm@hyprland.service" ];
+          After = [ "wayland-wm@hyprland.service" ];
+        };
+      };
+    };
+
+    xdg.configFile = {
+      "systemd/user/xdg-desktop-autostart.target".source = pkgs.emptyFile;
+      "hyprshell".source = ./hyprshell;
     };
   };
+
+  system.checks = [
+    (pkgs.runCommand "check-hyprshell-config" {} ''
+      ${custom-pkgs.hyprshell}/bin/hyprshell config check -c ${./hyprshell/config.toml} -s ${./hyprshell/styles.css}
+      touch $out
+    '')
+  ];
 }
