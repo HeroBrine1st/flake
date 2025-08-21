@@ -74,6 +74,7 @@
           tlauncher = pkgs.callPackage packages/tlauncher {};
           arc-x-icon-theme = pkgs.callPackage packages/arc-x-icons.nix {};
           auditor = pkgs.callPackage packages/auditor {};
+          hyprshell = pkgs.callPackage packages/hyprshell.nix {};
         };
       };
     nixosConfigurations = let
