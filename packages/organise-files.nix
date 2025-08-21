@@ -1,11 +1,7 @@
 { config, lib, pkgs, ... }: pkgs.writeShellApplication {
-  runtimeInputs = [ pkgs.coreutils pkgs.findutils ];
+  runtimeInputs = [ pkgs.coreutils pkgs.findutils pkgs.bash ];
   name = "organise-files.sh";
   text = ''
-    #!/bin/bash
-
-    set -e
-
     SOURCE_DIR="$1"
     DEST_DIR="$2"
 
@@ -20,6 +16,6 @@
         mv -v "$file" "$dir"
     done
 
-    find "$DEST_DIR" -depth -type d -execdir sh -c 'touch "$PWD/$0" -r "$PWD/$0/$( ls -t "$PWD/$0" | head -n 1 )"' {} \;
+    find "$DEST_DIR" -depth -type d -execdir bash -c 'touch "$PWD/$0" -r "$PWD/$0/$( ls -t "$PWD/$0" | head -n 1 )"' {} \;
   '';
 }
