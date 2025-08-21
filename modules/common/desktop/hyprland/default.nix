@@ -32,9 +32,9 @@ in {
   systemd.user.services = let
     mkHyprlandService = service: {
       enable = true;
-      wantedBy = [ "wayland-session@hyprland.target" ];
-      requires = [ "wayland-wm@hyprland.target" ];
-      after = [ "wayland-wm@hyprland.target" ];
+      wantedBy = [ "wayland-session@Hyprland.target" ];
+      #requires = [ "wayland-wm@Hyprland.service" ];
+      after = [ "wayland-wm@Hyprland.service" ];
     } // service;
     # A convenient replacement to exec-once which supports restarting on config changes
     mkSimpleHyprlandService = execStart: mkHyprlandService {
@@ -148,7 +148,7 @@ in {
           "SUPER, 1, exec, uwsm app -- gnome-terminal"
 #          "SUPER_SHIFT, A, exec, uwsm app -- ${pkgs.anyrun}/bin/anyrun" # https://github.com/anyrun-org/anyrun
           "SUPER, C, killactive, "
-          "SUPER, up, fullscreenstate, 1"
+          "SUPER, up, fullscreen, 1"
           "SUPER, down, fullscreenstate, 0"
           "SUPER, L, exec, pidof hyprlock || hyprlock"
           #"ALT, Tab, cyclenext"
@@ -181,11 +181,11 @@ in {
     systemd.user.services = {
       hyprpaper = {
         Install = {
-          WantedBy = lib.mkForce [ "wayland-session@hyprland.target" ];
+          WantedBy = lib.mkForce [ "wayland-session@Hyprland.target" ];
         };
         Unit = {
-          Requires = [ "wayland-wm@hyprland.service" ];
-          After = [ "wayland-wm@hyprland.service" ];
+          #Requires = [ "wayland-wm@Hyprland.service" ]; circular dependency prevents starting! hyprland and session target require each other but it is user services that suffer from that!
+          After = [ "wayland-wm@Hyprland.service" ];
         };
       };
     };
