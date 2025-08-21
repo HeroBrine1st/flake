@@ -35,6 +35,43 @@
             shadow_passes = 2;
           }
         ];
+
+        label = [
+          # TIME
+          {
+              monitor = "";
+              text = "$TIME"; # ref. https://wiki.hyprland.org/Hypr-Ecosystem/hyprlock/#variable-substitution
+              font_size = 90;
+              font_family = "$font";
+
+              position = "-30, 0";
+              halign = "right";
+              valign = "top";
+          }
+
+          # DATE
+          {
+              monitor = "";
+              text = "cmd[update:60000] date +\"%A, %d %B %Y\""; # update every 60 seconds
+              font_size = 25;
+              font_family = "$font";
+
+              position = "-30, -150";
+              halign = "right";
+              valign = "top";
+          }
+
+          {
+              monitor = "";
+              text = "$LAYOUT[en,ru]";
+              font_size = 24;
+              onclick = "hyprctl switchxkblayout all next";
+
+              position = "250, -20";
+              halign = "center";
+              valign = "center";
+          }
+        ];
       };
     };
   };
