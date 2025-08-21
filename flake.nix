@@ -119,7 +119,6 @@
           self.nixosModules.basic
           self.nixosModules.scrutiny-collector
           self.nixosModules.desktop
-          self.nixosModules.hyprland
           self.nixosModules.development
 
           ./system/pc
