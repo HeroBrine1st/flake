@@ -87,6 +87,24 @@ in {
           gaps_out = 0;
         };
 
+        group.groupbar = {
+          # Disables undocumented feature enabled by default
+          # To confirm it is undocumented: https://www.google.com/search?q=site%3Awiki.hypr.land%20%22groupbar%22&filter=0
+          # Red flag until I find documentation on this feature
+          # TODO lock hyprland version until the policy of enabling undocumented features by default becomes clear
+          # According to https://github.com/hyprwm/Hyprland/issues/2415#issuecomment-2526295603, this is unwanted feature anyway
+          enabled = false;
+          # those two are set to 2 by default and as such it is assumed they add faintly visible borders disallowing mindless cursor snapping to fullscreen window edge and as such requiring context switch to perform a basic action such as scrolling
+          # gaps_in = 0;
+          # gaps_out = 0;
+
+          # According to https://linuxiac.com/hyprland-0-49-introduces-fine-grained-permissions/, the feature is widely used by users
+          # According to ddg (not ai, manual search) and chatgpt, there's no explicit documentation on this feature including user feedback
+          # Users reporting rendering issues take too small screenshots to actually see the feature:
+          # - https://github.com/hyprwm/Hyprland/discussions/6751
+          # - https://github.com/hyprwm/Hyprland/issues/6334
+        };
+
         input = {
           kb_layout = "us,ru";
           kb_options = "grp:alt_shift_toggle";
