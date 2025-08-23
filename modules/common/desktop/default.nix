@@ -112,7 +112,11 @@
     };
   };
 
-  networking.firewall.logReversePathDrops = true;
+  networking.firewall = {
+    logReversePathDrops = true;
+    checkReversePath = "loose";
+  };
+
 
   system.stateVersion = "23.11"; # Do not change
 }
