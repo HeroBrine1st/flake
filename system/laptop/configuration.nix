@@ -6,6 +6,4 @@
   ];
 
   environment.etc."htoprc".source = ./htoprc;
-
-  networking.firewall.checkReversePath = "loose";
 }
