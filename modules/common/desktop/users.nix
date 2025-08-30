@@ -1,4 +1,4 @@
-{ custom-pkgs, assets, ... }: {
+{ custom-pkgs, assets, lib, config, ... }: {
   users.users.herobrine1st = {
     isNormalUser = true;
     description = "HeroBrine1st Erquilenne";
@@ -89,14 +89,14 @@
         file:///.fsroot File System Root
         file:///tmp
         file:///mnt/tmp /mnt/tmp
-        file:///mnt/extra Extra
-        file:///mnt/hdd HDD
+        ${lib.optionalString (config.fileSystems ? "/mnt/extra") "file:///mnt/extra Extra"}
+        ${lib.optionalString (config.fileSystems ? "/mnt/hdd") "file:///mnt/hdd HDD"}
         file:///home/herobrine1st/Documents
         file:///home/herobrine1st/Music
         file:///home/herobrine1st/Pictures
         file:///home/herobrine1st/Videos
         file:///home/herobrine1st/Downloads
-        sftp://10.168.88.72/mnt/basic Seagate Basic on Orange Pi 5
+        dav://10.168.88.10:3923/ Shared
       '';
       "ptpython/config.py".source = ./ptpython-config.py;
       "mimeapps.list".force = true;
