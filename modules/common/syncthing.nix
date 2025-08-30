@@ -21,12 +21,12 @@ in {
         "uf77h-ptigu" = mkFolder {
           label = "Secure";
           path = "/mnt/secure";
-          devices = [ "alfa" "foxtrot" "MOBILE-DCV5AQD" "DESKTOP-IJK2GUG" "lynx" ];
+          devices = [ "foxtrot" "MOBILE-DCV5AQD" "DESKTOP-IJK2GUG" "lynx" ];
         };
         "yb6rg-qs9gm" = mkFolder {
           label = "Local Music";
           path = "/home/herobrine1st/Music/Main";
-          devices = [ "alfa" "MOBILE-DCV5AQD" "DESKTOP-IJK2GUG" "lynx" ];
+          devices = [ "MOBILE-DCV5AQD" "DESKTOP-IJK2GUG" "lynx" ];
         };
         "f665p-sm9kf" = mkFolder {
           label = "Notes";
