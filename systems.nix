@@ -4,7 +4,6 @@
     networks.overlay.address = "10.168.88.72";
     isServer = true;
     isStatic = true;
-    syncthing.id = "QDEHB5B-UGM2GQ6-3VG3RBL-JXOTGB2-OGNO5AL-H7KAFIC-MESTOWJ-O2YD3AO";
   };
   "bravo" = {
     networks.overlay.address = "10.168.88.57";
