@@ -2,7 +2,7 @@
   users.users.herobrine1st = {
     isNormalUser = true;
     description = "HeroBrine1st Erquilenne";
-    extraGroups = [ "wheel" "docker" "libvirtd" "wireshark" "adbusers" "dialout" ];
+    extraGroups = [ "wheel" "libvirtd" "wireshark" "adbusers" "dialout" ];
   };
 
   home-manager.users.herobrine1st = {
