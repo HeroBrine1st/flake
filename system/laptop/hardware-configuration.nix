@@ -78,4 +78,10 @@
   hardware.cpu.amd.updateMicrocode = config.hardware.enableRedistributableFirmware;
 
   hardware.xpadneo.enable = true;
+
+  security.tpm2 = {
+    enable = true;
+    pkcs11.enable = true;
+    tctiEnvironment.enable = true;
+  };
 }
