@@ -1,4 +1,4 @@
-{ pkgs, options, ... }: {
+{ lib, pkgs, options, ... }: {
   imports = [
     ./oh-my-zsh.nix
   ];
@@ -52,6 +52,10 @@
       zle -N tab-complete-or-nothing
 
       bindkey '^I' tab-complete-or-nothing
+      bindkey '^[[A' history-beginning-search-backward
+      bindkey '^[OA' history-beginning-search-backward
+      bindkey '^[[B' history-beginning-search-forward
+      bindkey '^[OB' history-beginning-search-forward
     '';
   };
 
