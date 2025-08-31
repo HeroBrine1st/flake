@@ -1,0 +1,20 @@
+# Taken at 36f3045d69d1ba402db09d09eb12b42eebe0fa3b
+diff --git a/internal/p10k.zsh b/internal/p10k.zsh
+index f73dd20..fa053ec 100644
+--- a/internal/p10k.zsh
++++ b/internal/p10k.zsh
+@@ -3884,10 +3884,12 @@ function _p9k_vcs_render() {
+     if [[ -z $state ]]; then
+       if [[ $VCS_STATUS_HAS_CONFLICTED == 1 && $_POWERLEVEL9K_VCS_CONFLICTED_STATE == 1 ]]; then
+         state=CONFLICTED
+-      elif [[ $VCS_STATUS_HAS_STAGED != 0 || $VCS_STATUS_HAS_UNSTAGED != 0 ]]; then
+-        state=MODIFIED
+       elif [[ $VCS_STATUS_HAS_UNTRACKED != 0 ]]; then
+         state=UNTRACKED
++      elif [[ $VCS_STATUS_HAS_UNSTAGED != 0 ]]; then
++        state=UNSTAGED
++      elif [[ $VCS_STATUS_HAS_STAGED != 0 ]]; then
++        state=STAGED
+       else
+         state=CLEAN
+       fi
