@@ -71,6 +71,12 @@
       bindkey '^[OA' history-beginning-search-backward
       bindkey '^[[B' history-beginning-search-forward
       bindkey '^[OB' history-beginning-search-forward
+
+      bindkey '^[[1;5B' down-line
+      bindkey '^[[1;5A' up-line
+      # and left-right for mindless usage
+      bindkey '^[[1;5C' forward-char
+      bindkey '^[[1;5D' backward-char
     '';
   };
 
