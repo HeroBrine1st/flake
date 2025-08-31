@@ -94,14 +94,6 @@
     source "$OSH"/oh-my-bash.sh
 
     alias mkdir="mkdir >/dev/null"
-    alias ytmusic="yt-dlp -f bestaudio --extract-audio -o '%(playlist_index)s. %(title)s.%(ext)s'"
-    alias ytvideo="yt-dlp --write-sub --sub-lang ru,en.* --sponsorblock-mark all --embed-metadata --merge-output-format mkv"
-
-    alias xclip="xclip -selection c"
-    alias killall="killall -I"
-    if ! which sudo > /dev/null 2>&1; then # TODO remove when sudo-rs is replaced with run0 on servers too
-      alias sudo=run0
-    fi
 
     dockersend() {
         docker save "''${@:2}" -o image.tar && (pv image.tar | ssh $1 "docker load") && rm image.tar
