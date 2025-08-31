@@ -10,6 +10,10 @@
     histSize = 16777216; # practically unlimited
     setOptions = [
       "HIST_IGNORE_DUPS"
+      "AUTO_CD"
+      "NOCLOBBER"
+      "NOAUTO_MENU"
+
       # "SHARE_HISTORY" - requires .bash_history migration as it enables "EXTENDED_HISTORY"
       # "HIST_FCNTL_LOCK" - may provide performance improvement (is there any problem?)
     ];
@@ -35,6 +39,19 @@
         fi
       done
       unset UNSAFE_DOTFILES
+    '';
+    interactiveShellInit = lib.mkAfter ''
+      tab-complete-or-nothing() {
+        # with empty buffer it inserts tab characters
+        if [[ -z $BUFFER ]]; then
+          return 0
+        else
+          zle expand-or-complete
+        fi
+      }
+      zle -N tab-complete-or-nothing
+
+      bindkey '^I' tab-complete-or-nothing
     '';
   };
 
