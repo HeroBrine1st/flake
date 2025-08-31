@@ -44,14 +44,29 @@
       tab-complete-or-nothing() {
         # with empty buffer it inserts tab characters
         if [[ -z $BUFFER ]]; then
+          print -n "\a" # beep
           return 0
         else
           zle expand-or-complete
+          if [[ $? -ne 0 ]]; then
+            print -n "\a" # beep
+          fi
         fi
       }
       zle -N tab-complete-or-nothing
 
       bindkey '^I' tab-complete-or-nothing
+
+      zle_beep_backspace() {
+        if [[ -z $BUFFER ]]; then
+          print -n "\a" # beep
+        else
+          zle backward-delete-char
+        fi
+      }
+      zle -N zle_beep_backspace
+      bindkey '^?' zle_beep_backspace
+
       bindkey '^[[A' history-beginning-search-backward
       bindkey '^[OA' history-beginning-search-backward
       bindkey '^[[B' history-beginning-search-forward
