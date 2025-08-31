@@ -7,4 +7,6 @@
     ./bash
     ./zsh
   ];
+
+  users.defaultUserShell = pkgs.zsh;
 }
