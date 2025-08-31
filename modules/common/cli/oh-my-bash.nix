@@ -97,7 +97,6 @@
     alias ytmusic="yt-dlp -f bestaudio --extract-audio -o '%(playlist_index)s. %(title)s.%(ext)s'"
     alias ytvideo="yt-dlp --write-sub --sub-lang ru,en.* --sponsorblock-mark all --embed-metadata --merge-output-format mkv"
 
-    alias "engage-buildkit-multiplatform=docker run --rm --privileged multiarch/qemu-user-static --reset -p yes"
     alias xclip="xclip -selection c"
     alias killall="killall -I"
     if ! which sudo > /dev/null 2>&1; then # TODO remove when sudo-rs is replaced with run0 on servers too
