@@ -67,10 +67,37 @@
       zle -N zle_beep_backspace
       bindkey '^?' zle_beep_backspace
 
-      bindkey '^[[A' history-beginning-search-backward
-      bindkey '^[OA' history-beginning-search-backward
-      bindkey '^[[B' history-beginning-search-forward
-      bindkey '^[OB' history-beginning-search-forward
+      # The logic: on down-history/up-history save the LBUFFER, and if it is still the same, use down-history or up-history again and update the variable
+      # Otherwise, search by prefix
+      last_lbuffer=""
+
+      arrow-up() {
+        if [[ -z $BUFFER || "$last_lbuffer" = "$LBUFFER" ]]; then
+          zle up-history
+          last_lbuffer="$LBUFFER"
+        else
+          last_lbuffer=""
+          zle history-beginning-search-backward
+        fi
+      }
+      zle -N arrow-up
+
+      bindkey '^[[A' arrow-up
+      bindkey '^[OA' arrow-up
+
+      arrow-down() {
+        if [[ -z $BUFFER || "$last_lbuffer" = "$LBUFFER" ]]; then
+          zle down-history
+          last_lbuffer="$LBUFFER"
+        else
+          last_lbuffer=""
+          zle history-beginning-search-forward
+        fi
+      }
+      zle -N arrow-down
+
+      bindkey '^[[B' arrow-down
+      bindkey '^[OB' arrow-down
 
       bindkey '^[[1;5B' down-line
       bindkey '^[[1;5A' up-line
