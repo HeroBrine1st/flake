@@ -77,6 +77,12 @@
     daemon.settings = {
       dns = ["1.1.1.1"];
     };
+    extraPackages = [
+      # https://docs.docker.com/reference/cli/dockerd/#runtime-options
+      # It has example for kata itself (and I tried to change daemon.json runtimes key for 2 hours without success!!! kata-containers documentation is lacking and issues are not helpful - probably everyone started with reading whole docker documentation?)
+      # The example is: docker run --runtime io.containerd.kata.v2
+      pkgs.kata-runtime
+    ];
   };
 
   environment.etc."htoprc".source = ./htoprc;
