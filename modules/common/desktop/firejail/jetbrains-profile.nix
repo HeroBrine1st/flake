@@ -47,7 +47,7 @@ in writeTextFile {
     ]))}
     ${ownFiles [
       "${HOME}/.gitconfig"
-      "${HOME}/.bash_history"
+      "${HOME}/.zsh_history"
     ]}
 
     whitelist ${HOME}/.ssh/config
