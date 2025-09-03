@@ -1,0 +1,3 @@
+{ flake, ...}: {
+  system.extraDependencies = [ flake ];
+}
