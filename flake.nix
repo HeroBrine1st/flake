@@ -82,6 +82,7 @@
         custom-pkgs = self.packages."${system}" // (if system == "x86_64-linux" then self.legacyPackages."${system}" else {});
         assets = ./assets;
         systems = import ./systems.nix;
+        flake = self;
       };
     in {
       alfa = let
