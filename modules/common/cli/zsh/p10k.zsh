@@ -305,6 +305,15 @@
       # Tip: To always show local branch name in full without truncation, delete the next line.
       (( $#branch > 32 )) && branch[13,-13]="…"  # <-- this line
       res+="${clean}${(g::)POWERLEVEL9K_VCS_BRANCH_ICON}${branch//\%/%%}"
+
+      # Show tracking branch name if it differs from local branch.
+      if [[ $VCS_STATUS_REMOTE_BRANCH != $VCS_STATUS_LOCAL_BRANCH ]]; then
+        res+="${meta}:${clean}${(V)VCS_STATUS_REMOTE_BRANCH//\%/%%}"
+      fi
+
+      if [[ $VCS_STATUS_REMOTE_NAME != "origin" ]]; then
+        res+=" → $VCS_STATUS_REMOTE_NAME"
+      fi
     fi
 
     if [[ -n $VCS_STATUS_TAG
@@ -324,11 +333,6 @@
     [[ -z $VCS_STATUS_LOCAL_BRANCH && -z $VCS_STATUS_TAG ]] &&
       # I don't care about performance, gitstatusd doesn't support showing nearest attachable reference
       res+="${meta}detached:${clean}$(git describe --contains --all HEAD 2> /dev/null)"
-
-    # Show tracking branch name if it differs from local branch.
-    if [[ -n ${VCS_STATUS_REMOTE_BRANCH:#$VCS_STATUS_LOCAL_BRANCH} ]]; then
-      res+="${meta}:${clean}${(V)VCS_STATUS_REMOTE_BRANCH//\%/%%}"
-    fi
 
     # Display "wip" if the latest commit's summary contains "wip" or "WIP".
     if [[ $VCS_STATUS_COMMIT_SUMMARY == (|*[^[:alnum:]])(wip|WIP)(|[^[:alnum:]]*) ]]; then
