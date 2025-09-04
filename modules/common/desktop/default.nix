@@ -102,6 +102,8 @@
   networking.firewall = {
     enable = true;
     trustedInterfaces = [ "sing-box-tun" ];
+    logReversePathDrops = true;
+    checkReversePath = "loose";
   };
 
   fileSystems = {
@@ -111,12 +113,6 @@
       options = [ "rw" "noexec" "nodev" "nosuid" "uid=1000" "gid=1000" "mode=1700" ];
     };
   };
-
-  networking.firewall = {
-    logReversePathDrops = true;
-    checkReversePath = "loose";
-  };
-
 
   system.stateVersion = "23.11"; # Do not change
 }
