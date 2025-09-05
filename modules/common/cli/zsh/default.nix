@@ -111,6 +111,18 @@
       # and left-right for mindless usage
       bindkey '^[[1;5C' forward-char
       bindkey '^[[1;5D' backward-char
+
+      [[ -d "$HOME/.zsh" ]] || mkdir -p "$HOME/.zsh"
+      if [[ -f "$HOME/.zsh_history" ]]; then
+        if [[ ! -f "$HOME/.zsh/history" ]]; then
+          mv "$HOME/.zsh_history" "$HOME/.zsh/history"
+        elif [[ -s "$HOME/.zsh_history" ]]; then
+          echo "WARNING: Found rogue $HOME/.zsh_history file"
+        else
+          rm "$HOME/.zsh_history"
+        fi
+      fi
+      HISTFILE="$HOME/.zsh/history"
     '';
   };
 
