@@ -109,6 +109,9 @@
     lrcget
     finamp
     freecad
+
+    # CLI
+    typst
   ];
 
   nixpkgs.allowedUnfreePackages = [
