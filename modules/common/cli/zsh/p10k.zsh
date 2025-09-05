@@ -311,7 +311,7 @@
         res+="${meta}:${clean}${(V)VCS_STATUS_REMOTE_BRANCH//\%/%%}"
       fi
 
-      if [[ $VCS_STATUS_REMOTE_NAME != "origin" ]]; then
+      if (("$(git remote show | wc -l)" > 1 )); then
         res+=" → $VCS_STATUS_REMOTE_NAME"
       fi
     fi
