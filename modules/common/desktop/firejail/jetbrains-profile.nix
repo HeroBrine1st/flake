@@ -33,6 +33,7 @@ in writeTextFile {
       "${HOME}/.jdks"
       "${HOME}/.skiko"
       "${HOME}/.continue"
+      "${HOME}/.zsh"
     ] ++ (if ideName == "android-studio" then [
       "${HOME}/.config/Google"
       "${HOME}/.cache/Google"
@@ -47,7 +48,6 @@ in writeTextFile {
     ]))}
     ${ownFiles [
       "${HOME}/.gitconfig"
-      "${HOME}/.zsh_history"
     ]}
 
     whitelist ${HOME}/.ssh/config
