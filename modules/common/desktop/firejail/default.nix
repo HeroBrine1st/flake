@@ -67,12 +67,11 @@
 
       # Generic configuration
       noblacklist ''${HOME}/.cache
-      noblacklist /mnt/games/Steam
-      noblacklist /mnt/games_hdd/Steam
-      noblacklist /mnt/games_ssd/Steam
+      noblacklist /mnt/extra/Steam
+      noblacklist ''${HOME}/.config/gamescope
       whitelist ''${HOME}/.cache
-      whitelist /mnt/games/Steam
       whitelist /mnt/extra/Steam
+      whitelist ''${HOME}/.config/gamescope
 
       caps.keep sys_nice
       deterministic-shutdown
@@ -161,7 +160,7 @@
         steam = {
           executable = "${config.programs.steam.package}/bin/steam";
           profile = pkgs.runCommand "steam.profile" {} ''
-            patch "${pkgs.firejail}/etc/firejail/steam.profile" "${./steam.profile.patch}" -o - > "$out"
+            patch "${pkgs.firejail}/etc/firejail/steam.profile" "${./steam.profile.patch}" -o "$out"
           '';
         };
         steam-runtime = {
