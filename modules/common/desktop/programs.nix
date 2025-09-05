@@ -140,7 +140,17 @@
   boot.blacklistedKernelModules = [ "hid_nintendo" ]; # steam has its own hidraw driver
 
   programs.gamemode.enable = true;
-  programs.gamescope.enable = true;
+  programs.gamescope = {
+    enable = true;
+    package = pkgs.gamescope.overrideAttrs(old: {
+      patches = (old.patches or []) ++ [
+        (pkgs.fetchpatch {
+          url = "https://github.com/ValveSoftware/gamescope/pull/1867.patch";
+          hash = "sha256-ONjSInJ7M8niL5xWaNk5Z16ZMcM/A7M7bHTrgCFjrts=";
+        })
+      ];
+    });
+  };
 
   programs.firefox = {
     enable = true;
