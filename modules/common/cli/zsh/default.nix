@@ -13,8 +13,11 @@
       "AUTO_CD"
       "NOCLOBBER"
       "NOAUTO_MENU"
+      "HIST_FIND_NO_DUPS"
+      "APPEND_HISTORY"
+      "INC_APPEND_HISTORY"
+      "EXTENDED_HISTORY"
 
-      # "SHARE_HISTORY" - requires .bash_history migration as it enables "EXTENDED_HISTORY"
       # "HIST_FCNTL_LOCK" - may provide performance improvement (is there any problem?)
     ];
     # See zshparam.1 ("ARRAY PARAMETERS", describes ${var[@}}) and zshexpn.1 ("PARAMETER EXPANSION")
