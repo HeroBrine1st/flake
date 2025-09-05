@@ -39,6 +39,10 @@
         fi
       done
       unset UNSAFE_DOTFILES
+      # Intellij IDEA is noticed overriding ZDOTDIR via environment variable then setting HISTFILE to $ZDOTDIR/.zsh_history
+      # This breaks shell integration flake-wide and fixes HISTFILE
+      # No actual payload is found in shell integration. That shell integration likely does nothing.
+      ZDOTDIR=${pkgs.emptyDirectory};
     '';
     interactiveShellInit = lib.mkAfter ''
       tab-complete-or-nothing() {
