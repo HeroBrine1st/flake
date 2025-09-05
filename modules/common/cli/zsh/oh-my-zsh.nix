@@ -1,4 +1,4 @@
-{ pkgs, ... }: {
+{ pkgs, lib, ... }: {
   programs.zsh.ohMyZsh = {
     enable = true;
     customPkgs = [
@@ -22,4 +22,7 @@
       "git"
     ];
   };
+  programs.zsh.interactiveShellInit = lib.mkAfter ''
+    setopt NOSHARE_HISTORY
+  '';
 }
