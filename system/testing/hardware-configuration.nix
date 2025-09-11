@@ -1,12 +1,11 @@
 { lib, config, ... }: {
-  boot.loader.grub = {
-    # no need to set devices, disko will add all devices that have a EF02 partition to the list already
-    # devices = [ ];
-    efiSupport = true;
-    efiInstallAsRemovable = true;
+  boot = {
+    loader = {
+      systemd-boot.enable = true;
+      systemd-boot.consoleMode = "auto";
+      efi.canTouchEfiVariables = true;
+    };
   };
-
-#  boot.initrd.availableKernelModules = [ "ata_piix" "uhci_hcd" "virtio_pci" "virtio_blk" ];
 
   disko.devices.disk = {
     root = {
@@ -15,10 +14,6 @@
       content = {
         type = "gpt";
         partitions = {
-          "reserved" = { # for grub in legacy mode
-            size = "1M";
-            type = "EF02";
-          };
           boot = {
             size = "512M";
             type = "EF00";
@@ -36,13 +31,6 @@
               subvolumes = {
                 "@nix" = {
                   mountpoint = "/nix";
-                  mountOptions = [
-                    "compress=zstd"
-                    "noatime"
-                  ];
-                };
-                "@home" = {
-                  mountpoint = "/home";
                   mountOptions = [
                     "compress=zstd"
                     "noatime"
@@ -66,7 +54,10 @@
   };
 
   systemd.network.enable = true;
-  networking.useDHCP = false; # static condiguration provided in impermanence.nix
-  networking.hostName = "charlie";
+  networking = {
+    useDHCP = true;
+    hostName = "testing";
+    useNetworkd = true;
+  };
   nixpkgs.hostPlatform = "x86_64-linux";
 }
