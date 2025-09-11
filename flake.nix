@@ -182,7 +182,7 @@
         ];
       };
 
-      charlie = pkgs-stable.lib.nixosSystem rec {
+      testing = pkgs-stable.lib.nixosSystem rec {
         system = "x86_64-linux";
         specialArgs = commonSpecialArgs system;
         modules = [
@@ -191,7 +191,7 @@
           self.nixosModules.optionals
           self.nixosModules.basic
 
-          ./system/charlie
+          ./system/testing
         ];
       };
     };

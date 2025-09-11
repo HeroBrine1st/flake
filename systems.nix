@@ -10,11 +10,6 @@
     isServer = true;
     isStatic = true;
   };
-  "charlie" = {
-    networks.overlay.address = "10.168.88.25";
-    isServer = true;
-    isStatic = true;
-  };
   "DESKTOP-IJK2GUG" = {
     networks.overlay.address = "10.168.88.254";
     isServer = false;
@@ -38,5 +33,10 @@
     isServer = false;
     isStatic = false;
     syncthing.id = "3HCNB6K-LJN74OU-TVIZNB4-RBWZA7T-JRPIMTW-6ZK5BRS-2WJEB5V-5AEVGQD";
+  };
+  "testing" = {
+    networks = {};
+    isServer = false;
+    isStatic = false;
   };
 }
