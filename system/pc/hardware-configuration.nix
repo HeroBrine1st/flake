@@ -140,6 +140,7 @@
 
   boot.extraModprobeConfig = ''
     options nvidia NVreg_TemporaryFilePath=/var/tmp
+    options kvm-amd nested=1
   '';
 
   hardware.cpu.amd.updateMicrocode = config.hardware.enableRedistributableFirmware;
