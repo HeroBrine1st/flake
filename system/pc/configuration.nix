@@ -1,4 +1,4 @@
-{ pkgs, ... }: {
+{ pkgs, config, systems, ... }: {
   environment.systemPackages = with pkgs; [
     (pkgs.callPackage ../../packages/edmarketconnector.nix {})
   ];
@@ -14,5 +14,22 @@
     ];
   };
 
-  networking.firewall.allowedUDPPorts = [ 34197 ]; # factorio
+  services.llama-cpp.worker = {
+    enable = true;
+    host = systems."${config.networking.hostName}".networks.overlay.address;
+    cache.enable = true;
+  };
+
+  networking.firewall.allowedUDPPorts = [
+    34197 # factorio
+  ];
+  
+  networking.firewall.interfaces."nebula.overlay".allowedTCPPorts = [ config.services.llama-cpp.worker.port ];
+  services.nebula.networks.overlay.firewall.inbound = [
+    {
+      host = "foxtrot";
+      port = toString config.services.llama-cpp.worker.port;
+      proto = "tcp";
+    }
+  ];
 }

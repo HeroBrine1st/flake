@@ -1,4 +1,4 @@
-{ ... }: {
+{ pkgs, ... }: {
   # TODO commonize
   environment.persistence."/nix/persist/system" = {
     hideMounts = true;
@@ -13,6 +13,7 @@
       { directory = "/var/lib/colord"; user = "colord"; group = "colord"; mode = "u=rwx,g=rx,o="; }
       { directory = "/mnt/secure"; user = "herobrine1st"; group = "users"; }
       "/var/lib/libvirt"
+      { directory = "/var/lib/private/llama-rpc-worker"; mode = "700"; }
     ];
     files = [
       "/etc/machine-id"
