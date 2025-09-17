@@ -1,4 +1,4 @@
-{ pkgs-jetbrains-2022, pkgs-unstable, fenix, ags, system }: let
+{ pkgs-jetbrains-2022, pkgs-unstable, fenix, ags, pkgs-bdfr, system }: let
   lib = pkgs.lib;
   pkgs = pkgs-unstable.legacyPackages."${system}";
   pkgsNamed = names: pkg: builtins.elem (lib.getName pkg) names;
@@ -14,5 +14,22 @@
     jetbrains = (import pkgs-jetbrains-2022 { inherit system; config.allowUnfreePredicate = pkgsNamed [ "idea-ultimate" "pycharm-professional" "clion" ]; }).jetbrains;
     fenix = (import pkgs-unstable { inherit system; overlays = [ fenix.overlays.default ]; }).fenix;
     topbar = import ./topbar { inherit pkgs ags; };
+
+    bdfr = pkgs-bdfr.legacyPackages."${system}".callPackage ./bdfr {};
+    debounce-keyboard = callPackage ./debounce-keyboard {};
+    organise-files = callPackage ./organise-files.nix {};
+    tlauncher = callPackage ./tlauncher {};
+    arc-x-icon-theme = callPackage ./arc-x-icons.nix {};
+    auditor = callPackage ./auditor {};
+    hyprshell = callPackage ./hyprshell.nix {};
+
+    llama-cpp = pkgs-cuda.llama-cpp.override {
+      rpcSupport = true;
+      cudaSupport = true;
+    };
+
+    dockerImages = {
+      llama-cpp = callPackages ./llama-cpp/docker.nix {};
+    };
   };
 in custom-pkgs

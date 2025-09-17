@@ -47,29 +47,12 @@
       development = ./modules/common/development;
       hyprland = ./modules/common/desktop/hyprland;
     };
-    legacyPackages."x86_64-linux" = import ./packages {
-      inherit pkgs-jetbrains-2022 pkgs-unstable fenix ags;
-      system = "x86_64-linux";
-    };
-    packages = lib.recursiveUpdate
-      (forAllSystems (system: let bdfr = pkgs-bdfr.legacyPackages."${system}"; in {
-          bdfr = bdfr.callPackage packages/bdfr {};
-      }))
-      {
-        "x86_64-linux" = let
-          pkgs = pkgs-unstable.legacyPackages."x86_64-linux";
-        in {
-          debounce-keyboard = pkgs.callPackage packages/debounce-keyboard {};
-          organise-files = pkgs.callPackage packages/organise-files.nix {};
-          tlauncher = pkgs.callPackage packages/tlauncher {};
-          arc-x-icon-theme = pkgs.callPackage packages/arc-x-icons.nix {};
-          auditor = pkgs.callPackage packages/auditor {};
-          hyprshell = pkgs.callPackage packages/hyprshell.nix {};
-        };
-      };
+    legacyPackages = forAllSystems (system: import ./packages {
+      inherit pkgs-jetbrains-2022 pkgs-unstable fenix ags pkgs-bdfr system;
+    });
     nixosConfigurations = let
       commonSpecialArgs = system: {
-        custom-pkgs = self.packages."${system}" // (if system == "x86_64-linux" then self.legacyPackages."${system}" else {});
+        custom-pkgs = self.legacyPackages."${system}";
         assets = ./assets;
         systems = import ./systems.nix;
         flake = self;
@@ -140,7 +123,7 @@
           ({ pkgs, ... }: {
             isoImage.forceTextMode = true;
             environment.systemPackages = [
-              self.packages."${system}".auditor
+              self.legacyPackages."${system}".auditor
             ];
           })
         ];
