@@ -47,19 +47,9 @@
       development = ./modules/common/development;
       hyprland = ./modules/common/desktop/hyprland;
     };
-    # I'm sick of "flake attribute '...' is not a derivation"
-    legacyPackages."x86_64-linux" = let
-      pkgs = pkgs-unstable.legacyPackages."x86_64-linux";
-    in {
-      jetbrains = (import pkgs-jetbrains-2022 {
-        system = "x86_64-linux";
-        config.allowUnfreePredicate = pkg: builtins.elem (pkgs.lib.getName pkg) [ "idea-ultimate" "pycharm-professional" "clion" ];
-      }).jetbrains;
-      fenix = (import pkgs-unstable {
-        system = "x86_64-linux";
-        overlays = [ fenix.overlays.default ];
-      }).fenix;
-      topbar = import packages/topbar { inherit pkgs ags; };
+    legacyPackages."x86_64-linux" = import ./packages {
+      inherit pkgs-jetbrains-2022 pkgs-unstable fenix ags;
+      system = "x86_64-linux";
     };
     packages = lib.recursiveUpdate
       (forAllSystems (system: let bdfr = pkgs-bdfr.legacyPackages."${system}"; in {
