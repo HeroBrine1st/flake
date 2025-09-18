@@ -25,7 +25,9 @@
     # zshbuiltins.1
     shellInit = ''
       # Enforce ZDOTDIR
-      UNSAFE_DOTFILES=(.zshenv .zprofile .zshrc .zlogin .zlogout)
+      # Also check bash files because bash is sometimes triggered via nix-shell etc (and bash has no way to disable it - that's the only reason it is replaced with zsh. The only)
+      # xprofile and xinitrc to complete the picture
+      UNSAFE_DOTFILES=(.zshenv .zprofile .zshrc .zlogin .zlogout .bash_profile .bashrc .bash_logout .xprofile .xinitrc)
       for file in "''${UNSAFE_DOTFILES[@]/#/$HOME/}"; do
         if [[ -e $file ]]; then
           echo "Found file $file" >&2
