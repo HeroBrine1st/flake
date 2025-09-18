@@ -4,7 +4,6 @@
     ./aliases.nix
     ./nix.nix
 
-    ./bash
     ./zsh
   ];
 
