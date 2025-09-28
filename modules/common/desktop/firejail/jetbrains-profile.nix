@@ -102,6 +102,8 @@ in writeTextFile {
 
     dbus-user filter
     dbus-user.talk org.freedesktop.secrets.*
+    # dark/light theme
+    dbus-user.talk org.freedesktop.portal.Desktop
 
     # IDE somehow breaks EGL libraries (running in the same profile without IDE works)
     # I am finamp contributor
