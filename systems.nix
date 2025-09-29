@@ -8,7 +8,7 @@
   "bravo" = {
     networks.overlay.address = "10.168.88.57";
     isServer = true;
-    isStatic = true;
+    isStatic = false;
   };
   "DESKTOP-IJK2GUG" = {
     networks.overlay.address = "10.168.88.254";
