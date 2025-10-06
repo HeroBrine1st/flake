@@ -94,10 +94,7 @@
     })
 
     # "Security"
-    veracrypt
-    keepassxc
     seahorse # gnome
-    # windscribe unavailable
 
     # Other desktop applications
     ungoogled-chromium
