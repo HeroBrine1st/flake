@@ -18,10 +18,11 @@ in {
     settings = {
       devices = builtins.mapAttrs (k: v: v.syncthing) (builtins.removeAttrs (lib.attrsets.filterAttrs (k: v: v ? syncthing) systems) [hostname]);
       folders = {
+        # TODO nothihg backs it up!
         "uf77h-ptigu" = mkFolder {
           label = "Secure";
           path = "/mnt/secure";
-          devices = [ "foxtrot" "MOBILE-DCV5AQD" "DESKTOP-IJK2GUG" "lynx" ];
+          devices = [ "foxtrot" "lynx" ];
         };
         "yb6rg-qs9gm" = mkFolder {
           label = "Local Music";

@@ -107,8 +107,6 @@
       #ignore noroot
 
       ignore disable-mnt
-      # TODO not a mountpoint, needs to be moved somewhere
-      blacklist /mnt/secure
 
       ignore private-tmp
     '';
