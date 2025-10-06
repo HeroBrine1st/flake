@@ -33,7 +33,7 @@
       };
 
       "org/gnome/desktop/app-folders/folders/87b23f92-4dfb-4de2-9e1a-d87353238049" = {
-        apps = [ "veracrypt.desktop" "org.gnome.seahorse.Application.desktop" "org.keepassxc.KeePassXC.desktop" ];
+        apps = [ "org.gnome.seahorse.Application.desktop" ];
         name = "Security";
         translate = false;
       };
