@@ -16,7 +16,14 @@ in {
           sniStrict = true;
           clientAuth = {
             clientAuthType = "RequireAndVerifyClientCert";
-            caFiles = [ "${./cloudflare-origin-ca.pem}" ];
+            caFiles = let
+              originPullCa = pkgs.fetchurl {
+                url = "https://developers.cloudflare.com/ssl/static/authenticated_origin_pull_ca.pem";
+                hash = "sha256-wU/tDOUhDbBxn+oR0fELM3UNwX1gmur0fHXp7/DXuEM=";
+              };
+            in [
+              "${originPullCa}"
+            ];
           };
         };
       };
