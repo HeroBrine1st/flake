@@ -67,13 +67,18 @@ in {
             "131.0.72.0/22"
           ];
         };
+        # TODO rename to httpsOverlay
         nebula = {
           address = "${systems."${config.networking.hostName}".networks.overlay.address}:443";
+          AsDefault = true;
           http2.maxConcurrentStreams = 250;
           http.tls = {}; # this enables TLS, idk whether it is still needed
         };
         dot = {
-          address = ":853";
+          address = "\${PHYSICAL_INTERFACE_IP}:853";
+        };
+        dotOverlay = {
+          address = "${systems."${config.networking.hostName}".networks.overlay.address}:853";
         };
       };
     };
