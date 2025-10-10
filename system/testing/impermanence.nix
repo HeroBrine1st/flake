@@ -1,22 +1,10 @@
 { config, lib, ... }: {
-  environment.persistence."/nix/persist/system" = {
+  services.impermanence = {
+    enable = true;
     hideMounts = true;
-    directories = [
-      "/var/log"
-      { directory = "/var/tmp"; mode = "0777"; }
-      "/var/lib/nixos"
-      "/var/lib/systemd/coredump"
-      "/var/cron"
-      { directory = "/var/lib/docker"; mode = "0710"; }
-      "/var/docker_data"
+    path = "/nix/persist/system";
+    extraDirectories = [
       "/home"
-    ];
-    files = [
-      "/etc/machine-id"
-      "/etc/ssh/ssh_host_ed25519_key"
-      "/etc/ssh/ssh_host_ed25519_key.pub"
-      "/etc/ssh/ssh_host_rsa_key"
-      "/etc/ssh/ssh_host_rsa_key.pub"
     ];
   };
 

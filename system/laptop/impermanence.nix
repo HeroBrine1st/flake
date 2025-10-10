@@ -1,19 +1,10 @@
 { ... }: {
-  environment.persistence."/nix/persist/system" = {
+  services.impermanence = {
+    enable = true;
     hideMounts = true;
-    directories = [
-      "/var/log"
-      { directory = "/var/tmp"; mode = "0777"; }
-      { directory = "/var/lib/bluetooth"; mode = "0700"; }
-      "/var/lib/nixos"
-      "/var/lib/systemd/coredump"
-      { directory = "/etc/NetworkManager/system-connections"; mode = "0700"; }
+    path = "/nix/persist/system";
+    extraDirectories = [
       "/var/lib/sbctl"
-      { directory = "/var/lib/colord"; user = "colord"; group = "colord"; mode = "u=rwx,g=rx,o="; }
-      "/var/lib/libvirt"
-    ];
-    files = [
-      "/etc/machine-id"
     ];
   };
 
