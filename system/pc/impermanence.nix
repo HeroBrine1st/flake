@@ -1,26 +1,12 @@
 { pkgs, ... }: {
-  # TODO commonize
-  environment.persistence."/nix/persist/system" = {
+  services.impermanence = {
+    enable = true;
     hideMounts = true;
-    directories = [
-      "/var/log"
-      { directory = "/var/tmp"; mode = "0777"; }
-      { directory = "/var/lib/bluetooth"; mode = "0700"; }
-      "/var/lib/nixos"
-      "/var/lib/systemd/coredump"
-      { directory = "/etc/NetworkManager/system-connections"; mode = "0700"; }
+    path = "/nix/persist/system";
+    extraDirectories = [
       "/var/lib/AccountsService" # TODO there are only two files there and none of them are secret
-      { directory = "/var/lib/colord"; user = "colord"; group = "colord"; mode = "u=rwx,g=rx,o="; }
-      "/var/lib/libvirt"
-      { directory = "/var/lib/private/llama-rpc-worker"; mode = "700"; }
     ];
-    files = [
-      "/etc/machine-id"
-      "/etc/ssh/ssh_host_ed25519_key"
-      "/etc/ssh/ssh_host_ed25519_key.pub"
-      "/etc/ssh/ssh_host_rsa_key"
-      "/etc/ssh/ssh_host_rsa_key.pub"
-
+    extraFiles = [
       "/etc/keyfile/hdd.key"
       "/etc/keyfile/ssd.key"
     ];
