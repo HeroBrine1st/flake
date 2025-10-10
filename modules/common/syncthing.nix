@@ -12,7 +12,7 @@ in {
   services.syncthing = lib.mkIf (currentSystem ? syncthing) {
     enable = true;
     user = lib.mkDefault "herobrine1st";
-    configDir = lib.mkDefault "/home/herobrine1st/.config/Syncthing";
+    dataDir = lib.mkDefault "/home/herobrine1st";
     overrideDevices = true;
     overrideFolders = lib.mkDefault false;
     settings = {
