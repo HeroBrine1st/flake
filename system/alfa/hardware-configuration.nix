@@ -56,16 +56,6 @@
       fsType = "btrfs";
       options = [ "defaults" "compress=zstd" "discard=async" "subvol=@home" ];
     };
-    "/var/lib/docker" = {
-      device = "/dev/mapper/root";
-      fsType = "btrfs";
-      options = [ "defaults" "compress=zstd" "discard=async" "subvol=@var_lib_docker" ];
-    };
-    "/var/docker_data" = {
-      device = "/dev/mapper/root";
-      fsType = "btrfs";
-      options = [ "defaults" "compress=zstd" "discard=async" "subvol=@docker_data" ];
-    };
   };
 
   networking.hostName = "alfa";
