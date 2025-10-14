@@ -12,6 +12,31 @@
     + "\n\n" +
     (lib.strings.concatMapStringsSep "\n" (path: "whitelist ${path}") paths);
   HOME = "\${HOME}";
+
+  # TODO This urges migration to nixpak! This should be in programs.nix
+  hiName = {
+    # https://github.com/NixOS/nixpkgs/blob/nixos-unstable/pkgs/applications/editors/jetbrains/bin/ides.json
+    # "productShort" or "product", upper cased
+    "idea-community" = "IDEA";
+    "idea-ultimate" = "IDEA";
+    "pycharm-community" = "PYCHARM";
+    "android-studio" = "STUDIO"; # dummy
+    "webstorm" = "WEBSTORM";
+    "clion" = "CLION";
+    "rust-rover" = "RUSTROVER";
+  }.${ideName};
+  vmoptsFile = writeTextFile {
+    name = "jetbrains.vmoptions";
+    text = ''
+      # Wayland. Faulty, at the time of writing became completely unusable (any popup means no mouse and dim screen until restart)
+      # Window decorations cannot be disabled on GNOME and, as such, forced to merge toolbar with decorations, and icon left to hamburger cannot be removed too :-(
+      #-Dawt.toolkit.name=WLToolkit
+
+      # https://youtrack.jetbrains.com/issue/IDEA-357991 , currently the only xorg-specific issue
+      -Dsun.java2d.uiScale.enabled=false
+    '';
+  };
+
 in writeTextFile {
   name = "${ideName}.profile";
   # TODO sometimes it does not delete lock file .config/JetBrains/*/.lock
@@ -111,6 +136,8 @@ in writeTextFile {
     #${lib.optionalString (ideName == "android-studio" || ideName == "idea-community") "dbus-user.own org.mpris.MediaPlayer2.*"}
 
     name ${ideName}
+
+    env ${hiName}_VM_OPTIONS=${vmoptsFile}
 
     tab
   '';
