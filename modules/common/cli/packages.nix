@@ -2,7 +2,7 @@
   environment.systemPackages = with pkgs; [
     nano
     wget
-    curlHTTP3
+    curl
     hdparm
     smartmontools
     htop
