@@ -92,12 +92,12 @@ in {
       ];
     };
 
-    assertions = [
-      {
+    assertions = lib.mkMerge [
+      (lib.optional config.services.colord.enable {
         # evaluation of config.users.users.colord triggers rpcbind module, which eventually triggers filesystems and this module, leading to recursion
         assertion = config.users.users.colord.home == colordHome;
         message = "colord user home changed, now it is ${config.users.users.colord.home}";
-      }
+      })
     ];
   };
 }
