@@ -123,7 +123,7 @@
     seahorse # gnome
 
     # Other desktop applications
-    ungoogled-chromium
+    chromium
     dconf-editor
     winbox
     gnome-connections # RDP client
@@ -190,5 +190,15 @@
       lockPref("cookiebanners.service.mode.privateBrowsing", 1);
       lockPref("network.trr.allow-rfc1918", true);
     '';
+  };
+
+  programs.chromium = {
+    enable = true;
+    extraOpts = {
+      "DefaultJavaScriptOptimizerSetting" = 2;
+      "BlockThirdPartyCookies" = true;
+
+      # TODO disable telemetry, https://qua3k.github.io/ungoogled/ implies it is possible but no settings or policies are found
+    };
   };
 }
