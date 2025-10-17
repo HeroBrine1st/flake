@@ -318,6 +318,22 @@
         "type": "github"
       }
     },
+    "nixpakRaw": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1759977797,
+        "narHash": "sha256-S4zggzxtEnGvlLhECL8HFkEC+xReepCFZtpn0EVu6rI=",
+        "owner": "nixpak",
+        "repo": "nixpak",
+        "rev": "a01256655fe8c081e1add7ce0df9d1710e1fa545",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nixpak",
+        "repo": "nixpak",
+        "type": "github"
+      }
+    },
     "nixpkgs": {
       "locked": {
         "lastModified": 1709309926,
@@ -481,6 +497,7 @@
         "impermanence": "impermanence",
         "lanzaboote": "lanzaboote",
         "nixos-rk3588": "nixos-rk3588",
+        "nixpakRaw": "nixpakRaw",
         "pkgs-bdfr": "pkgs-bdfr",
         "pkgs-jetbrains-2022": "pkgs-jetbrains-2022",
         "pkgs-stable": "pkgs-stable",

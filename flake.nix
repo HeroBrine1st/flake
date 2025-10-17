@@ -33,9 +33,16 @@
       url = "github:aylur/ags?rev=3ed9737bdbc8fc7a7c7ceef2165c9109f336bff6";
       inputs.nixpkgs.follows = "pkgs-unstable";
     };
+    nixpakRaw = {
+      url = "github:nixpak/nixpak";
+      flake = false;
+    };
   };
 
-  outputs = { self, pkgs-unstable, pkgs-stable, nixos-rk3588, pkgs-jetbrains-2022, home-manager, disko, impermanence, lanzaboote, fenix, pkgs-bdfr, ags, ... }: let
+  outputs = {
+    self, pkgs-unstable, pkgs-stable, nixos-rk3588, pkgs-jetbrains-2022, home-manager, disko, impermanence,
+    lanzaboote, fenix, pkgs-bdfr, ags, nixpakRaw, ...
+  }: let
     lib = pkgs-unstable.lib;
     forAllSystems = f: lib.genAttrs [ "x86_64-linux" "aarch64-linux" ] (system: f system);
   in {
@@ -48,7 +55,7 @@
       hyprland = ./modules/common/desktop/hyprland;
     };
     legacyPackages = forAllSystems (system: import ./packages {
-      inherit pkgs-jetbrains-2022 pkgs-unstable fenix ags pkgs-bdfr system;
+      inherit pkgs-jetbrains-2022 pkgs-unstable fenix ags pkgs-bdfr system nixpakRaw;
     });
     nixosConfigurations = let
       commonSpecialArgs = system: {
