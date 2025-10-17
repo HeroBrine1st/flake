@@ -1,8 +1,6 @@
 { config, lib, pkgs, ... }: {
   boot.tmp.useTmpfs = true;
 
-  security.sudo-rs.wheelNeedsPassword = false;
-
   # Set your time zone.
   time.timeZone = "Europe/Moscow";
 
@@ -26,23 +24,11 @@
     ];
   };
 
-  environment.systemPackages = with pkgs; [
-    duplicity
-    ctop
-    rclone
-  ];
-
   services.openssh = {
     enable = true;
     settings = {
       PermitRootLogin = "without-password";
       PasswordAuthentication = false;
-      Macs = [
-        "hmac-sha2-512"
-        "hmac-sha2-512-etm@openssh.com"
-        "hmac-sha2-256-etm@openssh.com"
-        "umac-128-etm@openssh.com"
-      ];
     };
   };
   services.udisks2.enable = true;
@@ -57,16 +43,7 @@
     dns = [ "1.1.1.1" ];
   };
 
-  networking.firewall = {
-    trustedInterfaces = [
-      "sing-box-tun"
-    ];
-    enable = true;
-
-    # Syncthing
-    allowedTCPPorts = [ 22000 ];
-    allowedUDPPorts = [ 22000 21027 ];
-  };
+  networking.firewall.enable = true;
 
   environment.etc."htoprc".source = ./htoprc;
 
@@ -76,6 +53,7 @@
   security.sudo-rs = {
     enable = true;
     execWheelOnly = true;
+    wheelNeedsPassword = true;
   };
 }
 
