@@ -37,15 +37,12 @@
           src = pkgs.fetchFromGitHub {
             owner = "kata-containers";
             repo = "kata-containers";
-            rev = "pull/11749/head";
-            hash = "sha256-dbu8f1UUU5pX2Y3zaRvfgLPrk+xHHI5mXnissO+btPc";
+            rev = "758471cbddeff44297ca5a3db9340bad0c3360ef"; # pull/11749/head
+            hash = "sha256-tH395Uz1vdm/9rvFVKcfycMEuSDfWJ9S798n0wb7EBg=";
           };
           name = src.name;
 
           phases = [ "unpackPhase" "patchPhase" "installPhase" ];
-          patches = [
-            ./kata-fix-link-connect.patch
-          ];
           installPhase = "cp --archive . $out";
         };
       }))
