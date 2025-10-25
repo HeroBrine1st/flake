@@ -118,6 +118,7 @@
         obs-vkcapture
       ];
     })
+    custom-pkgs.dreamfinity
 
     # "Security"
     seahorse # gnome

@@ -180,6 +180,10 @@
           executable = "${finalPackage}/bin/firefox";
           profile = "${pkgs.firejail}/etc/firejail/firefox.profile";
         };
+        dreamfinity = {
+          executable = "${custom-pkgs.dreamfinity}/bin/dreamfinity";
+          profile = custom-pkgs.dreamfinity.firejailProfile;
+        };
       }
       (sandboxJetbrains { 
         package = pkgs.android-studio; 

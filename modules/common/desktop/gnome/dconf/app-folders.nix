@@ -22,7 +22,7 @@
       };
 
       "org/gnome/desktop/app-folders/folders/75b80c76-a354-4910-a0de-1a76fd2eefeb" = {
-        apps = [ "steam.desktop" "osu!.desktop" "net.lutris.Lutris.desktop" "com.obsproject.Studio.desktop" "tlauncher.desktop" ];
+        apps = [ "steam.desktop" "osu!.desktop" "net.lutris.Lutris.desktop" "com.obsproject.Studio.desktop" "tlauncher.desktop" "dreamfinity.desktop" ];
         name = "Games";
       };
 
