@@ -1,4 +1,4 @@
-{ pkgs-jetbrains-2022, pkgs-unstable, fenix, ags, pkgs-bdfr, system, nixpakRaw }: let
+{ pkgs-jetbrains-2022, pkgs-unstable, fenix, ags, pkgs-bdfr, system }: let
   lib = pkgs.lib;
   pkgs = pkgs-unstable.legacyPackages."${system}";
   pkgsNamed = names: pkg: builtins.elem (lib.getName pkg) names;
@@ -30,17 +30,6 @@
 
     dockerImages = {
       llama-cpp = callPackages ./llama-cpp/docker.nix {};
-    };
-
-    nixpak = let
-      mkNixPak = import (nixpakRaw + "/modules") { inherit pkgs lib; }; # strictly avoiding unnecessary code
-      sloth = import (nixpakRaw + "/modules/lib/sloth.nix") {
-        inherit lib sloth;
-        config = throw "appDir is explicitly not supported";
-      };
-    in {
-      inherit (sloth._module.args) sloth;
-      mkSandbox = config: (mkNixPak { inherit config; }).config.env;
     };
   };
 in custom-pkgs
