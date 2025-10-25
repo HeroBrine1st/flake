@@ -31,5 +31,7 @@
     dockerImages = {
       llama-cpp = callPackages ./llama-cpp/docker.nix {};
     };
+
+    dreamfinity = callPackage ./dreamfinity.nix {};
   };
 in custom-pkgs
