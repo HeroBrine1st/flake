@@ -199,6 +199,7 @@
             targetPkgs = pkgs: (with pkgs;
               [
                 libz # llama-index, numpy, or something, idk
+                xorg.libXcursor # Xwayland cursor
              ]);
             runScript = "env";
           };
