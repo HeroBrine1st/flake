@@ -244,8 +244,7 @@
                 || builtins.length pkg.meta.platforms == 0
                 || builtins.elem pkgs.stdenv.hostPlatform.system pkg.meta.platforms))
               (builtins.filter (pkg: (builtins.substring 0 4 pkg.name) != "xf86")) # not drivers
-            ]))
-          );
+            ])));
             runScript = "env";
           };
         in [
