@@ -14,6 +14,8 @@
       notebook
       numpy
       scipy
+      matplotlib
+      mplcursors
     ];
   };
 }
