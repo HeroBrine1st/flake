@@ -43,4 +43,6 @@
     enable = true;
     execWheelOnly = true;
   };
+
+  nix.useFlakeCache = false;
 }
