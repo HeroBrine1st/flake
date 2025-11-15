@@ -5,6 +5,7 @@
     path = "/nix/persist/system";
     extraDirectories = [
       "/home"
+      "/etc/systemd/network/10-wan.network"
     ];
   };
 

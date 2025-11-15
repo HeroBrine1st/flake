@@ -48,18 +48,7 @@
     "/nix".neededForBoot = true;
   };
 
-  systemd.network = {
-    enable = true;
-    networks."10-wan" = {
-      matchConfig.Name = "ens3";
-      networkConfig = {
-        DHCP = "yes";
-      };
-      dhcpV6Config = {
-        DUIDType = "link-layer-time";
-      };
-    };
-  };
+  systemd.network.enable = true;
   networking.useDHCP = false; # is not read at all! Only emits warning if true with systemd-network
 
   networking.hostName = "bravo";
