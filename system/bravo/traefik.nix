@@ -4,30 +4,7 @@ in {
   services.traefik = {
     enable = true;
     group = "docker";
-    dynamicConfigOptions = {
-      tls = {
-        certificates = [{
-          certFile="${config.services.traefik.dataDir}/tls.cert";
-          keyFile="${config.services.traefik.dataDir}/tls.key";
-        }];
-
-        # that's for cloudflare. the actual default (without cloudflare) is sniStrict=true only.
-        options.default = {
-          sniStrict = true;
-          clientAuth = {
-            clientAuthType = "RequireAndVerifyClientCert";
-            caFiles = let
-              originPullCa = pkgs.fetchurl {
-                url = "https://developers.cloudflare.com/ssl/static/authenticated_origin_pull_ca.pem";
-                hash = "sha256-wU/tDOUhDbBxn+oR0fELM3UNwX1gmur0fHXp7/DXuEM=";
-              };
-            in [
-              "${originPullCa}"
-            ];
-          };
-        };
-      };
-    };
+    dynamicConfigFile = "${config.services.traefik.dataDir}/dynamic.yml";
     staticConfigOptions = {
       providers.docker = {
         exposedByDefault = false;
