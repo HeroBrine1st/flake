@@ -1,9 +1,11 @@
 { lib, config, ... }: {
-  nix.settings = lib.mkMerge [
+  options.nix.useFlakeCache = (lib.mkEnableOption "usage of cache from build machine") // { default = true; };
+
+  config.nix.settings = lib.mkMerge [
     {
       auto-optimise-store = true;
     }
-    (lib.mkIf config.network.overlay.enabled {
+    (lib.mkIf (config.network.overlay.enabled && config.nix.useFlakeCache ){
       substituters = [
         "http://10.168.88.10:5000"
       ];
