@@ -20,7 +20,7 @@
     networks.overlay.address = "10.168.88.96";
     isServer = false;
     isStatic = false;
-    syncthing.id = "HXQH6TU-LOKJVCF-RPO7W3Q-7EXUWIM-NID4SPJ-NUZLDQM-TONYLP6-E3IYGQF";
+    syncthing.id = "MD45MAP-3ODQPJ2-YKCZSTQ-IY6T3OZ-KEEPU3I-NCD7I7J-ERBT6SJ-77MHLQC";
   };
   "foxtrot" = {
     networks.overlay.address = "10.168.88.10";
