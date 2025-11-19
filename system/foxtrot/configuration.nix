@@ -78,24 +78,25 @@
       dns = ["1.1.1.1"];
     };
     extraPackages = [
-      # https://docs.docker.com/reference/cli/dockerd/#runtime-options
-      # It has example for kata itself (and I tried to change daemon.json runtimes key for 2 hours without success!!! kata-containers documentation is lacking and issues are not helpful - probably everyone started with reading whole docker documentation?)
-      # The example is: docker run --runtime io.containerd.kata.v2
+      # docker run --runtime io.containerd.kata.v2
       (pkgs.kata-runtime.overrideAttrs(old: {
         # For some reason they did not enable it back after fix
         hardeningDisable = [];
-        # apply full patch not restricted by sourceRoot, as it is a complete patch ready for upstreaming
-        # the patch is taken from https://github.com/kata-containers/kata-containers/pull/7648 and updated to resolve conflicts
         # I know about -p3 and --directory, no both won't work (in latter case /build/source/tests is read-only)
-        src = pkgs.stdenv.mkDerivation {
-          inherit (old) src;
-          inherit (old.src) name;
+        src = pkgs.stdenv.mkDerivation rec {
+          src = pkgs.fetchFromGitHub {
+            owner = "kata-containers";
+            repo = "kata-containers";
+            rev = "758471cbddeff44297ca5a3db9340bad0c3360ef"; # pull/11749/head
+            hash = "sha256-tH395Uz1vdm/9rvFVKcfycMEuSDfWJ9S798n0wb7EBg=";
+          };
+          name = src.name;
 
           phases = [ "unpackPhase" "patchPhase" "installPhase" ];
-          patches = [ ./0001-runtime-creating-network-monitor-for-the-Go-runtime.patch ];
           installPhase = "cp --archive . $out";
         };
       }))
+      pkgs.gvisor
     ];
   };
 
