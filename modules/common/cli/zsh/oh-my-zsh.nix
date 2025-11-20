@@ -12,7 +12,7 @@
         ];
       });
       derivation = pkgs.runCommandLocal "zsh-custom" {} ''
-        install -d $out/share/zsh/themes/
+        install -d $out/themes/powerlevel10k
         ln -s ${powerlevel10k}/share/zsh-powerlevel10k $out/themes/powerlevel10k
       '';
       # and for some reason it wants string not path
