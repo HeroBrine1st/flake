@@ -9,8 +9,12 @@
     home.stateVersion = "23.11";
     programs.git = {
       enable = true;
-      userName  = "herobrine1st";
-      userEmail = "pankov.76.tvink@gmail.com";
+      settings = {
+        user = {
+          name  = "herobrine1st";
+          email = "pankov.76.tvink@gmail.com";
+        };
+      };
     };
 
     xdg.desktopEntries = {
