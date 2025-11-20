@@ -1,6 +1,6 @@
 { stdenvNoCC,
   fetchurl,
-  openjdk17,
+  openjdk21,
   copyDesktopItems,
   makeDesktopItem,
   makeWrapper,
@@ -9,7 +9,7 @@
   firejail,
   lib,
   buildFHSEnv,
-  javaWithFx ? (openjdk17.override {
+  javaWithFx ? (openjdk21.override {
     enableJavaFX = true;
   })
 }: let
