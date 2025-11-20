@@ -124,7 +124,7 @@
   };
 
   # TODO wrap in environment.systemPackages because lib.getExe is unsafe
-  # TODO use nixpak or bubblejail (anything bwrap-based because firejail disallows bind mounts)
+  # TODO use systemd-run
   programs.firejail = let
     # environemnt is interpreted literally and allows interpolation!
     sandboxJetbrains = { package, prefix ? null, environment ? {} }: let
@@ -238,6 +238,9 @@
               libbsd
             ] ++ (lib.pipe pkgs.xorg [ # ALL xorg libraries! AVD is insatiable! Probably not all of them are needed but that's 96 paths 23.25 MiB in total
               builtins.attrValues
+              # https://github.com/NixOS/nixpkgs/pull/442323 bro just why!!
+              # special case for fontbitstreamspeedo which throws instead of being broken or etc without any reason
+              (builtins.filter (v: (builtins.tryEval v).success))
               (builtins.filter lib.attrsets.isDerivation) # some are functions
               (builtins.filter (pkg: # free
                 if pkg.meta ? "licenses" then !(isUnfree pkg.meta.licenses)
