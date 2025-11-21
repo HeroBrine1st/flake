@@ -132,6 +132,9 @@
     package = config.boot.kernelPackages.nvidiaPackages.latest;
   };
 
+  # https://github.com/NixOS/nixpkgs/issues/463525
+  systemd.services.nvidia-container-toolkit-cdi-generator.serviceConfig.ExecStartPre = lib.mkForce null;
+
   hardware.nvidia-container-toolkit.enable = true;
 
   nixpkgs.allowedUnfreePackages = [
