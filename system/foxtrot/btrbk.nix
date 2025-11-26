@@ -8,7 +8,7 @@
           volume."/.fsroot" = {
             subvolume."@nix/persist/system/var/docker_data/*" = {
               snapshot_dir = "@archives/docker_data_ssd/";
-              snapshot_preserve = "24h 7d 4w";
+              snapshot_preserve = "24h 7d";
               snapshot_preserve_min = "2d";
               target = "/mnt/brp/@archives/docker_data_ssd/";
               target_preserve = "24h 7d 4w 12m 2y";
@@ -16,8 +16,8 @@
             };
             subvolume."@docker_compose" = {
               snapshot_dir = "@archives/docker_compose/";
-              snapshot_preserve = "24h 7d 4w";
-              snapshot_preserve_min = "14d";
+              snapshot_preserve = "24h 7d";
+              snapshot_preserve_min = "2d";
               target = "/mnt/brp/@archives/docker_compose/";
               target_preserve = "24h 7d 4w 12m 2y";
               target_preserve_min = "14d";
