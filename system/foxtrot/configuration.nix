@@ -76,6 +76,16 @@
     storageDriver = "btrfs";
     daemon.settings = {
       dns = ["1.1.1.1"];
+      runtimes = {
+        runsc = {
+          path = "${pkgs.gvisor}/bin/runsc";
+          runtimeArgs = [ "--platform=kvm" ];
+        };
+        runsc-net-raw = {
+          path = "${pkgs.gvisor}/bin/runsc";
+          runtimeArgs = [ "--platform=kvm" "--net-raw" ];
+        };
+      };
     };
     extraPackages = [
       # docker run --runtime io.containerd.kata.v2
@@ -96,7 +106,6 @@
           installPhase = "cp --archive . $out";
         };
       }))
-      pkgs.gvisor
     ];
   };
 
