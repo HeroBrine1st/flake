@@ -76,13 +76,24 @@
     storageDriver = "btrfs";
     daemon.settings = {
       dns = ["1.1.1.1"];
-      runtimes = {
+      runtimes = let
+        gvisor = pkgs.gvisor.overrideAttrs rec {
+          version = "20251118.0-19-gd25a12513";
+          src = pkgs.fetchFromGitHub {
+            owner = "google";
+            repo = "gvisor";
+            rev = "c426a4c6d753ce2bf405de125b0486adfef12877";
+            hash = "sha256-DCgU4Jv40w2ItgrQv3mBWJ4r51qQx8BIUEsa0bX3sQs=";
+          };
+          vendorHash = "sha256-Ey4M3NK/+AVkr7r0aA+kAfNk1yVfnDn3Izy7u74HFkE=";
+        };
+      in {
         runsc = {
-          path = "${pkgs.gvisor}/bin/runsc";
+          path = "${gvisor}/bin/runsc";
           runtimeArgs = [ "--platform=kvm" ];
         };
         runsc-net-raw = {
-          path = "${pkgs.gvisor}/bin/runsc";
+          path = "${gvisor}/bin/runsc";
           runtimeArgs = [ "--platform=kvm" "--net-raw" ];
         };
       };
