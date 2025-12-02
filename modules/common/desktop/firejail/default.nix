@@ -214,7 +214,10 @@
       (sandboxJetbrains { package = pkgs.jetbrains.rust-rover; })
       (sandboxJetbrains {
         package = pkgs.jetbrains.idea-community-bin;
-        environment = { GRADLE_USER_HOME = "$HOME/.cache/Gradle"; };
+        environment = {
+          GRADLE_USER_HOME = "$HOME/.cache/Gradle";
+          GOCACHE = "$HOME/.cache/go-build-untrusted";
+        };
         prefix = let
           isUnfree = licenses: lib.lists.any (l: !l.free or true) licenses;
           env = pkgs.buildFHSEnv {
@@ -236,6 +239,7 @@
               libdrm
               util-linux.lib # that's libuuid! Try guess it!
               libbsd
+              ninja meson go gperf
             ] ++ (lib.pipe pkgs.xorg [ # ALL xorg libraries! AVD is insatiable! Probably not all of them are needed but that's 96 paths 23.25 MiB in total
               builtins.attrValues
               # https://github.com/NixOS/nixpkgs/pull/442323 bro just why!!
