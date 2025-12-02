@@ -70,6 +70,7 @@ in writeTextFile {
       "${HOME}/.java" # that's where settings are stored at least for intellij idea!
     ]) ++ (lib.optionals (ideName == "android-studio" || ideName == "idea-community") [
       "${HOME}/.pub-cache"
+      "${HOME}/.cache/go-build-untrusted" # just in case I ever use a go tool outside of nixpkgs
     ]))}
     ${ownFiles [
       "${HOME}/.gitconfig"
