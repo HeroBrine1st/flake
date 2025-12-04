@@ -47,6 +47,11 @@
               snapshot_preserve = "24h 7d 4w 12m 2y";
               snapshot_preserve_min = "14d";
             };
+            subvolume."@backups" = {
+              snapshot_dir = "@archives/backups/";
+              snapshot_preserve = "24h 7d 4w 12m 2y";
+              snapshot_preserve_min = "14d";
+            };
           };
         };
       };
