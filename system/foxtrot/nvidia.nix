@@ -15,7 +15,4 @@ in {
   nixpkgs.allowedUnfreePackages = [
     "nvidia-x11"
   ];
-
-  # https://github.com/NixOS/nixpkgs/issues/463525
-  systemd.services.nvidia-container-toolkit-cdi-generator.serviceConfig.ExecStartPre = lib.mkForce null;
 }
