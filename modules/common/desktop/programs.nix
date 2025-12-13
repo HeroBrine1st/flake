@@ -169,14 +169,6 @@
   programs.gamemode.enable = true;
   programs.gamescope = {
     enable = true;
-    package = pkgs.gamescope.overrideAttrs(old: {
-      patches = (old.patches or []) ++ [
-        (pkgs.fetchpatch {
-          url = "https://github.com/ValveSoftware/gamescope/pull/1867.patch";
-          hash = "sha256-ONjSInJ7M8niL5xWaNk5Z16ZMcM/A7M7bHTrgCFjrts=";
-        })
-      ];
-    });
     # `gamescope.convars.drm_debug_disable_explicit_sync.value = true` in ~/.config/gamescope/scripts/es.lua
     # may help with out of order frame presentation (yes, explicit sync triggers OOFP while was created to fix that! and
     # somehow it works on wayland backend despite being defined in DRM backend)
