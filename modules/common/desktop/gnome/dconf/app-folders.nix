@@ -59,7 +59,7 @@
       };
 
       "org/gnome/desktop/app-folders/folders/d7db46c4-d38c-4c67-9869-e0e7aa7899c3" = {
-        apps = [ "org.gnome.Settings.desktop" "gnome-system-monitor.desktop" "OpenTabletDriver.desktop" "org.gnome.Extensions.desktop" "pavucontrol.desktop" "org.gnome.tweaks.desktop" "nvidia-settings.desktop" "org.gnome.Logs.desktop" "org.pipewire.Helvum.desktop" "com.github.wwmm.easyeffects.desktop" "ca.desrt.dconf-editor.desktop" ];
+        apps = [ "org.gnome.Settings.desktop" "gnome-system-monitor.desktop" "OpenTabletDriver.desktop" "org.gnome.Extensions.desktop" "org.pulseaudio.pavucontrol.desktop" "org.gnome.tweaks.desktop" "nvidia-settings.desktop" "org.gnome.Logs.desktop" "org.pipewire.Helvum.desktop" "com.github.wwmm.easyeffects.desktop" "ca.desrt.dconf-editor.desktop" ];
         name = "System Mainentance";
         translate = false;
       };
