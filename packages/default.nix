@@ -23,10 +23,14 @@
     auditor = callPackage ./auditor {};
     hyprshell = callPackage ./hyprshell.nix {};
 
-    llama-cpp = pkgs-cuda.llama-cpp.override {
+    llama-cpp = (pkgs-cuda.llama-cpp.override {
       rpcSupport = true;
       cudaSupport = true;
-    };
+    }).overrideAttrs(old: {
+      # TODO remove when updated upstream
+      version = "7445";
+      src = old.src.override { hash = "sha256-oHQtfGu1altWwHUl4z2ApLVp8ISfd+l9t+k5NqtbWgA="; };
+    });
 
     dockerImages = {
       llama-cpp = callPackages ./llama-cpp/docker.nix {};
