@@ -125,6 +125,8 @@
             environment.systemPackages = [
               self.legacyPackages."${system}".auditor
             ];
+            boot.supportedFilesystems = [ "bcachefs" ];
+            boot.kernelPackages = lib.mkOverride 0 pkgs.linuxPackages_latest;
           })
         ];
       };

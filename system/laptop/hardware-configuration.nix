@@ -1,6 +1,7 @@
 { config, lib, pkgs, ... }: {
   boot = {
     kernelModules = [ "kvm-amd" ];
+    supportedFilesystems = [ "bcachefs" ];
     loader = {
       systemd-boot.enable = true;
       systemd-boot.consoleMode = "auto";
