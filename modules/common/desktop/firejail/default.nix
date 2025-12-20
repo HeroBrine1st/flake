@@ -192,7 +192,7 @@
       })
       (sandboxJetbrains { package = custom-pkgs.jetbrains.idea-ultimate; })
       (sandboxJetbrains {
-        package = pkgs.jetbrains.pycharm-community-bin;
+        package = pkgs.jetbrains.pycharm-oss;
         prefix = let
           env = pkgs.buildFHSEnv {
             name = "pycharm-fhs-env";
@@ -213,7 +213,7 @@
       (sandboxJetbrains { package = custom-pkgs.jetbrains.clion; })
       (sandboxJetbrains { package = pkgs.jetbrains.rust-rover; })
       (sandboxJetbrains {
-        package = pkgs.jetbrains.idea-community-bin;
+        package = pkgs.jetbrains.idea-oss;
         environment = {
           GRADLE_USER_HOME = "$HOME/.cache/Gradle";
           GOCACHE = "$HOME/.cache/go-build-untrusted";

@@ -84,13 +84,13 @@
     android-studio
     custom-pkgs.jetbrains.idea-ultimate
     #custom-pkgs.jetbrains.pycharm-professional
-    jetbrains.pycharm-community-bin
+    jetbrains.pycharm-oss
     jetbrains.webstorm
     custom-pkgs.jetbrains.clion
     gcc cmake
     arduino-ide
     jetbrains.rust-rover
-    jetbrains.idea-community-bin
+    jetbrains.idea-oss
     (vscode-with-extensions.override {
       vscode = vscodium.fhsWithPackages (ps: [ ps.nixd ]);
       vscodeExtensions = with vscode-extensions; [

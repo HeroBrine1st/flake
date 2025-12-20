@@ -17,9 +17,9 @@
   hiName = {
     # https://github.com/NixOS/nixpkgs/blob/nixos-unstable/pkgs/applications/editors/jetbrains/bin/ides.json
     # "productShort" or "product", upper cased
-    "idea-community" = "IDEA";
+    "idea-oss" = "IDEA";
     "idea-ultimate" = "IDEA";
-    "pycharm-community" = "PYCHARM";
+    "pycharm-oss" = "PYCHARM";
     "android-studio" = "STUDIO"; # dummy
     "webstorm" = "WEBSTORM";
     "clion" = "CLION";
