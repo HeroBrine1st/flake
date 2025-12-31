@@ -81,16 +81,6 @@
 
 
     # "Development"
-    android-studio
-    custom-pkgs.jetbrains.idea-ultimate
-    #custom-pkgs.jetbrains.pycharm-professional
-    jetbrains.pycharm-oss
-    jetbrains.webstorm
-    custom-pkgs.jetbrains.clion
-    gcc cmake
-    arduino-ide
-    jetbrains.rust-rover
-    jetbrains.idea-oss
     (vscode-with-extensions.override {
       vscode = vscodium.fhsWithPackages (ps: [ ps.nixd ]);
       vscodeExtensions = with vscode-extensions; [
@@ -101,6 +91,12 @@
         continue.continue
       ];
     })
+    jetbrains.idea-oss
+    jetbrains.pycharm-oss
+    jetbrains.webstorm
+    jetbrains.clion gcc cmake
+    arduino-ide
+    jetbrains.rust-rover
     # fleet unavailable
 
     # "Office"
@@ -142,6 +138,7 @@
     "android-studio-stable"
     "rust-rover"
     "webstorm"
+    "clion"
     "steam" "steam-original" "steam-run" "steam-unwrapped"
     "osu-lazer-bin"
     "veracrypt"
