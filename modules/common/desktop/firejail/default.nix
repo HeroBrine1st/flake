@@ -186,7 +186,7 @@
         };
       }
       (sandboxJetbrains {
-        package = pkgs.jetbrains.idea-oss;
+        package = custom-pkgs.jetbrains.idea-oss;
         environment = {
           GRADLE_USER_HOME = "$HOME/.cache/Gradle";
           GOCACHE = "$HOME/.cache/go-build-untrusted";

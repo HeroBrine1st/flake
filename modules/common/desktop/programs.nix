@@ -91,7 +91,7 @@
         continue.continue
       ];
     })
-    jetbrains.idea-oss
+    custom-pkgs.jetbrains.idea-oss
     jetbrains.pycharm-oss
     jetbrains.webstorm
     jetbrains.clion gcc cmake
