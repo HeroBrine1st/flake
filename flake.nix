@@ -4,7 +4,6 @@
   inputs = {
     pkgs-unstable.url = "nixpkgs/nixos-unstable-small";
     pkgs-stable.url = "nixpkgs/nixos-25.11-small";
-    pkgs-jetbrains-2022.url = "github:NixOS/nixpkgs?rev=e1fa54a56982c5874f6941703c8b760541e40db1";
     pkgs-bdfr.url = "github:NixOS/nixpkgs?rev=59b1aef59071cae6e87859dc65de973d2cc595c0"; # pinned
     nixos-rk3588.url = "github:HeroBrine1st/nixos-rk3588?rev=0b8b677e400fe178e46e0f04175ac2b9b6441b82"; # pinned
     home-manager = {
@@ -35,7 +34,7 @@
     };
   };
 
-  outputs = { self, pkgs-unstable, pkgs-stable, nixos-rk3588, pkgs-jetbrains-2022, home-manager, disko, impermanence, lanzaboote, fenix, pkgs-bdfr, ags, ... }: let
+  outputs = { self, pkgs-unstable, pkgs-stable, nixos-rk3588, home-manager, disko, impermanence, lanzaboote, fenix, pkgs-bdfr, ags, ... }: let
     lib = pkgs-unstable.lib;
     forAllSystems = f: lib.genAttrs [ "x86_64-linux" "aarch64-linux" ] (system: f system);
   in {
@@ -48,7 +47,7 @@
       hyprland = ./modules/common/desktop/hyprland;
     };
     legacyPackages = forAllSystems (system: import ./packages {
-      inherit pkgs-jetbrains-2022 pkgs-unstable fenix ags pkgs-bdfr system;
+      inherit pkgs-unstable fenix ags pkgs-bdfr system;
     });
     nixosConfigurations = let
       commonSpecialArgs = system: {
@@ -191,6 +190,7 @@
       in {
         rust-rover = overrideMirror pkgs.jetbrains.rust-rover.src;
         webstorm = overrideMirror pkgs.jetbrains.webstorm.src;
+        clion = overrideMirror pkgs.jetbrains.clion.src;
       };
     };
   };
