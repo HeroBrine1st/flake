@@ -4,41 +4,6 @@
       blacklist /.fsroot
       blacklist ''${RUNUSER}/docker.sock
     '';
-    "firejail/lutris.local".text = ''
-      ignore restrict-namespaces
-
-      ignore mkdir ''${HOME}/Games
-      ignore whitelist ''${HOME}/Games
-      ignore whitelist ''${DOWNLOADS}
-      #ignore mkdir ''${HOME}/.cache/lutris
-      #ignore mkdir ''${HOME}/.cache/wine
-      #ignore mkdir ''${HOME}/.cache/winetricks
-      ignore mkdir ''${HOME}/.cache
-
-      blacklist ''${DOWNLOADS}
-
-      noblacklist ''${HOME}/.config/MangoHud
-      whitelist ''${HOME}/.config/MangoHud
-      whitelist /mnt/extra/Lutris
-      whitelist ''${HOME}/.cache/lutris
-      whitelist ''${HOME}/.cache/wine
-      whitelist ''${HOME}/.cache/winetricks
-
-      # !mount,!pivot_root,!umount2 - bwrap, remaining is from lutris profile
-      seccomp !clone3,!modify_ldt,!process_vm_readv,!ptrace,!mount,!pivot_root,!umount2
-      seccomp.32 !modify_ldt
-      ignore seccomp
-      ignore seccomp.32
-      # bwrap
-      noblacklist /proc/sys/kernel/overflowuid
-      noblacklist /proc/sys/kernel/overflowgid
-
-      apparmor
-
-      deterministic-shutdown
-
-      join-or-start lutris
-    '';
     "firejail/nodejs-common.local".text = ''
       mkdir ''${HOME}/.node-gyp
       mkdir ''${HOME}/.npm
@@ -153,10 +118,6 @@
     enable = true;
     wrappedBinaries = lib.mkMerge [
       {
-        lutris = {
-          executable = "${pkgs.lutris}/bin/lutris";
-          profile = "${pkgs.firejail}/etc/firejail/lutris.profile";
-        };
         node = {
           executable = "${pkgs.nodejs}/bin/node";
           profile = "${pkgs.firejail}/etc/firejail/node.profile";
