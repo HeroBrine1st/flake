@@ -105,7 +105,6 @@
     # "Games"
     # steam inferred by programs.steam.enable = true
     osu-lazer-bin
-    lutris
     custom-pkgs.tlauncher
     # CKAN not needed yet
     # protontricks not needed yet
