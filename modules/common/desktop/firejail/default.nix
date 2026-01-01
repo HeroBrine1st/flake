@@ -24,8 +24,14 @@
       whitelist ''${HOME}/.cache/wine
       whitelist ''${HOME}/.cache/winetricks
 
-      ignore seccomp !modify_ldt
-      ignore seccomp.32 !modify_ldt
+      # !mount,!pivot_root,!umount2 - bwrap, remaining is from lutris profile
+      seccomp !clone3,!modify_ldt,!process_vm_readv,!ptrace,!mount,!pivot_root,!umount2
+      seccomp.32 !modify_ldt
+      ignore seccomp
+      ignore seccomp.32
+      # bwrap
+      noblacklist /proc/sys/kernel/overflowuid
+      noblacklist /proc/sys/kernel/overflowgid
 
       apparmor
 
