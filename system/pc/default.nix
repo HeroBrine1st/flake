@@ -6,5 +6,6 @@
     ./hardware-dconf.nix
     ./impermanence.nix
     ./hardware-mitigations.nix
+    ./lanzaboote.nix
   ];
 }
