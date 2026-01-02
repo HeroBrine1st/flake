@@ -39,7 +39,7 @@
         "x-scheme-handler/http" = ["firefox.desktop"];
         "x-scheme-handler/https" = ["firefox.desktop"];
         "x-scheme-handler/chrome" = ["firefox.desktop"];
-        "text/html"= ["firefox.desktop"];
+        "text/html" = ["firefox.desktop"];
         "application/x-extension-htm" = ["firefox.desktop"];
         "application/x-extension-html" = ["firefox.desktop"];
         "application/x-extension-shtml" = ["firefox.desktop"];
@@ -53,8 +53,9 @@
         "image/webp" = ["org.gnome.gThumb.desktop"];
         "video/x-matroska" = ["vlc.desktop"];
         "text/plain" = ["org.gnome.TextEditor.desktop"];
-        "video/webm"=["vlc.desktop"];
-        "audio/flac"=["mpv.desktop"];
+        "video/webm" = ["vlc.desktop"];
+        "audio/flac" = ["mpv.desktop"];
+        "application/x-tar" = ["org.gnome.FileRoller.desktop"];
       };
       associations.added = {
         "x-scheme-handler/http" = ["firefox.desktop"];
@@ -76,8 +77,9 @@
         "image/webp" = ["org.gnome.gThumb.desktop"];
         "video/x-matroska" = ["vlc.desktop"];
         "text/plain" = ["org.gnome.TextEditor.desktop"];
-        "video/webm"=["vlc.desktop"];
-        "audio/flac"=["mpv.desktop"];
+        "video/webm" = ["vlc.desktop"];
+        "audio/flac" = ["mpv.desktop"];
+        "application/x-tar" = ["org.gnome.FileRoller.desktop"];
       };
     };
 
