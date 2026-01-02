@@ -88,6 +88,7 @@
         modules = [
           home-manager.nixosModules.home-manager
           impermanence.nixosModules.impermanence
+          lanzaboote.nixosModules.lanzaboote
           self.nixosModules.optionals
           self.nixosModules.basic
           self.nixosModules.scrutiny-collector
