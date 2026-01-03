@@ -35,7 +35,6 @@
 
   environment.etc.crypttab.text = ''
     hdd PARTLABEL=HDD /etc/keyfile/hdd.key nofail
-    ssd PARTLABEL=SSD /etc/keyfile/ssd.key allow-discards,no-read-workqueue,no-write-workqueue
   '';
 
   fileSystems = {
@@ -65,14 +64,9 @@
       options = [ "defaults" "compress=zstd" "discard=async" "subvol=@home" ];
     };
     "/mnt/extra" = {
-      device = "/dev/mapper/ssd";
+      device = "/dev/mapper/root";
       fsType = "btrfs";
-      options = [ "defaults" "compress=zstd" "discard=async" "subvol=@user" ];
-    };
-    "/mnt/extra/.fsroot" = {
-      device = "/dev/mapper/ssd";
-      fsType = "btrfs";
-      options = [ "defaults" "compress=zstd" "discard=async" ];
+      options = [ "defaults" "compress=zstd" "discard=async" "subvol=@extra" ];
     };
     "/mnt/hdd" = {
       device = "/dev/mapper/hdd";
