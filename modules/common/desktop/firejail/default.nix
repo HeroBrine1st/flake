@@ -84,15 +84,24 @@
     "firejail/firefox.local".text = ''
       name firefox
     '';
+  };
+
+  security.wrappers.firejail.source = let
     # https://github.com/netblue30/firejail/blob/master/etc/firejail.config
-    "firejail/firejail.config".text = ''
+    config = builtins.toFile "firejail.config" ''
       # Force use of nonewprivs.  This mitigates the possibility of
       # a user abusing firejail's features to trick a privileged (suid
       # or file capabilities) process into loading code or configuration
       # that is partially under their control.  Default disabled
       force-nonewprivs yes
     '';
-  };
+    firejail = pkgs.firejail.overrideAttrs(old: {
+      postInstall = old.postInstall + ''
+        cat ${config} >> $out/etc/firejail/firejail.config
+      '';
+    });
+    # no need to replace pkg in systemPackages since it is the only used binary
+  in lib.mkForce "${lib.getBin firejail}/bin/firejail";
 
   # TODO wrap in environment.systemPackages because lib.getExe is unsafe
   # TODO use systemd-run
