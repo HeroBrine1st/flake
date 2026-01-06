@@ -68,7 +68,7 @@ in writeTextFile {
       "${HOME}/.config/JetBrains"
       "${HOME}/.cache/JetBrains"
       "${HOME}/.java" # that's where settings are stored at least for intellij idea!
-    ]) ++ (lib.optionals (ideName == "android-studio" || ideName == "idea-community") [
+    ]) ++ (lib.optionals (ideName == "android-studio" || ideName == "idea-oss") [
       "${HOME}/.pub-cache"
       "${HOME}/.cache/go-build-untrusted" # just in case I ever use a go tool outside of nixpkgs
     ]))}
