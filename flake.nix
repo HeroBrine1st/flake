@@ -14,7 +14,13 @@
       url = "github:nix-community/disko";
       inputs.nixpkgs.follows = "pkgs-unstable";
     };
-    impermanence.url = "github:nix-community/impermanence";
+    impermanence = {
+      url = "github:nix-community/impermanence";
+      inputs = {
+        nixpkgs.follows = "pkgs-unstable";
+        home-manager.follows = "home-manager";
+      };
+    };
     lanzaboote = {
       url = "github:nix-community/lanzaboote/v1.0.0";
       inputs.nixpkgs.follows = "pkgs-unstable";
