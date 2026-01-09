@@ -76,7 +76,8 @@ in {
         (lib.mkIf config.hardware.bluetooth.enable [
           { directory = "/var/lib/bluetooth"; mode = "0700"; }
         ])
-        cfg.extraDirectories
+        # mkRemovedOptionModule adds an option which triggers its own application!
+        (builtins.map (dir: builtins.removeAttrs dir [ "method" ]) cfg.extraDirectories)
       ];
       files = lib.mkMerge [
         [
