@@ -131,6 +131,7 @@
 
     # CLI
     typst
+    android-tools
   ];
 
   nixpkgs.allowedUnfreePackages = [
@@ -145,7 +146,6 @@
     "winbox"
   ];
 
-  programs.adb.enable = true;
   programs.gnupg.agent.enable = true;
 
   programs.wireshark.enable = true;
