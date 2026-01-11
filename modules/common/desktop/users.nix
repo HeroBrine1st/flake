@@ -56,12 +56,13 @@
         "video/webm" = ["vlc.desktop"];
         "audio/flac" = ["mpv.desktop"];
         "application/x-tar" = ["org.gnome.FileRoller.desktop"];
+        "application/zip" = ["org.gnome.FileRoller.desktop"];
       };
       associations.added = {
         "x-scheme-handler/http" = ["firefox.desktop"];
         "x-scheme-handler/https" = ["firefox.desktop"];
         "x-scheme-handler/chrome" = ["firefox.desktop"];
-        "text/html"= ["firefox.desktop"];
+        "text/html" = ["firefox.desktop"];
         "application/x-extension-htm" = ["firefox.desktop"];
         "application/x-extension-html" = ["firefox.desktop"];
         "application/x-extension-shtml" = ["firefox.desktop"];
@@ -80,6 +81,7 @@
         "video/webm" = ["vlc.desktop"];
         "audio/flac" = ["mpv.desktop"];
         "application/x-tar" = ["org.gnome.FileRoller.desktop"];
+        "application/zip" = ["org.gnome.FileRoller.desktop"];
       };
     };
 
