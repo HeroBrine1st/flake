@@ -15,6 +15,7 @@
     kernelParams = [
       "nvidia-drm.fbdev=1" # disable additional dummy display
       "nvidia.NVreg_EnableGpuFirmware=0" # https://github.com/NVIDIA/open-gpu-kernel-modules/issues/538
+      "init_on_free=1" # should *partially* mitigate dual-booted windows malware ability to alter /nix/store and as such to get root access on this system
     ];
     loader = {
       systemd-boot.enable = true;
