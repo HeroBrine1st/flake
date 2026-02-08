@@ -78,12 +78,12 @@
       dns = ["1.1.1.1"];
       runtimes = let
         gvisor = pkgs.gvisor.overrideAttrs rec {
-          version = "20251118.0-19-gd25a12513";
+          version = "20260126.0-16-gf87a10ed3";
           src = pkgs.fetchFromGitHub {
             owner = "google";
             repo = "gvisor";
-            rev = "c426a4c6d753ce2bf405de125b0486adfef12877";
-            hash = "sha256-DCgU4Jv40w2ItgrQv3mBWJ4r51qQx8BIUEsa0bX3sQs=";
+            rev = "0bd9aedd142c213b4c718156e1e1c6e68c91a17c";
+            hash = "sha256-c8p4pvR8j9TiFnuQdn7nIZkVmRQAf6ICzsBxjB9cPt8=";
           };
           vendorHash = "sha256-Ey4M3NK/+AVkr7r0aA+kAfNk1yVfnDn3Izy7u74HFkE=";
         };
