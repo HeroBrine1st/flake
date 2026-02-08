@@ -100,23 +100,17 @@
     };
     extraPackages = [
       # docker run --runtime io.containerd.kata.v2
-      (pkgs.kata-runtime.overrideAttrs(old: {
-        # For some reason they did not enable it back after fix
-        hardeningDisable = [];
-        # I know about -p3 and --directory, no both won't work (in latter case /build/source/tests is read-only)
-        src = pkgs.stdenv.mkDerivation rec {
-          src = pkgs.fetchFromGitHub {
-            owner = "kata-containers";
-            repo = "kata-containers";
-            rev = "758471cbddeff44297ca5a3db9340bad0c3360ef"; # pull/11749/head
-            hash = "sha256-tH395Uz1vdm/9rvFVKcfycMEuSDfWJ9S798n0wb7EBg=";
-          };
-          name = src.name;
-
-          phases = [ "unpackPhase" "patchPhase" "installPhase" ];
-          installPhase = "cp --archive . $out";
-        };
-      }))
+#      (pkgs.kata-runtime.overrideAttrs(old: {
+#        # For some reason they did not enable it back after fix
+#        hardeningDisable = [];
+#        # I know about -p3 and --directory, no both won't work (in latter case /build/source/tests is read-only)
+#        src = pkgs.fetchFromGitHub {
+#          owner = "kata-containers";
+#          repo = "kata-containers";
+#          rev = "4fe59cf0992375d6aca44dfe05f9192f98de5a50"; # pull/11749/head
+#          hash = "sha256-tWHiNiebQgTEAkFx8Kt+ABlyJNnxK5r4/prvEeTW8JU=";
+#        };
+#      }))
     ];
   };
 
