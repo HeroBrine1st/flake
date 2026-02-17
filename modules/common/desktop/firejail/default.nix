@@ -234,6 +234,11 @@
       (sandboxJetbrains { package = pkgs.jetbrains.webstorm; })
       (sandboxJetbrains { package = pkgs.jetbrains.clion; })
       (sandboxJetbrains { package = pkgs.jetbrains.rust-rover; })
+      (sandboxJetbrains {
+        package = pkgs.android-studio;
+        environment = { GRADLE_USER_HOME = "$HOME/.cache/Gradle"; };
+        prefix = [ "env" ];
+      })
     ];
   };
 }
