@@ -81,6 +81,7 @@
 
 
     # "Development"
+    android-studio
     (vscode-with-extensions.override {
       vscode = vscodium.fhsWithPackages (ps: [ ps.nixd ]);
       vscodeExtensions = with vscode-extensions; [
@@ -135,7 +136,7 @@
   ];
 
   nixpkgs.allowedUnfreePackages = [
-    "android-studio-stable"
+    "android-studio"
     "rust-rover"
     "webstorm"
     "clion"
