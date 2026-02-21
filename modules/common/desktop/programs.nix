@@ -98,7 +98,19 @@
     jetbrains.clion gcc cmake
     arduino-ide
     jetbrains.rust-rover
-    # fleet unavailable
+    (mistral-vibe.override {
+      # remove textual-speedups as proprietary package
+      # also to be used via ACP only
+      python3Packages = python3Packages // {
+        buildPythonApplication = old: let
+          attrs = old finalAttrs;
+          finalAttrs = attrs // {
+            dependencies = builtins.filter (pkg: (lib.getName pkg) != "textual-speedups") attrs.dependencies;
+            dontCheckRuntimeDeps = true;
+          };
+        in python3Packages.buildPythonApplication finalAttrs;
+      };
+    })
 
     # "Office"
     libreoffice-fresh
