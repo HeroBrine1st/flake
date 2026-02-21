@@ -59,6 +59,7 @@ in writeTextFile {
       "${HOME}/.skiko"
       "${HOME}/.continue"
       "${HOME}/.zsh"
+      "${HOME}/.jetbrains"
     ] ++ (if ideName == "android-studio" then [
       "${HOME}/.config/Google"
       "${HOME}/.cache/Google"
