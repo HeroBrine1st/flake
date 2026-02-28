@@ -19,7 +19,7 @@ in stdenvNoCC.mkDerivation {
   srcs = [
     (fetchurl {
       url = "https://launcher.dreamfinity.org/Dreamfinity.jar";
-      hash = "sha256-Cl4WoGD37puEVTKxo5zubbVPhPIfyqeKLC1mOBkHsFY=";
+      hash = "sha256-H3vmGEcPwwPgIyGczMS50vMjXkIxlVrATmd2ebtljso=";
     })
     (fetchurl {
       url = "https://raw.githubusercontent.com/Noire86/Dreamfinity-Brand-Logo/1cc4b6b487d37cb8c76abfe0187253059fc01a01/gearlogo/SVG/logo.svg";
