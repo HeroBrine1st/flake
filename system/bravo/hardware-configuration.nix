@@ -50,6 +50,7 @@
 
   systemd.network.enable = true;
   networking.useDHCP = false; # is not read at all! Only emits warning if true with systemd-network
+  systemd.network.wait-online.enable = false; # stuck at configuring; awaits static routes (not that I didn't add them...)
 
   networking.hostName = "bravo";
   nixpkgs.hostPlatform = "x86_64-linux";

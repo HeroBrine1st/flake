@@ -77,4 +77,16 @@ in {
       };
     };
   };
+
+  networking.firewall.extraCommands = ''
+    ip6tables -A nixos-fw -p tcp --dport 443 -j nixos-fw-accept
+    ip6tables -A nixos-fw -p udp --dport 443 -j nixos-fw-accept
+  '';
+
+  assertions = [
+    {
+      assertion = config.networking.firewall.backend == "iptables";
+      message = "Traefik module requires iptables firewall backend to open ports on v6 only";
+    }
+  ];
 }
