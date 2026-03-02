@@ -44,5 +44,7 @@
         installPhase = builtins.replaceStrings ["item=${old.desktopItem}"] ["item=${desktopItem}"] old.installPhase;
       });
     };
+
+    letta-code = callPackage ./letta-code {};
   };
 in custom-pkgs

@@ -1,0 +1,13 @@
+diff --git a/build.js b/build.js
+index da338c0..8b2adfb 100644
+--- a/build.js
++++ b/build.js
+@@ -90,7 +90,7 @@ if (existsSync(bundledSkillsSrc)) {
+ 
+ // Generate type declarations for wire types export
+ console.log("📝 Generating type declarations...");
+-await Bun.$`bunx tsc -p tsconfig.types.json`;
++await Bun.$`env tsc -p tsconfig.types.json`;
+ console.log("   Output: dist/types/protocol.d.ts");
+ 
+ console.log("✅ Build complete!");
