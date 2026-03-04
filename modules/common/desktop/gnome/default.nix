@@ -23,7 +23,7 @@
     #gnomeExtensions.removable-drive-menu # somehow already available
     gnomeExtensions.system-monitor-next
     gnomeExtensions.dash-to-dock
-    gnomeExtensions.unite xorg.xprop
+    gnomeExtensions.unite xprop
     gnomeExtensions.gsconnect
     gnomeExtensions.clipboard-indicator
   ];
