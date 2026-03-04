@@ -26,19 +26,18 @@
       openjdk8-bootstrap
       perl
       which
-      xorg.libICE
-      xorg.libX11
-      xorg.libXcursor
-      xorg.libXext
-      xorg.libXi
-      xorg.libXinerama
-      xorg.libXrandr
-      xorg.xrandr
-      xorg.libXrender
-      xorg.libXt
-      xorg.libXtst
-      xorg.libXtst
-      xorg.libXxf86vm
+      libice
+      libx11
+      libxcursor
+      libxext
+      libxi
+      libxinerama
+      libxrandr
+      xrandr
+      libxrender
+      libxt
+      libxtst
+      libxxf86vm
       zip
       zlib
     ];

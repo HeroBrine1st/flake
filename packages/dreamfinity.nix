@@ -32,14 +32,14 @@ in stdenvNoCC.mkDerivation {
   fhsEnvironment = buildFHSEnv {
     name = "dreamfinity-fhs-env";
     targetPkgs = pkgs: with pkgs; [
-      xorg.libXext
-      xorg.libX11
-      xorg.libXrender
-      xorg.libXtst
-      xorg.libXi
-      xorg.libXcursor
-      xorg.libXrandr
-      xorg.libXxf86vm
+      libxext
+      libx11
+      libxrender
+      libxtst
+      libxi
+      libxcursor
+      libxrandr
+      libxxf86vm
 
       libGL
       fontconfig
