@@ -133,7 +133,8 @@ in {
             exit 0
           fi
 
-          if ${docker} network inspect -f '{{.Internal}}' "${network}" | grep -q '^true$'; then
+          if ${docker} network inspect -f '{{.Internal}}' "${network}" | grep -q '^true$' &&
+             ${docker} network inspect -f '{{index .Options "com.docker.network.bridge.enable_icc"}}' "${network}" | grep -q '^false$'; then
             exit 0
           fi
 
@@ -143,13 +144,19 @@ in {
           done
 
           failed=0
-          { ${docker} network rm "${network}" && ${docker} network create --internal "${network}"; } || {
+          {
+            ${docker} network rm "${network}"
+            ${docker} network create --internal --opt com.docker.network.bridge.enable_icc=false "${network}"
+          } || {
             echo "Failed to update docker network ${network}" >&2
             failed=1
           }
 
           for c in $CONTAINERS; do
-            ${docker} network connect "${network}" "$c" || true
+            ${docker} network connect "${network}" "$c" || {
+              echo "Failed to connect container \"$c\" back to network \"${network}\"" >&2
+              failed=1
+            }
           done
 
           exit $failed
