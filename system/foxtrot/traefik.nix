@@ -12,7 +12,23 @@ in {
     # (also a reason to finally use internal networks)
     enable = true;
     group = "docker";
-    # TODO combine nix and impermanence configs with yq-go
+    dynamicConfigOptions = {
+      tls.options = builtins.mapAttrs (_: v: {
+        sniStrict = true;
+      } // v) {
+        default = {};
+        cloudflare.clientAuth = {
+          clientAuthType = "RequireAndVerifyClientCert";
+          caFiles = [
+            (pkgs.fetchurl {
+              url = "https://developers.cloudflare.com/ssl/static/authenticated_origin_pull_ca.pem";
+              hash = "sha256-wU/tDOUhDbBxn+oR0fELM3UNwX1gmur0fHXp7/DXuEM=";
+            })
+          ];
+        };
+        dot.alpnProtocols = [ "dot" ];
+      };
+    };
     dynamicConfigFile = "${dataDir}/dynamic.yml";
     environmentFiles = [
       "${dataDir}/traefik.env"
@@ -43,12 +59,12 @@ in {
           };
         };
       };
-      entryPoints = {
+      entryPoints = builtins.mapAttrs (_: v: {
+        http.tls.certResolver = "letsencrypt";
+      } // v) {
         https = {
           address = "\${PHYSICAL_INTERFACE_IP}:443";
-          AsDefault = true;
-          http2.maxConcurrentStreams = 250;
-          http.tls = {}; # this enables TLS, idk whether it is still needed
+          asDefault = true;
           forwardedHeaders.trustedIPs = [ # TODO https://www.cloudflare.com/ips-v4/ , IFD is avoidable via staticConfigFile
             "173.245.48.0/20"
             "103.21.244.0/22"
@@ -70,15 +86,15 @@ in {
         # TODO rename to httpsOverlay
         nebula = {
           address = "${systems."${config.networking.hostName}".networks.overlay.address}:443";
-          AsDefault = true;
-          http2.maxConcurrentStreams = 250;
-          http.tls = {}; # this enables TLS, idk whether it is still needed
+          asDefault = true;
         };
         dot = {
           address = "\${PHYSICAL_INTERFACE_IP}:853";
+          http.tls.options = "dot@file";
         };
         dotOverlay = {
           address = "${systems."${config.networking.hostName}".networks.overlay.address}:853";
+          http.tls.options = "dot@file";
         };
       };
     };
