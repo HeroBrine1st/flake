@@ -104,6 +104,7 @@ in {
     settings = {
       "${config.services.traefik.dataDir}/logs/access.log" = {
         rotate = -1;
+        monthly = true;
         postrotate = ''
           systemctl kill traefik --signal=USR1
         '';
