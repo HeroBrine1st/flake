@@ -100,6 +100,17 @@ in {
     };
   };
 
+  services.logrotate = {
+    settings = {
+      "${config.services.traefik.dataDir}/logs/access.log" = {
+        rotate = -1;
+        postrotate = ''
+          systemctl kill traefik --signal=USR1
+        '';
+      };
+    };
+  };
+
   systemd.services = {
     traefik = {
       after = [ "docker-traefik-network.service" ];
