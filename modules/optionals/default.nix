@@ -8,5 +8,6 @@
     ./llama-cpp-worker.nix
     ./impermanence.nix
     ./networks
+    ./traefik.nix
   ];
 }
