@@ -123,4 +123,17 @@
      enable = true;
      execWheelOnly = true;
    };
+
+   services.logrotate = {
+     enable = true;
+     settings = {
+       header = {
+         compress = true;
+         compresscmd = "${pkgs.zstd}/bin/zstd";
+         compressext = ".zst";
+         compressoptions = "-T --long";
+         uncompresscmd = "${pkgs.zstd}/bin/unzstd";
+       };
+     };
+   };
 }
