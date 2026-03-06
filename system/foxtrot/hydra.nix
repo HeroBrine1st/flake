@@ -70,7 +70,7 @@
       encodings = [ "zstd" "br" "gzip" ];
     };
     services.nix-serve.loadBalancer = {
-      servers = [ "http://${config.services.nix-serve.bindAddress}:${toString config.services.nix-serve.port}" ];
+      servers = [ { url = "http://${config.services.nix-serve.bindAddress}:${toString config.services.nix-serve.port}"; } ];
     };
   };
 
