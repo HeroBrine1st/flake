@@ -66,7 +66,6 @@
       service = "nix-serve";
     };
     middlewares.nix-serve.compress = {
-      defaultEncoding = "zstd";
       encodings = [ "zstd" "br" "gzip" ];
     };
     services.nix-serve.loadBalancer = {
