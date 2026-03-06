@@ -55,7 +55,7 @@
     gnome-tweaks
     # nvidia x server settings inferred
     gnome-logs
-    helvum
+    crosspipe
     # easyeffects can't pass tests
 
     # "Media"
