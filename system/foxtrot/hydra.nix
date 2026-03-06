@@ -57,4 +57,22 @@
     config.services.hydra.port
     config.services.nix-serve.port
   ];
+
+  services.traefik.dynamicConfigOptions.http = {
+    routers.nix-serve = {
+      entryPoints = [ "nebula" ];
+      rule = "Host(`cache.herobrine1st.ru`)";
+      middlewares = [ "nix-serve" ];
+      service = "nix-serve";
+    };
+    middlewares.nix-serve.compress = {
+      defaultEncoding = "zstd";
+      encodings = [ "zstd" "br" "gzip" ];
+    };
+    services.nix-serve.loadBalancer = {
+      servers = [ "http://${config.services.nix-serve.bindAddress}:${toString config.services.nix-serve.port}" ];
+    };
+  };
+
+  nix.useFlakeCache = false;
 }

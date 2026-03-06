@@ -5,11 +5,9 @@
     {
       auto-optimise-store = true;
     }
-    (let
-      host = "10.168.88.10";
-    in lib.mkIf (config.network.overlay.enabled && config.nix.useFlakeCache && systems."${config.networking.hostName}".networks.overlay.address != host) {
+    (lib.mkIf (config.network.overlay.enabled && config.nix.useFlakeCache) {
       substituters = [
-        "http://${host}:5000"
+        "https://cache.herobrine1st.ru"
       ];
       trusted-public-keys = [
         "foxtrot-cache:X8r3Ux9DlsIqkM0uMIw6gAlwCUCW324gm2VZn7eMJr0="
