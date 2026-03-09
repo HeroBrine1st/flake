@@ -24,11 +24,10 @@
     gnomeExtensions.system-monitor-next
     gnomeExtensions.dash-to-dock
     gnomeExtensions.unite xprop
-    gnomeExtensions.gsconnect
+    gnomeExtensions.valent valent
     gnomeExtensions.clipboard-indicator
   ];
 
-  # gsconnect
   environment.sessionVariables = rec {
     NAUTILUS_4_EXTENSION_DIR = "/run/current-system/sw/lib/nautilus/extensions-4/";
   };

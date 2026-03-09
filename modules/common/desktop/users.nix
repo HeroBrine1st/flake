@@ -70,8 +70,6 @@
         "application/x-extension-xhtml" = ["firefox.desktop"];
         "application/x-extension-xht" = ["firefox.desktop"];
         "application/pdf" = ["firefox.desktop"];
-        "x-scheme-handler/sms" = ["org.gnome.Shell.Extensions.GSConnect.desktop"];
-        "x-scheme-handler/tel" = ["org.gnome.Shell.Extensions.GSConnect.desktop"];
         "image/png" = ["org.gnome.gThumb.desktop"];
         "image/jpeg" = ["org.gnome.gThumb.desktop"];
         "video/mp4" = ["mpv.desktop"];
