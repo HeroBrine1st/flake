@@ -44,6 +44,7 @@
         hotkeys-show-dock = false;
         icon-size-fixed = false;
         intellihide-mode = "FOCUS_APPLICATION_WINDOWS";
+        intellihide = false; # workaround https://github.com/micheleg/dash-to-dock/issues/2527#issuecomment-4016578283
         show-mounts = false;
         show-trash = false;
         show-icons-emblems = false;
