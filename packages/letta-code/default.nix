@@ -24,16 +24,15 @@
     nativeBuildInputs = [ bun ];
     dontConfigure = true;
     buildPhase = ''
-      bun install --no-progress --frozen-lockfile
+      bun install --no-progress --frozen-lockfile --no-cache
     '';
     installPhase = ''
       mkdir -p $out/node_modules
 
-      rm ./node_modules/.cache -rf
       cp -R ./node_modules $out
     '';
     dontFixup = true;
-    outputHash = "sha256-RhaYNDWUdfML8wSOZ/iQwJ1AUWOU8BC9vkMOy9nPVaY="; # lib.fakeHash;
+    outputHash = "sha256-3DXpYc7Ijkc1j+khoCEXlZ3xSkpUIvPrqH8dv4w1fM8="; # lib.fakeHash;
     outputHashMode = "recursive";
   };
 in stdenvNoCC.mkDerivation {
@@ -79,4 +78,8 @@ in stdenvNoCC.mkDerivation {
 
     runHook postInstall
   '';
+
+  passthru = {
+    inherit node_modules;
+  };
 }
