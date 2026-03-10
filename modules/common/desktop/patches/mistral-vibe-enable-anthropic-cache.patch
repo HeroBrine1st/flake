@@ -1,0 +1,48 @@
+diff --git a/vibe/core/llm/backend/generic.py b/vibe/core/llm/backend/generic.py
+index 57f0fb9..308d03f 100644
+--- a/vibe/core/llm/backend/generic.py
++++ b/vibe/core/llm/backend/generic.py
+@@ -79,6 +79,33 @@ class OpenAIAdapter(APIAdapter):
+             msg_dict["reasoning_content"] = msg_dict.pop(field_name)
+         return msg_dict
+
++    @classmethod
++    def _add_cache_control_to_messages(cls, messages):
++        # from Letta https://github.com/letta-ai/letta
++        if not messages or len(messages) == 0:
++            return messages
++
++        # Work backwards to find the last message with content
++        for i in range(len(messages) - 1, -1, -1):
++            message = messages[i]
++            content = message.get("content")
++
++            if not content:
++                continue
++
++            # Handle string content
++            if isinstance(content, str):
++                messages[i]["content"] = [{"type": "text", "text": content, "cache_control": {"type": "ephemeral"}}]
++                return messages
++
++            # Handle list content - add cache_control to the last block
++            if isinstance(content, list) and len(content) > 0:
++                # Add cache_control to the last content block
++                messages[i]["content"][-1]["cache_control"] = {"type": "ephemeral"}
++                return messages
++
++        return messages
++
+     def prepare_request(  # noqa: PLR0913
+         self,
+         *,
+@@ -102,6 +129,9 @@ class OpenAIAdapter(APIAdapter):
+             for msg in merged_messages
+         ]
+
++        if "openrouter.ai" in provider.api_base and "anthropic" in model_name:
++            converted_messages = self._add_cache_control_to_messages(converted_messages)
++
+         payload = self.build_payload(
+             model_name, converted_messages, temperature, tools, max_tokens, tool_choice
+         )
