@@ -14,24 +14,7 @@
       ];
     }).overrideAttrs (prev: {
       patches = (prev.patches or []) ++ [
-        (builtins.toFile "pass-disable-features.patch" ''
-          diff --git a/src/electron-main.ts b/src/electron-main.ts
-          index 7443319..85b4cf2 100644
-          --- a/src/electron-main.ts
-          +++ b/src/electron-main.ts
-          @@ -334,7 +334,11 @@ protocol.registerSchemesAsPrivileged([
-           app.enableSandbox();
-
-           // We disable media controls here. We do this because calls use audio and video elements and they sometimes capture the media keys. See https://github.com/vector-im/element-web/issues/15704
-          -app.commandLine.appendSwitch("disable-features", "HardwareMediaKeyHandling,MediaSessionService");
-          +if (!app.commandLine.hasSwitch("disable-features")) {
-          +    app.commandLine.appendSwitch("disable-features", "HardwareMediaKeyHandling,MediaSessionService");
-          +} else {
-          +    app.commandLine.appendSwitch("disable-features", "HardwareMediaKeyHandling,MediaSessionService," + app.commandLine.getSwitchValue("disable-features"));
-          +}
-
-           const store = Store.initialize(argv["storage-mode"]); // must be called before any async actions
-        '')
+        ./patches/element-desktop-pass-disable-features.patch
       ];
     }))
     feishin
