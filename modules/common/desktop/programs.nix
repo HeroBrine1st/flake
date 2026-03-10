@@ -98,7 +98,7 @@
     jetbrains.clion gcc cmake
     arduino-ide
     jetbrains.rust-rover
-    (mistral-vibe.override {
+    ((mistral-vibe.override {
       # remove textual-speedups as proprietary package
       # also to be used via ACP only
       python3Packages = python3Packages // {
@@ -110,7 +110,11 @@
           };
         in python3Packages.buildPythonApplication finalAttrs;
       };
-    })
+    }).overrideAttrs(old: {
+      patches = (old.patches or []) ++ [
+        ./patches/mistral-vibe-enable-anthropic-cache.patch
+      ];
+    }))
 
     # "Office"
     libreoffice-fresh
