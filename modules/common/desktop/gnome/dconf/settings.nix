@@ -50,6 +50,7 @@
       "org/gnome/settings-daemon/plugins/media-keys" = {
         control-center = [ "<Super>i" ];
         custom-keybindings = [ "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/" ];
+        play = [ "AudioPlay" ];
       };
 
       "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0" = {
