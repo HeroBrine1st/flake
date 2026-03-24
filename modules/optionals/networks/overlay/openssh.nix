@@ -18,7 +18,6 @@ in {
     services.openssh.openFirewall = false;
     networking.firewall.interfaces."nebula.overlay".allowedTCPPorts = cfg.ports;
     services.nebula.networks.overlay.firewall.inbound = map (port: {
-      host = "any";
       port = toString port;
       proto = "any";
       group = "entryhost";
