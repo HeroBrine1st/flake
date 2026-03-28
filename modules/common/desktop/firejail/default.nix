@@ -166,6 +166,7 @@
         environment = {
           GRADLE_USER_HOME = "$HOME/.cache/Gradle";
           GOCACHE = "$HOME/.cache/go-build-untrusted";
+          PIPENV_VENV_IN_PROJECT = "1";
         };
         prefix = let
           isUnfree = licenses: lib.lists.any (l: !l.free or true) licenses;
