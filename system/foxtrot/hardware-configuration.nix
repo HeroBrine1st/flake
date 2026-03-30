@@ -22,8 +22,11 @@
     kernelParams = [ "intel_iommu=on" ];
   };
 
+  # same_cpu_crypt disables encryption workqueue, gains are unknown
   environment.etc.crypttab.text = ''
-    romeo-papa-bravo  PARTLABEL=ROMEO-PAPA-BRAVO  /nix/persist/keyfile/romeo-papa-bravo.key  nofail
+    romeo-papa-bravo PARTLABEL=ROMEO-PAPA-BRAVO /nix/persist/keyfile/romeo-papa-bravo.key nofail
+    romeo-papa-alfa  PARTLABEL=ROMEO-PAPA-ALFA  /nix/persist/keyfile/romeo-papa-alfa.key  nofail
+    sierra-mike-alfa PARTLABEL=SIERRA-MIKE-ALFA /nix/persist/keyfile/sierra-mike-alfa.key discard,no-read-workqueue,no-write-workqueue
   '';
 
   fileSystems = {
@@ -58,6 +61,11 @@
       device = "/dev/mapper/romeo-papa-bravo";
       fsType = "btrfs";
       options = [ "defaults" "compress=zstd" "autodefrag" "noatime" "nofail" "x-systemd.before=local-fs.target" ];
+    };
+    "/mnt/arp" = {
+      device = "UUID=9ca297fe-888c-452f-a640-b68f4b641ed1"; # multi-device filesystem
+      fsType = "btrfs";
+      options = [ "defaults" "compress=zstd" "discard=async" "noatime" "nofail" "x-systemd.before=local-fs.target" ];
     };
   };
 
