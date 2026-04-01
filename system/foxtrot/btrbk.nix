@@ -23,6 +23,16 @@
               target_preserve_min = "14d";
             };
           };
+          volume."/mnt/arp" = {
+            subvolume."@docker_data/*" = {
+              snapshot_dir = "@archives/docker_data_arp/";
+              snapshot_preserve = "24h 7d";
+              snapshot_preserve_min = "2d";
+              target = "/mnt/brp/@archives/docker_data_arp/";
+              target_preserve = "24h 7d 4w 12m 2y";
+              target_preserve_min = "2d";
+            };
+          };
           volume."/mnt/brp" = {
             subvolume."@docker_data/*" = {
               snapshot_dir = "@archives/docker_data_hdd/";
