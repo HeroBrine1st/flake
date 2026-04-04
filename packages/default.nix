@@ -22,10 +22,17 @@
     auditor = callPackage ./auditor {};
     hyprshell = callPackage ./hyprshell.nix {};
 
-    llama-cpp = pkgs-cuda.llama-cpp.override {
+    llama-cpp = (pkgs-cuda.llama-cpp.override {
       rpcSupport = true;
       cudaSupport = true;
-    };
+    }).overrideAttrs(old: {
+      version = assert lib.versionOlder old.version "8661"; "8661";
+      src = old.src.override { hash = "sha256-ZjrYrIR7hLsKuIh7tUZvmuY09Hcp98kXTrKIWFkx77A="; };
+      npmDepsHash = "sha256-DxgUDVr+kwtW55C4b89Pl+j3u2ILmACcQOvOBjKWAKQ=";
+      postPatch = ''
+        rm -f tools/server/public/index.html.gz
+      '';
+    });
 
     dockerImages = {
       llama-cpp = callPackages ./llama-cpp/docker.nix {};
