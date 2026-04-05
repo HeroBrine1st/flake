@@ -81,19 +81,12 @@
     jetbrains.clion gcc cmake
     arduino-ide
     jetbrains.rust-rover
-    ((mistral-vibe.override {
+    ((mistral-vibe.overridePythonAttrs (old: {
       # remove textual-speedups as proprietary package
       # also to be used via ACP only
-      python3Packages = python3Packages // {
-        buildPythonApplication = old: let
-          attrs = old finalAttrs;
-          finalAttrs = attrs // {
-            dependencies = builtins.filter (pkg: (lib.getName pkg) != "textual-speedups") attrs.dependencies;
-            dontCheckRuntimeDeps = true;
-          };
-        in python3Packages.buildPythonApplication finalAttrs;
-      };
-    }).overrideAttrs(old: {
+      dependencies = builtins.filter (pkg: (lib.getName pkg) != "textual-speedups") old.dependencies;
+      dontCheckRuntimeDeps = true;
+    })).overrideAttrs(old: {
       patches = (old.patches or []) ++ [
         ./patches/mistral-vibe-enable-anthropic-cache.patch
       ];
