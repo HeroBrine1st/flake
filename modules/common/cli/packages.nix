@@ -26,6 +26,7 @@
     pwgen
     dig
     custom-pkgs.bdfr
+    compsize
   ] ++ lib.optionals config.virtualisation.docker.enable [ pkgs.docker-compose ];
 
   programs.python = {
