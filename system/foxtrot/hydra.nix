@@ -1,8 +1,18 @@
 { pkgs, config, ... }: {
-  nix.settings.allowed-uris = [
-    "github:"
-#    "git+https://github.com/"
-  ];
+  nix.settings = {
+    allowed-uris = [
+      "github:"
+      #"git+https://github.com/"
+    ];
+    build-dir = "/nix/var/nix/tmp/builds"; # so that it creates with right permissions
+  };
+
+  # so that parent is not world-writeable
+  fileSystems."/nix/var/nix/tmp" = {
+    device = "tmpfs";
+    fsType = "tmpfs";
+    options = [ "mode=700" ];
+  };
 
   boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
 
