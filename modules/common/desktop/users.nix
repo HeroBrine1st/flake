@@ -9,6 +9,7 @@
     home.stateVersion = "23.11";
     programs.git = {
       enable = true;
+      signing.format = "ssh";
       settings = {
         user = {
           name  = "herobrine1st";
