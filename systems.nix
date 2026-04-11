@@ -39,4 +39,9 @@
     isServer = false;
     isStatic = false;
   };
+  "charlie" = {
+    networks.overlay.address = "10.168.88.25";
+    isServer = false;
+    isStatic = false;
+  };
 }
