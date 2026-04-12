@@ -23,7 +23,12 @@
     syncthing.id = "MD45MAP-3ODQPJ2-YKCZSTQ-IY6T3OZ-KEEPU3I-NCD7I7J-ERBT6SJ-77MHLQC";
   };
   "foxtrot" = {
-    networks.overlay.address = "10.168.88.10";
+    networks.overlay = {
+      address = "10.168.88.10";
+      # one relay and lighthouse in its local network is enough
+      isRelay = false;
+      isLighthouse = false;
+    };
     isServer = true;
     isStatic = true;
     syncthing.id = "VODY2JZ-EXHCH54-ESZKRJE-ATXYN5S-AXAY5UG-75Q7H2Q-P6RKFOG-QJ3CPQX";
@@ -41,7 +46,7 @@
   };
   "charlie" = {
     networks.overlay.address = "10.168.88.25";
-    isServer = false;
-    isStatic = false;
+    isServer = true;
+    isStatic = true;
   };
 }
