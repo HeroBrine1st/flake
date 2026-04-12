@@ -25,6 +25,7 @@
 
   services.openssh = {
     enable = true;
+    restrictToOverlay = true;
     settings = {
       PermitRootLogin = "no";
       PasswordAuthentication = false;
