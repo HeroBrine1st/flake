@@ -1,9 +1,12 @@
 { config, lib, options, pkgs, systems, ... }: let
   hostname = config.networking.hostName;
-  staticHosts = map (e: e.networks.overlay.address) (builtins.attrValues (lib.attrsets.filterAttrs (k: v: v.isStatic && v.networks ? overlay && k != hostname) systems));
-  isStatic = systems."${hostname}".isStatic;
-  isServer = systems."${hostname}".isServer;
-  isEnabled = systems."${hostname}".networks ? overlay;
+  currentSystem = systems."${hostname}";
+
+  isRelay = system: (system.networks.overlay.isRelay or system.isStatic);
+  isLighthouse = system: (system.networks.overlay.isLighthouse or system.isStatic);
+  mapToAddress = map (e: e.networks.overlay.address);
+
+  otherStaticHosts = builtins.attrValues (lib.attrsets.filterAttrs (k: v: v.isStatic && v.networks ? overlay && k != hostname) systems);
 in {
   options.network.overlay = {
     configAppendixFile = lib.mkOption {
@@ -18,7 +21,9 @@ in {
     };
   };
 
-  config = {
+  config = let
+    isEnabled = currentSystem.networks ? overlay;
+  in {
     network.overlay.enabled = isEnabled;
     services.nebula.networks.overlay = lib.mkIf isEnabled {
       enable = true;
@@ -40,7 +45,7 @@ in {
           port = "any";
           proto = "icmp";
         }
-      ] ++ lib.optionals isServer [
+      ] ++ lib.optionals currentSystem.isServer [
         {
           port = "any";
           proto = "any";
@@ -53,11 +58,11 @@ in {
       cert = "/nix/persist/nebula/${hostname}.crt";
       key = "/nix/persist/nebula/${hostname}.key";
 
-      lighthouses = lib.mkIf (!isStatic) staticHosts;
-      relays = lib.mkIf (!isStatic) staticHosts;
+      lighthouses = lib.mkIf (!isLighthouse currentSystem) (mapToAddress (builtins.filter isLighthouse otherStaticHosts));
+      relays = lib.mkIf (!isRelay currentSystem) (mapToAddress (builtins.filter isRelay otherStaticHosts));
 
-      isLighthouse = isStatic;
-      isRelay = isStatic;
+      isLighthouse = isLighthouse currentSystem;
+      isRelay = isRelay currentSystem;
 
       settings = {
         pki.blocklist = [
