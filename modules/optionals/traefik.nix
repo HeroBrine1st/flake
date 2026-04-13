@@ -30,7 +30,9 @@ in {
         pkgs.writeShellScript "pre-start" ''
           umask 077
           ${lib.optionalString mergeDynamicConfigs ''
-            ${pkgs.yq-go}/bin/yq '. *+ load("${cfg.dynamicConfigFile}")' "${generatedDynamicConfigFile}" > ${dynamicConfigFile}
+            ${pkgs.yq-go}/bin/yq '. *+ load("${cfg.dynamicConfigFile}")' "${generatedDynamicConfigFile}" ${
+              lib.optionalString (cfg.environmentFiles != []) "${pkgs.envsubst}/bin/envsubst"
+            } > ${dynamicConfigFile}
           ''}
           ${lib.optionalString (cfg.environmentFiles != []) ''
             ${pkgs.envsubst}/bin/envsubst -i "${staticConfigFile}" > "${finalStaticConfigFile}"
