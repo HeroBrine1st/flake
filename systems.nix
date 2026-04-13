@@ -25,9 +25,8 @@
   "foxtrot" = {
     networks.overlay = {
       address = "10.168.88.10";
-      # one relay and lighthouse in its local network is enough
+      # one relay in its local network is enough
       isRelay = false;
-      isLighthouse = false;
     };
     isServer = true;
     isStatic = true;
