@@ -1,31 +1,32 @@
 {
   nixpkgs,
-  pulls,
-  refs,
-  #declInput,  # a derivation which points to (most probably) the input from where this file is fetched
+  # blame to revert
+  #pulls,
+  #refs,
+  #declInput,  # a derivation which points to (most probably) the input where this file is fetched from
   ...
 }@inputs: let
   pkgs = import inputs.nixpkgs {};
-  repo = "HeroBrine1st/flake";
+  repo = "git+ssh://git@herobrine1st.ru/HeroBrine1st/flake";
 
-  prs = builtins.fromJSON (builtins.readFile inputs.pulls);
-  refs = builtins.fromJSON (builtins.readFile inputs.refs);
-  prJobsets =
-    pkgs.lib.mapAttrs (
-      num: info: {
-        enabled = 1;
-        hidden = false;
-        description = "PR ${num}: ${info.title}";
-        checkinterval = 60;
-        schedulingshares = 20;
-        enableemail = false;
-        emailoverride = "";
-        keepnr = 1;
-        type = 1;
-        flake = "github:${repo}/pull/${num}/head";
-      }
-    )
-    prs;
+#  prs = builtins.fromJSON (builtins.readFile inputs.pulls);
+#  refs = builtins.fromJSON (builtins.readFile inputs.refs);
+#  prJobsets =
+#    pkgs.lib.mapAttrs (
+#      num: info: {
+#        enabled = 1;
+#        hidden = false;
+#        description = "PR ${num}: ${info.title}";
+#        checkinterval = 60;
+#        schedulingshares = 20;
+#        enableemail = false;
+#        emailoverride = "";
+#        keepnr = 1;
+#        type = 1;
+#        flake = "github:${repo}/pull/${num}/head";
+#      }
+#    )
+#    prs;
   mkFlakeJobset = branch: {
     description = "Build ${branch}";
     checkinterval = 3600;
@@ -36,8 +37,8 @@
     keepnr = 1;
     hidden = false;
     type = 1;
-#    flake = "github:${repo}?rev=${refs."${branch}".object.sha}";
-    flake = "github:${repo}/${branch}";
+#    flake = "${repo}?rev=${refs."${branch}".object.sha}";
+    flake = "${repo}?ref=${branch}";
   };
 
   # desc = prJobsets // {
