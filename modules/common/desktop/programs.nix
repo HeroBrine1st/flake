@@ -91,6 +91,7 @@
         ./patches/mistral-vibe-enable-anthropic-cache.patch
       ];
     }))
+    opencode
 
     # "Office"
     libreoffice-fresh
