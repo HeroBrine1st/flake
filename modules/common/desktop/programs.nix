@@ -15,6 +15,7 @@
     }).overrideAttrs (prev: {
       patches = (prev.patches or []) ++ [
         ./patches/element-desktop-pass-disable-features.patch
+        ./patches/element-desktop-fix-wmclass.patch
       ];
     }))
     feishin

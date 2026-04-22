@@ -1,0 +1,24 @@
+diff --git a/apps/desktop/electron-builder.ts b/apps/desktop/electron-builder.ts
+index 967a129c1c..738934371b 100644
+--- a/apps/desktop/electron-builder.ts
++++ b/apps/desktop/electron-builder.ts
+@@ -39,6 +39,7 @@ interface ExtraMetadata extends Metadata {
+     electron_appId: string;
+     electron_protocol: string;
+     electron_windows_cert_sn?: string;
++    desktopName?: string;
+ }
+
+ /**
+@@ -216,6 +217,11 @@ if (os.platform() === "linux") {
+     // Electron crashes on debian if there's a space in the path.
+     // https://github.com/vector-im/element-web/issues/13171
+     config.extraMetadata.productName = config.extraMetadata.productName.replace(/ /g, "-");
++    // Set desktopName so Electron calls app.setDesktopName("<name>.desktop") before user JS
++    // runs. Without this, Electron falls back to basename(process.execPath)+".desktop" which
++    // yields "electron.desktop" when using a stock electron binary, making the Wayland
++    // xdg-toplevel app_id "electron" regardless of productName or argv[0].
++    config.extraMetadata.desktopName = `${variant.name}.desktop`;
+
+     /**
+      * Allow specifying deb changelog via env var
