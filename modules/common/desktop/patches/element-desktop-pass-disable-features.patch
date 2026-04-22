@@ -1,7 +1,7 @@
-diff --git a/src/electron-main.ts b/src/electron-main.ts
+diff --git a/apps/desktop/src/electron-main.ts b/apps/desktop/src/electron-main.ts
 index 7443319..85b4cf2 100644
---- a/src/electron-main.ts
-+++ b/src/electron-main.ts
+--- a/apps/desktop/src/electron-main.ts
++++ b/apps/desktop/src/electron-main.ts
 @@ -334,7 +334,11 @@ protocol.registerSchemesAsPrivileged([
  app.enableSandbox();
 
