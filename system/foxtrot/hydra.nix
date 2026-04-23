@@ -84,4 +84,8 @@
   };
 
   nix.useFlakeCache = false;
+
+  nix.gc = {
+    automatic = true;
+  };
 }
