@@ -217,6 +217,10 @@
         webstorm = overrideMirror pkgs.jetbrains.webstorm.src;
         clion = overrideMirror pkgs.jetbrains.clion.src;
       };
+      stdenv = {
+        stable = pkgs-stable.legacyPackages."x86_64-linux".stdenv;
+        unstable = pkgs-unstable.legacyPackages."x86_64-linux".stdenv;
+      };
     };
   };
 }
