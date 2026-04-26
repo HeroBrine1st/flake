@@ -1,0 +1,177 @@
+From 2076bcf4ce6d67a93c68f3c567f488dabf14b0ff Mon Sep 17 00:00:00 2001
+From: HeroBrine1st Erquilenne <pankov.76.tvink@gmail.com>
+Date: Sun, 26 Apr 2026 18:57:57 +0300
+Subject: [PATCH] Add WT tunnel client
+
+---
+ cmd/wt-client/main.go | 158 ++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 158 insertions(+)
+ create mode 100644 cmd/wt-client/main.go
+
+diff --git a/cmd/wt-client/main.go b/cmd/wt-client/main.go
+new file mode 100644
+index 00000000..885047aa
+--- /dev/null
++++ b/cmd/wt-client/main.go
+@@ -0,0 +1,158 @@
++// wt-client forwards local UDP datagrams over a WebTransport session
++// to a Traefik datagramTunnel service.
++//
++// Usage:
++//
++//	wt-client \
++//	  --listen 127.0.0.1:1234 \
++//	  --proxy-url https://traefik.example.com/tunnel \
++//	  [--server-name traefik.example.com] \
++//	  [--ca-file /path/to/ca.pem] \
++//	  [--insecure-skip-verify]
++package main
++
++import (
++	"context"
++	"crypto/tls"
++	"crypto/x509"
++	"flag"
++	"fmt"
++	"log"
++	"net"
++	"os"
++	"os/signal"
++	"syscall"
++	"time"
++
++	"github.com/quic-go/quic-go"
++	"github.com/quic-go/quic-go/http3"
++	webtransport "github.com/quic-go/webtransport-go"
++)
++
++var (
++	flagListen             = flag.String("listen", "", "local UDP address to listen on (required), e.g. 127.0.0.1:1234")
++	flagProxyURL           = flag.String("proxy-url", "", "WebTransport endpoint URL (required), e.g. https://host/tunnel")
++	flagServerName         = flag.String("server-name", "", "override TLS SNI server name")
++	flagInsecureSkipVerify = flag.Bool("insecure-skip-verify", false, "skip TLS certificate verification (unsafe)")
++	flagCAFile             = flag.String("ca-file", "", "path to CA certificate PEM file for server verification")
++)
++
++func main() {
++	flag.Parse()
++
++	if *flagProxyURL == "" {
++		log.Fatal("--proxy-url is required")
++	}
++
++	tlsCfg, err := buildTLSConfig()
++	if err != nil {
++		log.Fatalf("building TLS config: %v", err)
++	}
++
++	ctx, stop := signal.NotifyContext(context.Background(), os.Interrupt, syscall.SIGTERM)
++	defer stop()
++
++	if err := run(ctx, *flagListen, *flagProxyURL, tlsCfg); err != nil {
++		log.Fatal(err)
++		stop()
++	}
++}
++
++func buildTLSConfig() (*tls.Config, error) {
++	cfg := &tls.Config{
++		InsecureSkipVerify: *flagInsecureSkipVerify,
++		ServerName:         *flagServerName,
++		NextProtos:         []string{http3.NextProtoH3},
++	}
++
++	if *flagCAFile != "" {
++		pem, err := os.ReadFile(*flagCAFile)
++		if err != nil {
++			return nil, err
++		}
++		pool := x509.NewCertPool()
++		if !pool.AppendCertsFromPEM(pem) {
++			return nil, fmt.Errorf("no certificates found in %s", *flagCAFile)
++		}
++		cfg.RootCAs = pool
++	}
++
++	return cfg, nil
++}
++
++func run(ctx context.Context, listenAddr, proxyURL string, tlsCfg *tls.Config) error {
++	d := &webtransport.Dialer{
++		TLSClientConfig: tlsCfg,
++		QUICConfig:      &quic.Config{EnableDatagrams: true, EnableStreamResetPartialDelivery: true, InitialPacketSize: 1400, DisablePathMTUDiscovery: true},
++	}
++	dialCtx, dialCancel := context.WithTimeout(ctx, 15*time.Second)
++	defer dialCancel()
++
++	_, sess, err := d.Dial(dialCtx, proxyURL, nil)
++	if err != nil {
++		return fmt.Errorf("dialing WebTransport endpoint %s: %w", proxyURL, err)
++	}
++	defer func() { _ = sess.CloseWithError(0, "") }()
++	log.Printf("WebTransport session established to %s", proxyURL)
++
++	udpAddr, err := net.ResolveUDPAddr("udp", listenAddr)
++	if err != nil {
++		return fmt.Errorf("resolving listen address %s: %w", listenAddr, err)
++	}
++	udpConn, err := net.ListenUDP("udp", udpAddr)
++	if err != nil {
++		return fmt.Errorf("listening on UDP %s: %w", listenAddr, err)
++	}
++	defer udpConn.Close()
++	log.Printf("Listening for UDP on %s", udpConn.LocalAddr())
++
++	go func() {
++		select {
++		case <-ctx.Done():
++		case <-sess.Context().Done():
++		}
++		udpConn.Close()
++		sess.CloseWithError(0, "")
++	}()
++
++	var lastAddr *net.UDPAddr
++
++	go func() {
++		buf := make([]byte, 65535)
++		for {
++			n, addr, err := udpConn.ReadFromUDP(buf)
++			if err != nil {
++				return
++			}
++			lastAddr = addr
++
++			if err := sess.SendDatagram(buf[:n]); err != nil {
++				if _, is_frag := err.(*quic.DatagramTooLargeError); is_frag {
++					// handle
++				}
++
++				log.Printf("SendDatagram error (size = %d): %v\n", n, err)
++				return
++			}
++		}
++	}()
++
++	// WebTransport session → local UDP (runs in main goroutine).
++	sessCtx := sess.Context()
++	for {
++		data, err := sess.ReceiveDatagram(sessCtx)
++		if err != nil {
++			panic(err)
++			// return nil
++		}
++
++		target := lastAddr
++
++		if target == nil {
++			continue // no local client seen yet; discard the reply (should be impossible though)
++		}
++		if _, err := udpConn.WriteToUDP(data, target); err != nil {
++			log.Printf("WriteToUDP error: %v\n", err)
++		}
++	}
++}
+-- 
+2.53.0
+

@@ -6,12 +6,16 @@
 
   passthru = old.passthru // {
     tests = {};
-    tunnel = pkg.overrideAttrs {
-      passthru = {};
-      subPackages = [ "cmd/traefik-tunnel-client" ];
+    wt-client = pkg.overrideAttrs(old: {
+      name = "wt-client";
+      patches = (old.patches or []) ++ [
+        ./wt-client.patch
+      ];
+      passthru = { inherit (old.passthru) overrideModAttrs; };
+      subPackages = [ "cmd/wt-client" ];
       meta = {
-        mainProgram = "traefik-tunnel-client";
+        mainProgram = "wt-client";
       };
-    };
+    });
   };
 }); in pkg
