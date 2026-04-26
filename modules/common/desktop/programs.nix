@@ -67,13 +67,14 @@
     # "Development"
     android-studio
     (vscode-with-extensions.override {
-      vscode = vscodium.fhsWithPackages (ps: [ ps.nixd ]);
+      vscode = vscodium.fhsWithPackages (ps: [ ps.nixd ps.go ]);
       vscodeExtensions = with vscode-extensions; [
         jnoortheen.nix-ide
         k--kato.intellij-idea-keybindings
         ms-python.python
         ms-toolsai.jupyter
         continue.continue
+        golang.go
       ];
     })
     custom-pkgs.jetbrains.idea-oss
