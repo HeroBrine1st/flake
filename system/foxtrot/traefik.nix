@@ -82,11 +82,13 @@ in {
             "172.64.0.0/13"
             "131.0.72.0/22"
           ];
+          http3 = {};
         };
         # TODO rename to httpsOverlay
         nebula = {
           address = "${systems."${config.networking.hostName}".networks.overlay.address}:443";
           asDefault = true;
+          http3 = {};
         };
         dot = {
           address = "\${PHYSICAL_INTERFACE_IP}:853";
@@ -167,4 +169,5 @@ in {
   };
 
   networking.firewall.allowedTCPPorts = [ 443 853 ];
+  networking.firewall.allowedUDPPorts = [ 443 ];
 }
