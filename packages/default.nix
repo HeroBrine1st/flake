@@ -1,4 +1,4 @@
-{ pkgs-unstable, fenix, ags, pkgs-bdfr, system }: let
+{ pkgs-unstable, pkgs-stable, fenix, ags, pkgs-bdfr, system }: let
   lib = pkgs.lib;
   pkgs = pkgs-unstable.legacyPackages."${system}";
   pkgsNamed = names: pkg: builtins.elem (lib.getName pkg) names;
@@ -46,5 +46,6 @@
     };
 
     letta-code = callPackage ./letta-code {};
+    traefik = callPackage ./traefik { traefik = pkgs-stable.legacyPackages."${system}".traefik; };
   };
 in custom-pkgs

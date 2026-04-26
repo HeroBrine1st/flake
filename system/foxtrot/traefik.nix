@@ -1,4 +1,4 @@
-{ pkgs, modulesPath, lib, config, options, systems, ... }: let
+{ pkgs, modulesPath, lib, config, options, systems, custom-pkgs, ... }: let
   network = "traefik";
 in {
   services.traefik = let
@@ -11,6 +11,7 @@ in {
     # "and the host may communicate with any container IP directly"
     # (also a reason to finally use internal networks)
     enable = true;
+    package = custom-pkgs.traefik;
     group = "docker";
     dynamicConfigOptions = {
       tls.options = builtins.mapAttrs (_: v: {

@@ -54,7 +54,7 @@
       hyprland = ./modules/common/desktop/hyprland;
     };
     legacyPackages = forAllSystems (system: import ./packages {
-      inherit pkgs-unstable fenix ags pkgs-bdfr system;
+      inherit pkgs-unstable pkgs-stable fenix ags pkgs-bdfr system;
     });
     nixosConfigurations = let
       commonSpecialArgs = system: {

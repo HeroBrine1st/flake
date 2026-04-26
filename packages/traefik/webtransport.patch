@@ -1,0 +1,573 @@
+From c1e0264ff501670e4b50ae573f89073684a362a9 Mon Sep 17 00:00:00 2001
+From: HeroBrine1st Erquilenne <pankov.76.tvink@gmail.com>
+Date: Sun, 26 Apr 2026 18:46:16 +0300
+Subject: [PATCH] Add udp tunneling through webtransport
+
+---
+ go.mod                                        |   2 +
+ go.sum                                        |   4 +
+ .../dynamic/datagram_tunnel_config_test.go    |  44 +++++++
+ pkg/config/dynamic/http_config.go             |  27 +++-
+ pkg/config/dynamic/zz_generated.deepcopy.go   |  42 +++++++
+ pkg/middlewares/capture/capture.go            |  33 ++++-
+ pkg/middlewares/recovery/recovery.go          |  42 +++++--
+ pkg/server/server_entrypoint_tcp_http3.go     |  29 ++++-
+ pkg/server/service/service.go                 |  11 ++
+ pkg/server/service/service_datagram_tunnel.go | 117 ++++++++++++++++++
+ 10 files changed, 327 insertions(+), 24 deletions(-)
+ create mode 100644 pkg/config/dynamic/datagram_tunnel_config_test.go
+ create mode 100644 pkg/server/service/service_datagram_tunnel.go
+
+diff --git a/go.mod b/go.mod
+index c540bd8e..ce37f2a3 100644
+--- a/go.mod
++++ b/go.mod
+@@ -55,6 +55,7 @@ require (
+ 	github.com/prometheus/client_golang v1.23.0
+ 	github.com/prometheus/client_model v0.6.2
+ 	github.com/quic-go/quic-go v0.59.0
++	github.com/quic-go/webtransport-go v0.10.0
+ 	github.com/redis/go-redis/v9 v9.8.0
+ 	github.com/rs/zerolog v1.33.0
+ 	github.com/sirupsen/logrus v1.9.3
+@@ -192,6 +193,7 @@ require (
+ 	github.com/distribution/reference v0.6.0 // indirect
+ 	github.com/dnsimple/dnsimple-go/v4 v4.0.0 // indirect
+ 	github.com/docker/go-units v0.5.0 // indirect
++	github.com/dunglas/httpsfv v1.1.0 // indirect
+ 	github.com/ebitengine/purego v0.8.4 // indirect
+ 	github.com/emicklei/go-restful/v3 v3.13.0 // indirect
+ 	github.com/evanphx/json-patch/v5 v5.9.11 // indirect
+diff --git a/go.sum b/go.sum
+index 05593b42..e3b4605c 100644
+--- a/go.sum
++++ b/go.sum
+@@ -358,6 +358,8 @@ github.com/docker/go-connections v0.6.0 h1:LlMG9azAe1TqfR7sO+NJttz1gy6KO7VJBh+pM
+ github.com/docker/go-connections v0.6.0/go.mod h1:AahvXYshr6JgfUJGdDCs2b5EZG/vmaMAntpSFH5BFKE=
+ github.com/docker/go-units v0.5.0 h1:69rxXcBk27SvSaaxTtLh/8llcHD8vYHT7WSdRZ/jvr4=
+ github.com/docker/go-units v0.5.0/go.mod h1:fgPhTUdO+D/Jk86RDLlptpiXQzgHJF7gydDDbaIK4Dk=
++github.com/dunglas/httpsfv v1.1.0 h1:Jw76nAyKWKZKFrpMMcL76y35tOpYHqQPzHQiwDvpe54=
++github.com/dunglas/httpsfv v1.1.0/go.mod h1:zID2mqw9mFsnt7YC3vYQ9/cjq30q41W+1AnDwH8TiMg=
+ github.com/dustin/go-humanize v1.0.0/go.mod h1:HtrtbFcZ19U5GC7JDqmcUSB87Iq5E25KnS6fMYU6eOk=
+ github.com/eapache/go-resiliency v1.1.0/go.mod h1:kFI+JgMyC7bLPUVY133qvEBtVayf5mFgVsvEsIPBvNs=
+ github.com/eapache/go-resiliency v1.2.0/go.mod h1:kFI+JgMyC7bLPUVY133qvEBtVayf5mFgVsvEsIPBvNs=
+@@ -1118,6 +1120,8 @@ github.com/quic-go/qpack v0.6.0 h1:g7W+BMYynC1LbYLSqRt8PBg5Tgwxn214ZZR34VIOjz8=
+ github.com/quic-go/qpack v0.6.0/go.mod h1:lUpLKChi8njB4ty2bFLX2x4gzDqXwUpaO1DP9qMDZII=
+ github.com/quic-go/quic-go v0.59.0 h1:OLJkp1Mlm/aS7dpKgTc6cnpynnD2Xg7C1pwL6vy/SAw=
+ github.com/quic-go/quic-go v0.59.0/go.mod h1:upnsH4Ju1YkqpLXC305eW3yDZ4NfnNbmQRCMWS58IKU=
++github.com/quic-go/webtransport-go v0.10.0 h1:LqXXPOXuETY5Xe8ITdGisBzTYmUOy5eSj+9n4hLTjHI=
++github.com/quic-go/webtransport-go v0.10.0/go.mod h1:LeGIXr5BQKE3UsynwVBeQrU1TPrbh73MGoC6jd+V7ow=
+ github.com/rcrowley/go-metrics v0.0.0-20181016184325-3113b8401b8a/go.mod h1:bCqnVzQkZxMG4s8nGwiZ5l3QUCyqpo9Y+/ZMZ9VjZe4=
+ github.com/rcrowley/go-metrics v0.0.0-20201227073835-cf1acfcdf475/go.mod h1:bCqnVzQkZxMG4s8nGwiZ5l3QUCyqpo9Y+/ZMZ9VjZe4=
+ github.com/redis/go-redis/v9 v9.8.0 h1:q3nRvjrlge/6UD7eTu/DSg2uYiU2mCL0G/uzBWqhicI=
+diff --git a/pkg/config/dynamic/datagram_tunnel_config_test.go b/pkg/config/dynamic/datagram_tunnel_config_test.go
+new file mode 100644
+index 00000000..4f69bfe8
+--- /dev/null
++++ b/pkg/config/dynamic/datagram_tunnel_config_test.go
+@@ -0,0 +1,44 @@
++package dynamic_test
++
++import (
++	"testing"
++
++	"github.com/stretchr/testify/assert"
++	"github.com/stretchr/testify/require"
++	"gopkg.in/yaml.v3"
++
++	"github.com/traefik/traefik/v3/pkg/config/dynamic"
++)
++
++func TestDatagramTunnelServiceYAML(t *testing.T) {
++	raw := `
++datagramTunnel:
++  servers:
++    - address: "127.0.0.1:9001"
++    - address: "127.0.0.1:9002"
++`
++	var svc dynamic.Service
++	err := yaml.Unmarshal([]byte(raw), &svc)
++	require.NoError(t, err)
++	require.NotNil(t, svc.DatagramTunnel)
++	assert.Len(t, svc.DatagramTunnel.Servers, 2)
++	assert.Equal(t, "127.0.0.1:9001", svc.DatagramTunnel.Servers[0].Address)
++}
++
++func TestDatagramTunnelServiceDeepCopy(t *testing.T) {
++	orig := &dynamic.Service{
++		DatagramTunnel: &dynamic.DatagramTunnelService{
++			Servers: []dynamic.DatagramTunnelServer{
++				{Address: "10.0.0.1:4000"},
++				{Address: "10.0.0.2:4000"},
++			},
++		},
++	}
++	cp := orig.DeepCopy()
++	require.NotNil(t, cp.DatagramTunnel)
++	assert.Equal(t, orig.DatagramTunnel.Servers, cp.DatagramTunnel.Servers)
++
++	// Mutating the original slice must not affect the copy.
++	orig.DatagramTunnel.Servers[0].Address = "changed"
++	assert.Equal(t, "10.0.0.1:4000", cp.DatagramTunnel.Servers[0].Address)
++}
+diff --git a/pkg/config/dynamic/http_config.go b/pkg/config/dynamic/http_config.go
+index 4eb866ba..ef41be7b 100644
+--- a/pkg/config/dynamic/http_config.go
++++ b/pkg/config/dynamic/http_config.go
+@@ -56,11 +56,12 @@ type Model struct {
+ 
+ // Service holds a service configuration (can only be of one type at the same time).
+ type Service struct {
+-	LoadBalancer        *ServersLoadBalancer `json:"loadBalancer,omitempty" toml:"loadBalancer,omitempty" yaml:"loadBalancer,omitempty" export:"true"`
+-	HighestRandomWeight *HighestRandomWeight `json:"highestRandomWeight,omitempty" toml:"highestRandomWeight,omitempty" yaml:"highestRandomWeight,omitempty" label:"-" export:"true"`
+-	Weighted            *WeightedRoundRobin  `json:"weighted,omitempty" toml:"weighted,omitempty" yaml:"weighted,omitempty" label:"-" export:"true"`
+-	Mirroring           *Mirroring           `json:"mirroring,omitempty" toml:"mirroring,omitempty" yaml:"mirroring,omitempty" label:"-" export:"true"`
+-	Failover            *Failover            `json:"failover,omitempty" toml:"failover,omitempty" yaml:"failover,omitempty" label:"-" export:"true"`
++	LoadBalancer        *ServersLoadBalancer   `json:"loadBalancer,omitempty" toml:"loadBalancer,omitempty" yaml:"loadBalancer,omitempty" export:"true"`
++	HighestRandomWeight *HighestRandomWeight   `json:"highestRandomWeight,omitempty" toml:"highestRandomWeight,omitempty" yaml:"highestRandomWeight,omitempty" label:"-" export:"true"`
++	Weighted            *WeightedRoundRobin    `json:"weighted,omitempty" toml:"weighted,omitempty" yaml:"weighted,omitempty" label:"-" export:"true"`
++	Mirroring           *Mirroring             `json:"mirroring,omitempty" toml:"mirroring,omitempty" yaml:"mirroring,omitempty" label:"-" export:"true"`
++	Failover            *Failover              `json:"failover,omitempty" toml:"failover,omitempty" yaml:"failover,omitempty" label:"-" export:"true"`
++	DatagramTunnel      *DatagramTunnelService `json:"datagramTunnel,omitempty" toml:"datagramTunnel,omitempty" yaml:"datagramTunnel,omitempty" label:"-" export:"true"`
+ }
+ 
+ // +k8s:deepcopy-gen=true
+@@ -187,6 +188,22 @@ type Failover struct {
+ 
+ // +k8s:deepcopy-gen=true
+ 
++// DatagramTunnelService holds the datagram tunnel service configuration.
++// It bridges each incoming WebTransport session to one of its backend UDP addresses.
++type DatagramTunnelService struct {
++	Servers []DatagramTunnelServer `json:"servers,omitempty" toml:"servers,omitempty" yaml:"servers,omitempty" export:"true"`
++}
++
++// +k8s:deepcopy-gen=true
++
++// DatagramTunnelServer is a single backend UDP address for a DatagramTunnelService.
++type DatagramTunnelServer struct {
++	// Address is the UDP address of the backend (e.g. "10.0.0.1:4000").
++	Address string `json:"address,omitempty" toml:"address,omitempty" yaml:"address,omitempty"`
++}
++
++// +k8s:deepcopy-gen=true
++
+ // MirrorService holds the MirrorService configuration.
+ type MirrorService struct {
+ 	Name    string `json:"name,omitempty" toml:"name,omitempty" yaml:"name,omitempty" export:"true"`
+diff --git a/pkg/config/dynamic/zz_generated.deepcopy.go b/pkg/config/dynamic/zz_generated.deepcopy.go
+index 88a956e1..f52cb79b 100644
+--- a/pkg/config/dynamic/zz_generated.deepcopy.go
++++ b/pkg/config/dynamic/zz_generated.deepcopy.go
+@@ -1676,6 +1676,11 @@ func (in *Service) DeepCopyInto(out *Service) {
+ 		*out = new(Failover)
+ 		(*in).DeepCopyInto(*out)
+ 	}
++	if in.DatagramTunnel != nil {
++		in, out := &in.DatagramTunnel, &out.DatagramTunnel
++		*out = new(DatagramTunnelService)
++		(*in).DeepCopyInto(*out)
++	}
+ 	return
+ }
+ 
+@@ -2625,3 +2630,40 @@ func (in *WeightedRoundRobin) DeepCopy() *WeightedRoundRobin {
+ 	in.DeepCopyInto(out)
+ 	return out
+ }
++
++// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
++func (in *DatagramTunnelService) DeepCopyInto(out *DatagramTunnelService) {
++	*out = *in
++	if in.Servers != nil {
++		in, out := &in.Servers, &out.Servers
++		*out = make([]DatagramTunnelServer, len(*in))
++		copy(*out, *in)
++	}
++	return
++}
++
++// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new DatagramTunnelService.
++func (in *DatagramTunnelService) DeepCopy() *DatagramTunnelService {
++	if in == nil {
++		return nil
++	}
++	out := new(DatagramTunnelService)
++	in.DeepCopyInto(out)
++	return out
++}
++
++// DeepCopyInto is an autogenerated deepcopy function, copying the receiver, writing into out. in must be non-nil.
++func (in *DatagramTunnelServer) DeepCopyInto(out *DatagramTunnelServer) {
++	*out = *in
++	return
++}
++
++// DeepCopy is an autogenerated deepcopy function, copying the receiver, creating a new DatagramTunnelServer.
++func (in *DatagramTunnelServer) DeepCopy() *DatagramTunnelServer {
++	if in == nil {
++		return nil
++	}
++	out := new(DatagramTunnelServer)
++	in.DeepCopyInto(out)
++	return out
++}
+diff --git a/pkg/middlewares/capture/capture.go b/pkg/middlewares/capture/capture.go
+index 669e2426..153ffd0a 100644
+--- a/pkg/middlewares/capture/capture.go
++++ b/pkg/middlewares/capture/capture.go
+@@ -32,6 +32,7 @@ import (
+ 	"net"
+ 	"net/http"
+ 
++	"github.com/quic-go/quic-go/http3"
+ 	"github.com/traefik/traefik/v3/pkg/middlewares"
+ )
+ 
+@@ -78,7 +79,7 @@ func FromContext(ctx context.Context) (Capture, error) {
+ // holding probes that allow to gather information about the request and response.
+ type Capture struct {
+ 	rr  *readCounter
+-	crw *captureResponseWriter
++	crw captureResponseWriterInterface
+ }
+ 
+ // NeedsReset returns whether the given http.ResponseWriter is the capture's probe.
+@@ -122,7 +123,8 @@ func (c *Capture) renew(rw http.ResponseWriter, req *http.Request) (http.Respons
+ 		c.rr = readCounter
+ 		newReq.Body = readCounter
+ 	}
+-	c.crw = &captureResponseWriter{rw: rw}
++	
++	c.crw = newCaptureResponseWriter(rw)
+ 
+ 	return c.crw, newReq
+ }
+@@ -144,6 +146,31 @@ func (r *readCounter) Close() error {
+ 	return r.source.Close()
+ }
+ 
++// captureResponseWriterInterface defines the internal methods needed by Capture
++type captureResponseWriterInterface interface {
++	http.ResponseWriter
++	Size() int64
++	Status() int
++}
++
++// newCaptureResponseWriter dynamically wraps the ResponseWriter to proxy H3 interfaces.
++func newCaptureResponseWriter(rw http.ResponseWriter) captureResponseWriterInterface {
++	wrapper := &captureResponseWriter{rw: rw}
++
++	s, isH3_1 := rw.(http3.Settingser)
++	h, isH3_2 := rw.(http3.HTTPStreamer)
++
++	if isH3_1 && isH3_2 {
++		return &struct {
++			*captureResponseWriter
++			http3.Settingser
++			http3.HTTPStreamer
++		}{wrapper, s, h}
++	}
++
++	return wrapper
++}
++
+ var _ middlewares.Stateful = &captureResponseWriter{}
+ 
+ // captureResponseWriter is a wrapper of type http.ResponseWriter
+@@ -194,4 +221,4 @@ func (crw *captureResponseWriter) Hijack() (net.Conn, *bufio.ReadWriter, error)
+ 	}
+ 
+ 	return nil, nil, fmt.Errorf("not a hijacker: %T", crw.rw)
+-}
++}
+\ No newline at end of file
+diff --git a/pkg/middlewares/recovery/recovery.go b/pkg/middlewares/recovery/recovery.go
+index 32c4e15f..88c0c927 100644
+--- a/pkg/middlewares/recovery/recovery.go
++++ b/pkg/middlewares/recovery/recovery.go
+@@ -8,6 +8,7 @@ import (
+ 	"net/http"
+ 	"runtime"
+ 
++	"github.com/quic-go/quic-go/http3"
+ 	"github.com/traefik/traefik/v3/pkg/middlewares"
+ )
+ 
+@@ -69,11 +70,38 @@ type recoveryResponseWriter interface {
+ 
+ func newRecoveryResponseWriter(rw http.ResponseWriter) recoveryResponseWriter {
+ 	wrapper := &responseWriterWrapper{rw: rw}
+-	if _, ok := rw.(http.CloseNotifier); !ok {
++
++	s, isH3_1 := rw.(http3.Settingser)
++	h, isH3_2 := rw.(http3.HTTPStreamer)
++	cn, isCN := rw.(http.CloseNotifier)
++
++	isH3 := isH3_1 && isH3_2
++
++	switch {
++	case isH3 && isCN:
++		return &struct {
++			*responseWriterWrapper
++			http3.Settingser
++			http3.HTTPStreamer
++			http.CloseNotifier
++		}{wrapper, s, h, cn}
++
++	case isH3:
++		return &struct {
++			*responseWriterWrapper
++			http3.Settingser
++			http3.HTTPStreamer
++		}{wrapper, s, h}
++
++	case isCN:
++		return &struct {
++			*responseWriterWrapper
++			http.CloseNotifier
++		}{wrapper, cn}
++
++	default:
+ 		return wrapper
+ 	}
+-
+-	return &responseWriterWrapperWithCloseNotify{wrapper}
+ }
+ 
+ type responseWriterWrapper struct {
+@@ -130,11 +158,3 @@ func (r *responseWriterWrapper) finalizeResponse() {
+ 	// we can safely return a fresh new error response.
+ 	http.Error(r.rw, http.StatusText(http.StatusInternalServerError), http.StatusInternalServerError)
+ }
+-
+-type responseWriterWrapperWithCloseNotify struct {
+-	*responseWriterWrapper
+-}
+-
+-func (r *responseWriterWrapperWithCloseNotify) CloseNotify() <-chan bool {
+-	return r.rw.(http.CloseNotifier).CloseNotify()
+-}
+diff --git a/pkg/server/server_entrypoint_tcp_http3.go b/pkg/server/server_entrypoint_tcp_http3.go
+index 7a2b0cad..417dfd32 100644
+--- a/pkg/server/server_entrypoint_tcp_http3.go
++++ b/pkg/server/server_entrypoint_tcp_http3.go
+@@ -7,17 +7,21 @@ import (
+ 	"fmt"
+ 	"net"
+ 	"net/http"
++	"strconv"
++	"strings"
+ 	"sync"
+ 
+ 	"github.com/quic-go/quic-go"
+ 	"github.com/quic-go/quic-go/http3"
++	webtransport "github.com/quic-go/webtransport-go"
+ 	"github.com/rs/zerolog/log"
+ 	"github.com/traefik/traefik/v3/pkg/config/static"
+ 	tcprouter "github.com/traefik/traefik/v3/pkg/server/router/tcp"
++	"github.com/traefik/traefik/v3/pkg/server/service"
+ )
+ 
+ type http3server struct {
+-	*http3.Server
++	*webtransport.Server
+ 
+ 	http3conn net.PacketConn
+ 
+@@ -60,21 +64,36 @@ func newHTTP3Server(ctx context.Context, name string, config *static.EntryPoint,
+ 		},
+ 	}
+ 
+-	h3.Server = &http3.Server{
++	h3Server := &http3.Server{
+ 		Addr:      config.GetAddress(),
+ 		Port:      config.HTTP3.AdvertisedPort,
+ 		Handler:   httpsServer.Server.(*http.Server).Handler,
+-		TLSConfig: &tls.Config{GetConfigForClient: h3.getGetConfigForClient},
++		TLSConfig: http3.ConfigureTLSConfig(&tls.Config{
++			GetConfigForClient: h3.getGetConfigForClient,
++		}),
+ 		QUICConfig: &quic.Config{
+ 			Allow0RTT: false,
+ 		},
+ 	}
+ 
++	webtransport.ConfigureHTTP3Server(h3Server)
++	h3.Server = &webtransport.Server{H3: h3Server}
++	h3.Server.H3.Handler = service.InjectWTServer(h3.Server.H3.Handler, h3.Server)
++
+ 	previousHandler := httpsServer.Server.(*http.Server).Handler
+ 
+ 	httpsServer.Server.(*http.Server).Handler = http.HandlerFunc(func(rw http.ResponseWriter, req *http.Request) {
+-		if err := h3.Server.SetQUICHeaders(rw.Header()); err != nil {
+-			log.Ctx(ctx).Error().Err(err).Msg("Failed to set HTTP3 headers")
++		port := config.HTTP3.AdvertisedPort
++		if port == 0 {
++			port, err = strconv.Atoi(strings.SplitN(config.GetAddress(), ":", 2)[1])
++			if err != nil {
++				log.Ctx(ctx).Error().Err(err).Msg("Failed to parse port from address in http3 listener")
++			}
++		}
++		if port != 0 {
++			rw.Header()["Alt-Svc"] = append(rw.Header()["Alt-Svc"], fmt.Sprintf(`%s=":%d"; ma=2592000`, http3.NextProtoH3, port))
++		} else {
++			log.Ctx(ctx).Error().Msg("Failed to set HTTP3 headers: port is not advertised")
+ 		}
+ 
+ 		previousHandler.ServeHTTP(rw, req)
+diff --git a/pkg/server/service/service.go b/pkg/server/service/service.go
+index 23d1daf6..3af8d708 100644
+--- a/pkg/server/service/service.go
++++ b/pkg/server/service/service.go
+@@ -167,6 +167,13 @@ func (m *Manager) BuildHTTP(rootCtx context.Context, serviceName string) (http.H
+ 			conf.AddError(err, true)
+ 			return nil, err
+ 		}
++	case conf.DatagramTunnel != nil:
++		var err error
++		lb, err = m.getDatagramTunnelServiceHandler(ctx, conf.DatagramTunnel)
++		if err != nil {
++			conf.AddError(err, true)
++			return nil, err
++		}
+ 	default:
+ 		sErr := fmt.Errorf("the service %q does not have any type defined", serviceName)
+ 		conf.AddError(sErr, true)
+@@ -233,6 +240,10 @@ func (m *Manager) getFailoverServiceHandler(ctx context.Context, serviceName str
+ 	return f, nil
+ }
+ 
++func (m *Manager) getDatagramTunnelServiceHandler(_ context.Context, config *dynamic.DatagramTunnelService) (http.Handler, error) {
++	return newDatagramTunnelHandler(config)
++}
++
+ func (m *Manager) getMirrorServiceHandler(ctx context.Context, config *dynamic.Mirroring) (http.Handler, error) {
+ 	serviceHandler, err := m.BuildHTTP(ctx, config.Service)
+ 	if err != nil {
+diff --git a/pkg/server/service/service_datagram_tunnel.go b/pkg/server/service/service_datagram_tunnel.go
+new file mode 100644
+index 00000000..27c58405
+--- /dev/null
++++ b/pkg/server/service/service_datagram_tunnel.go
+@@ -0,0 +1,117 @@
++package service
++
++import (
++	"context"
++	"fmt"
++	"math/rand/v2"
++	"net"
++	"net/http"
++
++	webtransport "github.com/quic-go/webtransport-go"
++	"github.com/rs/zerolog/log"
++
++	"github.com/traefik/traefik/v3/pkg/config/dynamic"
++)
++
++type wtServerKeyType struct{}
++
++var WTServerContextKey = wtServerKeyType{}
++
++func InjectWTServer(h http.Handler, wts *webtransport.Server) http.Handler {
++	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
++		log.Debug().Msgf("Got request: %T", w)
++		ctx := context.WithValue(r.Context(), WTServerContextKey, wts)
++		h.ServeHTTP(w, r.WithContext(ctx))
++	})
++}
++
++type datagramTunnelHandler struct {
++	servers []dynamic.DatagramTunnelServer
++}
++
++func newDatagramTunnelHandler(cfg *dynamic.DatagramTunnelService) (http.Handler, error) {
++	if len(cfg.Servers) == 0 {
++		return nil, fmt.Errorf("datagramTunnel service has no servers configured")
++	}
++	return &datagramTunnelHandler{servers: cfg.Servers}, nil
++}
++
++func (h *datagramTunnelHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
++	logger := log.Ctx(r.Context())
++	logger.Trace().Msgf("Got webtransport from %s", r.RemoteAddr)
++
++	wtSrv, ok := r.Context().Value(WTServerContextKey).(*webtransport.Server)
++	if !ok || wtSrv == nil {
++		http.Error(w, "WebTransport not available on this entry point (HTTP/3 only)", http.StatusServiceUnavailable)
++		return
++	}
++
++	sess, err := wtSrv.Upgrade(w, r)
++	if err != nil {
++		logger.Error().Err(err).Msg("WebTransport upgrade failed")
++		http.Error(w, "WebTransport upgrade: "+err.Error(), http.StatusBadRequest)
++		return
++	}
++	defer func() {
++		if err := recover(); err != nil {
++			sess.CloseWithError(1, "Internal server error")
++			panic(err)
++		}
++		sess.CloseWithError(0, "")
++	}()
++
++	idx := rand.IntN(len(h.servers))
++	addr := h.servers[idx].Address
++
++	udpConn, err := net.Dial("udp", addr)
++	if err != nil {
++		logger.Error().Err(err).Str("addr", addr).Msg("Failed to dial UDP backend")
++		_ = sess.CloseWithError(1, "backend unavailable")
++		return
++	}
++	defer udpConn.Close()
++
++	ctx := sess.Context()
++
++	err_chan := make(chan error)
++
++	// WebTransport datagram → UDP backend.
++	go func() {
++		for {
++			data, err := sess.ReceiveDatagram(ctx)
++			if err != nil {
++				err_chan <- err
++				return
++			}
++			if _, err := udpConn.Write(data); err != nil {
++				err_chan <- err
++				return
++			}
++		}
++	}()
++
++	go func() {
++		buf := make([]byte, 65535)
++		for {
++			n, err := udpConn.Read(buf)
++			if err != nil {
++				err_chan <- err
++				return
++			}
++			if err := sess.SendDatagram(buf[:n]); err != nil {
++				err_chan <- err
++				return
++			}
++		}
++	}()
++
++	for {
++		select {
++		case <-ctx.Done():
++			return
++		case err := <-err_chan:
++			log.Error().Msgf("An error occurred in udp tunneling: %s", err)
++			return
++		}
++	}
++}
+-- 
+2.53.0
+
