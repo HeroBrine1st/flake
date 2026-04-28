@@ -43,6 +43,30 @@
         "type": "github"
       }
     },
+    "cloudflare-ips-v4": {
+      "flake": false,
+      "locked": {
+        "narHash": "sha256-V4dThTb8iw02hjngubVtSJbEeWgOS1e/ODt1fLjLZvk=",
+        "type": "file",
+        "url": "https://www.cloudflare.com/ips-v4"
+      },
+      "original": {
+        "type": "file",
+        "url": "https://www.cloudflare.com/ips-v4"
+      }
+    },
+    "cloudflare-ips-v6": {
+      "flake": false,
+      "locked": {
+        "narHash": "sha256-BgpkXCAh/MmK3GTAElKiGJctCYUN+/UgvpuawqGmitE=",
+        "type": "file",
+        "url": "https://www.cloudflare.com/ips-v6"
+      },
+      "original": {
+        "type": "file",
+        "url": "https://www.cloudflare.com/ips-v6"
+      }
+    },
     "crane": {
       "locked": {
         "lastModified": 1765145449,
@@ -424,6 +448,8 @@
     "root": {
       "inputs": {
         "ags": "ags",
+        "cloudflare-ips-v4": "cloudflare-ips-v4",
+        "cloudflare-ips-v6": "cloudflare-ips-v6",
         "disko": "disko",
         "fenix": "fenix",
         "home-manager": "home-manager",

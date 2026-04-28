@@ -38,9 +38,17 @@
       url = "github:aylur/ags?rev=3ed9737bdbc8fc7a7c7ceef2165c9109f336bff6";
       inputs.nixpkgs.follows = "pkgs-unstable";
     };
+    cloudflare-ips-v4 = {
+      url = "https://www.cloudflare.com/ips-v4";
+      flake = false;
+    };
+    cloudflare-ips-v6 = {
+      url = "https://www.cloudflare.com/ips-v6";
+      flake = false;
+    };
   };
 
-  outputs = { self, pkgs-unstable, pkgs-stable, nixos-rk3588, home-manager, disko, impermanence, lanzaboote, fenix, pkgs-bdfr, ags, ... }: let
+  outputs = { self, pkgs-unstable, pkgs-stable, nixos-rk3588, home-manager, disko, impermanence, lanzaboote, fenix, pkgs-bdfr, ags, ... }@inputs: let
     lib = pkgs-unstable.lib;
     forAllSystems = f: lib.genAttrs [ "x86_64-linux" "aarch64-linux" ] (system: f system);
   in {
@@ -54,7 +62,8 @@
       hyprland = ./modules/common/desktop/hyprland;
     };
     legacyPackages = forAllSystems (system: import ./packages {
-      inherit pkgs-unstable pkgs-stable fenix ags pkgs-bdfr system;
+      inherit (inputs) pkgs-unstable pkgs-stable fenix ags pkgs-bdfr;
+      inherit system;
     });
     nixosConfigurations = let
       commonSpecialArgs = system: {
@@ -62,6 +71,8 @@
         assets = ./assets;
         systems = import ./systems.nix;
         flake = self;
+        cloudflare-ips = (lib.splitString "\n" (builtins.readFile inputs.cloudflare-ips-v4))
+                      ++ (lib.splitString "\n" (builtins.readFile inputs.cloudflare-ips-v6));
       };
     in {
       alfa = let
