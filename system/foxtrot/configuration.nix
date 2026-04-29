@@ -137,4 +137,8 @@
        };
      };
    };
+
+  networking.firewall.extraCommands = ''
+    iptables -A nixos-fw -p tcp --dport 22 -i br-sing-box -j nixos-fw-accept
+  '';
 }
