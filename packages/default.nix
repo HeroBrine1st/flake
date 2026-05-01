@@ -47,5 +47,8 @@
 
     letta-code = callPackage ./letta-code {};
     traefik = callPackage ./traefik { traefik = pkgs-stable.legacyPackages."${system}".traefik; };
+
+    krita = callPackage ./krita {};
+    krita-unwrapped = callPackage ./krita/unwrapped.nix {};
   };
 in custom-pkgs

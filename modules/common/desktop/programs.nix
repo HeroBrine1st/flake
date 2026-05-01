@@ -26,7 +26,7 @@
     gnome-clocks
     gnome-maps
     xournalpp
-    krita
+    custom-pkgs.krita
 
     # "System maintenance"
     gnome-control-center
