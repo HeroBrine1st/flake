@@ -103,7 +103,7 @@
         file:///home/herobrine1st/Pictures
         file:///home/herobrine1st/Videos
         file:///home/herobrine1st/Downloads
-        dav://10.168.88.10:3923/ Shared
+        davs://herobrine1st.ru/y7wgEZk6QX9UXgLyBntCwVqYkPgCCz0R Shared
       '';
       "ptpython/config.py".source = ./ptpython-config.py;
       "mimeapps.list".force = true;
