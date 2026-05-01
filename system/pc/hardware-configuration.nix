@@ -130,7 +130,7 @@
   hardware.nvidia-container-toolkit.enable = true;
 
   nixpkgs.allowedUnfreePackages = [
-    "nvidia-x11" "nvidia-settings" "nvidia-persistenced" # drivers
+    "nvidia-x11" "nvidia-settings" "nvidia-persistenced" "nvidia-kernel-modules" # drivers
   ];
 
   boot.extraModprobeConfig = ''
