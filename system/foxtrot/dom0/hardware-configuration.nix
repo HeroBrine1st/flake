@@ -9,7 +9,7 @@
           bypassWorkqueues = true;
           keyFile = "/dev/disk/by-partlabel/root-keyfile";
           keyFileSize = 2048;
-          fallbackToPassword = true;
+          #fallbackToPassword = true;
         };
       };
     };
