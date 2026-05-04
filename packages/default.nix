@@ -50,5 +50,7 @@
 
     krita = callPackage ./krita {};
     krita-unwrapped = callPackage ./krita/unwrapped.nix {};
+
+    scrutiny-collector = callPackage ./scrutiny-collector.nix {};
   };
 in custom-pkgs

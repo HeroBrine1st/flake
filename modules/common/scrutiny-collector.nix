@@ -1,4 +1,4 @@
-{ pkgs, config, lib, systems, ... }: {
+{ pkgs, config, lib, systems, custom-pkgs, ... }: {
   services.scrutiny.collector = lib.mkIf config.network.overlay.enabled {
     enable = true;
 
@@ -13,28 +13,6 @@
 
     schedule = "*:0/10";
 
-    # pin version to review on upgrade
-    package = let
-      version = "0.8.1";
-    in pkgs.scrutiny-collector.overrideAttrs {
-      inherit version;
-      pname = "scrutiny-collector";
-      vendorHash = "sha256-SiQw6pq0Fyy8Ia39S/Vgp9Mlfog2drtVn43g+GXiQuI=";
-      subPackages = "collector/cmd/collector-metrics"; # just in case
-
-      src = pkgs.fetchFromGitHub {
-        owner = "AnalogJ";
-        repo = "scrutiny";
-        rev = "refs/tags/v${version}";
-        hash = "sha256-WoU5rdsIEhZQ+kPoXcestrGXC76rFPvhxa0msXjFsNg=";
-      };
-
-      # External direct dependencies as of 0.8.1
-      # https://github.com/stretchr/testify
-      # https://github.com/sirupsen/logrus
-      # https://github.com/spf13/viper
-      # https://github.com/mitchellh/mapstructure
-      # https://github.com/jaypipes/ghw
-    };
+    package = custom-pkgs.scrutiny-collector;
   };
 }
