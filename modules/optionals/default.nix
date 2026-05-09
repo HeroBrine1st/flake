@@ -9,5 +9,6 @@
     ./impermanence.nix
     ./networks
     ./traefik.nix
+    ./xen
   ];
 }
