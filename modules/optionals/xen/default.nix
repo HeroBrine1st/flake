@@ -1,6 +1,7 @@
 {
   imports = [
-    ./config.nix
+    ./domain.nix
     ./options.nix
+    ./networking.nix
   ];
 }

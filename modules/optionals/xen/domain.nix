@@ -44,5 +44,19 @@ in {
         ExecStop = "${stopDomain} ${name}";
       };
     }) cfg.machines;
+
+    virtualisation.xen.networking.bridges = lib.mkMerge (lib.mapAttrsToList (machine: machineCfg:
+      lib.mapAttrs (bridge: bridgeCfg: {
+        dhcp.reservations = [
+          { inherit (bridgeCfg) ip mac; }
+        ];
+      }) machineCfg.networking.bridges
+    ) cfg.machines);
+
+    networking.hosts = lib.concatMapAttrs (machine: machineCfg:
+      lib.concatMapAttrs (bridge: bridgeCfg: {
+        "${machine}" = [ bridgeCfg.ip ];
+      }) machineCfg.networking.bridges
+    ) cfg.machines;
   };
 }
