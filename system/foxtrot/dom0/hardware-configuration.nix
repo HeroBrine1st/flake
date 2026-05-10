@@ -69,8 +69,26 @@
     };
   };
 
-  networking.hostName = "foxtrot";
-  networking.networkmanager.enable = true;
+  networking = {
+    hostName = "foxtrot";
+    useDHCP = false;
+    useNetworkd = true;
+  };
+  systemd.network = {
+    enable = true;
+    wait-online = {
+      anyInterface = true;
+      extraArgs = [ "--interface=enp7s0" "--interface=enp8s0" ];
+    };
+    networks = {
+      egress = {
+        matchConfig = {
+          Name = "enp7s0 enp8s0";
+        };
+        DHCP = "yes";
+      };
+    };
+  };
 
   environment.etc."systemd/network/99-default.link.d/wake-on-lan.conf".text = ''
     [Link]
