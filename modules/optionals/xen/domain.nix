@@ -38,6 +38,8 @@ in {
     systemd.services = lib.mapAttrs' (name: value: lib.nameValuePair "xen-domU-${name}" {
       before = [ "multi-user.target" ];
       wantedBy = [ "multi-user.target" ];
+      wants = [ "network.target" ];
+      after = [ "network.target" ];
 
       serviceConfig = {
         ExecStart = "${runDomain} ${name} ${value.definition}";
