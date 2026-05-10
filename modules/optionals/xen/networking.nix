@@ -53,4 +53,11 @@ in lib.mkIf cfg.enable {
       ];
     };
   };
+
+  assertions = [
+    {
+      assertion = config.networking.useNetworkd == false;
+      message = "Xen networking is not compatible with systemd as it does not assign an address to bridge";
+    }
+  ];
 }

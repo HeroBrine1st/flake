@@ -72,7 +72,6 @@
   networking = {
     hostName = "foxtrot";
     useDHCP = false;
-    useNetworkd = true;
   };
   systemd.network = {
     enable = true;
