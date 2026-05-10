@@ -3,6 +3,12 @@
 in {
   boot.initrd.systemd.enable = true;
 
+  boot.kernel.sysctl = {
+    "net.bridge.bridge-nf-call-ip6tables" = 0;
+    "net.bridge.bridge-nf-call-iptables" = 0;
+    "net.bridge.bridge-nf-call-arptables" = 0;
+  };
+
   virtualisation.xen = {
     enable = true;
     boot.params = [
@@ -35,7 +41,7 @@ in {
     };
     dom0Resources = {
       maxMemory = 120000;
-      memory = 120000;
+      memory = 16384;
     };
   };
 }
