@@ -42,6 +42,7 @@ in {
       wantedBy = [ "multi-user.target" ];
       wants = [ "network.target" ];
       after = [ "network.target" ];
+      restartIfChanged = true;
 
       serviceConfig = {
         ExecStart = "${runDomain} ${name} ${value.definition}";
