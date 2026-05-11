@@ -1,4 +1,4 @@
-{ ... }: let
+{ lib, ... }: let
   bridge = "xenbr0";
 in {
   imports = [
@@ -19,6 +19,7 @@ in {
       boot.params = [
         #"vga=ask"
         "dom0=pvh"
+        "dom0_mem=16384M,max:16384M"
         "smt=false"
       ];
       networking.bridges.xenbr0 = {
@@ -30,10 +31,6 @@ in {
           dns = "1.1.1.1, 1.0.0.1";
           pool = "10.135.116.10-10.135.116.254";
         };
-      };
-      dom0Resources = {
-        maxMemory = 120000;
-        memory = 16384;
       };
     };
   };
