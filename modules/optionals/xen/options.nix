@@ -35,6 +35,7 @@ in {
             };
             specialArgs = lib.mkOption {
               type = lib.types.attrsOf lib.types.anything;
+              default = {};
             };
 
             definition = lib.mkOption {
