@@ -11,6 +11,8 @@
     #!${pkgs.bash}/bin/bash
     set -e
 
+    export PATH="${pkgs.qemu_xen}/bin:$PATH"
+
     if ${cfg.package}/bin/xl list "$1" 2>&1 > /dev/null; then
       ${stopDomain} $1
     fi
