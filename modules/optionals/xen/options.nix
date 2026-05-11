@@ -6,6 +6,7 @@ in {
     # see http://github.com/NixOS/nixpkgs/blob/master/nixos/modules/virtualisation/nixos-containers.nix
     virtualisation.xen = {
       machines = lib.mkOption {
+        default = {};
         type = lib.types.attrsOf (lib.types.submodule ({ name, ... }@machine: {
           options = {
             modules = lib.mkOption {
@@ -32,6 +33,9 @@ in {
               type = lib.types.lines;
               default = "";
             };
+            specialArgs = lib.mkOption {
+              type = lib.types.attrsOf lib.types.anything;
+            };
 
             definition = lib.mkOption {
               description = "Generated xl.cfg file";
@@ -39,6 +43,13 @@ in {
               readOnly = true;
               internal = true;
             };
+
+            system = lib.mkOption {
+              description = "Module evaluation result";
+
+              readOnly = true;
+            };
+
             disks = lib.mkOption {
               type = lib.types.attrsOf (lib.types.submodule ({ name, ... }@disk: {
                 options = {
@@ -108,12 +119,13 @@ in {
                 }
                 (modulesPath + "/virtualisation/xen-domU.nix")
               ] ++ machine.config.modules;
-              prefix = [ "virtualisation" "xen" "machines" machine.name "modules" ];
-              inherit (host) specialArgs pkgs;
+              prefix = [ "virtualisation" "xen" "machines" machine.name "modules" "*" ];
+              specialArgs = host.specialArgs // machine.config.specialArgs;
               system = null;
             };
             gconfig = guest.config;
           in {
+            system = guest;
             disks."${nix-store-disk}" = {
               target = let
                 closure = pkgs.closureInfo { rootPaths = [ gconfig.system.build.toplevel ]; };

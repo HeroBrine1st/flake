@@ -7,6 +7,14 @@
     };
   };
 
+  services.impermanence.enable = true;
+
+  security.sudo-rs = {
+    enable = true;
+    wheelNeedsPassword = false;
+    execWheelOnly = true;
+  };
+
   systemd.services."getty@hvc0".enable = true;
 
   systemd.network.enable = true;
@@ -16,7 +24,9 @@
   users.users.herobrine1st = {
     isNormalUser = true;
     extraGroups = [ "wheel" ];
-    password = "5GQQN4tUCccRcdno1zXbWzxpt0aACluLsiSM48HjPI36N4iTYk8qt0Z0AYWO4HOQ"; # test
+    openssh.authorizedKeys.keys = [
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMx6iwADwNH6wLURS6/jfa7mlKB9wXAPJaN8x61JainS herobrine1st@foxtrot"
+    ];
   };
 
   services.openssh = {
