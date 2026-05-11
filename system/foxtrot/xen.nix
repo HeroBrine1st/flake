@@ -3,6 +3,7 @@
 in {
   imports = [
     ./domU/hydra
+    ./domU/forgejo-runner
   ];
   config = {
     boot.initrd.systemd.enable = true;

@@ -27,7 +27,6 @@
     openssh.authorizedKeys.keys = [
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMx6iwADwNH6wLURS6/jfa7mlKB9wXAPJaN8x61JainS herobrine1st@foxtrot"
     ];
-    password = "c8B7xq3HjhexQiJW";
   };
 
   services.openssh = {
