@@ -91,7 +91,25 @@ in {
                   nixpkgs = { inherit (host.pkgs.stdenv) hostPlatform; };
                   system = lib.mkDefault { inherit (host.config.system) stateVersion; };
                   boot.kernelParams = [ "console=hvc0" ];
-                  boot.initrd.systemd.enable = true; # not required, but future-proofing
+
+                  boot.initrd.systemd = {
+                    enable = true;
+                    services.tidy-nix-store = rec {
+                      requiredBy = [ "nix-store.mount" ];
+                      # Assuming /nix/.rw-store is mounted as /nix, which is dependency of /nix/.ro-store
+                      requires = [
+                        "nix-.ro-store.mount"
+                      ];
+
+                      after = requires;
+                      before = requiredBy;
+
+                      serviceConfig = {
+                        Type = "oneshot";
+                        ExecStart = "/bin/bash -c 'cd /nix/.rw-store && rm -rf $(ls /nix/.ro-store)'";
+                      };
+                    };
+                  };
 
                   fileSystems = {
                     "/nix/.ro-store" = {
