@@ -38,7 +38,8 @@ in {
       };
       extraXenlight = ''
         memory=32768
-        maxmem=32768
+        vcpus=48
+        cpu_weight=512
       '';
     };
   };
