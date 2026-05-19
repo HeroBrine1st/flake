@@ -13,11 +13,15 @@
       autoStart = true;
       image = "data.forgejo.org/forgejo/runner:${pkgs.forgejo-runner.version}";
       volumes = [
+        # add
+        # container:
+        #   network: host
         "/nix/persist/runner.yml:/config.yml:ro"
         "/var/run/docker.sock:/var/run/docker.sock:ro"
       ];
       user = "0:${toString config.users.groups.docker.gid}";
       cmd = [ "forgejo-runner" "daemon" "--config=/config.yml" ];
+      extraOptions = [ "--network=host" ];
     };
   };
 

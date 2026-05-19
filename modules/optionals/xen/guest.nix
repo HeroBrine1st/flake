@@ -29,7 +29,7 @@
 
       serviceConfig = {
         Type = "oneshot";
-        ExecStart = "/bin/bash -c 'cd /nix/.rw-store && rm -rf $(ls /nix/.ro-store)'";
+        ExecStart = "/bin/bash -c 'cd /sysroot/nix/.rw-store && rm -rf $(ls /sysroot/nix/.ro-store)'";
       };
     };
   };
@@ -86,6 +86,7 @@
 
   nix = {
     channel.enable = false;
+    settings.experimental-features = [ "flakes" "nix-command" ];
     nixPath = [
       "nixpkgs=flake:nixpkgs"
     ];
