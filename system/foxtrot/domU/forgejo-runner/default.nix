@@ -29,7 +29,7 @@
       };
       extraXenlight = ''
         memory=32768
-        vcpus=48
+        vcpus=24
         cpu_weight=512
       '';
     };

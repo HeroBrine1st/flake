@@ -19,6 +19,7 @@ in {
       boot.params = [
         #"vga=ask"
         "dom0=pvh"
+        "smt=false"
       ];
       networking.bridges.xenbr0 = {
         enable = true;
