@@ -1,4 +1,4 @@
-{ host, nix-store-disk, machine }: { lib, utils, pkgs, config, ... }@guest: lib.mkMerge [
+{ host, nix-store-disk, machine }: { lib, utils, pkgs, config, options, ... }@guest: lib.mkMerge [
   {
     networking.hostName = lib.mkDefault machine.name;
     nixpkgs = { inherit (host.pkgs.stdenv) hostPlatform; };
@@ -9,6 +9,9 @@
     };
     nix.enable = lib.mkDefault false;
   }
+  (lib.mkIf (options.boot ? isBareMetal) { # for reusage
+    boot.isBareMetal = false;
+  })
   (lib.mkIf (!config.nix.enable) {
     fileSystems."/nix/store" = {
       device = "/dev/${nix-store-disk}";
