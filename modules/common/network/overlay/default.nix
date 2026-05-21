@@ -1,7 +1,7 @@
 { config, lib, options, pkgs, systems, ... }: let
   hostname = config.networking.hostName;
   currentSystem = systems."${hostname}";
-
+  isEnabled = builtins.hasAttr hostname systems && currentSystem.networks ? overlay;
   isRelay = system: (system.networks.overlay.isRelay or system.isStatic);
   isLighthouse = system: (system.networks.overlay.isLighthouse or system.isStatic);
   mapToAddress = map (e: e.networks.overlay.address);
@@ -21,9 +21,7 @@ in {
     };
   };
 
-  config = let
-    isEnabled = currentSystem.networks ? overlay;
-  in {
+  config = {
     network.overlay.enabled = isEnabled;
     services.nebula.networks.overlay = lib.mkIf isEnabled {
       enable = true;
