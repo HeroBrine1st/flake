@@ -1,5 +1,6 @@
 { lib, config, ... }: {
   boot = {
+    isBareMetal = false;
     loader = {
       systemd-boot.enable = true;
       systemd-boot.consoleMode = "auto";

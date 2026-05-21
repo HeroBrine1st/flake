@@ -55,7 +55,6 @@
     nixosModules = {
       optionals = ./modules/optionals; # "optionals" means that they require an option to be enabled
       basic = ./modules/common;
-      scrutiny-collector = ./modules/common/scrutiny-collector.nix;
       includeSource = ./modules/common/include-source.nix;
       desktop = ./modules/common/desktop;
       development = ./modules/common/development;
@@ -95,7 +94,6 @@
           impermanence.nixosModules.impermanence
           self.nixosModules.optionals
           self.nixosModules.basic
-          self.nixosModules.scrutiny-collector
           self.nixosModules.includeSource
 
           ./system/alfa
@@ -110,7 +108,6 @@
           lanzaboote.nixosModules.lanzaboote
           self.nixosModules.optionals
           self.nixosModules.basic
-          self.nixosModules.scrutiny-collector
           self.nixosModules.includeSource
           self.nixosModules.desktop
           self.nixosModules.development
@@ -127,7 +124,6 @@
           lanzaboote.nixosModules.lanzaboote
           self.nixosModules.optionals
           self.nixosModules.basic
-          self.nixosModules.scrutiny-collector
           self.nixosModules.includeSource
           self.nixosModules.desktop
           self.nixosModules.development
@@ -159,7 +155,6 @@
           impermanence.nixosModules.impermanence
           self.nixosModules.optionals
           self.nixosModules.basic
-          self.nixosModules.scrutiny-collector
           self.nixosModules.includeSource
 
           ./system/foxtrot

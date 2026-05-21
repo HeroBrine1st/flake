@@ -1,5 +1,5 @@
 { pkgs, config, lib, systems, custom-pkgs, ... }: {
-  services.scrutiny.collector = lib.mkIf config.network.overlay.enabled {
+  services.scrutiny.collector = lib.mkIf (config.network.overlay.enabled && config.boot.isBareMetal) {
     enable = true;
 
     settings = {

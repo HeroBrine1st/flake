@@ -3,17 +3,12 @@
     nano
     wget
     curl
-    hdparm
-    smartmontools
     htop
-    udisks
     tree
     ffmpeg
     yt-dlp
-    usbutils
     git
     tcpdump
-    lm_sensors
     psmisc
     gnupg age
     gnumake
@@ -27,7 +22,15 @@
     dig
     custom-pkgs.bdfr
     compsize
-  ] ++ lib.optionals config.virtualisation.docker.enable [ pkgs.docker-compose ];
+  ] ++ lib.optionals config.boot.isBareMetal [
+    hdparm
+    smartmontools
+    udisks
+    usbutils
+    lm_sensors
+  ] ++ lib.optionals config.virtualisation.docker.enable [
+    pkgs.docker-compose
+  ];
 
   programs.python = {
     enable = true;
