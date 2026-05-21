@@ -9,7 +9,7 @@
     path = if currentSystem.isServer then "${cfg.dataDir}/${builtins.baseNameOf folder.path}" else folder.path;
   };
 in {
-  services.syncthing = lib.mkIf (currentSystem ? syncthing) {
+  services.syncthing = lib.mkIf (config.boot.isBareMetal && currentSystem ? syncthing) {
     enable = true;
     user = lib.mkDefault "herobrine1st";
     dataDir = lib.mkDefault "/home/herobrine1st";
