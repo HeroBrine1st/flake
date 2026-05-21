@@ -9,6 +9,7 @@
   boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
 
   nix = {
+    enable = true;
     settings = {
       experimental-features = [ "flakes" "nix-command" ];
       allowed-uris = [

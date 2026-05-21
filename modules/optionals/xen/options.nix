@@ -107,13 +107,19 @@ in {
                 __structuredAttrs = true;
                 unsafeDiscardReferences.out = true;
               } ''
+                echo -n "${gconfig.system.build.toplevel}" > toplevel
                 ${pkgs.gnutar}/bin/tar --create \
                   --absolute-names \
+                  ${lib.optionalString (!gconfig.nix.enable) ''
+                    --transform 'flags=rSh;s|/nix/store/||' \
+                    --transform 'flags=rSh;s|~nix~case~hack~[[:digit:]]\+||g' \
+                  ''} \
                   --verbatim-files-from \
-                  --transform 'flags=rSh;s|/nix/store/||' \
-                  --transform 'flags=rSh;s|~nix~case~hack~[[:digit:]]\+||g' \
                   --files-from=${closure}/store-paths \
-                  -C ${closure} --add-file registration \
+                  ${lib.optionalString gconfig.nix.enable ''
+                    --add-file toplevel \
+                    -C ${closure} --add-file store-paths --add-file registration \
+                  ''} \
                 | ${pkgs.erofs-utils}/bin/mkfs.erofs \
                   --quiet \
                   --force-uid=0 \

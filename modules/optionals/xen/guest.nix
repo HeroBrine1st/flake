@@ -1,94 +1,86 @@
-{ host, nix-store-disk, machine }: { lib, utils, ... }@guest: {
-  networking.hostName = lib.mkDefault machine.name;
-  nixpkgs = { inherit (host.pkgs.stdenv) hostPlatform; };
-  system = lib.mkDefault { inherit (host.config.system) stateVersion; };
-  boot.kernelParams = [ "console=hvc0" ];
-
-
-  boot.initrd.systemd = {
-    enable = true;
-    services.tidy-nix-store = rec {
-      requiredBy = [
-        "${utils.escapeSystemdPath "/sysroot/nix/store"}.mount"
-      ];
-      # Assuming /nix/.rw-store is mounted as /nix, which is dependency of /nix/.ro-store
-      requires = [
-        "${utils.escapeSystemdPath "/sysroot/nix/.ro-store"}.mount"
-      ];
-
-      after = requires;
-      before = requiredBy;
-
-#      unitConfig = {
-#        # is it needed?
-#        RequiresMountsFor = [
-#          "/sysroot/nix/.ro-store"
-#          "/sysroot/nix/.rw-store"
-#        ];
-#      };
-
-      serviceConfig = {
-        Type = "oneshot";
-        ExecStart = "/bin/bash -c 'cd /sysroot/nix/.rw-store && rm -rf $(ls /sysroot/nix/.ro-store)'";
-      };
+{ host, nix-store-disk, machine }: { lib, utils, pkgs, config, ... }@guest: lib.mkMerge [
+  {
+    networking.hostName = lib.mkDefault machine.name;
+    nixpkgs = { inherit (host.pkgs.stdenv) hostPlatform; };
+    system = lib.mkDefault { inherit (host.config.system) stateVersion; };
+    boot = {
+      kernelParams = [ "console=hvc0" ]; # SYSTEMD_SULOGIN_FORCE=1
+      initrd.systemd.enable = true;
     };
-  };
-
-  # https://github.com/NixOS/nixpkgs/blob/fd255281e2c710f08ced79312bac0b88c8c2f8ba/nixos/modules/installer/cd-dvd/iso-image.nix
-  # it's possible that it's not good idea because store paths can be removed afterwards
-  # a better idea is to copy store paths to guest in stage 1
-  # then register in stage 2
-  systemd.services.register-nix-paths = {
-    description = "Register Nix Store Paths";
-    unitConfig.DefaultDependencies = false;
-    wantedBy = [ "sysinit.target" ];
-    before = [
-      "sysinit.target"
-      "shutdown.target"
-      "nix-daemon.socket"
-      "nix-daemon.service"
-    ];
-    after = [ "local-fs.target" ];
-    conflicts = [ "shutdown.target" ];
-    restartIfChanged = false;
-    serviceConfig = {
-      Type = "oneshot";
-      RemainAfterExit = true;
-    };
-    script = ''
-      # After booting, register the contents of the Nix store on the
-      # CD in the Nix database in the tmpfs.
-      ${lib.getExe' guest.config.nix.package.out "nix-store"} --load-db < /nix/store/registration
-
-      # not supported
-      # nixos-rebuild also requires a "system" profile and an /etc/NIXOS tag.
-      #touch /etc/NIXOS
-      #${lib.getExe' guest.config.nix.package.out "nix-env"} -p /nix/var/nix/profiles/system --set /run/current-system
-    '';
-  };
-
-  fileSystems = {
-    "/nix/.ro-store" = {
+    nix.enable = lib.mkDefault false;
+  }
+  (lib.mkIf (!config.nix.enable) {
+    fileSystems."/nix/store" = {
       device = "/dev/${nix-store-disk}";
       fsType = "erofs";
       options = [ "defaults" "ro" ];
-      neededForBoot = true;
     };
-    "/nix/store" = {
-      overlay = {
-        lowerdir = [ "/nix/.ro-store" ];
-        upperdir = "/nix/.rw-store";
-        workdir = "/nix/.wd-store";
-      };
-      neededForBoot = true;
+  })
+  (lib.mkIf config.nix.enable {
+    nix = {
+      channel.enable = false;
+      settings.experimental-features = [ "flakes" "nix-command" ];
+      nixPath = [
+        "nixpkgs=flake:nixpkgs"
+      ];
     };
-  };
 
-  nix = {
-    channel.enable = false;
-    settings.experimental-features = [ "flakes" "nix-command" ];
-    nixPath = [
-      "nixpkgs=flake:nixpkgs"
-    ];
-  };
-}
+    boot = {
+      initrd = {
+        supportedFilesystems = [ "erofs" "overlay" ];
+        # overlayfs is special case: it doesn't insert module like erofs does
+        # https://github.com/NixOS/nixpkgs/blob/nixos-25.11/nixos/modules/tasks/filesystems/erofs.nix
+        availableKernelModules = [ "overlay" ];
+        systemd = {
+          storePaths = [
+            config.nix.package.out
+            pkgs.findutils
+          ];
+
+          services.copy-nix-store = rec {
+            unitConfig = {
+              RequiresMountsFor = [
+                "/sysroot/nix/store"
+              ];
+            };
+
+            requiredBy = [
+              "initrd-find-nixos-closure.service"
+            ];
+            before = requiredBy;
+
+            serviceConfig.Type = "oneshot";
+
+            script = ''
+              set -euo pipefail
+
+              mkdir -p /tmp/ro-store{-base,-upper,-work,}
+              mount -t erofs -o defaults,ro /dev/${nix-store-disk} /tmp/ro-store-base
+
+              # make store writable because nix-store --query wants to write to /nix/store/.links even with read-only=true
+              # and this was written before I realized it needs a database, so we need to write a database
+              # it's perhaps possible to TODO make all those things in derivation, though this works so another day
+              mount -t overlay overlay \
+                -o lowerdir=/tmp/ro-store-base,upperdir=/tmp/ro-store-upper,workdir=/tmp/ro-store-work \
+                /tmp/ro-store
+
+              SYSTEM="$(cat /tmp/ro-store/toplevel)"
+              if ! [[ -e "/sysroot$SYSTEM" ]]; then
+                # TODO overlay is not needed until this point
+                ${lib.getExe' config.nix.package.out "nix-store"} --store /tmp/ro-store --load-db < /tmp/ro-store/registration
+                # closureInfo doesn't guarantee order for some reason
+                ${lib.getExe' config.nix.package.out "nix-store"} --store /tmp/ro-store --query --requisites "$SYSTEM" \
+                  | ${lib.getExe' pkgs.findutils "xargs"} ${lib.getExe' config.nix.package.out "nix-store"} --store /tmp/ro-store --export \
+                  | ${lib.getExe' config.nix.package.out "nix-store"} --store /sysroot --import
+              fi
+
+              umount /tmp/ro-store
+              umount /tmp/ro-store-base
+              rm -rf /tmp/ro-store*
+            '';
+          };
+        };
+      };
+    };
+  })
+]
