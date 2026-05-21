@@ -15,8 +15,6 @@
     execWheelOnly = true;
   };
 
-  systemd.services."getty@hvc0".enable = true;
-
   systemd.network.enable = true;
   networking.useDHCP = true;
   networking.useNetworkd = true;
