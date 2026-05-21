@@ -3,6 +3,7 @@
     forgejo-runner = {
       modules = [
         flake.nixosModules.optionals
+        flake.nixosModules.basic
         flake.inputs.impermanence.nixosModules.impermanence
         ./guest.nix
         {

@@ -7,6 +7,7 @@ in {
     hydra = {
       modules = [
         flake.nixosModules.optionals
+        flake.nixosModules.basic
         flake.inputs.impermanence.nixosModules.impermanence
         ./guest.nix
         ./hydra.nix
