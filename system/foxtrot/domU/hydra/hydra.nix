@@ -54,7 +54,7 @@
     };
     nix-serve = {
       enable = true;
-      secretKeyFile = "/nix/persist/foxtrot-cache.key";
+      secretKeyFile = "/nix/persist/cache.key";
       bindAddress = ip;
       openFirewall = false;
     };

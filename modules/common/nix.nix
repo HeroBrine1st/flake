@@ -10,6 +10,7 @@
         "https://cache.herobrine1st.ru"
       ];
       trusted-public-keys = [
+        "cache.herobrine1st.ru-1:/NpJiVaEZpIfnL9k61h8ugyCdw3FH7IiMQVL80fXqyM="
         "foxtrot-cache:X8r3Ux9DlsIqkM0uMIw6gAlwCUCW324gm2VZn7eMJr0="
       ];
     })
