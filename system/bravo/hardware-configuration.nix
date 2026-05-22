@@ -6,6 +6,7 @@
     efiSupport = true;
     efiInstallAsRemovable = true;
   };
+  boot.kernelParams = [ "console=tty0" ];
 
   disko.devices.disk = {
     root = {
