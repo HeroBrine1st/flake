@@ -46,25 +46,28 @@ in {
   };
 
   services.traefik.dynamicConfigOptions.http = {
-#    routers.nix-serve = {
-#      entryPoints = [ "nebula" ];
-#      rule = "Host(`cache.herobrine1st.ru`)";
-#      middlewares = [ "nix-serve" ];
-#      service = "nix-serve";
-#    };
-#    middlewares.nix-serve.compress = {
-#      encodings = [ "zstd" "br" "gzip" ];
-#    };
-#    services.nix-serve.loadBalancer = {
-#      servers = [ { url = "http://${ip}:${toString gconfig.services.nix-serve.port}"; } ];
-#    };
-    routers.hydra = {
-      entryPoints = [ "nebula" ];
-      rule = "Host(`${domain}`)";
-      service = "hydra";
+    routers = {
+      nix-serve = {
+        entryPoints = [ "nebula" ];
+        rule = "Host(`cache.herobrine1st.ru`)";
+        middlewares = [ "nix-serve" ];
+        service = "nix-serve";
+      };
+      hydra = {
+        entryPoints = [ "nebula" ];
+        rule = "Host(`${domain}`)";
+        service = "hydra";
+      };
     };
-    services.hydra.loadBalancer = {
-      servers = [ { url = "http://${ip}:${toString gconfig.services.hydra.port}"; } ];
+    middlewares = {
+      nix-serve.compress.encodings = [ "zstd" "br" "gzip" ];
+    };
+    services = {
+      nix-serve.loadBalancer.servers = [ { url = "http://${ip}:${toString gconfig.services.nix-serve.port}"; } ];
+      hydra.loadBalancer.servers = [ { url = "http://${ip}:${toString gconfig.services.hydra.port}"; } ];
     };
   };
+
+  # hardening; otherwise it's trivial VM escape
+  nix.useFlakeCache = false;
 }

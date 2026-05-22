@@ -7,7 +7,6 @@
     ./traefik.nix
     ./btrbk.nix
 
-    ./hydra.nix
     ./syncthing.nix
   ];
 }
