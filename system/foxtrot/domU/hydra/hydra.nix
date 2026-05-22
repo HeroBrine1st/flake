@@ -17,6 +17,7 @@
         #"git+https://github.com/"
       ];
       build-dir = "/nix/var/nix/tmp/builds"; # so that it creates with right permissions
+      max-jobs = 24;
     };
     buildMachines = [
       {
@@ -24,6 +25,7 @@
         protocol = null;
         systems = [ "x86_64-linux" "aarch64-linux" "i686-linux" ];
         supportedFeatures = [ "nixos-test" "big-parallel" "benchmark" ];
+        maxJobs = 24;
       }
     ];
     gc.automatic = true;
