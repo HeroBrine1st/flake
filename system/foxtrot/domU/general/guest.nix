@@ -17,6 +17,12 @@
   virtualisation.docker.enable = true;
   virtualisation.docker.enableOnBoot = true;
 
+  networking.firewall = {
+    allowedTCPPortRanges = [
+      { from = 3000; to = 3999; }
+    ];
+  };
+
   security.sudo-rs = {
     enable = true;
     wheelNeedsPassword = false;
