@@ -1,4 +1,4 @@
-{ pkgs-unstable, pkgs-stable, fenix, ags, pkgs-bdfr, system }: let
+{ pkgs-unstable, pkgs-stable, fenix, ags, pkgs-bdfr, system, ... }@inputs: let
   lib = pkgs.lib;
   pkgs = pkgs-unstable.legacyPackages."${system}";
   pkgsNamed = names: pkg: builtins.elem (lib.getName pkg) names;
@@ -6,6 +6,7 @@
     inherit system;
     config.allowUnfreePredicate = pkgsNamed [ "cuda_cccl" "cuda_cudart" "libcublas" "cuda_nvcc" ];
   };
+  pkgs-krita = import inputs.pkgs-krita { inherit system; };
   all-pkgs = pkgs // custom-pkgs // { pkgs = all-pkgs; };
   callPackage = lib.customisation.callPackageWith all-pkgs;
   callPackages = lib.customisation.callPackagesWith all-pkgs;
@@ -48,8 +49,9 @@
     letta-code = callPackage ./letta-code {};
     traefik = callPackage ./traefik { traefik = pkgs-stable.legacyPackages."${system}".traefik; };
 
-    krita = callPackage ./krita {};
-    krita-unwrapped = callPackage ./krita/unwrapped.nix {};
+    krita = pkgs-krita.callPackage ./krita {
+      krita-unwrapped = pkgs-krita.callPackage ./krita/unwrapped.nix {};
+    };
 
     scrutiny-collector = callPackage ./scrutiny-collector.nix {};
   };

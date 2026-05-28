@@ -359,6 +359,22 @@
         "type": "github"
       }
     },
+    "pkgs-krita": {
+      "locked": {
+        "lastModified": 1778016882,
+        "narHash": "sha256-P0r7DKpsh9Sn8v/ckIv5xgBm9RWSgJsJskadaQiX4us=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "5c21abf2abb5bcbbb8d486d1fc32305fb03b0414",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "5c21abf2abb5bcbbb8d486d1fc32305fb03b0414",
+        "type": "github"
+      }
+    },
     "pkgs-stable": {
       "locked": {
         "lastModified": 1778003029,
@@ -457,6 +473,7 @@
         "lanzaboote": "lanzaboote",
         "nixos-rk3588": "nixos-rk3588",
         "pkgs-bdfr": "pkgs-bdfr",
+        "pkgs-krita": "pkgs-krita",
         "pkgs-stable": "pkgs-stable",
         "pkgs-unstable": "pkgs-unstable"
       }

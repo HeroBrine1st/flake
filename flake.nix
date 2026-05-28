@@ -5,6 +5,7 @@
     pkgs-unstable.url = "nixpkgs/nixos-unstable-small";
     pkgs-stable.url = "nixpkgs/nixos-25.11-small";
     pkgs-bdfr.url = "github:NixOS/nixpkgs?rev=59b1aef59071cae6e87859dc65de973d2cc595c0"; # pinned
+    pkgs-krita.url = "github:NixOS/nixpkgs?rev=5c21abf2abb5bcbbb8d486d1fc32305fb03b0414"; # pinned
     nixos-rk3588.url = "github:HeroBrine1st/nixos-rk3588?rev=0b8b677e400fe178e46e0f04175ac2b9b6441b82"; # pinned
     home-manager = {
       url = "github:nix-community/home-manager";
@@ -60,10 +61,9 @@
       development = ./modules/common/development;
       hyprland = ./modules/common/desktop/hyprland;
     };
-    legacyPackages = forAllSystems (system: import ./packages {
-      inherit (inputs) pkgs-unstable pkgs-stable fenix ags pkgs-bdfr;
+    legacyPackages = forAllSystems (system: import ./packages (inputs // {
       inherit system;
-    });
+    }));
     nixosConfigurations = let
       commonSpecialArgs = system: {
         custom-pkgs = self.legacyPackages."${system}";
