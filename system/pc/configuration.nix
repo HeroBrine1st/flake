@@ -5,31 +5,20 @@
 
   environment.etc."htoprc".source = ./htoprc;
 
-  nix.settings = {
-    substituters = [
-      "https://cuda-maintainers.cachix.org"
-    ];
-    trusted-public-keys = [
-      "cuda-maintainers.cachix.org-1:0dq3bujKpuEPMCX6U4WylrUDZ9JyUG0VpVZa7CNfq5E="
-    ];
-  };
-
   services.llama-cpp.worker = {
     enable = true;
-    host = systems."${config.networking.hostName}".networks.overlay.address;
+    host = "192.168.88.254";
     cache.enable = true;
   };
 
-  networking.firewall.allowedUDPPorts = [
-    34197 # factorio
-  ];
-  
-  networking.firewall.interfaces."nebula.overlay".allowedTCPPorts = [ config.services.llama-cpp.worker.port ];
-  services.nebula.networks.overlay.firewall.inbound = [
-    {
-      host = "foxtrot";
-      port = toString config.services.llama-cpp.worker.port;
-      proto = "tcp";
-    }
-  ];
+  services.displayManager.gdm.autoSuspend = false;
+
+  networking.firewall = {
+    allowedUDPPorts = [
+      34197 # factorio
+    ];
+    extraCommands = ''
+      iptables -A nixos-fw -p tcp -i enp9s0 --source 192.168.88.10 --dport ${toString config.services.llama-cpp.worker.port} -j nixos-fw-accept
+    '';
+  };
 }
