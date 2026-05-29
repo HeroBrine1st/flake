@@ -1,4 +1,4 @@
-{ pkgs, config, lib, systems, custom-pkgs, ... }: {
+{ pkgs, config, lib, systems, flake, ... }: {
   services.scrutiny.collector = lib.mkIf (config.network.overlay.enabled && config.boot.isBareMetal) {
     enable = true;
 
@@ -13,6 +13,6 @@
 
     schedule = "*:0/10";
 
-    package = custom-pkgs.scrutiny-collector;
+    package = flake.pkgs.scrutiny-collector;
   };
 }

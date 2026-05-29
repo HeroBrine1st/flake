@@ -1,4 +1,4 @@
-{ custom-pkgs, assets, lib, config, ... }: {
+{ flake, assets, lib, config, ... }: {
   users.users.herobrine1st = {
     isNormalUser = true;
     description = "HeroBrine1st Erquilenne";
@@ -124,8 +124,8 @@
           };
           Service = {
             Type = "oneshot";
-            ExecStart = ''${custom-pkgs.organise-files}/bin/organise-files.sh "''${HOME}/Pictures/Screenshots" "''${HOME}/Pictures/Screenshots" ; '' +
-                        ''${custom-pkgs.organise-files}/bin/organise-files.sh "''${HOME}/Videos/Screencasts" "''${HOME}/Videos/Screencasts"'';
+            ExecStart = ''${flake.pkgs.organise-files}/bin/organise-files.sh "''${HOME}/Pictures/Screenshots" "''${HOME}/Pictures/Screenshots" ; '' +
+                        ''${flake.pkgs.organise-files}/bin/organise-files.sh "''${HOME}/Videos/Screencasts" "''${HOME}/Videos/Screencasts"'';
           };
         };
       };

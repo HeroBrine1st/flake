@@ -1,4 +1,4 @@
-{ config, lib, pkgs, custom-pkgs, ... }: {
+{ config, lib, pkgs, flake, ... }: {
   environment.etc = {
     "firejail/globals.local".text = ''
       blacklist /.fsroot
@@ -142,7 +142,7 @@
           profile = "${pkgs.firejail}/etc/firejail/steam.profile";
         };
         tlauncher = {
-          executable = "${custom-pkgs.tlauncher}/bin/tlauncher";
+          executable = "${flake.pkgs.tlauncher}/bin/tlauncher";
           profile = "${./tlauncher.profile}";
         };
         firefox = let
@@ -157,12 +157,12 @@
           profile = "${pkgs.firejail}/etc/firejail/firefox.profile";
         };
         dreamfinity = {
-          executable = "${custom-pkgs.dreamfinity}/bin/dreamfinity";
-          profile = custom-pkgs.dreamfinity.firejailProfile;
+          executable = "${flake.pkgs.dreamfinity}/bin/dreamfinity";
+          profile = flake.pkgs.dreamfinity.firejailProfile;
         };
       }
       (sandboxJetbrains {
-        package = custom-pkgs.jetbrains.idea-oss;
+        package = flake.pkgs.jetbrains.idea-oss;
         environment = {
           GRADLE_USER_HOME = "$HOME/.cache/Gradle";
           GOCACHE = "$HOME/.cache/go-build-untrusted";

@@ -1,4 +1,4 @@
-{ pkgs, custom-pkgs, lib, config, ... }: {
+{ pkgs, flake, lib, config, ... }: {
   environment.systemPackages = with pkgs; [
     nano
     wget
@@ -20,7 +20,7 @@
 
     pwgen
     dig
-    custom-pkgs.bdfr
+    flake.pkgs.bdfr
     compsize
   ] ++ lib.optionals config.boot.isBareMetal [
     hdparm

@@ -1,4 +1,4 @@
-{ lib, pkgs, custom-pkgs, assets, ... }: let
+{ lib, pkgs, flake, assets, ... }: let
   ags = pkgs.ags.override {
     # required for ags init -g 4
     extraPackages = [
@@ -48,13 +48,13 @@ in {
     };
   in {
     hyprpolkitagent = mkSimpleHyprlandService "${pkgs.hyprpolkitagent}/libexec/v";
-    hyprland-status-bar = mkSimpleHyprlandService "${custom-pkgs.topbar}/bin/topbar";
+    hyprland-status-bar = mkSimpleHyprlandService "${flake.pkgs.topbar}/bin/topbar";
     hyprland-cursor = mkOneshotHyprlandService "hyprctl setcursor oreo_spark_purple_cursors 32";
     wl-clip-persist = mkSimpleHyprlandService "${pkgs.wl-clip-persist}/bin/wl-clip-persist --clipboard regular --all-mime-type-regex '^(?!x-kde-passwordManagerHint).+'";
     wlsunset = mkSimpleHyprlandService "${pkgs.wlsunset}/bin/wlsunset -l 51.7 -L 39.1";
     # uses systemd-run by default, no patch needed
     # https://github.com/H3rmt/hyprshell/blob/601c7eb1a61854d0d70b257447e9ddc044810855/exec-lib/src/run.rs#L57-L60
-    hyprshell = mkSimpleHyprlandService "${custom-pkgs.hyprshell}/bin/hyprshell run";
+    hyprshell = mkSimpleHyprlandService "${flake.pkgs.hyprshell}/bin/hyprshell run";
 
     "gnome-terminal-server" = {
       environment = {
@@ -216,7 +216,7 @@ in {
 
   system.checks = [
     (pkgs.runCommand "check-hyprshell-config" {} ''
-      ${custom-pkgs.hyprshell}/bin/hyprshell config check -c ${./hyprshell/config.toml} -s ${./hyprshell/styles.css}
+      ${flake.pkgs.hyprshell}/bin/hyprshell config check -c ${./hyprshell/config.toml} -s ${./hyprshell/styles.css}
       touch $out
     '')
   ];

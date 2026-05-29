@@ -1,6 +1,6 @@
-{ custom-pkgs, pkgs, ... }: {
+{ flake, pkgs, ... }: {
   environment.systemPackages = [
-    (with custom-pkgs.fenix; combine [
+    (with flake.pkgs.fenix; combine [
       stable.cargo
       stable.rustc
       stable.rust-src

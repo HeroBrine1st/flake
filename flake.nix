@@ -66,10 +66,11 @@
     }));
     nixosConfigurations = let
       commonSpecialArgs = system: {
-        custom-pkgs = self.legacyPackages."${system}";
         assets = ./assets;
         systems = import ./systems.nix;
-        flake = self;
+        flake = self // {
+          pkgs = self.legacyPackages."${system}";
+        };
         cloudflare-ips = (lib.splitString "\n" (builtins.readFile inputs.cloudflare-ips-v4))
                       ++ (lib.splitString "\n" (builtins.readFile inputs.cloudflare-ips-v6));
       };

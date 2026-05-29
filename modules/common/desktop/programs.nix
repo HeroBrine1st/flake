@@ -1,4 +1,4 @@
-{ pkgs, custom-pkgs, ... }: {
+{ pkgs, flake, ... }: {
   environment.systemPackages = with pkgs; [
     mangohud
     nodejs
@@ -26,7 +26,7 @@
     gnome-clocks
     gnome-maps
     xournalpp
-    custom-pkgs.krita
+    flake.pkgs.krita
 
     # "System maintenance"
     gnome-control-center
@@ -77,7 +77,7 @@
         golang.go
       ];
     })
-    custom-pkgs.jetbrains.idea-oss
+    flake.pkgs.jetbrains.idea-oss
     jetbrains.pycharm-oss
     jetbrains.webstorm
     jetbrains.clion gcc cmake
@@ -91,7 +91,7 @@
     # "Games"
     # steam inferred by programs.steam.enable = true
     osu-lazer-bin
-    custom-pkgs.tlauncher
+    flake.pkgs.tlauncher
     # CKAN not needed yet
     # protontricks not needed yet
     (pkgs.wrapOBS {
@@ -99,7 +99,7 @@
         obs-vkcapture
       ];
     })
-    custom-pkgs.dreamfinity
+    flake.pkgs.dreamfinity
 
     # "Security"
     seahorse # gnome

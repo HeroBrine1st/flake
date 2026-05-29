@@ -7,11 +7,11 @@
     config.allowUnfreePredicate = pkgsNamed [ "cuda_cccl" "cuda_cudart" "libcublas" "cuda_nvcc" ];
   };
   pkgs-krita = import inputs.pkgs-krita { inherit system; };
-  all-pkgs = pkgs // custom-pkgs // { pkgs = all-pkgs; };
+  all-pkgs = pkgs // flake-pkgs // { pkgs = all-pkgs; };
   callPackage = lib.customisation.callPackageWith all-pkgs;
   callPackages = lib.customisation.callPackagesWith all-pkgs;
-  custom-pkgs = {
-    inherit callPackage callPackages custom-pkgs;
+  flake-pkgs = {
+    inherit callPackage callPackages;
     fenix = (import pkgs-unstable { inherit system; overlays = [ fenix.overlays.default ]; }).fenix;
     topbar = import ./topbar { inherit pkgs ags; };
 
@@ -55,4 +55,4 @@
 
     scrutiny-collector = callPackage ./scrutiny-collector.nix {};
   };
-in custom-pkgs
+in flake-pkgs

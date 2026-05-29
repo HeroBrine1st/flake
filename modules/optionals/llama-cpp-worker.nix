@@ -1,10 +1,10 @@
 # Clearly a copy of nixpkgs llama-cpp module
-{ custom-pkgs, config, lib, ... }: let
+{ flake, config, lib, ... }: let
   cfg = config.services.llama-cpp.worker;
 in {
   options.services.llama-cpp.worker = {
     enable = lib.mkEnableOption "LLaMA C++ RPC worker";
-    package = lib.mkPackageOption custom-pkgs "llama-cpp" {};
+    package = lib.mkPackageOption flake.pkgs "llama-cpp" {};
     host = lib.mkOption {
       type = lib.types.str;
       default = "127.0.0.1";
