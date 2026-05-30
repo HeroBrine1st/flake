@@ -72,7 +72,6 @@
   virtualisation.docker = {
     enable = true;
     enableOnBoot = true;
-    package = pkgs.docker_28;
     liveRestore = false;
     storageDriver = "btrfs";
     daemon.settings = {

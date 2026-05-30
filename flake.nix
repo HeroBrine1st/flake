@@ -145,6 +145,7 @@
             ];
             boot.supportedFilesystems = [ "bcachefs" ];
             boot.kernelPackages = lib.mkOverride 0 pkgs.linuxPackages_latest;
+            boot.zfs.forceImportRoot = false; # not used here, why warning?
           })
         ];
       };

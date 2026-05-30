@@ -24,7 +24,6 @@
           bypassWorkqueues = true;
           keyFile = "/dev/mmcblk1";
           keyFileSize = 2048;
-          fallbackToPassword = true;
         };
       };
     };
