@@ -3,7 +3,7 @@
 
   inputs = {
     pkgs-unstable.url = "nixpkgs/nixos-unstable-small";
-    pkgs-stable.url = "nixpkgs/nixos-25.11-small";
+    pkgs-stable.url = "nixpkgs/nixos-26.05-small";
     pkgs-bdfr.url = "github:NixOS/nixpkgs?rev=59b1aef59071cae6e87859dc65de973d2cc595c0"; # pinned
     pkgs-krita.url = "github:NixOS/nixpkgs?rev=5c21abf2abb5bcbbb8d486d1fc32305fb03b0414"; # pinned
     nixos-rk3588.url = "github:HeroBrine1st/nixos-rk3588?rev=0b8b677e400fe178e46e0f04175ac2b9b6441b82"; # pinned
