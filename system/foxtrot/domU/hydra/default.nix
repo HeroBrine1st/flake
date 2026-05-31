@@ -38,7 +38,7 @@ in {
         format = "qcow2";
       };
       extraXenlight = ''
-        memory=32768
+        memory=16384
         vcpus=24
         cpu_weight=512
       '';
