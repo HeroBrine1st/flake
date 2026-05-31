@@ -23,10 +23,29 @@
     auditor = callPackage ./auditor {};
     hyprshell = callPackage ./hyprshell.nix {};
 
-    llama-cpp = pkgs-cuda.llama-cpp.override {
+    llama-cpp = (pkgs-cuda.llama-cpp.override {
       rpcSupport = true;
       cudaSupport = true;
-    };
+    }).overrideAttrs (old: {
+      patches = (old.patches or []) ++ [
+        (builtins.toFile "consider-mmproj-offload-in-vram-reservation.patch" ''
+          diff --git a/tools/server/server-context.cpp b/tools/server/server-context.cpp
+          index bfe3443c..800da19b 100644
+          --- a/tools/server/server-context.cpp
+          +++ b/tools/server/server-context.cpp
+          @@ -769,7 +769,7 @@ private:
+                   }
+
+                   // optionally get the memory usage of mmproj
+          -        if (has_mmproj && params_base.fit_params) {
+          +        if (has_mmproj && params_base.fit_params && params_base.mmproj_use_gpu) {
+                       auto mmproj_mem = mtmd_get_memory_usage(mmproj_path.c_str(), mparams);
+                       if (!mmproj_mem.empty()) {
+                           size_t total = 0;
+
+        '')
+      ];
+    });
 
     dockerImages = {
       llama-cpp = callPackages ./llama-cpp/docker.nix {};
