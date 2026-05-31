@@ -5,6 +5,7 @@
   vendorHash = "sha256-ULeiU/4dctvfOUPLD8CDZ0LkpUjyTOIEfsWJdhEJN9o=";
 
   passthru = old.passthru // {
+    broken = true;
     tests = {};
     wt-client = pkg.overrideAttrs(old: {
       name = "wt-client";
