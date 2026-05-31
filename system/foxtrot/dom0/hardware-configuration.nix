@@ -62,7 +62,12 @@
       options = [ "defaults" "compress=zstd" "autodefrag" "noatime" "nofail" "x-systemd.before=local-fs.target" ];
     };
     "/mnt/arp" = {
-      device = "UUID=9ca297fe-888c-452f-a640-b68f4b641ed1"; # multi-device filesystem
+      device = "UUID=9ca297fe-888c-452f-a640-b68f4b641ed1";
+      fsType = "btrfs";
+      options = [ "defaults" "compress=zstd" "discard=async" "noatime" "nofail" "x-systemd.before=local-fs.target" ];
+    };
+    "/mnt/asm" = {
+      device = "UUID=9ca297fe-888c-452f-a640-b68f4b641ed1";
       fsType = "btrfs";
       options = [ "defaults" "compress=zstd" "discard=async" "noatime" "nofail" "x-systemd.before=local-fs.target" ];
     };
