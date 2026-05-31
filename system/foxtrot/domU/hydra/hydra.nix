@@ -34,11 +34,14 @@
   services = {
     hydra = {
       enable = true;
-      package = pkgs.hydra.overrideAttrs(old: {
-        patches = (old.patches or []) ++ [
-          ./hydra-ignore-query-params-in-flake-uri.patch
-        ];
-      });
+      # it was this patch in src/lib/Hydra/Plugin/GithubStatus.pm (see git blame)
+      #-if ($eval->flake =~ m!github:([^/]+)/([^/]+)/([[:xdigit:]]{40})$! or $eval->flake =~ m!git\+ssh://git\@github.com/([^/]+)/([^/]+)\?.*rev=([[:xdigit:]]{40})$!) {
+      #+if ($eval->flake =~ m!github:([^/]+)/([^/]+)/([[:xdigit:]]{40})(?:\?.*)?$! or $eval->flake =~ m!git\+ssh://git\@github.com/([^/]+)/([^/]+)\?.*rev=([[:xdigit:]]{40})$!) {
+#      package = pkgs.hydra.overrideAttrs(old: {
+#        patches = (old.patches or []) ++ [
+#          ./hydra-ignore-query-params-in-flake-uri.patch
+#        ];
+#      });
       inherit hydraURL;
       notificationSender = "hydra@localhost";
       useSubstitutes = true;
