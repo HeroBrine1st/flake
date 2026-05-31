@@ -34,7 +34,7 @@ in {
         # run
         # mkfs ext4 /dev/sda
         # Ctrl-D
-        target = "/mnt/arp/@vm/images/hydra.qcow2";
+        target = "/mnt/asm/@vm/images/hydra.qcow2";
         format = "qcow2";
       };
       extraXenlight = ''

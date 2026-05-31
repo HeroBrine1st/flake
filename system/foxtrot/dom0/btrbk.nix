@@ -23,7 +23,7 @@
               target_preserve_min = "14d";
             };
           };
-          volume."/mnt/arp" = {
+          volume."/mnt/asm" = {
             subvolume."@docker_data/*" = {
               snapshot_dir = "@archives/docker_data_arp/";
               snapshot_preserve = "24h 7d";
@@ -52,7 +52,7 @@
               snapshot_preserve = "24h 7d 4w 12m 2y";
               snapshot_preserve_min = "14d";
               # non-canonical hot backup to back up regular cold backups
-              target = "/mnt/arp/@archives/user/";
+              target = "/mnt/asm/@archives/user/";
               target_preserve = "7d 4w 3m";
               target_preserve_min = "2d";
             };
@@ -61,7 +61,7 @@
               snapshot_preserve = "24h 7d 4w 12m 2y";
               snapshot_preserve_min = "14d";
               # non-canonical hot backup to back up regular cold backups
-              target = "/mnt/arp/@archives/user/";
+              target = "/mnt/asm/@archives/user/";
               target_preserve = "7d 4w 3m";
               target_preserve_min = "2d";
             };
