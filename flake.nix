@@ -225,9 +225,12 @@
         webstorm = overrideMirror pkgs.jetbrains.webstorm.src;
         clion = overrideMirror pkgs.jetbrains.clion.src;
       };
-      stdenv = {
+      stdenv."x86_64-linux" = {
         stable = pkgs-stable.legacyPackages."x86_64-linux".stdenv;
         unstable = pkgs-unstable.legacyPackages."x86_64-linux".stdenv;
+      };
+      packages."x86_64-linux" = {
+        inherit (self.legacyPackages."x86_64-linux") dockerImages;
       };
     };
   };
