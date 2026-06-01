@@ -37,11 +37,11 @@ in {
         };
 
         serviceConfig = {
-          Type = "idle";
+          Type = "exec";
           KillSignal = "SIGINT";
           ExecStart = "${cfg.package}/bin/llama-rpc-server --host ${cfg.host} --port ${builtins.toString cfg.port} ${lib.optionalString cfg.cache.enable "-c"}";
           Restart = "on-failure";
-          RestartSec = 300;
+          RestartSec = 5;
 
           StateDirectory = "llama-rpc-worker";
 
