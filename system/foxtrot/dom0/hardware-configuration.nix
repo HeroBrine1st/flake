@@ -54,8 +54,12 @@
       fsType = "btrfs";
       options = [ "defaults" "compress=zstd" "discard=async" "subvol=@home" ];
     };
-    # /var/lib/docker moved to impermanence
-    # /var/docker_data moved to impermanence
+    "/mnt/arp" = {   # alfa-romeo-papa
+      # bcachefs format --compression=zstd:3 --label hdd.rpa --rotational /dev/mapper/romeo-papa-alfa
+      device = "/dev/mapper/romeo-papa-alfa";
+      fsType = "bcachefs";
+      options = [ "defaults" "nofail" "x-systemd.before=local-fs.target" ];
+    };
     "/mnt/brp" = { # bravo-romeo-papa
       device = "/dev/mapper/romeo-papa-bravo";
       fsType = "btrfs";
