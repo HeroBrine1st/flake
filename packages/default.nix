@@ -27,6 +27,9 @@
       rpcSupport = true;
       cudaSupport = true;
     }).overrideAttrs (old: {
+      version = assert lib.versionOlder old.version "9505"; "9505";
+      src = old.src.override { hash = "sha256-HH60dBpTUWgMSkM1y6JhMVrK6Rookn+Xhm2qQxDbQKs="; };
+      npmDepsHash = "sha256-1iM0LGeI9e+gZEHk46lkBe51DxIhiimfAm9o3Z3m9Ik=";
       patches = (old.patches or []) ++ [
         (builtins.toFile "consider-mmproj-offload-in-vram-reservation.patch" ''
           diff --git a/tools/server/server-context.cpp b/tools/server/server-context.cpp
