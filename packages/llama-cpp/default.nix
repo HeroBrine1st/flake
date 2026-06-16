@@ -3,7 +3,7 @@
   cudaSupport = true;
 }).overrideAttrs (final: old: {
   pname = "beellama-cpp";
-  version = "000301"; # LLAMA_BUILD_NUMBER is an integer
+  version = "0.3.1";
   src = fetchFromGitHub {
     owner = "Anbeeld";
     repo = "beellama.cpp";
@@ -16,6 +16,7 @@
     # required for TurboQuant and TCQ cache types
     (lib.cmakeBool "GGML_CUDA_FA_ALL_QUANTS" true)
     (lib.cmakeFeature "CMAKE_CUDA_ARCHITECTURES" "86;75")
+    (lib.cmakeFeature "LLAMA_BUILD_NUMBER" "000301") # it is an integer
   ];
   patches = (old.patches or []) ++ [
     # This one is embedded in beellama.cpp
