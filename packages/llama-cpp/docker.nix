@@ -1,6 +1,6 @@
 { dockerTools, llama-cpp, pkgs }: {
   head = dockerTools.streamLayeredImage {
-    name = "llama-cpp";
+    name = llama-cpp.pname;
     tag = "${llama-cpp.version}-cuda-head_llama-swap-${pkgs.llama-swap.version}";
     contents = with pkgs; [
       llama-cpp llama-swap bash busybox
@@ -14,7 +14,7 @@
     ];
   };
   worker = dockerTools.streamLayeredImage {
-    name = "llama-cpp";
+    name = llama-cpp.pname;
     tag = "${llama-cpp.version}-cuda-worker";
     contents = with pkgs; [ llama-cpp busybox ];
   };
