@@ -8,6 +8,7 @@
     owner = "Anbeeld";
     repo = "beellama.cpp";
     rev = "v${final.version}";
+
     hash = "sha256-sKoFROgpOE8bsFTAe34suJ5j9DWln5wlBxR0MVuhKgQ=";
   };
   npmDepsHash = "sha256-1iM0LGeI9e+gZEHk46lkBe51DxIhiimfAm9o3Z3m9Ik=";
@@ -15,6 +16,7 @@
     # https://github.com/Anbeeld/beellama.cpp/blob/main/docs/quickstart-qwen36-dflash.md
     # required for TurboQuant and TCQ cache types
     (lib.cmakeBool "GGML_CUDA_FA_ALL_QUANTS" true)
+    (lib.cmakeBool "GGML_CUDA_NCCL" true)
     (lib.cmakeFeature "CMAKE_CUDA_ARCHITECTURES" "86;75")
     (lib.cmakeFeature "LLAMA_BUILD_NUMBER" "000301") # it is an integer
   ];
