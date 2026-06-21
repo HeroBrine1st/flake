@@ -1,4 +1,4 @@
-{ llama-cpp, lib, fetchFromGitHub }: (llama-cpp.override {
+{ llama-cpp, lib, fetchFromGitHub, cudaPackages}: (llama-cpp.override {
   rpcSupport = true;
   cudaSupport = true;
 }).overrideAttrs (final: old: {
@@ -17,6 +17,9 @@
     tag = "b${final.version}";
     hash = "sha256-ecXJxidnlQRAyDftYIcTrER5U3+YQ+XfvAxA29pj+uI=";
   };
+  buildInputs = old.buildInputs ++ [
+    cudaPackages.nccl
+  ];
   npmDepsHash = "sha256-0dctM/apI3ysMIEVBaBXO9hZMWskpJpNpOws1gwiOYc=";
   cmakeFlags = old.cmakeFlags ++ [
     # https://github.com/Anbeeld/beellama.cpp/blob/main/docs/quickstart-qwen36-dflash.md
