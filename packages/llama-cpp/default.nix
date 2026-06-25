@@ -12,7 +12,8 @@
   #  hash = "sha256-sKoFROgpOE8bsFTAe34suJ5j9DWln5wlBxR0MVuhKgQ=";
   #};
   #npmDepsHash = "sha256-1iM0LGeI9e+gZEHk46lkBe51DxIhiimfAm9o3Z3m9Ik=";
-  version = let v = "9747"; in assert lib.versionOlder old.version v; v;
+  
+  #version = let v = "9747"; in assert lib.versionOlder old.version v; v;
   src = old.src.override {
     tag = "b${final.version}";
     hash = "sha256-ecXJxidnlQRAyDftYIcTrER5U3+YQ+XfvAxA29pj+uI=";
