@@ -201,6 +201,19 @@
           ./system/charlie
         ];
       };
+
+      hotel = pkgs-stable.lib.nixosSystem rec {
+        system = "x86_64-linux";
+        specialArgs = commonSpecialArgs system;
+        modules = [
+          disko.nixosModules.disko
+          impermanence.nixosModules.impermanence
+          self.nixosModules.optionals
+          self.nixosModules.basic
+
+          ./system/hotel
+        ];
+      };
     };
 
     hydraJobs = {

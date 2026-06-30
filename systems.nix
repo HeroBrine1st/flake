@@ -48,4 +48,9 @@
     isServer = true;
     isStatic = true;
   };
+  "hotel" = {
+    networks = {};
+    isServer = true;
+    isStatic = false;
+  };
 }
