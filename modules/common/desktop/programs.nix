@@ -91,6 +91,7 @@
         })
       ];
     }))
+    flake.pkgs.ksrc # TODO move into opencode PATH
 
     # "Office"
     libreoffice-fresh
