@@ -50,5 +50,6 @@
     };
 
     scrutiny-collector = callPackage ./scrutiny-collector.nix {};
+    ksrc = callPackage ./ksrc {};
   };
 in flake-pkgs
