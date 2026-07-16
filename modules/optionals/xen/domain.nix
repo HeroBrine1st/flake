@@ -40,8 +40,8 @@ in {
     systemd.services = lib.mapAttrs' (name: value: lib.nameValuePair "xen-domU-${name}" {
       before = [ "multi-user.target" ];
       wantedBy = [ "multi-user.target" ];
-      wants = [ "network.target" ];
-      after = [ "network.target" ];
+      wants = [ "network.target" "xendomains.service" ];
+      after = [ "network.target" "xendomains.service" ];
       restartIfChanged = true;
 
       serviceConfig = {
