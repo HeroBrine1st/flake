@@ -121,7 +121,7 @@
     audacity
     lrcget
     finamp
-    freecad
+    #freecad # requires more than 16G of memory to build vtk; hydra.nixos.org doesn't build it
 
     # CLI
     typst
