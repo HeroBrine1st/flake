@@ -39,7 +39,7 @@ in {
         serviceConfig = {
           Type = "exec";
           KillSignal = "SIGINT";
-          ExecStart = "${cfg.package}/bin/llama-rpc-server --host ${cfg.host} --port ${builtins.toString cfg.port} ${lib.optionalString cfg.cache.enable "-c"}";
+          ExecStart = "${cfg.package}/bin/ggml-rpc-server --host ${cfg.host} --port ${builtins.toString cfg.port} ${lib.optionalString cfg.cache.enable "-c"}";
           Restart = "on-failure";
           RestartSec = 5;
 
