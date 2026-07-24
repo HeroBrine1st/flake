@@ -14,4 +14,8 @@
       default = true;
     };
   };
+
+  config = {
+    zramSwap.enable = true;
+  };
 }
