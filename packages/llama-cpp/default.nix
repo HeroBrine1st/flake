@@ -15,8 +15,10 @@
   
   version = let v = "10344"; in assert lib.versionOlder old.version v; v;
   src = old.src.override {
-    tag = "b${final.version}";
-    hash = "sha256-of7SvYmzmw/dHuDtLQi6WGvFI1IHru/67LDvW6gG5/M=";
+    #tag = "b${final.version}";
+    tag = null;
+    rev = "dd1ea524333b1e697489067d7a4c39c60d32beee";
+    hash = "sha256-GpvmnUM6gvUOaZ0IKT7w2D2FGm7VCT58ZmjBMWM7lj0=";
   };
   buildInputs = old.buildInputs ++ [
     cudaPackages.nccl
