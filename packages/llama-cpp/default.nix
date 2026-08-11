@@ -13,12 +13,10 @@
   #};
   #npmDepsHash = "sha256-1iM0LGeI9e+gZEHk46lkBe51DxIhiimfAm9o3Z3m9Ik=";
   
-  version = let v = "10344"; in assert lib.versionOlder old.version v; v;
+  version = let v = "10362"; in assert lib.versionOlder old.version v; v;
   src = old.src.override {
-    #tag = "b${final.version}";
-    tag = null;
-    rev = "dd1ea524333b1e697489067d7a4c39c60d32beee";
-    hash = "sha256-GpvmnUM6gvUOaZ0IKT7w2D2FGm7VCT58ZmjBMWM7lj0=";
+    tag = "b${final.version}";
+    hash = "sha256-2pW5uATAU9503D+iUKWkCAGyBVpVyVhxabeV4wj2Kec=";
   };
   buildInputs = old.buildInputs ++ [
     cudaPackages.nccl
