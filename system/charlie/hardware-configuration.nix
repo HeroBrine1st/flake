@@ -1,10 +1,13 @@
 { lib, config, ... }: {
-  boot.isBareMetal = false;
-  boot.loader.grub = {
-    # no need to set devices, disko will add all devices that have a EF02 partition to the list already
-    # devices = [ ];
-    efiSupport = true;
-    efiInstallAsRemovable = true;
+  boot = {
+    isBareMetal = false;
+    loader.grub = {
+      # no need to set devices, disko will add all devices that have a EF02 partition to the list already
+      # devices = [ ];
+      efiSupport = true;
+      efiInstallAsRemovable = true;
+    };
+    kernelParams = [ "console=tty0" "console=ttyS0" "console=tty1" "console=ttyS0" ];
   };
 
   disko.devices.disk = {
