@@ -2,16 +2,16 @@
 
 buildGoModule (final: {
   pname = "kent";
-  version = "2.1.1";
+  version = "2.7.1";
 
   src = fetchFromGitHub {
     owner = "respawn-llc";
     repo = "kent";
     tag = "v${final.version}";
-    hash = "sha256-dI3OO634p9/SIMc6oQRICwd1PAAIZ3UXNN+4dp2MlrE=";
+    hash = "sha256-1EINBtWs6/pr0C8GAZEiUWptZqVsQeRo4KB48veReqs=";
   };
 
-  vendorHash = "sha256-g+ekQEgAa9FiRjDAsyEm/9ONhH+D94WoCA+taxLUXwU=";
+  vendorHash = "sha256-hMm1+J3tmSj9fpIumCM4JeVdyHLoKe9W2yNFq/BgiNQ=";
 
   installPhase = ''
     runHook preInstall
