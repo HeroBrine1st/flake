@@ -4,7 +4,10 @@
   pkgsNamed = names: pkg: builtins.elem (lib.getName pkg) names;
   pkgs-cuda = import pkgs-unstable {
     inherit system;
-    config.allowUnfreePredicate = pkgsNamed [ "cuda_cccl" "cuda_cudart" "libcublas" "cuda_nvcc" ];
+    config.allowUnfreePredicate = pkgsNamed [
+      "cuda_cccl" "cuda_cudart" "libcublas" "cuda_nvcc" # llama-cpp
+      "cuda_nvrtc" # vllm
+    ];
   };
   pkgs-krita = import inputs.pkgs-krita { inherit system; };
   all-pkgs = pkgs // flake-pkgs // { pkgs = all-pkgs; };
@@ -51,6 +54,7 @@
 
     scrutiny-collector = callPackage ./scrutiny-collector.nix {};
     kent = callPackage ./kent {};
-    ksrc = callPackage ./ksrc {}; 
+    ksrc = callPackage ./ksrc {};
+    vllm = pkgs-cuda.callPackage ./vllm {};
   };
 in flake-pkgs
