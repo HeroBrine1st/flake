@@ -1,6 +1,14 @@
 { pkgs-unstable, pkgs-stable, fenix, ags, pkgs-bdfr, system, ... }@inputs: let
   lib = pkgs.lib;
-  pkgs = pkgs-unstable.legacyPackages."${system}";
+  #pkgs = pkgs-unstable.legacyPackages."${system}";
+  pkgs = import pkgs-unstable {
+    inherit system;
+    config = {
+      permittedInsecurePackages = [
+        "idea-oss-2025.3.4"
+      ];
+    };
+  };
   pkgsNamed = names: pkg: builtins.elem (lib.getName pkg) names;
   pkgs-cuda = import pkgs-unstable {
     inherit system;

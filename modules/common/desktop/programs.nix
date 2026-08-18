@@ -61,7 +61,6 @@
     virt-manager
     lshw
     # wireshark inferred
-    gnome-nettool
 
 
     # "Development"
@@ -138,6 +137,10 @@
     "veracrypt"
     "code" "vscode"
     "winbox"
+  ];
+
+  nixpkgs.config.permittedInsecurePackages = [
+    "pycharm-oss-2025.3.3"
   ];
 
   programs.gnupg.agent.enable = true;
