@@ -1,10 +1,9 @@
-{ dockerTools, llama-cpp, pkgs, vllm }: {
+{ dockerTools, llama-cpp, pkgs }: {
   head = dockerTools.streamLayeredImage {
     name = llama-cpp.pname;
     tag = "${llama-cpp.version}-cuda-head_llama-swap-${pkgs.llama-swap.version}";
     contents = with pkgs; [
       llama-cpp llama-swap bash busybox
-      vllm
       (pkgs.writeShellApplication {
         name = "llama-cpp.sh";
         runtimeInputs = [
