@@ -5,7 +5,7 @@
   pkgsNamed = names: pkg: builtins.elem (lib.getName pkg) names;
   pkgs-cuda = import pkgs-unstable {
     inherit system;
-    config.allowUnfreePredicate = pkgsNamed [ "cuda_cccl" "cuda_cudart" "libcublas" "cuda_nvcc" ];
+    config.allowUnfreePredicate = pkgsNamed [ "cuda_cccl" "cuda_cudart" "libcublas" "cuda_nvcc" "cuda_nvrtc" ];
   };
   pkgs-krita = import inputs.pkgs-krita { inherit system; };
   all-pkgs = pkgs // flake-pkgs // { pkgs = all-pkgs; };
