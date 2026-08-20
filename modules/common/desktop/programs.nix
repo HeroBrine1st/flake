@@ -77,7 +77,7 @@
       ];
     })
     flake.pkgs.jetbrains.idea-oss
-    jetbrains.pycharm-oss
+    flake.pkgs.jetbrains.pycharm-oss
     jetbrains.webstorm
     jetbrains.clion gcc cmake
     arduino-ide
@@ -137,10 +137,6 @@
     "veracrypt"
     "code" "vscode"
     "winbox"
-  ];
-
-  nixpkgs.config.permittedInsecurePackages = [
-    "pycharm-oss-2025.3.3"
   ];
 
   programs.gnupg.agent.enable = true;

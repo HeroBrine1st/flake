@@ -1,14 +1,7 @@
 { pkgs-unstable, pkgs-stable, fenix, ags, pkgs-bdfr, system, ... }@inputs: let
   lib = pkgs.lib;
-  #pkgs = pkgs-unstable.legacyPackages."${system}";
-  pkgs = import pkgs-unstable {
-    inherit system;
-    config = {
-      permittedInsecurePackages = [
-        "idea-oss-2025.3.4"
-      ];
-    };
-  };
+  pkgs = pkgs-unstable.legacyPackages."${system}";
+  pkgs-jetbrains-oss = inputs.pkgs-jetbrains-oss.legacyPackages."${system}";
   pkgsNamed = names: pkg: builtins.elem (lib.getName pkg) names;
   pkgs-cuda = import pkgs-unstable {
     inherit system;
@@ -45,13 +38,14 @@
     jetbrains = {
       # I tried to find the source of invalid wmClass but it isn't in github:jetbrains/intellij-community
       # (also looking at build times it seems like derivation does not build from source. It should have been days instead)
-      idea-oss = pkgs.jetbrains.idea-oss.overrideAttrs(old: let
+      idea-oss = pkgs-jetbrains-oss.jetbrains.idea-oss.overrideAttrs(old: let
         desktopItem = old.desktopItem.override(old: {
           startupWMClass = assert old.startupWMClass == "jetbrains-idea-ce"; "jetbrains-idea";
         });
       in {
         installPhase = builtins.replaceStrings ["item=${old.desktopItem}"] ["item=${desktopItem}"] old.installPhase;
       });
+      inherit (pkgs-jetbrains-oss.jetbrains) pycharm-oss;
     };
 
     traefik = callPackage ./traefik { traefik = pkgs-stable.legacyPackages."${system}".traefik; };

@@ -378,7 +378,7 @@
         ];
       })
       (sandboxJetbrains {
-        package = pkgs.jetbrains.pycharm-oss;
+        package = flake.pkgs.jetbrains.pycharm-oss;
         prefix = let
           env = pkgs.buildFHSEnv {
             name = "pycharm-fhs-env";
