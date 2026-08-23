@@ -12,6 +12,9 @@
   };
 
   users.users.herobrine1st.createHome = true;
-  users.users.root.hashedPasswordFile = "/nix/persist/password/root"; # REQUIRED ON INSTALLATION
+  users.users.root.hashedPasswordFile = "/nix/persist/password/root";
+  services.getty.autologinUser = "herobrine1st";
   users.mutableUsers = false;
+
+  network.overlay.configAppendixFile = "/nix/persist/nebula/local.yaml";
 }

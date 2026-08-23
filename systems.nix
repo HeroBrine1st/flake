@@ -49,7 +49,7 @@
     isStatic = true;
   };
   "hotel" = {
-    networks = {};
+    networks.overlay.address = "10.168.88.49";
     isServer = true;
     isStatic = false;
   };
