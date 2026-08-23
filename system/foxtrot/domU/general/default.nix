@@ -15,10 +15,15 @@
           boot.initrd.systemd = {
             storePaths = [ pkgs.btrfs-progs pkgs.libuuid ];
             services.mkbtrfs = rec {
+              unitConfig.DefaultDependencies = false;
               requiredBy = [
                 "${utils.escapeSystemdPath "/sysroot/nix"}.mount"
               ];
               before = requiredBy;
+              requires = [
+                "${utils.escapeSystemdPath "/dev/xvdb"}.device"
+              ];
+              after = requires;
               serviceConfig.Type = "oneshot";
               script = ''
                 set -euo pipefail
