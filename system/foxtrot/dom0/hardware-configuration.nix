@@ -75,7 +75,12 @@
   networking = {
     hostName = "foxtrot";
     useDHCP = false;
+    nameservers = [
+      "1.1.1.1"
+      "1.0.0.1"
+    ];
   };
+
   systemd.network = {
     enable = true;
     wait-online = {
@@ -89,6 +94,19 @@
         };
         DHCP = "yes";
       };
+    };
+  };
+
+  services.resolved = {
+    enable = true;
+    settings.Resolve = {
+      DNSSEC = "true";
+      Domains = [ "~." ];
+      DNSOverTLS = "true";
+      FallbackDNS = [
+        "1.1.1.1"
+        "1.0.0.1"
+      ];
     };
   };
 
