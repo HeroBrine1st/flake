@@ -43,7 +43,13 @@ in {
       certificatesResolvers.letsencrypt.acme = {
         email = "\${LETSENCRYPT_EMAIL}";
         storage = "${dataDir}/acme.json";
-        dnsChallenge.provider = "\${DNS_PROVIDER}"; # requires corresponding environment variables
+        dnsChallenge = {
+          provider = "\${DNS_PROVIDER}"; # requires corresponding environment variables
+          resolvers = [
+            "1.1.1.1:53"
+            "1.0.0.1:53"
+          ];
+        };
       };
       log = {
         format = "common";
