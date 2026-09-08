@@ -110,11 +110,11 @@
         "rust-analyzer-src": "rust-analyzer-src"
       },
       "locked": {
-        "lastModified": 1786973651,
-        "narHash": "sha256-OZ8WHQ+PeUbqhuQZ7Q+bxUn4d8QFOsa71UZwTHA/7+M=",
+        "lastModified": 1788865058,
+        "narHash": "sha256-ZkvwEHlSa46BkODMEwHCEh9hlUC2igneJ+noEUn9ww4=",
         "owner": "nix-community",
         "repo": "fenix",
-        "rev": "f3760fb22367a4d063a5455f9bf92281c1e70545",
+        "rev": "9efa138447c5773995d98d9aafa9eba4982aceab",
         "type": "github"
       },
       "original": {
@@ -208,11 +208,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1786929086,
-        "narHash": "sha256-kzpwMyT7i2fTQ41tf/WlsIHuJtf3e0leRBEPkBhUzBY=",
+        "lastModified": 1788651960,
+        "narHash": "sha256-v9wJd32eZ2bvhBzVOd7TIjLQd011P7nwOhjKtWlci5I=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "aac4965ddb7ea2ff0f3cadd9502c7042b7aa07ba",
+        "rev": "2c0350c759688177331b8f5242311fae8877bdb3",
         "type": "github"
       },
       "original": {
@@ -393,11 +393,11 @@
     },
     "pkgs-stable": {
       "locked": {
-        "lastModified": 1786965994,
-        "narHash": "sha256-tXOgrkQLSPApGkf97G3YNsWYQZbe5lptAhJ6ugtWMo8=",
-        "rev": "5c11f83f0eb1e25f1e13645dd8e5735f72d5fd25",
+        "lastModified": 1788870927,
+        "narHash": "sha256-hKUHhUG7k06yr2nl73xsH/kOgOiIEKDhXH1PBxlIm0g=",
+        "rev": "7388afdd893a5b349ac0d3dd3824f31262ccf943",
         "type": "tarball",
-        "url": "https://releases.nixos.org/nixos/26.05-small/nixos-26.05.7836.5c11f83f0eb1/nixexprs.tar.xz"
+        "url": "https://releases.nixos.org/nixos/26.05-small/nixos-26.05.9382.7388afdd893a/nixexprs.tar.xz"
       },
       "original": {
         "id": "nixpkgs",
@@ -407,11 +407,11 @@
     },
     "pkgs-unstable": {
       "locked": {
-        "lastModified": 1786935457,
-        "narHash": "sha256-OyPLHrWI7YXe6Flth06tkIjMrpsrlarsdgcYYAFOl5c=",
-        "rev": "4df4976d944e0057c4c9f99919c6cda2c623563a",
+        "lastModified": 1788861675,
+        "narHash": "sha256-IQlUeZ4FH4KZ36SK8Hh8b09rDPEVtopDPYaKrib+Rfw=",
+        "rev": "003f062570b04be4890c4acdcd970365281fc955",
         "type": "tarball",
-        "url": "https://releases.nixos.org/nixos/unstable-small/nixos-26.11pre1056375.4df4976d944e/nixexprs.tar.xz"
+        "url": "https://releases.nixos.org/nixos/unstable-small/nixos-26.11pre1069739.003f062570b0/nixexprs.tar.xz"
       },
       "original": {
         "id": "nixpkgs",
@@ -496,11 +496,11 @@
     "rust-analyzer-src": {
       "flake": false,
       "locked": {
-        "lastModified": 1786897424,
-        "narHash": "sha256-AxaCvcUZIgkNvzxDY85k7ICuGaWNbrVuGUn6SxLS+V0=",
+        "lastModified": 1788794694,
+        "narHash": "sha256-FROpcpM2ELawfxhW8cWuz8m3dp/0EFAFCiK+AbNw95w=",
         "owner": "rust-lang",
         "repo": "rust-analyzer",
-        "rev": "bb3bbbd9e4529cbf1a6392d5953f03eb01af3792",
+        "rev": "48d839420745124e85140234ce783ccd90dab24e",
         "type": "github"
       },
       "original": {
