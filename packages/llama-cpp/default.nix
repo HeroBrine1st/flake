@@ -13,17 +13,17 @@
   #};
   #npmDepsHash = "sha256-1iM0LGeI9e+gZEHk46lkBe51DxIhiimfAm9o3Z3m9Ik=";
   
-  version = let v = "10517"; in assert lib.versionOlder old.version v; v;
-  src = old.src.override {
-    tag = "b${final.version}";
-    hash = "sha256-heMmF0gQNPdxRLxwU/JB/9vtAoZ66EJPllY8ans/5Cw=";
-  };
+  #version = let v = "10517"; in assert lib.versionOlder old.version v; v;
+  #src = old.src.override {
+  #  tag = "b${final.version}";
+  #  hash = "sha256-heMmF0gQNPdxRLxwU/JB/9vtAoZ66EJPllY8ans/5Cw=";
+  #};
   buildInputs = old.buildInputs ++ [
     cudaPackages.nccl
   ];
 
-  postInstall = builtins.replaceStrings ["cp bin/rpc-server $out/bin/llama-rpc-server"] [""] old.postInstall;
-  npmDepsHash = "sha256-2Q7XhaLAArmviOLdQsNbYTfdyDE5pW9lR26cRHEVl9k=";
+  #postInstall = builtins.replaceStrings ["cp bin/rpc-server $out/bin/llama-rpc-server"] [""] old.postInstall;
+  #npmDepsHash = "sha256-2Q7XhaLAArmviOLdQsNbYTfdyDE5pW9lR26cRHEVl9k=";
   cmakeFlags = old.cmakeFlags ++ [
     # https://github.com/Anbeeld/beellama.cpp/blob/main/docs/quickstart-qwen36-dflash.md
     # required for TurboQuant and TCQ cache types
