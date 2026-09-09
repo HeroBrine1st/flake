@@ -7,6 +7,7 @@
   mapToAddress = map (e: e.networks.overlay.address);
 
   otherStaticHosts = builtins.attrValues (lib.attrsets.filterAttrs (k: v: v.isStatic && v.networks ? overlay && k != hostname) systems);
+  cfg = config.network.overlay;
 in {
   options.network.overlay = {
     configAppendixFile = lib.mkOption {
@@ -19,15 +20,27 @@ in {
       description = "Set to true if overlay network enable condition is true";
       readOnly = true;
     };
+    allowedTCPPorts = lib.mkOption {
+      type = lib.types.listOf lib.types.port;
+      description = "List of TCP ports opened to all machines in overlay network";
+    };
+    allowedUDPPorts = lib.mkOption {
+      type = lib.types.listOf lib.types.port;
+      description = "List of UDP ports opened to all machines in overlay network";
+    };
   };
 
   config = {
+    networking.firewall.interfaces."nebula.overlay" = lib.mkIf isEnabled {
+      inherit (cfg) allowedTCPPorts allowedUDPPorts;
+    };
+
     network.overlay.enabled = isEnabled;
     services.nebula.networks.overlay = lib.mkIf isEnabled {
       enable = true;
 
-      package = lib.mkIf (config.network.overlay.configAppendixFile != null) (pkgs.callPackage ./wrapper.nix {
-        configAppendixFile = config.network.overlay.configAppendixFile;
+      package = lib.mkIf (cfg.configAppendixFile != null) (pkgs.callPackage ./wrapper.nix {
+        configAppendixFile = cfg.configAppendixFile;
       });
 
       firewall.outbound = [
@@ -49,7 +62,15 @@ in {
           proto = "any";
           group = "entryhost"; # entrypoint + host = entryhost
         }
-      ];
+      ] ++ builtins.map (x: {
+        port = builtins.toString x;
+        proto = "tcp";
+        host = "any";
+      }) cfg.allowedTCPPorts ++ builtins.map (x: {
+        port = builtins.toString x;
+        proto = "tcp";
+        host = "any";
+      }) cfg.allowedUDPPorts;
 
       # TODO change with impermanence on every host
       ca = "/nix/persist/nebula/ca.crt";
