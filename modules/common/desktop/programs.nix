@@ -93,7 +93,7 @@
     flake.pkgs.ksrc # TODO move into opencode PATH
 
     # "Office"
-    libreoffice-fresh
+    libreoffice-stable
 
     # "Games"
     # steam inferred by programs.steam.enable = true
