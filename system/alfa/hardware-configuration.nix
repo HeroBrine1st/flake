@@ -57,8 +57,26 @@
     };
   };
 
-  networking.hostName = "alfa";
-  networking.networkmanager.enable = true;
+  networking = {
+    hostName = "alfa";
+    useDHCP = false;
+  };
+  systemd.network = {
+    enable = true;
+    wait-online = {
+      anyInterface = true;
+      extraArgs = [ "--interface=end1" ];
+    };
+    networks.egress = {
+      matchConfig.Name = "end1";
+      DHCP = "yes";
+    };
+    links.egress = {
+      matchConfig.Name = "end1";
+      linkConfig.MACAddressPolicy = "persistent";
+    };
+  };
+
 
   nixpkgs.hostPlatform = "aarch64-linux";
 
