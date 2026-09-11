@@ -7,6 +7,7 @@
     ./firejail
     ./gnome
     # ./hyprland # WIP
+    ./pi
     ./programs.nix
     ./users.nix
   ];
