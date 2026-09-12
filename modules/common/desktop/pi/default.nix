@@ -25,6 +25,13 @@ in
       defaultThinkingLevel = "xhigh";
       markdown.mermaid = "streaming";
       hideThinkingBlock = false;
+      steeringMode = "all";
+      followUpMode = "all";
+      showCacheMissNotices = true;
+
+      extensions = [
+        ./extensions/prefix-compaction/index.ts
+      ];
       packages = [
         "${subagent}/index.ts"
       ];
@@ -52,6 +59,7 @@ in
             maxTokens = 65536;
             reasoning = true;
             thinkingLevelMap = {
+              minimal = null;
               high = null;
               xhigh = "xhigh";
             };
@@ -64,6 +72,7 @@ in
       "tui.input.newLine" = [ "shift+enter" "ctrl+j" "alt+enter" ];
       "app.message.followUp" = "alt+q";
     };
+
 
     ".jetbrains/pi/agent/agents/scout.md".source = "${subagent}/agents/scout.md";
     ".jetbrains/pi/agent/agents/planner.md".source = "${subagent}/agents/planner.md";
