@@ -145,6 +145,12 @@ Here is the handoff summary:`;
  */
 const DEFAULT_RESERVE_TOKENS = 16384;
 
+
+interface WarningMessage {
+  level: number; // it's element of WARNING_LEVELS, TODO make in an index or enum
+  usage: number; // normalized to total context
+}
+
 /**
  * Read pi's effective compaction.reserveTokens the same layered way pi does
  * (settings-manager.js): project <cwd>/.pi/settings.json overrides global
@@ -282,7 +288,7 @@ export default function (pi: ExtensionAPI) {
 	 */
 	const warn = (
 		text: string,
-		warning: { level: number; pct: number; remainingPcts: number[] },
+		warning: WarningMessage,
 		ctx: ExtensionContext,
 	) => {
 		const msg = {
@@ -322,35 +328,40 @@ export default function (pi: ExtensionAPI) {
 	const checkWarnings = (ctx: ExtensionContext) => {
 		const usage = getCompactionThreshold(ctx);
 		if (!usage) return;
-		const pct = Math.round((usage.tokens / usage.contextWindow) * 100);
+		let crossed = false;
 		for (const level of WARNING_LEVELS) {
-			if (usage.tokens >= usage.threshold * level && !warnedLevels.has(level)) {
-				warnedLevels.add(level);
-				const first = warnedLevels.size === 1;
-				const remaining = remainingLevels(level);
-				const last = remaining.length === 0;
-				const warning = {
-					level,
-					pct,
-					remainingPcts: remaining.map((l) => levelWindowPercent(l, usage.contextWindow, usage.reserveTokens)),
-				};
-        let message: string
-        if (first) {
-          message = `Heads-up: you're approaching your working memory limit and will soon be asked to hand off your work to another agent. This should not change the quality or scope of your work. The \`trigger_handoff\` tool is now armed; use it to trigger a handoff proactively at a time that is convenient for the other agent to continue after you, such as before starting the next chunk of work, after a local checkpoint or commit, before working on the next user request, or before writing final response to user. Before handoff, consider persisting or updating plans and checklists. If you do not use the tool, the context will still be compacted automatically once it fills up, possibly degrading quality of your work. You will get ${moreWarnings(remaining.length)} more warnings; do not wait until the last one - at that point you will not be able to update plans and checklists.\n\nIf your task is completed before handoff, it is recommended to hand off before writing a final response, since you will anyway need to hand off on next user request.`;
-        } else if(last) {
-          message = `This is the last warning: you have reached context limit. You MUST hand off NOW by calling \`trigger_handoff\` tool without updating plans and checklists, which can still be done by summarizer guided with \`summarizer_prompt\`.`
-        } else {
-          message = `Context usage is nearing the limit — the automatic compaction threshold is close. If you have not called \`trigger_handoff\` yet, do so at the next natural checkpoint (after finishing a chunk of work, after a commit, or before starting the next chunk). This is warning ${WARNING_LEVELS.indexOf(level) + 1} of ${WARNING_LEVELS.length}, with ${moreWarnings(remaining.length)} to come.`
-        }
+      if (usage.tokens >= usage.threshold * level && !warnedLevels.has(level)) {
+        warnedLevels.add(level);
+        crossed = true;
+      }
+    }
 
-				// TODO run only one warn, it might do three at once
-				warn(
-					message,
-					warning,
-					ctx,
-				);
-			}
-		}
+    if (!crossed) return;
+    const level = warnedLevels[-1];
+
+    warnedLevels.add(level);
+    const first = warnedLevels.size === 1;
+    const remaining = remainingLevels(level);
+    const last = remaining.length === 0;
+    const pct = Math.round((usage.tokens / usage.contextWindow) * 100);
+    const warning: WarningMessage = {
+      level,
+      "usage": usage.tokens / usage.contextWindow
+    };
+    let message: string
+    if (first) {
+      message = `Heads-up: you're approaching your working memory limit and will soon be asked to hand off your work to another agent. This should not change the quality or scope of your work. The \`trigger_handoff\` tool is now armed; use it to trigger a handoff proactively at a time that is convenient for the other agent to continue after you, such as before starting the next chunk of work, after a local checkpoint or commit, before working on the next user request, or before writing final response to user. Before handoff, consider persisting or updating plans and checklists. If you do not use the tool, the context will still be compacted automatically once it fills up, possibly degrading quality of your work. You will get ${moreWarnings(remaining.length)} more warnings; do not wait until the last one - at that point you will not be able to update plans and checklists.\n\nIf your task is completed before handoff, it is recommended to hand off before writing a final response, since you will anyway need to hand off on next user request.`;
+    } else if(last) {
+      message = `This is the last warning: you have reached context limit. You MUST hand off NOW by calling \`trigger_handoff\` tool without updating plans and checklists, which can still be done by summarizer guided with \`summarizer_prompt\`.`
+    } else {
+      message = `Context usage is nearing the limit — the automatic compaction threshold is close. If you have not called \`trigger_handoff\` yet, do so at the next natural checkpoint (after finishing a chunk of work, after a commit, or before starting the next chunk). This is warning ${WARNING_LEVELS.indexOf(level) + 1} of ${WARNING_LEVELS.length}, with ${moreWarnings(remaining.length)} to come.`
+    }
+
+    warn(
+      message,
+      warning,
+      ctx,
+    );
 	};
 
 	// User-facing rendering of the warning messages: the agent keeps the full
@@ -360,12 +371,11 @@ export default function (pi: ExtensionAPI) {
 	// details (never sent to the LLM) carries level, the usage percent, and
 	// the remaining levels' percents — all computed at warn time.
 	pi.registerMessageRenderer("pi-context-warning", (message, _options, theme) => {
-		const details = (message.details ?? undefined) as
-			| { level?: number; pct?: number; remainingPcts?: number[] }
-			| undefined;
-		if (typeof details?.level !== "number") return undefined;
+    if (message.details ?? false === false) return;
+		const details: WarningMessage = message.details;
+		const remaining = remainingLevels(details.level);
 		const pct = typeof details.pct === "number" ? details.pct : Math.round(details.level * 100);
-		const remainingPcts = (details.remainingPcts ?? []).filter((p) => typeof p === "number");
+		const remainingPcts = remainingLevels(details.level).map((p) => `${p*100}%`)
 		// Pre-remainingPcts messages (reloaded from an older session): count
 		// only, no percents.
 		const remainingCount = remainingPcts.length > 0 ? remainingPcts.length : remainingLevels(details.level).length;
