@@ -68,6 +68,7 @@ in {
       };
       entryPoints = builtins.mapAttrs (_: v: {
         http.tls.certResolver = "letsencrypt";
+        transport.respondingTimeouts.readTimeout = "600s"; # for immich
       } // v) {
         https = {
           address = "\${PHYSICAL_INTERFACE_IP}:443";
