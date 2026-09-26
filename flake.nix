@@ -48,6 +48,10 @@
       url = "https://www.cloudflare.com/ips-v6";
       flake = false;
     };
+    letta-code = {
+      url = "github:letta-ai/letta-code/v0.33.2";
+      inputs.nixpkgs.follows = "pkgs-unstable";
+    };
   };
 
   outputs = { self, pkgs-unstable, pkgs-stable, nixos-rk3588, home-manager, disko, impermanence, lanzaboote, fenix, pkgs-bdfr, ags, ... }@inputs: let

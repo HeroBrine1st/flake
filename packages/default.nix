@@ -53,6 +53,11 @@
 
     scrutiny-collector = callPackage ./scrutiny-collector.nix {};
     kent = callPackage ./kent {};
-    ksrc = callPackage ./ksrc {}; 
+    ksrc = callPackage ./ksrc {};
+
+    letta-code = import ./letta-code {
+      inherit (inputs) letta-code pkgs-unstable;
+      inherit system;
+    };
   };
 in flake-pkgs

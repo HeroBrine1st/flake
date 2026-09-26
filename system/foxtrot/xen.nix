@@ -5,6 +5,7 @@ in {
     ./domU/hydra
     ./domU/forgejo-runner
     ./domU/general
+    ./domU/letta-code
   ];
   config = {
     boot.initrd.systemd.enable = true;
