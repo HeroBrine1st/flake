@@ -1,4 +1,14 @@
-{ flake, pkgs, config, ... }: {
+{ flake, pkgs, config, ... }: let
+  wrappedPackage = pkgs.buildFHSEnv {
+    name = "letta-code-wrapped";
+    targetPkgs = pkgs: with pkgs; [
+      nodejs
+      bubblewrap
+    ];
+    executableName = "letta";
+    runScript = "${flake.pkgs.letta-code}/bin/letta";
+  };
+in {
   fileSystems = {
     "/" = {
       device = "none";
@@ -12,22 +22,24 @@
   # (see the letta-code flake's nixosModules.letta-code for the rest of the options)
   # the package in flake.pkgs overrides the stale bunDeps (see packages/letta-code/default.nix)
   environment.systemPackages = with pkgs; [
-    flake.pkgs.letta-code
-    nodejs
-    bubblewrap
+    wrappedPackage
   ];
 
-  # once the service is enabled, it should run the patched package too — the
-  # letta-code module's default is the unpatched letta-code flake package
-  services.letta-code.package = flake.pkgs.letta-code;
+  services.letta-code = {
+    enable = false;
+    package = wrappedPackage;
+    extraArgs = [
+      "server"
+      "--channels" "telegram"
+      "--install-channel-runtimes"
+    ];
+  };
 
   services.impermanence = {
     enable = true;
     extraDirectories = [
       "/home"
-      # when the service gets enabled, give the state to the letta-code user:
-      # { directory = "/var/lib/letta-code"; user = "letta-code"; group = "letta-code"; mode = "0700"; }
-      { directory = "/var/lib/letta-code"; }
+      { directory = "/var/lib/letta-code"; user = "letta-code"; group = "letta-code"; mode = "0700"; }
     ];
   };
 
