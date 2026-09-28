@@ -26,7 +26,7 @@ in {
   ];
 
   services.letta-code = {
-    enable = false;
+    enable = true;
     package = wrappedPackage;
     extraArgs = [
       "server"
