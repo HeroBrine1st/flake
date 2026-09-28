@@ -1,4 +1,4 @@
-{ flake, pkgs, config, ... }: let
+{ flake, pkgs, config, lib, ... }: let
   wrappedPackage = pkgs.buildFHSEnv {
     name = "letta-code-wrapped";
     targetPkgs = pkgs: with pkgs; [
@@ -35,11 +35,16 @@ in {
     ];
   };
 
+  users.users.letta-code = {
+    isSystemUser = lib.mkForce false;
+    isNormalUser = true;
+  };
+
   services.impermanence = {
     enable = true;
     extraDirectories = [
       "/home"
-      { directory = "/var/lib/letta-code"; user = "letta-code"; group = "letta-code"; mode = "0700"; }
+      { directory = config.services.letta-code.workingDirectory; user = "letta-code"; group = "letta-code"; mode = "0700"; }
     ];
   };
 
