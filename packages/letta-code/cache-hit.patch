@@ -1,0 +1,48 @@
+diff --git a/src/backend/local/local-backend.ts b/src/backend/local/local-backend.ts
+index 33caa1e1..6af59c58 100644
+--- a/src/backend/local/local-backend.ts
++++ b/src/backend/local/local-backend.ts
+@@ -167,7 +167,7 @@ function formatMidConversationMemoryUpdate(
+ ): string {
+   return [
+     "<memory_update>",
+-    `The local memory filesystem has been edited and committed at revision ${compiled.memfsRevision ?? "unknown"}.`,
++    `The local memory filesystem has been edited.`,
+     "This updates part of your persona/system memory. Treat the following freshly rendered memory context as authoritative from now on; where it conflicts with earlier memory context, this newer memory context wins.",
+     "",
+     compiled.coreMemory.trimEnd(),
+diff --git a/src/backend/local/system-prompt-compilation.ts b/src/backend/local/system-prompt-compilation.ts
+index 64c858f2..58b50b9b 100644
+--- a/src/backend/local/system-prompt-compilation.ts
++++ b/src/backend/local/system-prompt-compilation.ts
+@@ -361,6 +361,7 @@ function formatUtcTimestamp(date: Date): string {
+   return `${date.getUTCFullYear()}-${pad2(date.getUTCMonth() + 1)}-${pad2(date.getUTCDate())} ${pad2(hour12)}:${pad2(date.getUTCMinutes())}:${pad2(date.getUTCSeconds())} ${meridiem} UTC+0000`;
+ }
+ 
++
+ function compileMemoryMetadata(input: {
+   agentId: string;
+   conversationId: string;
+@@ -371,7 +372,6 @@ function compileMemoryMetadata(input: {
+     "<memory_metadata>",
+     `- AGENT_ID: ${input.agentId}`,
+     `- CONVERSATION_ID: ${input.conversationId}`,
+-    `- System prompt last recompiled: ${formatUtcTimestamp(input.compiledAt)}`,
+     `- ${input.previousMessageCount} previous messages between you and the user are stored in recall memory`,
+     "</memory_metadata>",
+   ].join("\n");
+diff --git a/tsconfig.json b/tsconfig.json
+index 6e21728e..7fa71a3b 100644
+--- a/tsconfig.json
++++ b/tsconfig.json
+@@ -27,8 +27,8 @@
+     "noImplicitReturns": true,
+ 
+     // Some stricter flags (disabled by default)
+-    "noUnusedLocals": true,
+-    "noUnusedParameters": true,
++    "noUnusedLocals": false,
++    "noUnusedParameters": false,
+     "noPropertyAccessFromIndexSignature": false
+   },
+   "include": ["src/**/*"],

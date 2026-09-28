@@ -11,8 +11,11 @@ let
     overlays = [ letta-code.inputs.bun2nix.overlays.default ];
   };
 in
-letta-code.packages."${system}".letta-code.overrideAttrs (_: {
+letta-code.packages."${system}".letta-code.overrideAttrs (old: {
   bunDeps = lcPkgs.bun2nix.fetchBunDeps { bunNix = ./bun.nix; };
+  patches = (old.patches or []) ++ [
+    ./cache-hit.patch
+  ];
   # v0.33.2's preBuild patches `bunx tsc -p tsconfig.types.json` out of build.js, but
   # build.js still walks dist/types afterwards and fails with ENOENT. Let tsc run as-is:
   # typescript is in bun.lock, so bunx resolves it from the installed node_modules.
