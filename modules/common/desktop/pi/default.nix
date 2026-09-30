@@ -55,7 +55,7 @@ in
             id = "qwen3.8:27b";
             name = "Qwen 3.8 27B";
             input = [ "text" "image" ];
-            contextWindow = 81920;
+            contextWindow = 163840;
             maxTokens = 65536;
             reasoning = true;
             thinkingLevelMap = {
