@@ -18,6 +18,15 @@
   #  tag = "b${final.version}";
   #  hash = "sha256-heMmF0gQNPdxRLxwU/JB/9vtAoZ66EJPllY8ans/5Cw=";
   #};
+
+  version = "0.5.0";
+  src = fetchFromGitHub {
+    owner = "ggml-org";
+    repo = "llama.cpp";
+    tag = "v${final.version}";
+    hash = "sha256-MtSVt0qM8I0MeMzVxT7+nVkhQ7ysMS4/kbk/DxzTI2A=";
+  };
+  npmDepsHash = "sha256-2Q7XhaLAArmviOLdQsNbYTfdyDE5pW9lR26cRHEVl9k=";
   buildInputs = old.buildInputs ++ [
     cudaPackages.nccl
   ];
@@ -28,7 +37,7 @@
     # https://github.com/Anbeeld/beellama.cpp/blob/main/docs/quickstart-qwen36-dflash.md
     # required for TurboQuant and TCQ cache types
     # and possibly for q6.patch
-    (lib.cmakeBool "GGML_CUDA_FA_ALL_QUANTS" true)
+    (lib.cmakeFeature "GGML_CUDA_FA_QUANTS" "all")
     (lib.cmakeBool "GGML_CUDA_NCCL" true)
     (lib.cmakeFeature "CMAKE_CUDA_ARCHITECTURES" "86;75")
     #(lib.cmakeFeature "LLAMA_BUILD_NUMBER" "000301") # it is an integer

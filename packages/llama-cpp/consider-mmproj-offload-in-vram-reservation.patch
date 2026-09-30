@@ -1,8 +1,8 @@
 diff --git a/tools/server/server-context.cpp b/tools/server/server-context.cpp
-index 715477e2e..b939cbab1 100644
+index 274af9b..5db91ac 100644
 --- a/tools/server/server-context.cpp
 +++ b/tools/server/server-context.cpp
-@@ -1052,7 +1052,7 @@ private:
+@@ -1061,7 +1061,7 @@ private:
          }
  
          // optionally get the memory usage of mmproj
