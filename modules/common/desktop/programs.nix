@@ -2,6 +2,7 @@
   environment.systemPackages = with pkgs; [
     mangohud
     nodejs
+    wl-clipboard
 
     # Dash
     gnome-terminal
