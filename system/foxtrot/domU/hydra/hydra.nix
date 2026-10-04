@@ -1,4 +1,4 @@
-{ ip, hydraURL, pkgs, config, ... }: {
+{ ip, hydraURL, pkgs, config, lib, ... }: {
   # so that parent is not world-writeable
   fileSystems."/nix/var/nix/tmp" = {
     device = "tmpfs";
@@ -15,6 +15,9 @@
       allowed-uris = [
         "github:"
         #"git+https://github.com/"
+      ];
+      substituters = [
+        "https://aseipp-nix-cache.global.ssl.fastly.net"
       ];
       build-dir = "/nix/var/nix/tmp/builds"; # so that it creates with right permissions
     };
