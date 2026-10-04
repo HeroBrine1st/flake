@@ -1,16 +1,11 @@
-{ dockerTools, llama-cpp, pkgs }: {
+{ dockerTools, llama-cpp, whisper-cpp, pkgs }: {
   head = dockerTools.streamLayeredImage {
     name = llama-cpp.pname;
     tag = "${llama-cpp.version}-cuda-head_llama-swap-${pkgs.llama-swap.version}";
     contents = with pkgs; [
-      llama-cpp llama-swap bash busybox
-      (pkgs.writeShellApplication {
-        name = "llama-cpp.sh";
-        runtimeInputs = [
-          netcat gnugrep
-        ];
-        text = builtins.readFile ./llama-cpp.sh;
-      })
+      llama-swap
+      llama-cpp bash busybox
+      whisper-cpp
     ];
   };
   worker = dockerTools.streamLayeredImage {

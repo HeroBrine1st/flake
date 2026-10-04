@@ -25,6 +25,9 @@
     hyprshell = callPackage ./hyprshell.nix {};
 
     llama-cpp = pkgs-cuda.callPackage ./llama-cpp {};
+    whisper-cpp = pkgs-cuda.whisper-cpp.override {
+      cudaSupport = true;
+    };
 
     dockerImages = {
       llama-cpp = callPackages ./llama-cpp/docker.nix {};
