@@ -179,7 +179,7 @@ function readCompactionReserve(path: string): number | undefined {
  * (contextWindow - reserveTokens). The first level that fires also arms
  * trigger_handoff. Tune as needed.
  */
-const WARNING_LEVELS = [0.8, 0.9, 0.95];
+const WARNING_LEVELS = [0.75, 0.825, 0.875, 0.95];
 
 /** Warning levels still to come after `level` (ascending). */
 function remainingLevels(level: number): number[] {
@@ -336,11 +336,11 @@ export default function (pi: ExtensionAPI) {
 				};
         let message: string
         if (first) {
-          message = `Heads-up: you're approaching your working memory limit (context usage ${pct}%) and will soon be asked to hand off your work to another agent. This should not change the quality or scope of your work. The \`trigger_handoff\` tool is now armed; use it to trigger a handoff proactively at a time that is convenient for the other agent to continue after you, such as before starting the next chunk of work, after a local checkpoint or commit, or before working on the next user request. Before handoff, consider persisting or updating plans and checklists. If you do not use the tool, the context will still be compacted automatically once it fills up, possibly degrading quality of your work.`;
+          message = `Heads-up: you're approaching your working memory limit and will soon be asked to hand off your work to another agent. This should not change the quality or scope of your work. The \`trigger_handoff\` tool is now armed; use it to trigger a handoff proactively at a time that is convenient for the other agent to continue after you, such as before starting the next chunk of work, after a local checkpoint or commit, or before working on the next user request. Before handoff, consider persisting or updating plans and checklists. If you do not use the tool, the context will still be compacted automatically once it fills up, possibly degrading quality of your work. You will get ${moreWarnings(remaining.length)} more warnings; do not wait until the last one - at that point you will not be able to update plans and checklists.`;
         } else if(last) {
           message = `This is the last warning: you have reached context limit. You MUST hand off NOW by calling \`trigger_handoff\` tool without updating plans and checklists, which can still be done by summarizer guided with \`summarizer_prompt\`.`
         } else {
-          message = `Context usage is at ${pct}% of the context window — the automatic compaction threshold is close. If you have not called \`trigger_handoff\` yet, do so at the next natural checkpoint (after finishing a chunk of work, after a commit, or before starting the next chunk). This is warning ${WARNING_LEVELS.indexOf(level) + 1} of ${WARNING_LEVELS.length}, with ${moreWarnings(remaining.length)} to come.`
+          message = `Context usage is nearing the limit — the automatic compaction threshold is close. If you have not called \`trigger_handoff\` yet, do so at the next natural checkpoint (after finishing a chunk of work, after a commit, or before starting the next chunk). This is warning ${WARNING_LEVELS.indexOf(level) + 1} of ${WARNING_LEVELS.length}, with ${moreWarnings(remaining.length)} to come.`
         }
 
 				// TODO run only one warn, it might do three at once
