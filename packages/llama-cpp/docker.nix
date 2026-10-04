@@ -1,7 +1,7 @@
 { dockerTools, llama-cpp, whisper-cpp, pkgs }: {
   head = dockerTools.streamLayeredImage {
     name = llama-cpp.pname;
-    tag = "${llama-cpp.version}-cuda-head_llama-swap-${pkgs.llama-swap.version}";
+    tag = "${llama-cpp.version}-cuda-head_whisper-cpp-${whisper-cpp.version}_llama-swap-${pkgs.llama-swap.version}";
     contents = with pkgs; [
       llama-swap
       llama-cpp bash busybox
