@@ -76,6 +76,13 @@
  *   session_before_compact; the last loaded wins).
  * - Avoid other extensions that mutate per-turn messages (context event) or
  *   the system prompt per turn (before_agent_start) — that breaks prefix identity.
+ * - The summary request's transcript head is the previous compaction entry's
+ *   stored system message (pi >= 0.86 stores the full prompt + tool state on
+ *   every compaction entry; the main loop sends it as the transcript head). The
+ *   extension must not additionally pass its own systemPrompt — pi would fold
+ *   the stored sections onto the text and render the prompt twice, so only the
+ *   first copy would match the KV cache. The first compaction (no stored head)
+ *   falls back to the current system prompt + tools.
  * - The summary request is a prefix of the last main request, so it fits in
  *   the window by construction.
  * - reserveTokens is read from pi's settings (project .pi/settings.json
@@ -582,7 +589,12 @@ Parameters:
       for(let i = 0; i < 3; i++) {
         response = await ctx.modelRegistry.complete(
           model,
-          { systemPrompt: ctx.getSystemPrompt(), messages: [...messages, { role: "user", content: [{ type: "text", text: instruction }], timestamp: Date.now() }], tools },
+          {
+            // system prompt is already in messages
+            // systemPrompt: ctx.getSystemPrompt(),
+            messages: [...messages, { role: "user", content: [{ type: "text", text: instruction }], timestamp: Date.now() }],
+            tools
+          },
           {
             // Same output budget as built-in compaction (0.8 * reserveTokens).
             maxTokens: Math.min(
