@@ -6,6 +6,7 @@ in {
     ./domU/forgejo-runner
     ./domU/general
     ./domU/letta-code
+    ./domU/spark
   ];
   config = {
     boot.initrd.systemd.enable = true;
