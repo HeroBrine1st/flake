@@ -65,6 +65,9 @@
       desktop = ./modules/common/desktop;
       development = ./modules/common/development;
       hyprland = ./modules/common/desktop/hyprland;
+      xen.domain = {
+        onBtrfs = import ./modules/common/xen/btrfs.nix;
+      };
     };
     legacyPackages = forAllSystems (system: import ./packages (inputs // {
       inherit system;
