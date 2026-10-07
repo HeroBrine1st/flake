@@ -1,5 +1,5 @@
 { lib, modulesPath, pkgs, utils, ... }@host: let
-  nix-store-disk = "xvda";
+  nix-store-disk = "xvdz"; # HVM reserves some first disks to be emulated; everything else is PV
   nixStoreFilesystemLabel = "nix-store";
 in {
   options = {
