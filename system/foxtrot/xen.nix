@@ -20,7 +20,7 @@ in {
       enable = true;
       boot.params = [
         #"vga=ask"
-        "dom0=pv" # TODO make it pvh when Xen 4.21 arrives; Xen 4.20 doesn't support PCI passthrough with PVH dom0
+        "dom0=pvh"
         "dom0_mem=65536M,max:65536M"
         "smt=false"
       ];
