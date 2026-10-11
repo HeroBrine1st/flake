@@ -1,38 +1,24 @@
-{ llama-cpp, lib, fetchFromGitHub, cudaPackages}: (llama-cpp.override {
+{ llama-cpp, lib, fetchFromGitHub, cudaPackages, npmHooks }: (llama-cpp.override {
   rpcSupport = true;
   cudaSupport = true;
 }).overrideAttrs (final: old: {
-  #pname = "beellama-cpp";
-  #version = "0.3.1";
-  #src = fetchFromGitHub {
-  #  owner = "Anbeeld";
-  #  repo = "beellama.cpp";
-  #  rev = "v${final.version}";
-  #
-  #  hash = "sha256-sKoFROgpOE8bsFTAe34suJ5j9DWln5wlBxR0MVuhKgQ=";
-  #};
-  #npmDepsHash = "sha256-1iM0LGeI9e+gZEHk46lkBe51DxIhiimfAm9o3Z3m9Ik=";
-  
-  #version = let v = "10517"; in assert lib.versionOlder old.version v; v;
-  #src = old.src.override {
-  #  tag = "b${final.version}";
-  #  hash = "sha256-heMmF0gQNPdxRLxwU/JB/9vtAoZ66EJPllY8ans/5Cw=";
-  #};
-
-  version = "0.5.0";
+  version = "b11557";
   src = fetchFromGitHub {
     owner = "ggml-org";
     repo = "llama.cpp";
-    tag = "v${final.version}";
-    hash = "sha256-MtSVt0qM8I0MeMzVxT7+nVkhQ7ysMS4/kbk/DxzTI2A=";
+    tag = "b11557";
+    hash = "sha256-kV7y1i5HWdGR6oBIxmiB+L/FgiJOKURdX/N5nznkMg4=";
   };
-  npmDepsHash = "sha256-2Q7XhaLAArmviOLdQsNbYTfdyDE5pW9lR26cRHEVl9k=";
+
+  # disable frontend
+  npmDeps = null;
+  nativeBuildInputs = builtins.filter (x: x != npmHooks.npmConfigHook) old.nativeBuildInputs;
+  preConfigure = builtins.replaceStrings [ "npm run build" ] [ "" ] old.preConfigure;
+
   buildInputs = old.buildInputs ++ [
     cudaPackages.nccl
   ];
 
-  #postInstall = builtins.replaceStrings ["cp bin/rpc-server $out/bin/llama-rpc-server"] [""] old.postInstall;
-  #npmDepsHash = "sha256-2Q7XhaLAArmviOLdQsNbYTfdyDE5pW9lR26cRHEVl9k=";
   cmakeFlags = old.cmakeFlags ++ [
     # https://github.com/Anbeeld/beellama.cpp/blob/main/docs/quickstart-qwen36-dflash.md
     # required for TurboQuant and TCQ cache types
