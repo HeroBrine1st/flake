@@ -17,7 +17,7 @@
         #"git+https://github.com/"
       ];
       substituters = [
-        "https://aseipp-nix-cache.global.ssl.fastly.net?priority=100" # not reliable, lower priority
+        #"https://aseipp-nix-cache.global.ssl.fastly.net?priority=100" # not reliable, slows down builds
       ];
       build-dir = "/nix/var/nix/tmp/builds"; # so that it creates with right permissions
     };
