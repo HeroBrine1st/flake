@@ -4,6 +4,8 @@
   config.nix.settings = lib.mkMerge [
     {
       auto-optimise-store = true;
+      http-connections = 128;
+      max-substitution-jobs = 128;
     }
     (lib.mkIf (config.network.overlay.enabled && config.nix.useFlakeCache) {
       substituters = [
