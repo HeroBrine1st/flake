@@ -5,6 +5,7 @@
         ./pipenv-venv-in-project.patch
       ];
     }))
+    pkgs.uv
   ];
 
   programs.python = {
