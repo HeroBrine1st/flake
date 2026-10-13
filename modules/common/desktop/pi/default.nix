@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, flake, ... }:
 let
   subagent = "${pkgs.pi-coding-agent}/lib/node_modules/pi-monorepo/examples/extensions/subagent";
 in
@@ -6,6 +6,7 @@ in
   environment = {
     systemPackages = with pkgs; [
       pi-coding-agent
+      flake.pkgs.ksrc
     ];
 
     variables = {
@@ -33,7 +34,10 @@ in
         ./extensions/prefix-compaction/index.ts
       ];
       packages = [
-        "${subagent}/index.ts"
+#        "${subagent}/index.ts"
+      ];
+      skills = [
+        "${flake.pkgs.ksrc.src}/skills/ksrc"
       ];
     };
 
