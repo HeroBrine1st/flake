@@ -83,14 +83,6 @@
     jetbrains.clion gcc cmake
     arduino-ide
     jetbrains.rust-rover
-    (opencode.overrideAttrs (old: {
-      patches = (old.patches or []) ++ [
-        (pkgs.fetchpatch {
-          url = "https://github.com/anomalyco/opencode/pull/30190.patch";
-          hash = "sha256-i7+dq2mMlTFgKoWqzdD0wUpr6ZDqPp9qwaLFFliMczw=";
-        })
-      ];
-    }))
 
     # "Office"
     libreoffice-stable
