@@ -381,8 +381,15 @@ export default function (pi: ExtensionAPI) {
 		return new Text(theme.fg("accent", line), 0, 0);
 	});
 
-	pi.registerMessageRenderer("future-agent-message", (message, _options, theme) => {
-		return new Text(theme.fg("success", "Handoff completed - sending future agent message to continue work"), 0, 0);
+	pi.registerMessageRenderer("future-agent-message", (message, { outputPad, expanded }, theme) => {
+    let text = "Handoff completed - sending future agent message to continue work"
+    if (expanded && message.details && message.details.futureAgentMessage) {
+      text = message.details.futureAgentMessage
+    }
+
+    const box = new Box(outputPad, 1, (t) => theme.bg("future-agent-message-bg", t));
+    box.addChild(new Text(theme.fg("success", text), 0, 0));
+    return box;
 	});
 
 	// Restore warnedLevels after a session reload/resume/fork: warnings fire
@@ -426,8 +433,8 @@ export default function (pi: ExtensionAPI) {
 							{
 								customType: "future-agent-message",
 								content: [{ type: "text" as const, text: "Here's the message from previous agent:\n\n" + handoffRef.futureAgentMessage }],
-								display: false,
-								details: { extension: "prefix-compaction" },
+								display: true,
+								details: { extension: "prefix-compaction", futureAgentMessage: handoffRef.futureAgentMessage },
 							},
 							{ triggerTurn: true },
 						);
