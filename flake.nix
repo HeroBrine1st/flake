@@ -158,7 +158,7 @@
         ];
       };
 
-      foxtrot = pkgs-stable.lib.nixosSystem rec {
+      foxtrot = pkgs-unstable.lib.nixosSystem rec {
         system = "x86_64-linux";
         specialArgs = commonSpecialArgs system;
         modules = [
