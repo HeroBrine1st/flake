@@ -17,6 +17,10 @@ in {
       "reasoningStrength" = "reasoning_strength";
       "enableThinking" = "enable_thinking";
     } {
+      healthCheckTimeout = 600;
+      globalTTL = 1800;
+      captureBuffer = 0;
+      includeAliasesInList = true;
       models = let
         server = [ "${flake.pkgs.llama-cpp}/bin/llama-server" "--port" "\${PORT}" "--log-verbosity" "4" "--load-mode" "dio" ];
         caching = [ "--cache-ram" "2048" ]; # TODO 16384
@@ -45,6 +49,33 @@ in {
               inherit reasoningStrength;
             };
           }) [ "low" "medium" "xhigh" ]);
+        };
+        "embeddinggemma2" = {
+          cmd = lib.escapeShellArgs (server ++ [
+            "--model" "${modelDir}/embeddinggemma-2-Q8_0.gguf"
+            "--mmproj" "${modelDir}/embeddinggemma-2-mmproj-Q8_0.gguf"
+            "--embedding"
+            "-b" "8192" "-ub" "8192" "--parallel" "4"
+            "--device" "none"
+          ]);
+        };
+        "datalab-to/surya-ocr-2" = {
+          cmd = lib.escapeShellArgs (server ++ [
+            "--model" "${modelDir}/surya-2.gguf"
+            "--mmproj" "${modelDir}/surya-2-mmproj.gguf"
+            "--flash-attn" "on"
+            "--predict" "8192"
+          ]);
+        };
+      };
+      groups = {
+        embedding = {
+          swap = false;
+          persistent = true;
+          exclusive = false;
+          members = [
+            "embeddinggemma2"
+          ];
         };
       };
     };
