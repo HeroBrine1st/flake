@@ -29,7 +29,7 @@ in {
         format = "qcow2";
       };
       extraXenlight = ''
-        memory=8192
+        memory=32768
         vcpus=14
         cpu_weight=256
         pci=[ "84:00.0@16,seize=1", "05:00.0@17,seize=1" ]

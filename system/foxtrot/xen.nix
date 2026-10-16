@@ -22,7 +22,7 @@ in {
       boot.params = [
         #"vga=ask"
         "dom0=pvh"
-        "dom0_mem=65536M,max:65536M"
+        "dom0_mem=32768M,max:32768M"
         "smt=false"
       ];
       networking.bridges.xenbr0 = {
