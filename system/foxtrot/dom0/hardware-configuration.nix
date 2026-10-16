@@ -14,8 +14,11 @@
     };
     kernelModules = [ "kvm-intel" ];
     loader = {
-      systemd-boot.enable = true;
-      systemd-boot.consoleMode = "auto";
+      systemd-boot = {
+        enable = true;
+        consoleMode = "auto";
+        bootCounting.enable = true;
+      };
       efi.canTouchEfiVariables = true;
     };
     kernelParams = [ "intel_iommu=on" ];

@@ -1,4 +1,4 @@
-{ lib, ... }: let
+{ lib, config, pkgs, ... }: let
   bridge = "xenbr0";
 in {
   imports = [
@@ -34,6 +34,15 @@ in {
           pool = "10.135.116.10-10.135.116.254";
         };
       };
+    };
+
+    boot.loader.systemd-boot = let
+      cfg = config.boot.loader.systemd-boot;
+    in lib.mkIf (cfg.enable && cfg.bootCounting.enable && config.virtualisation.xen.enable) {
+      # fix nixos entry being the preferred one
+      extraInstallCommands = lib.mkAfter ''
+        ${lib.getExe pkgs.gnused} -i 's/^preferred nixos-/preferred xen-/' "${config.boot.loader.efi.efiSysMountPoint}/loader/loader.conf"
+      '';
     };
   };
 }
