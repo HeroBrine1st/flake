@@ -2,7 +2,7 @@
   rpcSupport = true;
   cudaSupport = true;
 }).overrideAttrs (final: old: {
-  version = "b11557";
+  version = "11557";
   src = fetchFromGitHub {
     owner = "ggml-org";
     repo = "llama.cpp";
@@ -28,7 +28,7 @@
     (lib.cmakeFeature "CMAKE_CUDA_ARCHITECTURES" "86;75")
     #(lib.cmakeFeature "LLAMA_BUILD_NUMBER" "000301") # it is an integer
   ];
-  patches = (old.patches or []) ++ [
+  patches = [ # TODO: (old.patches or []) - https://github.com/ggml-org/llama.cpp/pull/30034 is included while it's in b11557 already
     # This one is embedded in beellama.cpp
     ./consider-mmproj-offload-in-vram-reservation.patch
     ./q6.patch
