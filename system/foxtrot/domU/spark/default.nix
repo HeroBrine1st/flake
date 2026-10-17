@@ -17,6 +17,8 @@ in {
         flake.inputs.impermanence.nixosModules.impermanence
         ./guest.nix
         ./nvidia.nix
+        ./docker.nix
+
         ./llama-swap.nix
       ];
       networking.bridges.xenbr0 = {
