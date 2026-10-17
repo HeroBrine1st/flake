@@ -227,7 +227,11 @@
     hydraJobs = {
       machines = pkgs-stable.lib.filterAttrs (name: _: name != "iso") (
         builtins.mapAttrs (_: node: node.config.system.build.toplevel) self.nixosConfigurations
-      );
+      ) // {
+        foxtrot.dom0 = self.nixosConfigurations.foxtrot.config.system.build.toplevel;
+        foxtrot.domU = builtins.mapAttrs (name: value: value.definition) self.nixosConfigurations.foxtrot.config.virtualisation.xen.machines;
+      };
+
       desktops = pkgs-stable.legacyPackages."x86_64-linux".releaseTools.aggregate { # To later allow updating only if every machine can be updated
         name = "All desktops";
         constituents = [
