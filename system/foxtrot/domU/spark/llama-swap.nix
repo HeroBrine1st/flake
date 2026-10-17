@@ -23,7 +23,7 @@ in {
       includeAliasesInList = true;
       models = let
         server = [ "${flake.pkgs.llama-cpp}/bin/llama-server" "--port" "\${PORT}" "--log-verbosity" "4" "--load-mode" "dio" ];
-        caching = [ "--cache-ram" "2048" ]; # TODO 16384
+        caching = [ "--cache-ram" "0" ]; # TODO 16384
         no_rpc = [ "--fit" "off" "--split-mode" "tensor" ];
       in {
         "qwen3.8:27b" = {
