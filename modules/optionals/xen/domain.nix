@@ -25,8 +25,7 @@
   stopDomain = pkgs.writeScript "stop-xl-domain" ''
     #!${pkgs.bash}/bin/bash
 
-    ${cfg.package}/bin/xl shutdown -w $1
-    ${cfg.package}/bin/xl destroy $1
+    ${cfg.package}/bin/xl shutdown -ww $1
     rm -f "$cfg"
   '';
 in {
