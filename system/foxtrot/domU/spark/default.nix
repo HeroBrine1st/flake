@@ -32,7 +32,7 @@ in {
       };
       extraXenlight = ''
         memory=65536
-        vcpus=14
+        vcpus=28
         cpu_weight=256
         pci=[ "84:00.0@16,seize=1", "05:00.0@17,seize=1" ]
       '';
