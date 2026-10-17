@@ -3,7 +3,7 @@
   fileSystems."/nix/var/nix/tmp" = {
     device = "tmpfs";
     fsType = "tmpfs";
-    options = [ "mode=700" ];
+    options = [ "mode=711" ];
   };
 
   boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
@@ -21,16 +21,10 @@
       ];
       build-dir = "/nix/var/nix/tmp/builds"; # so that it creates with right permissions
     };
-    buildMachines = [
-      {
-        hostName = "localhost";
-        protocol = null;
-        systems = [ "x86_64-linux" "aarch64-linux" "i686-linux" ];
-        supportedFeatures = [ "nixos-test" "big-parallel" "benchmark" ];
-      }
-    ];
     gc.automatic = true;
   };
+
+
 
   services = {
     hydra = {
@@ -55,6 +49,24 @@
         </githubstatus>
         Include /nix/persist/hydra.xml
       '';
+    };
+    hydra-builder = {
+      enable = true;
+      queueRunnerAddr = with config.services.hydra.queueRunner.grpc; "http://${address}:${builtins.toString port}";
+
+      settings = {
+        systems = [
+          "x86_64-linux"
+          "aarch64-linux"
+          "i686-linux"
+        ];
+
+        supportedFeatures = [
+          "nixos-test"
+          "big-parallel"
+          "benchmark"
+        ];
+      };
     };
     nix-serve = {
       enable = true;
