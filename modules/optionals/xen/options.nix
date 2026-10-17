@@ -145,13 +145,14 @@ in {
                   disk=[ ${lib.concatMapStringsSep ", " (x: ''"${x.spec}"'') (lib.attrValues machine.config.disks) } ]
 
                   vif=[ ${lib.concatMapAttrsStringSep ", " (bridge: bridgeCfg: "'mac=${bridgeCfg.mac},bridge=${bridge}'") machine.config.networking.bridges} ]
+                  cmdline='init=${gconfig.system.build.toplevel}/init ${toString gconfig.boot.kernelParams}'
                 '';
                 inherit (machine.config) extraXenlight;
               };
 
               # what happens in VM stays in VM, base64 is used to trick scanner
               base64 = ''
-                cmdline='init=${gconfig.system.build.toplevel}/init ${toString gconfig.boot.kernelParams}'
+
               '';
 
               passAsFile = [ "json" "base64" ];
