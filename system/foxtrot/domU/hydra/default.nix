@@ -67,7 +67,4 @@ in {
       hydra.loadBalancer.servers = [ { url = "http://${ip}:${toString gconfig.services.hydra.port}"; } ];
     };
   };
-
-  # hardening; otherwise it's trivial VM escape
-  nix.useFlakeCache = false;
 }
