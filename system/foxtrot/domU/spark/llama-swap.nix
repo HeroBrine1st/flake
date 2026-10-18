@@ -49,9 +49,11 @@ in {
                 KV=${kv}
                 VISION=yes
                 STRATA_ALLOWED_HOSTS=spark.herobrine1st.ru
+                # qwen3.8 27b claimed thinking-only responses are omitted
+                STRATA_KEEP_EMPTY_TURNS=1
               ''}"
               "-v" "${modelDir}/strata:/data"
-              "-p" "\${PORT}:8080"
+              "-p" "127.0.0.1:\${PORT}:8080"
               "strata:latest" # built manually
             ];
             cmdStop = lib.escapeShellArgs [ "${config.virtualisation.docker.package}/bin/docker" "stop" "${family}-${model}" ];
