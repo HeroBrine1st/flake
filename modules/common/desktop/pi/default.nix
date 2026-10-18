@@ -42,33 +42,59 @@ in
     };
 
     ".jetbrains/pi/agent/models.json".text = builtins.toJSON {
-      providers."llama-swap" = {
-        baseUrl = "https://spark.herobrine1st.ru/v1";
-        api = "openai-completions";
-        apiKey = "dummy";
-        compat = {
-          thinkingFormat = "chat-template";
-          chatTemplateKwargs = {
-            enable_thinking = { "$var" = "thinking.enabled"; };
-            preserve_thinking = true;
-            reasoning_effort = { "$var" = "thinking.effort"; omitWhenOff = true; };
-          };
-        };
-        models = [
-          {
-            id = "qwen3.8:27b";
-            name = "Qwen 3.8 27B";
-            input = [ "text" "image" ];
-            contextWindow = 163840;
-            maxTokens = 65536;
-            reasoning = true;
-            thinkingLevelMap = {
-              minimal = null;
-              high = null;
-              xhigh = "xhigh";
+      providers = {
+        "llama-swap" = {
+          baseUrl = "https://spark.herobrine1st.ru/v1";
+          api = "openai-completions";
+          apiKey = "dummy";
+          compat = {
+            thinkingFormat = "chat-template";
+            chatTemplateKwargs = {
+              enable_thinking = { "$var" = "thinking.enabled"; };
+              preserve_thinking = true;
+              reasoning_effort = { "$var" = "thinking.effort"; omitWhenOff = true; };
             };
-          }
-        ];
+          };
+          models = [
+            {
+              id = "qwen3.8:27b";
+              name = "Qwen 3.8 27B";
+              input = [ "text" "image" ];
+              contextWindow = 163840;
+              maxTokens = 65536;
+              reasoning = true;
+              thinkingLevelMap = {
+                minimal = null;
+                high = null;
+                xhigh = "xhigh";
+              };
+            }
+          ];
+        };
+        "llama-swap-strata" = {
+          baseUrl = "https://spark.herobrine1st.ru/v1";
+          api = "openai-completions";
+          apiKey = "dummy";
+          compat = {
+            supportsReasoningEffort = true;
+            thinkingFormat = "openai";
+          };
+          models = [
+            {
+              id = "qwen3.8-flash-next:80b";
+              name = "Qwen 3.8 Flash Next";
+              input = [ "text" "image" ];
+              contextWindow = 163840;
+              maxTokens = 65536;
+              reasoning = true;
+              thinkingLevelMap = {
+                minimal = null;
+                high = null;
+                xhigh = "xhigh";
+              };
+            }
+          ];
+        };
       };
     };
 
