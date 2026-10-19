@@ -12,6 +12,7 @@ in {
     enable = true;
     openFirewall = true;
     listenAddress = ip;
+    validateConfigFile = false; # because it tries to write into store.path!
     settings = replaceKeys {
       "chatTemplateParams" = "chat_template_kwargs";
       "reasoningStrength" = "reasoning_strength";
@@ -21,8 +22,8 @@ in {
       globalTTL = 1800;
       captureBuffer = 0;
       includeAliasesInList = true;
-      models = let
-      in lib.mkMerge [
+      store.path = "/var/lib/llama-swap/llama-swap.sqlite";
+      models = lib.mkMerge [
         (let
           qwenFlashNext = { family, model, context ? 163840, kv ? "int8"}: {
             # manual actions:
@@ -75,10 +76,10 @@ in {
           no_rpc = [ "--fit" "off" "--split-mode" "tensor" ];
           buildCommand = { extras ? [], cfg }: lib.escapeShellArgs (
             # presets are likely for multiple models, and I don't need router mode!
-            builtins.concatLists ([ server ] ++ extras ++ lib.mapAttrsToList (name: value:
+            builtins.concatLists ([ server ] ++ extras ++ (lib.mapAttrsToList (name: value:
               (if value == false then [ "--no-${name}" ] else [ "--${name}" ]) ++
               (if builtins.isBool value then [] else [ value ])
-            ))
+            ) cfg))
           );
           reasoningStrengthFilters = strengths: builtins.listToAttrs (builtins.map (reasoningStrength: {
               name = "\${MODEL_ID}-${reasoningStrength}";
@@ -88,7 +89,7 @@ in {
               };
             }) strengths);
           reasoningFilters = {
-            "\${MODEL_ID}-${reasoningStrength}".enableThinking = true;
+            "\${MODEL_ID}-reasoning".enableThinking = true;
           };
         in {
           "qwen3.8:27b" = let
@@ -157,7 +158,7 @@ in {
                 ctx-size = 81920;
                 chat-template-file = "${modelDir}/gemma-4.jinja";
                 reasoning = "off";
-                chat-template-kwargs = builtins.toJson { preserve_thinking = true; };
+                chat-template-kwargs = builtins.toJSON { preserve_thinking = true; };
               };
             };
             filters.setParamsByID = reasoningFilters;
@@ -173,7 +174,7 @@ in {
                 ctx-size = 262144;
                 chat-template-file = "${modelDir}/gemma-4.jinja";
                 reasoning = "off";
-                chat-template-kwargs = builtins.toJson { preserve_thinking = true; };
+                chat-template-kwargs = builtins.toJSON { preserve_thinking = true; };
               };
             };
             filters.setParamsByID = reasoningFilters;
@@ -210,5 +211,12 @@ in {
     };
   };
 
-  systemd.services.llama-swap.serviceConfig.Group = "docker";
+  systemd.services.llama-swap.serviceConfig = {
+    Group = "docker";
+    StateDirectory = "llama-swap";
+  };
+
+  services.impermanence.extraDirectories = [
+    "/var/lib/private/llama-swap"
+  ];
 }

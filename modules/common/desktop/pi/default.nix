@@ -22,7 +22,7 @@ in
     ".jetbrains/pi/agent/settings.json".text = builtins.toJSON {
       theme = "dark";
       defaultProvider = "llama-swap";
-      defaultModel = "qwen3.8:27b";
+      defaultModel = "qwen3.8-flash-next:80b";
       defaultThinkingLevel = "xhigh";
       markdown.mermaid = "streaming";
       hideThinkingBlock = false;
@@ -69,17 +69,6 @@ in
                 xhigh = "xhigh";
               };
             }
-          ];
-        };
-        "llama-swap-strata" = {
-          baseUrl = "https://spark.herobrine1st.ru/v1";
-          api = "openai-completions";
-          apiKey = "dummy";
-          compat = {
-            supportsReasoningEffort = true;
-            thinkingFormat = "openai";
-          };
-          models = [
             {
               id = "qwen3.8-flash-next:80b";
               name = "Qwen 3.8 Flash Next";
@@ -91,6 +80,10 @@ in
                 minimal = null;
                 high = null;
                 xhigh = "xhigh";
+              };
+              compat = {
+                supportsReasoningEffort = true;
+                thinkingFormat = "openai";
               };
             }
           ];
