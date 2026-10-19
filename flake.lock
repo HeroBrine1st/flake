@@ -399,10 +399,9 @@
         "type": "github"
       },
       "original": {
-        "owner": "NixOS",
-        "repo": "nixpkgs",
+        "id": "nixpkgs",
         "rev": "59b1aef59071cae6e87859dc65de973d2cc595c0",
-        "type": "github"
+        "type": "indirect"
       }
     },
     "pkgs-jetbrains-oss": {
@@ -415,10 +414,9 @@
         "type": "github"
       },
       "original": {
-        "owner": "NixOS",
-        "repo": "nixpkgs",
+        "id": "nixpkgs",
         "rev": "fd40dc70a9554de4370b6d5d08b858f7c4e49e30",
-        "type": "github"
+        "type": "indirect"
       }
     },
     "pkgs-krita": {
@@ -431,10 +429,9 @@
         "type": "github"
       },
       "original": {
-        "owner": "NixOS",
-        "repo": "nixpkgs",
+        "id": "nixpkgs",
         "rev": "5c21abf2abb5bcbbb8d486d1fc32305fb03b0414",
-        "type": "github"
+        "type": "indirect"
       }
     },
     "pkgs-stable": {
