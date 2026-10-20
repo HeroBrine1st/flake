@@ -27,11 +27,12 @@ in {
         (let
           qwenFlashNext = { family, model, context ? 163840, kv ? "int8"}: {
             # manual actions:
-            # add this to config:
+            # add this to config (/models/strata/install/strata-iq3_s.json):
             # "sampling": {"temperature": 1.0, "top_p": 0.95, "top_k": 20},
             # "reasoning_effort": "none",
-            #  "fit_max_tokens": true,
+            # "fit_max_tokens": true,
             # also, https://www.reddit.com/r/LocalLLaMA/comments/1x8am0i/why_not_run_qwen_38_flash_next_with_the_full/
+            # also, mind "gpu" setting, it must be [0, 1], INCLUDING /models/strata/config/strata/launch-presets/docker.json
             cmd = lib.escapeShellArgs [
               "${config.virtualisation.docker.package}/bin/docker" "run" "--rm" "--name" "${family}-${model}"
               "--ulimit" "memlock=-1" "--device=nvidia.com/gpu=all"
@@ -40,14 +41,15 @@ in {
                 MODEL=${model}
                 CONTEXT=${builtins.toString context}
                 KV=${kv}
-                VISION=yes
+                VISION=gpu
                 STRATA_ALLOWED_HOSTS=spark.herobrine1st.ru
                 # qwen3.8 27b claimed thinking-only responses are omitted
                 STRATA_KEEP_EMPTY_TURNS=1
+                STRATA_API_KEY=none
               ''}"
               "-v" "${modelDir}/strata:/data"
               "-p" "127.0.0.1:\${PORT}:8080"
-              "strata:latest" # built manually
+              "strata:latest"
             ];
             cmdStop = lib.escapeShellArgs [ "${config.virtualisation.docker.package}/bin/docker" "stop" "${family}-${model}" ];
             checkEndpoint = "/health";
