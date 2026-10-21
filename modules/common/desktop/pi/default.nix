@@ -34,12 +34,7 @@ in
         ./extensions/prefix-compaction/index.ts
       ];
       packages = [
-        "${pkgs.fetchFromGitHub {
-          owner = "nicobailon";
-          repo = "pi-subagents";
-          tag = "v0.80.0";
-          hash = "sha256-/XjtoCIQu1c0DwOM+aeWWBmyk7JFuQWB10o9RLJk/kU=";
-        }}"
+#        "${subagent}/index.ts"
       ];
       skills = [
         "${flake.pkgs.ksrc.src}/skills/ksrc"
