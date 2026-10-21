@@ -7,7 +7,7 @@
     inherit system;
     config.allowUnfreePredicate = pkgsNamed [
       "cuda_cccl" "cuda_cudart" "libcublas" "cuda_nvcc" "cuda_nvrtc"
-      "cccl" "libnvvm" "cuda_crt"
+      "cccl" "libnvvm" "cuda_crt" "libcufft" "libnvjitlink"
     ];
   };
   pkgs-krita = import inputs.pkgs-krita { inherit system; };
@@ -28,6 +28,7 @@
     hyprshell = callPackage ./hyprshell.nix {};
 
     llama-cpp = pkgs-cuda.callPackage ./llama-cpp {};
+    audio-cpp = pkgs-cuda.callPackage ./audio-cpp {};
     whisper-cpp = pkgs-cuda.whisper-cpp.override {
       cudaSupport = true;
     };
