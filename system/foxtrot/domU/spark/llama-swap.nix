@@ -30,7 +30,7 @@ in {
             # add this to config:
             # "sampling": {"temperature": 1.0, "top_p": 0.95, "top_k": 20},
             # "reasoning_effort": "none",
-            #  "fit_max_tokens": true,
+            # "fit_max_tokens": true,
             # also, https://www.reddit.com/r/LocalLLaMA/comments/1x8am0i/why_not_run_qwen_38_flash_next_with_the_full/
             cmd = lib.escapeShellArgs [
               "${config.virtualisation.docker.package}/bin/docker" "run" "--rm" "--name" "${family}-${model}"
