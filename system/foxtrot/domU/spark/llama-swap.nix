@@ -1,5 +1,16 @@
 { pkgs, lib, flake, ip, config, ... }: let
   modelDir = "/models";
+  models = {
+    "whisper-large-v3-turbo-q5_0" = {
+      url = "https://huggingface.co/ggerganov/whisper.cpp/resolve/main/ggml-large-v3-turbo-q5_0.bin";
+      size = 574041195;
+    };
+  };
+  fileName = name:
+    models.${name}.fileName
+    or lib.last (lib.splitString "/" (builtins.head (lib.splitString "?" models.${name}.url)));
+  pathByName = name: "${modelDir}/${fileName name}";
+
   replaceKeys = replacements: attrs:
     lib.mapAttrs' (name: value: {
       name = replacements.${name} or name;
@@ -197,6 +208,50 @@ in {
             ]);
           };
         })
+        {
+          "comfyui" = let
+            comfyui = pkgs.comfyui;
+            stateDir = /run/comfyui;
+          in {
+            checkEndpoint = "/system_stats";
+            cmd = "${pkgs.writeShellScript "comfyui.sh" ''
+              ${pkgs.coreutils}/bin/mkdir -p "$STATE_DIRECTORY/comfyui"
+              for d in custom_nodes user; do
+                dir="$STATE_DIRECTORY/comfyui/$d"
+                [ -d "$dir" ] || ${pkgs.coreutils}/bin/mkdir -p "$dir";
+                ${pkgs.coreutils}/bin/ln -sfn "$dir" "${stateDir}/$d";
+              done
+              ${pkgs.coreutils}/bin/mkdir ${stateDir}/{input,output}
+              ${pkgs.coreutils}/bin/ln -sfn ${modelDir}/comfyui/models ${stateDir}/models
+              exec ${lib.getExe comfyui} --base-directory="${stateDir}" --listen=127.0.0.1 --port="$1" --preview-method auto
+            ''} \${PORT}";
+            cmdStop = "${pkgs.writeShellScript "comfyui-stop.sh" ''
+              kill "$1"
+              ${pkgs.findutils}/bin/find -P ${stateDir} -mindepth 1 -delete
+            ''} \${PID}";
+          };
+        }
+        {
+          "whisper:large-v3-turbo" = {
+            checkEndpoint = "/v1/audio/transcriptions/health";
+            capabilities = {
+              "in" = [ "audio" ];
+              out = [ "text" ];
+            };
+            cmd = lib.escapeShellArgs [
+              "${flake.pkgs.whisper-cpp}/bin/whisper-server"
+              "--host" "127.0.0.1"
+              "--port" "\${PORT}"
+              "--model" (pathByName "whisper-large-v3-turbo-q5_0")
+              "--language" "auto"
+              "--no-timestamps"
+              "--convert"
+              "--tmp-dir" "/tmp"
+              "--request-path" "/v1/audio/transcriptions"
+              "--inference-path" ""
+            ];
+          };
+        }
       ];
       groups = {
         embedding = {
@@ -214,6 +269,46 @@ in {
   systemd.services.llama-swap.serviceConfig = {
     Group = "docker";
     StateDirectory = "llama-swap";
+  };
+
+  systemd.services.llama-swap-models = {
+    description = "Fetch llama-swap model files into ${modelDir}";
+    wantedBy = [ "llama-swap.service" ];
+    after = [ "network-online.target" ];
+    wants = [ "network-online.target" ];
+    path = [ pkgs.coreutils pkgs.curl ];
+    serviceConfig = {
+      Type = "oneshot";
+      Restart = "on-failure";
+      RestartSec = 30;
+      Umask = "0022";
+    };
+    script = ''
+      fetch() {
+        local url="$1" path="$2" want="$3" got
+        mkdir -p "$(dirname -- "$path")"
+        got=$(stat -c %s -- "$path" 2>/dev/null || echo 0)
+        if [ "$got" -eq "$want" ]; then
+          echo "$path: complete ($got bytes)"
+          return 0
+        fi
+        echo "$path: $got/$want bytes, fetching"
+        curl --fail --location --continue-at - --retry 3 --retry-all-errors \
+          --connect-timeout 10 --no-progress-meter --show-error --output "$path" "$url" || return 1
+        got=$(stat -c %s -- "$path" 2>/dev/null || echo 0)
+        if [ "$got" -ne "$want" ]; then
+          echo "$path: still $got/$want bytes"
+          return 1
+        fi
+        echo "$path: complete ($got bytes)"
+      }
+
+      status=0
+      ${lib.concatMapStringsSep "\n" (name:
+        ''fetch "${models.${name}.url}" "${pathByName name}" "${toString models.${name}.size}" || status=1''
+      ) (builtins.attrNames models)}
+      exit $status
+    '';
   };
 
   services.impermanence.extraDirectories = [
