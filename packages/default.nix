@@ -1,7 +1,14 @@
 { pkgs-unstable, pkgs-stable, fenix, ags, pkgs-bdfr, system, ... }@inputs: let
   lib = pkgs.lib;
   pkgs = pkgs-unstable.legacyPackages."${system}";
-  pkgs-jetbrains-oss = inputs.pkgs-jetbrains-oss.legacyPackages."${system}";
+  pkgs-jetbrains-oss = import inputs.pkgs-jetbrains-oss {
+    inherit system;
+    config.rewriteURL = url:
+      lib.replaceStrings
+        [ "https://cache-redirector.jetbrains.com/repo1.maven.org" "https://cache-redirector.jetbrains.com" ] # throttled
+        [ "https://repo1.maven.org" "http://10.168.88.57:8001" ]
+        url;
+  };
   pkgsNamed = names: pkg: builtins.elem (lib.getName pkg) names;
   pkgs-cuda = import pkgs-unstable {
     inherit system;
