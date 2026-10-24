@@ -1,7 +1,7 @@
 { host, nix-store-disk, machine }: { lib, utils, pkgs, config, options, ... }@guest: lib.mkMerge [
   {
     networking.hostName = lib.mkDefault machine.name;
-    nixpkgs = { inherit (host.pkgs.stdenv) hostPlatform; };
+    nixpkgs = { inherit (host) pkgs; };
     system = lib.mkDefault { inherit (host.config.system) stateVersion; };
     boot = {
       kernelParams = [ "console=hvc0" ]; # SYSTEMD_SULOGIN_FORCE=1

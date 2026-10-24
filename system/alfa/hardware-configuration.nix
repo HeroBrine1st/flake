@@ -77,9 +77,6 @@
     };
   };
 
-
-  nixpkgs.hostPlatform = "aarch64-linux";
-
   services.udev.extraRules = ''
     KERNEL=="mpp_service", MODE="0660", GROUP="video"
     KERNEL=="rga", MODE="0660", GROUP="video"

@@ -54,5 +54,4 @@
   systemd.network.wait-online.enable = false; # copied from charlie
 
   networking.hostName = "hotel";
-  nixpkgs.hostPlatform = "x86_64-linux";
 }

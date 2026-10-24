@@ -118,18 +118,6 @@
     android-tools
   ];
 
-  nixpkgs.allowedUnfreePackages = [
-    "android-studio"
-    "rust-rover"
-    "webstorm"
-    "clion"
-    "steam" "steam-original" "steam-run" "steam-unwrapped"
-    "osu-lazer-bin"
-    "veracrypt"
-    "code" "vscode"
-    "winbox"
-  ];
-
   programs.gnupg.agent.enable = true;
 
   programs.wireshark.enable = true;

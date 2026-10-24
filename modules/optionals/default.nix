@@ -1,7 +1,6 @@
 {
   imports = [
     ./python.nix
-    ./unfree.nix
     ./wrappers.nix
     ./static-ids.nix
     ./llama-cpp-worker.nix

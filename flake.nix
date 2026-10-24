@@ -57,6 +57,22 @@
   outputs = { self, pkgs-unstable, pkgs-stable, nixos-rk3588, home-manager, disko, impermanence, lanzaboote, fenix, pkgs-bdfr, ags, ... }@inputs: let
     lib = pkgs-unstable.lib;
     forAllSystems = f: lib.genAttrs [ "x86_64-linux" "aarch64-linux" ] (system: f system);
+    commonNixpkgsConfig = {
+      allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [
+        "nvidia-x11" "nvidia-settings" "nvidia-kernel-modules" #"nvidia-persistenced"
+
+        # common/desktop
+        "android-studio"
+        "rust-rover"
+        "webstorm"
+        "clion"
+        "steam" "steam-original" "steam-run" "steam-unwrapped"
+        "osu-lazer-bin"
+        "veracrypt"
+        "code" "vscode"
+        "winbox"
+      ];
+    };
   in {
     nixosModules = {
       optionals = ./modules/optionals; # "optionals" means that they require an option to be enabled
@@ -68,7 +84,21 @@
       xen.domain = {
         onBtrfs = import ./modules/common/xen/btrfs.nix;
       };
-    };
+    } // lib.genAttrs [ "x86_64-linux" "aarch64-linux" ] (system:
+      builtins.mapAttrs
+      (_: nixpkgs: {
+        # note: readOnlyPkgs source must match lib source (excludes module)
+        imports = [ nixpkgs.nixosModules.readOnlyPkgs ];
+        config.nixpkgs.pkgs = import nixpkgs {
+          inherit system;
+          config = commonNixpkgsConfig;
+        };
+      })
+      {
+        onUnstablePkgs = pkgs-unstable;
+        onStablePkgs = pkgs-stable;
+      }
+    );
     legacyPackages = forAllSystems (system: import ./packages (inputs // {
       inherit system;
     }));
@@ -87,7 +117,6 @@
         inherit (nixos-rk3588.inputs) nixpkgs; # pinning nixpkgs so that kernel is not rebuilt due to system update
         system = "aarch64-linux";
       in pkgs-stable.lib.nixosSystem {
-        inherit system;
         specialArgs = {
           rk3588 = {
             inherit nixpkgs;
@@ -101,6 +130,7 @@
         modules = [
           nixos-rk3588.nixosModules.orangepi5.core
           impermanence.nixosModules.impermanence
+          self.nixosModules.${system}.onStablePkgs
           self.nixosModules.optionals
           self.nixosModules.basic
           self.nixosModules.includeSource
@@ -108,13 +138,15 @@
           ./system/alfa
         ];
       };
-      DESKTOP-IJK2GUG = pkgs-unstable.lib.nixosSystem rec {
+      DESKTOP-IJK2GUG = let
         system = "x86_64-linux";
+      in pkgs-unstable.lib.nixosSystem {
         specialArgs = commonSpecialArgs system;
         modules = [
           home-manager.nixosModules.home-manager
           impermanence.nixosModules.impermanence
           lanzaboote.nixosModules.lanzaboote
+          self.nixosModules.${system}.onUnstablePkgs
           self.nixosModules.optionals
           self.nixosModules.basic
           self.nixosModules.includeSource
@@ -124,13 +156,15 @@
           ./system/pc
         ];
       };
-      MOBILE-DCV5AQD = pkgs-unstable.lib.nixosSystem rec {
+      MOBILE-DCV5AQD = let
         system = "x86_64-linux";
+      in pkgs-unstable.lib.nixosSystem {
         specialArgs = commonSpecialArgs system;
         modules = [
           home-manager.nixosModules.home-manager
           impermanence.nixosModules.impermanence
           lanzaboote.nixosModules.lanzaboote
+          self.nixosModules.${system}.onUnstablePkgs
           self.nixosModules.optionals
           self.nixosModules.basic
           self.nixosModules.includeSource
@@ -158,11 +192,13 @@
         ];
       };
 
-      foxtrot = pkgs-unstable.lib.nixosSystem rec {
+      foxtrot = let
         system = "x86_64-linux";
+      in pkgs-unstable.lib.nixosSystem {
         specialArgs = commonSpecialArgs system;
         modules = [
           impermanence.nixosModules.impermanence
+          self.nixosModules.${system}.onUnstablePkgs
           self.nixosModules.optionals
           self.nixosModules.basic
           self.nixosModules.includeSource
@@ -171,12 +207,14 @@
         ];
       };
 
-      bravo = pkgs-stable.lib.nixosSystem rec {
+      bravo = let
         system = "x86_64-linux";
+      in pkgs-stable.lib.nixosSystem {
         specialArgs = commonSpecialArgs system;
         modules = [
           disko.nixosModules.disko
           impermanence.nixosModules.impermanence
+          self.nixosModules.${system}.onStablePkgs
           self.nixosModules.optionals
           self.nixosModules.basic
 
@@ -184,12 +222,14 @@
         ];
       };
 
-      testing = pkgs-stable.lib.nixosSystem rec {
+      testing = let
         system = "x86_64-linux";
+      in pkgs-stable.lib.nixosSystem rec {
         specialArgs = commonSpecialArgs system;
         modules = [
           disko.nixosModules.disko
           impermanence.nixosModules.impermanence
+          self.nixosModules.${system}.onStablePkgs
           self.nixosModules.optionals
           self.nixosModules.basic
 
@@ -197,12 +237,14 @@
         ];
       };
 
-      charlie = pkgs-stable.lib.nixosSystem rec {
+      charlie = let
         system = "x86_64-linux";
+      in pkgs-stable.lib.nixosSystem rec {
         specialArgs = commonSpecialArgs system;
         modules = [
           disko.nixosModules.disko
           impermanence.nixosModules.impermanence
+          self.nixosModules.${system}.onStablePkgs
           self.nixosModules.optionals
           self.nixosModules.basic
 
@@ -210,12 +252,14 @@
         ];
       };
 
-      hotel = pkgs-stable.lib.nixosSystem rec {
+      hotel = let
         system = "x86_64-linux";
+      in pkgs-stable.lib.nixosSystem rec {
         specialArgs = commonSpecialArgs system;
         modules = [
           disko.nixosModules.disko
           impermanence.nixosModules.impermanence
+          self.nixosModules.${system}.onStablePkgs
           self.nixosModules.optionals
           self.nixosModules.basic
 
@@ -225,7 +269,7 @@
     };
 
     hydraJobs = {
-      machines = pkgs-stable.lib.filterAttrs (name: _: name != "iso") (
+      machines = lib.filterAttrs (name: _: name != "iso") (
         builtins.mapAttrs (_: node: node.config.system.build.toplevel) self.nixosConfigurations
       ) // {
         foxtrot.dom0 = self.nixosConfigurations.foxtrot.config.system.build.toplevel;

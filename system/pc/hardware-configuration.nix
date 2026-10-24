@@ -85,8 +85,6 @@
   networking.hostName = "DESKTOP-IJK2GUG";
   networking.networkmanager.enable = true;
 
-  nixpkgs.hostPlatform = "x86_64-linux";
-
   # Enable OpenGL
   hardware.graphics.enable = true;
   hardware.graphics.enable32Bit = true;
@@ -128,10 +126,6 @@
   };
 
   hardware.nvidia-container-toolkit.enable = true;
-
-  nixpkgs.allowedUnfreePackages = [
-    "nvidia-x11" "nvidia-settings" "nvidia-persistenced" "nvidia-kernel-modules" # drivers
-  ];
 
   boot.extraModprobeConfig = ''
     options nvidia NVreg_TemporaryFilePath=/var/tmp

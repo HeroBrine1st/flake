@@ -87,6 +87,7 @@ in {
           config = let
             guest = import "${modulesPath}/../lib/eval-config.nix" {
               modules = [
+                (modulesPath + "/misc/nixpkgs/read-only.nix")
                 (import ./guest.nix {
                   inherit host nix-store-disk machine;
                 })

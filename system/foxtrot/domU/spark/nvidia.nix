@@ -11,8 +11,4 @@
   };
 
   services.xserver.videoDrivers = [ "nvidia" ];
-
-  nixpkgs.allowedUnfreePackages = [
-    "nvidia-x11"
-  ];
 }
