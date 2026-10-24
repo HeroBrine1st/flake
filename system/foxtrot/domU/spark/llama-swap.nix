@@ -34,9 +34,17 @@ in {
       captureBuffer = 0;
       includeAliasesInList = true;
       store.path = "/var/lib/llama-swap/llama-swap.sqlite";
+      upstream.ignorePaths = [
+        ".*\.(js|json|css|png|gif|jpg|jpeg|ico|txt)$"
+        # comfyui
+        "^/ws(/|$)"
+        "^/api/jobs$"
+        # strata
+        "^/metrics(/|$)"
+      ];
       models = lib.mkMerge [
         (let
-          qwenFlashNext = { family, model, context ? 163840, kv ? "int8"}: {
+          qwenFlashNext = { family, model, context ? 163840, kv ? "int8", extras ? {} }: {
             # manual actions:
             # add this to config:
             # "sampling": {"temperature": 1.0, "top_p": 0.95, "top_k": 20},
@@ -74,11 +82,14 @@ in {
                 reasoning.effort = reasoningStrength;
               };
             }) [ "low" "medium" "xhigh" ]);
-          };
+          } // extras;
         in {
           "qwen3.8-flash-next:80b" = qwenFlashNext {
             family = "qwen";
             model = "IQ3_S";
+            extras = {
+              ttl = 0;
+            };
           };
         })
         (let
