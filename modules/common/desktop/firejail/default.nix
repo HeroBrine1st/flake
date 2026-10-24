@@ -377,24 +377,6 @@
           "LD_LIBRARY_PATH=${pkgs.libGL}/lib"
         ];
       })
-      (sandboxJetbrains {
-        package = flake.pkgs.jetbrains.pycharm-oss;
-        prefix = let
-          env = pkgs.buildFHSEnv {
-            name = "pycharm-fhs-env";
-            targetPkgs = pkgs: (with pkgs;
-              [
-                libz # llama-index, numpy, or something, idk
-                libXcursor # Xwayland cursor
-             ]);
-            runScript = "env";
-          };
-        in [
-          "${env}/bin/pycharm-fhs-env"
-          "PIPENV_VENV_IN_PROJECT=1"
-          # "PIPENV_CUSTOM_VENV_NAME=venv" does not work with venv in project
-        ];
-      })
       (sandboxJetbrains { package = pkgs.jetbrains.webstorm; })
       (sandboxJetbrains { package = pkgs.jetbrains.clion; })
       (sandboxJetbrains { package = pkgs.jetbrains.rust-rover; })

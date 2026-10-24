@@ -19,7 +19,6 @@
     # "productShort" or "product", upper cased
     "idea-oss" = "IDEA";
     "idea-ultimate" = "IDEA";
-    "pycharm-oss" = "PYCHARM";
     "android-studio" = "STUDIO"; # dummy
     "webstorm" = "WEBSTORM";
     "clion" = "CLION";

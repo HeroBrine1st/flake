@@ -78,7 +78,6 @@
       ];
     })
     flake.pkgs.jetbrains.idea-oss
-    flake.pkgs.jetbrains.pycharm-oss
     jetbrains.webstorm
     jetbrains.clion gcc cmake
     arduino-ide

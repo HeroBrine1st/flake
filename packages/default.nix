@@ -49,7 +49,6 @@
       in {
         installPhase = builtins.replaceStrings ["item=${old.desktopItem}"] ["item=${desktopItem}"] old.installPhase;
       });
-      inherit (pkgs-jetbrains-oss.jetbrains) pycharm-oss;
     };
 
     traefik = callPackage ./traefik { traefik = pkgs-stable.legacyPackages."${system}".traefik; };
