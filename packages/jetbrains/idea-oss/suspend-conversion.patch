@@ -1,0 +1,15 @@
+--- a/platform/vcs-impl/src/com/intellij/vcs/changes/viewModel/LocalChangesViewProxy.kt
++++ b/platform/vcs-impl/src/com/intellij/vcs/changes/viewModel/LocalChangesViewProxy.kt
+@@ -47,7 +47,11 @@
+   }
+ 
+   override fun scheduleRefreshNow(callback: Runnable?) {
+-    panel.scheduleRefreshNow(if (callback == null) null else callback::run)
++    if (callback == null) {
++      panel.scheduleRefreshNow(null)
++    } else {
++      panel.scheduleRefreshNow { callback.run() }
++    }
+   }
+ 
+   override fun scheduleDelayedRefresh() {

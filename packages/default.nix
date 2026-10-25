@@ -50,12 +50,14 @@
     jetbrains = {
       # I tried to find the source of invalid wmClass but it isn't in github:jetbrains/intellij-community
       # (also looking at build times it seems like derivation does not build from source. It should have been days instead)
-      idea-oss = pkgs-jetbrains-oss.jetbrains.idea-oss.overrideAttrs(old: let
-        desktopItem = old.desktopItem.override(old: {
+      idea-oss = pkgs-jetbrains-oss.jetbrains.idea-oss.overrideAttrs (final: prev: {
+        src = prev.src.overrideAttrs (final: prev: {
+          patches = (prev.patches or [ ]) ++ [ ./jetbrains/idea-oss/suspend-conversion.patch ];
+        });
+        desktopItem = prev.desktopItem.override (old: {
           startupWMClass = assert old.startupWMClass == "jetbrains-idea-ce"; "jetbrains-idea";
         });
-      in {
-        installPhase = builtins.replaceStrings ["item=${old.desktopItem}"] ["item=${desktopItem}"] old.installPhase;
+        installPhase = builtins.replaceStrings [ "item=${prev.desktopItem}" ] [ "item=${final.desktopItem}" ] prev.installPhase;
       });
     };
 
