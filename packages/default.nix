@@ -14,10 +14,7 @@
     inherit system;
     config = {
       cudaSupport = true; # PYTHON!!!!!
-      allowUnfreePredicate = pkgsNamed [
-        "cuda_cccl" "cuda_cudart" "libcublas" "cuda_nvcc" "cuda_nvrtc"
-        "cccl" "libnvvm" "cuda_crt" "libcufft" "libnvjitlink"
-      ];
+      allowUnfree = true;
     };
   };
   pkgs-krita = import inputs.pkgs-krita { inherit system; };
