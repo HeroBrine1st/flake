@@ -222,24 +222,25 @@ in {
         })
         {
           "comfyui" = let
-            comfyui = pkgs.comfyui;
-            stateDir = /run/comfyui;
+            comfyui = flake.pkgs.comfyui;
+            runtimeDir = "$RUNTIME_DIRECTORY/comfyui";
+            stateDir = "$STATE_DIRECTORY/comfyui";
           in {
             checkEndpoint = "/system_stats";
             cmd = "${pkgs.writeShellScript "comfyui.sh" ''
-              ${pkgs.coreutils}/bin/mkdir -p "$STATE_DIRECTORY/comfyui"
+              ${pkgs.coreutils}/bin/mkdir -p "${runtimeDir}" "${stateDir}"
               for d in custom_nodes user; do
-                dir="$STATE_DIRECTORY/comfyui/$d"
+                dir="${stateDir}/$d"
                 [ -d "$dir" ] || ${pkgs.coreutils}/bin/mkdir -p "$dir";
-                ${pkgs.coreutils}/bin/ln -sfn "$dir" "${stateDir}/$d";
+                ${pkgs.coreutils}/bin/ln -sfn "$dir" "${runtimeDir}/$d";
               done
-              ${pkgs.coreutils}/bin/mkdir ${stateDir}/{input,output}
-              ${pkgs.coreutils}/bin/ln -sfn ${modelDir}/comfyui/models ${stateDir}/models
-              exec ${lib.getExe comfyui} --base-directory="${stateDir}" --listen=127.0.0.1 --port="$1" --preview-method auto
+              ${pkgs.coreutils}/bin/mkdir ${runtimeDir}/{input,output}
+              ${pkgs.coreutils}/bin/ln -sfn ${modelDir}/comfyui/models ${runtimeDir}/models
+              exec ${lib.getExe comfyui} --base-directory="${runtimeDir}" --listen=127.0.0.1 --port="$1" --preview-method auto
             ''} \${PORT}";
             cmdStop = "${pkgs.writeShellScript "comfyui-stop.sh" ''
               kill "$1"
-              ${pkgs.findutils}/bin/find -P ${stateDir} -mindepth 1 -delete
+              ${pkgs.findutils}/bin/find -P ${runtimeDir} -mindepth 1 -delete
             ''} \${PID}";
           };
         }
@@ -281,6 +282,7 @@ in {
   systemd.services.llama-swap.serviceConfig = {
     Group = "docker";
     StateDirectory = "llama-swap";
+    RuntimeDirectory = "llama-swap";
   };
 
   systemd.services.llama-swap-models = {

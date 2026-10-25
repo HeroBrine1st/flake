@@ -12,10 +12,13 @@
   pkgsNamed = names: pkg: builtins.elem (lib.getName pkg) names;
   pkgs-cuda = import pkgs-unstable {
     inherit system;
-    config.allowUnfreePredicate = pkgsNamed [
-      "cuda_cccl" "cuda_cudart" "libcublas" "cuda_nvcc" "cuda_nvrtc"
-      "cccl" "libnvvm" "cuda_crt" "libcufft" "libnvjitlink"
-    ];
+    config = {
+      cudaSupport = true; # PYTHON!!!!!
+      allowUnfreePredicate = pkgsNamed [
+        "cuda_cccl" "cuda_cudart" "libcublas" "cuda_nvcc" "cuda_nvrtc"
+        "cccl" "libnvvm" "cuda_crt" "libcufft" "libnvjitlink"
+      ];
+    };
   };
   pkgs-krita = import inputs.pkgs-krita { inherit system; };
   all-pkgs = pkgs // flake-pkgs // { pkgs = all-pkgs; };
@@ -39,6 +42,7 @@
     whisper-cpp = pkgs-cuda.whisper-cpp.override {
       cudaSupport = true;
     };
+    inherit (pkgs-cuda) comfyui;
 
     dockerImages = {
       llama-cpp = callPackages ./llama-cpp/docker.nix {};
