@@ -63,6 +63,7 @@ in {
                 STRATA_ALLOWED_HOSTS=spark.herobrine1st.ru
                 # qwen3.8 27b claimed thinking-only responses are omitted
                 STRATA_KEEP_EMPTY_TURNS=1
+                STRATA_KV_GROW=1
               ''}"
               "-v" "${modelDir}/strata:/data"
               "-p" "127.0.0.1:\${PORT}:8080"
