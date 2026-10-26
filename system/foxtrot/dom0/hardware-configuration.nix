@@ -68,11 +68,11 @@
       fsType = "btrfs";
       options = [ "defaults" "compress=zstd" "autodefrag" "noatime" "nofail" "x-systemd.before=local-fs.target" ];
     };
-    "/mnt/asm" = {
-      device = "/dev/mapper/sierra-mike-alfa";
-      fsType = "btrfs";
-      options = [ "defaults" "compress=zstd" "discard=async" "noatime" "nofail" "x-systemd.before=local-fs.target" ];
-    };
+#    "/mnt/asm" = {
+#      device = "/dev/mapper/sierra-mike-alfa";
+#      fsType = "btrfs";
+#      options = [ "defaults" "compress=zstd" "discard=async" "noatime" "nofail" "x-systemd.before=local-fs.target" ];
+#    };
   };
 
   networking = {
