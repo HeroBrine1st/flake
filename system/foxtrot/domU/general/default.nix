@@ -41,14 +41,8 @@
         ip = "10.135.116.12";
       };
       disks.xvdb = {
-        # sudo qemu-img create -f qcow2 -o compression_type=zstd,nocow=on forgejo-runner.qcow2 256G
-        # nix-shell -p libguestfs-with-appliance --run zsh
-        # sudo guestfish -a forgejo-runner.qcow2
-        # run
-        # mkfs ext4 /dev/sda
-        # Ctrl-D
-        target = "/mnt/asm/@vm/images/general.qcow2";
-        format = "qcow2";
+        target = "/dev/asm/general";
+        format = "raw";
       };
       extraXenlight = ''
         memory=8192

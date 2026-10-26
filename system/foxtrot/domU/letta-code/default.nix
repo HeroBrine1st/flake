@@ -42,9 +42,8 @@
         ip = "10.135.116.13";
       };
       disks.xvdb = {
-        # sudo qemu-img create -f qcow2 -o compression_type=zstd,nocow=on letta-code.qcow2 32G
-        target = "/mnt/asm/@vm/images/letta-code.qcow2";
-        format = "qcow2";
+        target = "/dev/asm/letta-code";
+        format = "raw";
       };
       extraXenlight = ''
         memory=4096

@@ -26,9 +26,8 @@ in {
         inherit ip;
       };
       disks.xvdx = {
-        # sudo qemu-img create -f qcow2 -o compression_type=zstd,nocow=on spark.qcow2 256G
-        target = "/mnt/asm/@vm/images/spark.qcow2";
-        format = "qcow2";
+        target = "/dev/asm/spark";
+        format = "raw";
       };
       extraXenlight = ''
         memory=65536

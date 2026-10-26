@@ -25,8 +25,8 @@
         # run
         # mkfs ext4 /dev/sda
         # Ctrl-D
-        target = "/mnt/asm/@vm/images/forgejo-runner.qcow2";
-        format = "qcow2";
+        target = "/dev/asm/forgejo-runner";
+        format = "raw";
       };
       extraXenlight = ''
         memory=16384

@@ -68,6 +68,10 @@
       fsType = "btrfs";
       options = [ "defaults" "compress=zstd" "autodefrag" "noatime" "nofail" "x-systemd.before=local-fs.target" ];
     };
+    # sudo pvcreate /dev/mapper/sierra-mike-alfa
+    # sudo vgcreate asm /dev/mapper/sierra-mike-alfa
+    # sudo lvcreate --type thin-pool -n asm-thin -l 95%FREE -Zn --discards passdown asm
+    # sudo lvcreate -n <name> -V 256G --thinpool asm-thin asm
 #    "/mnt/asm" = {
 #      device = "/dev/mapper/sierra-mike-alfa";
 #      fsType = "btrfs";

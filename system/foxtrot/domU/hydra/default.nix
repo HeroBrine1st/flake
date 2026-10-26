@@ -34,8 +34,8 @@ in {
         # run
         # mkfs ext4 /dev/sda
         # Ctrl-D
-        target = "/mnt/asm/@vm/images/hydra.qcow2";
-        format = "qcow2";
+        target = "/dev/asm/hydra";
+        format = "raw";
       };
       extraXenlight = ''
         memory=16384
