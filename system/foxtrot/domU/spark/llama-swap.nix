@@ -171,6 +171,7 @@ in {
           };
           "gemma4:31b" = {
             cmd = buildCommand {
+              extras = [ caching no_rpc ];
               cfg = {
                 model = "${modelDir}/gemma-4-31B-it-qat-UD-Q4_K_XL.gguf";
                 flash-attn = "on";
@@ -188,6 +189,7 @@ in {
           };
           "gemma4:12b" = {
             cmd = buildCommand {
+              extras = [ caching no_rpc ];
               cfg = {
                 model = "${modelDir}/gemma-4-12B-it-qat-UD-Q4_K_XL.gguf";
                 flash-attn = "on";
