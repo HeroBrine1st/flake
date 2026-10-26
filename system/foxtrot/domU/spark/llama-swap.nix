@@ -221,30 +221,6 @@ in {
           };
         })
         {
-          "comfyui" = let
-            comfyui = flake.pkgs.comfyui;
-            runtimeDir = "$RUNTIME_DIRECTORY/comfyui";
-            stateDir = "$STATE_DIRECTORY/comfyui";
-          in {
-            checkEndpoint = "/system_stats";
-            cmd = "${pkgs.writeShellScript "comfyui.sh" ''
-              ${pkgs.coreutils}/bin/mkdir -p "${runtimeDir}" "${stateDir}"
-              for d in custom_nodes user; do
-                dir="${stateDir}/$d"
-                [ -d "$dir" ] || ${pkgs.coreutils}/bin/mkdir -p "$dir";
-                ${pkgs.coreutils}/bin/ln -sfn "$dir" "${runtimeDir}/$d";
-              done
-              ${pkgs.coreutils}/bin/mkdir ${runtimeDir}/{input,output}
-              ${pkgs.coreutils}/bin/ln -sfn ${modelDir}/comfyui/models ${runtimeDir}/models
-              exec ${lib.getExe comfyui} --base-directory="${runtimeDir}" --listen=127.0.0.1 --port="$1" --preview-method auto
-            ''} \${PORT}";
-            cmdStop = "${pkgs.writeShellScript "comfyui-stop.sh" ''
-              kill "$1"
-              ${pkgs.findutils}/bin/find -P ${runtimeDir} -mindepth 1 -delete
-            ''} \${PID}";
-          };
-        }
-        {
           "whisper:large-v3-turbo" = {
             checkEndpoint = "/v1/audio/transcriptions/health";
             capabilities = {
