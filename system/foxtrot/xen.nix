@@ -2,13 +2,14 @@
   bridge = "xenbr0";
 in {
   imports = [
-    ./domU/hydra
-    ./domU/forgejo-runner
-    ./domU/general
-    ./domU/letta-code
-    ./domU/spark
+    #./domU/hydra
+    #./domU/forgejo-runner
+    #./domU/general
+    #./domU/letta-code
+    #./domU/spark
   ];
   config = {
+    nix.useFlakeCache = false;
     boot.initrd.systemd.enable = true;
 
     boot.kernel.sysctl = {
