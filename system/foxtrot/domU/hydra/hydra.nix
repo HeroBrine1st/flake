@@ -12,7 +12,9 @@
       substituters = [
         #"https://aseipp-nix-cache.global.ssl.fastly.net?priority=100" # not reliable, slows down builds
       ];
+      max-jobs = 1;
     };
+    nrBuildUsers = 1; # чтоб 100% один билд за раз
     gc.automatic = true;
   };
 
@@ -41,6 +43,7 @@
         </githubstatus>
         Include /nix/persist/hydra.xml
       '';
+      queueRunner.settings.machineFreeFn = "DynamicWithMaxJobLimit";
     };
     hydra-builder = {
       enable = true;
@@ -58,6 +61,8 @@
           "big-parallel"
           "benchmark"
         ];
+
+        maxJobs = 1;
       };
     };
     nix-serve = {
