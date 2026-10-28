@@ -84,6 +84,7 @@
       xen.domain = {
         onBtrfs = import ./modules/common/xen/btrfs.nix;
       };
+      xen.secrets = import ./modules/common/xen/secrets.nix;
     } // lib.genAttrs [ "x86_64-linux" "aarch64-linux" ] (system:
       builtins.mapAttrs
       (_: nixpkgs: {
