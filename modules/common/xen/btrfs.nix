@@ -1,5 +1,4 @@
-{ rootDevice ? "/dev/xvdb", lib, pkgs, utils, ... }: let
-in {
+{ rootDevice, lib, pkgs, utils, ... }: {
   fileSystems."/nix" = {
     device = rootDevice;
     fsType = "btrfs";
