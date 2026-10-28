@@ -3,6 +3,7 @@
     nano
     wget
     curl
+    jq
     htop
     tree
     ffmpeg

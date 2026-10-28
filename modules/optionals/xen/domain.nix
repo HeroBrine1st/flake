@@ -3,7 +3,7 @@
   decodeDomain = pkgs.writeScript "decode-xl-domain" ''
     #!${pkgs.bash}/bin/bash
 
-    ${pkgs.jq}/bin/jq --raw-output '.core' "$1"
+    ${pkgs.jq}/bin/jq --raw-output '.core, (.cmdline | "cmdline=" + @sh)' "$1"
     ${pkgs.jq}/bin/jq --raw-output '.base64' "$1" | ${pkgs.coreutils}/bin/base64 -d
     ${pkgs.jq}/bin/jq --raw-output '.extraXenlight' "$1"
   '';

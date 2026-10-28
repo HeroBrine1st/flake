@@ -1,0 +1,13 @@
+diff --git a/subprojects/hydra-queue-runner/src/state/mod.rs b/subprojects/hydra-queue-runner/src/state/mod.rs
+index 6609cb68..3e8a1da9 100644
+--- a/subprojects/hydra-queue-runner/src/state/mod.rs
++++ b/subprojects/hydra-queue-runner/src/state/mod.rs
+@@ -441,7 +441,7 @@ impl State {
+             if let Ok(cfg) = uri.parse::<binary_cache::S3CacheConfig>() {
+                 let cfg = cfg.with_presence_cache(
+                     Some(presence_cache_dir.join(presence_cache_file(&uri))),
+-                    None,
++                    Some(std::time::Duration::from_hours(3)),
+                 );
+                 remote_stores.push(RemoteStoreBackend::S3(Box::new(
+                     binary_cache::S3BinaryCacheClient::new(cfg).await?,

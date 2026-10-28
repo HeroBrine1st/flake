@@ -1,4 +1,4 @@
-{ pkgs, config, ... }: {
+{ forgejoURL, config, lib, pkgs, ... }: {
   fileSystems = {
     "/" = {
       device = "none";
@@ -7,22 +7,33 @@
     };
   };
 
-  virtualisation.oci-containers = {
-    backend = "docker";
-    containers."forgejo-runner" = {
-      autoStart = true;
-      image = "data.forgejo.org/forgejo/runner:${pkgs.forgejo-runner.version}";
-      volumes = [
-        # add
-        # container:
-        #   network: host
-        "/nix/persist/runner.yml:/config.yml:ro"
-        "/var/run/docker.sock:/var/run/docker.sock:ro"
-      ];
-      user = "0:${toString config.users.groups.docker.gid}";
-      cmd = [ "forgejo-runner" "daemon" "--config=/config.yml" ];
-      extraOptions = [ "--network=host" ];
+  services.forgejo-runner.instances.main = {
+    enable = true;
+    runtimes.docker = true;
+    assertions = lib.mkForce [ ];
+    settings = {
+      log.level = "info";
+      runner = {
+        capacity = 4;
+        labels = [
+          "docker:docker://node:26-trixie"
+          "alpine:docker://alpine"
+        ];
+      };
+      container.network = "host";
     };
+  };
+
+  systemd.services.forgejo-runner-main = {
+    after = [ "xen-secrets.service" ];
+    requires = [ "xen-secrets.service" ];
+    serviceConfig.ExecStart = lib.mkForce (pkgs.writeShellScript "forgejo-runner-one-job" ''
+      exec ${lib.getExe config.services.forgejo-runner.package} one-job -w \
+        --config ${config.services.forgejo-runner.instances.main.configFile} \
+        --url ${forgejoURL} \
+        --uuid "$(cat /run/xen.secret/forgejo-runner-uuid)" \
+        --token-url file:///run/xen.secret/forgejo-runner-token
+    '');
   };
 
   services.impermanence.enable = true;

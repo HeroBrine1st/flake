@@ -2,6 +2,10 @@
   ip = "10.135.116.10";
   domain = "hydra.ci.herobrine1st.ru";
   gconfig = config.virtualisation.xen.machines.hydra.system.config;
+  attic = {
+    domain = "cache.herobrine1st.ru";
+    cache = "herobrine1st";
+  };
 in {
   virtualisation.xen.machines = {
     hydra = {
@@ -11,6 +15,7 @@ in {
         flake.inputs.impermanence.nixosModules.impermanence
         ./guest.nix
         ./hydra.nix
+        ./attic.nix
         {
           fileSystems."/nix" = {
             device = "/dev/xvdb";
@@ -22,6 +27,7 @@ in {
       specialArgs = {
         inherit ip;
         hydraURL = "https://${domain}";
+        inherit attic;
       };
       networking.bridges.xenbr0 = {
         mac = "FE:FF:FF:00:00:01";
@@ -38,8 +44,8 @@ in {
         format = "raw";
       };
       extraXenlight = ''
-        memory=16384
-        vcpus=24
+        memory=8192
+        vcpus=4
         cpu_weight=512
       '';
     };
@@ -47,24 +53,34 @@ in {
 
   services.traefik.dynamicConfigOptions.http = {
     routers = {
-      nix-serve = {
-        entryPoints = [ "nebula" ];
-        rule = "Host(`cache.herobrine1st.ru`)";
-        middlewares = [ "nix-serve" ];
-        service = "nix-serve";
-      };
       hydra = {
         entryPoints = [ "nebula" ];
         rule = "Host(`${domain}`)";
         service = "hydra";
       };
+      atticDefaultCache = {
+        entryPoints = [ "nebula" ];
+        rule = "Host(`${attic.domain}`)";
+        middlewares = [ "addAtticCachePrefix" ];
+        service = "attic";
+      };
+      atticNamedCache = {
+        entryPoints = [ "nebula" ];
+        rule = "Host(`${attic.domain}`) && PathPrefix(`/${attic.cache}/`)";
+        service = "attic";
+      };
+      atticApi = {
+        entryPoints = [ "nebula" ]; # WARNING: HYDRA-BUILDER DOMU CAN EXFILTRATE JWT TOKEN - DON'T OPEN UNTIL XENSECRETS IS PROTECTED MORE
+        rule = "Host(`${attic.domain}`) && PathPrefix(`/_api`)";
+        service = "attic";
+      };
     };
     middlewares = {
-      nix-serve.compress.encodings = [ "zstd" "br" "gzip" ];
+      addAtticCachePrefix.addPrefix.prefix = "/${attic.cache}";
     };
     services = {
-      nix-serve.loadBalancer.servers = [ { url = "http://${ip}:${toString gconfig.services.nix-serve.port}"; } ];
       hydra.loadBalancer.servers = [ { url = "http://${ip}:${toString gconfig.services.hydra.port}"; } ];
+      attic.loadBalancer.servers = [ { url = "http://${gconfig.services.atticd.settings.listen}"; } ];
     };
   };
 }

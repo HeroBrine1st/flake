@@ -1,0 +1,13 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "narinfo-proxy"
+version = "0"
+
+[project.scripts]
+narinfo-proxy = "main:main"
+
+[tool.setuptools]
+py-modules = ["main"]

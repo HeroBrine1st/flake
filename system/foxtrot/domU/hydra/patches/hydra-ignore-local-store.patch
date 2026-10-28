@@ -1,0 +1,43 @@
+diff --git a/subprojects/hydra-queue-runner/src/state/mod.rs b/subprojects/hydra-queue-runner/src/state/mod.rs
+--- a/subprojects/hydra-queue-runner/src/state/mod.rs
++++ b/subprojects/hydra-queue-runner/src/state/mod.rs
+@@ -3228,7 +3228,10 @@ impl State {
+             match path {
+                 Some(path) => {
+                     let valid = match conn.as_mut() {
+-                        Some(conn) => conn.is_valid_path(path).await.unwrap_or(false),
++                        // the local store is ignored: paths shared with the booted domU
++                        // closure must not count as valid, or they are upload-gated
++                        // against the read-only cache and stall the whole graph
++                        Some(_) => false,
+                         None => false,
+                     };
+                     if !valid {
+--- a/subprojects/hydra-queue-runner/src/state/uploader.rs
++++ b/subprojects/hydra-queue-runner/src/state/uploader.rs
+@@ -322,16 +321,15 @@
+         use_overflow: bool,
+         notify_drv: Option<StorePath>,
+     ) {
+-        tracing::info!("Scheduling new path upload: {:?}", store_paths);
+-        self.queue.send(Message {
+-            id: uuid::Uuid::new_v4(),
+-            store_paths: Arc::new(store_paths),
+-            log_remote_path: Arc::new(log_remote_path),
+-            log_local_path: Arc::new(log_local_path),
+-            use_overflow,
+-            notify_drv,
+-        });
+-        let _ = self.save_state().await;
++        // schedule_upload is called directly from create_step,
++        // revalidate_locally_valid_step and prefetch_step_facts, so gating the
++        // callers is not enough: the cache answers every PUT with 501 and
++        // object_store retries each one ten times. Never enqueue; still report
++        // completion, or a step gated on PendingUpload waits forever
++        // (upload_msg reports completion even when the upload failed)
++        if let Some(drv) = notify_drv {
++            let _ = self.completion_tx.send(drv);
++        }
+     }
+ 
+     #[tracing::instrument(

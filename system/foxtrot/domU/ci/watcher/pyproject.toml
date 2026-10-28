@@ -1,0 +1,13 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ci-watchers"
+version = "0"
+
+[project.scripts]
+ci-watchers = "ci_watchers.__main__:main"
+
+[tool.setuptools]
+packages = ["ci_watchers"]
