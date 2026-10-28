@@ -47,7 +47,7 @@ in {
         ExecStart = "${runDomain} ${name} ${value.definition}";
         ExecStop = "${stopDomain} ${name}";
       };
-    }) cfg.machines;
+    }) (lib.filterAttrs (name: value: value.autoStart) cfg.machines);
 
     virtualisation.xen.networking.bridges = lib.mkMerge (lib.mapAttrsToList (machine: machineCfg:
       lib.mapAttrs (bridge: bridgeCfg: {

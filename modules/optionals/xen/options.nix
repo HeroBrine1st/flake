@@ -20,6 +20,11 @@ in {
               type = lib.types.enum [ "hvm" "pv" "pvh" ];
               default = "pvh";
             };
+            autoStart = lib.mkOption {
+              type = lib.types.bool;
+              default = true;
+              description = "Create systemd service";
+            };
             networking.bridges.xenbr0 = {
               ip = lib.mkOption {
                 type = lib.types.str;
