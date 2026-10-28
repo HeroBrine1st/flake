@@ -3,7 +3,7 @@
 in {
   imports = [
     ./domU/hydra
-    ./domU/forgejo-runner
+    ./domU/ci
     ./domU/general
     ./domU/letta-code
     ./domU/spark
