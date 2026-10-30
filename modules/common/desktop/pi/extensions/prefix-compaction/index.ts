@@ -277,7 +277,7 @@ export default function (pi: ExtensionAPI) {
 		futureAgentMessage?: string;
 		triggered: boolean;
 	} | null = null;
-	const warnedLevels = new Set<number>();
+	const warnedLevels = new Array<number>();
 
 	/**
 	 * Inject a context-usage warning without triggering an agent turn:
@@ -330,17 +330,15 @@ export default function (pi: ExtensionAPI) {
 		if (!usage) return;
 		let crossed = false;
 		for (const level of WARNING_LEVELS) {
-      if (usage.tokens >= usage.threshold * level && !warnedLevels.has(level)) {
-        warnedLevels.add(level);
+      if (usage.tokens >= usage.threshold * level && !warnedLevels.includes(level)) {
+        warnedLevels.push(level);
         crossed = true;
       }
     }
 
     if (!crossed) return;
-    const level = warnedLevels[-1];
-
-    warnedLevels.add(level);
-    const first = warnedLevels.size === 1;
+    const level = warnedLevels.at(-1);
+    const first = warnedLevels.length === 1;
     const remaining = remainingLevels(level);
     const last = remaining.length === 0;
     const pct = Math.round((usage.tokens / usage.contextWindow) * 100);
@@ -409,15 +407,19 @@ export default function (pi: ExtensionAPI) {
 	// already warned. (Only gap: a mid-turn process crash never warns; the
 	// rebuild then suppresses that one redundant warning — arming stays
 	// correct because usage >= level.)
-	pi.on("session_start", (event, ctx) => {
-		if (event.reason === "new") return;
-		warnedLevels.clear();
-		const usage = getCompactionThreshold(ctx);
-		if (!usage) return;
-		for (const level of WARNING_LEVELS) {
-			if (usage.tokens >= usage.threshold * level) warnedLevels.add(level);
-		}
-	});
+
+	const onCtxChange = (event, ctx) => {
+    warnedLevels.length = 0;
+    if (event.reason === "new") return;
+    const usage = getCompactionThreshold(ctx);
+    if (!usage) return;
+    for (const level of WARNING_LEVELS) {
+      if (usage.tokens >= usage.threshold * level) warnedLevels.push(level);
+    }
+  }
+
+	pi.on("session_start", onCtxChange);
+	pi.on("session_tree", onCtxChange);
 
 	// Context-usage warnings + handoff trigger, after every completed turn.
 	pi.on("turn_end", (event, ctx) => {
@@ -435,7 +437,7 @@ export default function (pi: ExtensionAPI) {
 			ctx.compact({
 				customInstructions: handoffRef.summarizerPrompt,
 				onComplete: () => {
-					warnedLevels.clear();
+					warnedLevels.length = 0;
 					// Hidden from the TUI: the next agent sees it as its first user
 					// message; the user does not need to read it.
 					if (handoffRef.futureAgentMessage) {
@@ -477,7 +479,7 @@ Parameters:
 					details: { outcome: "already-scheduled" },
 				};
 			}
-			if (warnedLevels.size === 0) {
+			if (warnedLevels.length === 0) {
 				return {
 					content: [
 						{
