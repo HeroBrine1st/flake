@@ -348,7 +348,7 @@ export default function (pi: ExtensionAPI) {
     };
     let message: string
     if (first) {
-      message = `Heads-up: you're approaching your working memory limit and will soon be asked to hand off your work to another agent. This should not change the quality or scope of your work. The \`trigger_handoff\` tool is now armed; use it to trigger a handoff proactively at a time that is convenient for the other agent to continue after you, such as before starting the next chunk of work, after a local checkpoint or commit, before working on the next user request, or before writing final response to user. Before handoff, consider persisting or updating plans and checklists. If you do not use the tool, the context will still be compacted automatically once it fills up, possibly degrading quality of your work. You will get ${moreWarnings(remaining.length)} more warnings; do not wait until the last one - at that point you will not be able to update plans and checklists.\n\nIf your task is completed before handoff, it is recommended to hand off before writing a final response, since you will anyway need to hand off on next user request.`;
+      message = `Heads-up: you're approaching your working memory limit and will soon be asked to hand off your work to another agent. This should not change the quality or scope of your work. The \`trigger_handoff\` tool is now armed; use it to trigger a handoff proactively at a time that is convenient for the other agent to continue after you, such as before starting the next chunk of work, after a local checkpoint or commit, before working on the next user request, or before writing final response to user. Before handoff, consider persisting or updating plans and checklists. If you do not use the tool, the context will still be compacted automatically once it fills up, possibly degrading quality of your work. You will get ${moreWarnings(remaining.length)}; do not wait until the last one - at that point you will not be able to update plans and checklists.\n\nIf your task is completed before handoff, it is recommended to hand off before writing a final response, since you will anyway need to hand off on next user request.`;
     } else if(last) {
       message = `This is the last warning: you have reached context limit. You MUST hand off NOW by calling \`trigger_handoff\` tool without updating plans and checklists, which can still be done by summarizer guided with \`summarizer_prompt\`.`
     } else {
@@ -369,7 +369,7 @@ export default function (pi: ExtensionAPI) {
 	// details (never sent to the LLM) carries level, the usage percent, and
 	// the remaining levels' percents — all computed at warn time.
 	pi.registerMessageRenderer("pi-context-warning", (message, _options, theme) => {
-    if (message.details ?? false === false) return;
+    if ((message.details ?? false) === false) return;
 		const details: WarningMessage = message.details;
 		const remaining = remainingLevels(details.level);
 		const pct = typeof details.pct === "number" ? details.pct : Math.round(details.level * 100);
