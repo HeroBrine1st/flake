@@ -27,7 +27,11 @@
   replaceKeys = replacements: attrs:
     lib.mapAttrs' (name: value: {
       name = replacements.${name} or name;
-      value = if builtins.isAttrs value
+      value =
+        # without recursing into mkMerge contents, renames never reach what it wraps
+        if value ? _type && value._type == "merge" then
+          lib.mkMerge (map (v: if builtins.isAttrs v then replaceKeys replacements v else v) value.contents)
+        else if builtins.isAttrs value
         then replaceKeys replacements value
         else value;
     }) attrs;
