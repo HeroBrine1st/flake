@@ -5,10 +5,23 @@
       url = "https://huggingface.co/ggerganov/whisper.cpp/resolve/main/ggml-large-v3-turbo-q5_0.bin";
       size = 574041195;
     };
+    "surya-2.5-q8_0" = {
+      url = "https://huggingface.co/datalab-to/surya-ocr-2.5-gguf/resolve/main/surya-2.5-Q8_0.gguf";
+      size = 628680096;
+    };
+    "surya-2.5-mmproj" = {
+      url = "https://huggingface.co/datalab-to/surya-ocr-2.5-gguf/resolve/main/surya-2.5-mmproj.gguf";
+      size = 207345920;
+    };
+    "surya-2.5-chat-template" = {
+      url = "https://huggingface.co/datalab-to/surya-ocr-2.5-gguf/resolve/main/chat_template.jinja";
+      fileName = "surya-2.5.jinja";
+      size = 2872;
+    };
   };
   fileName = name:
     models.${name}.fileName
-    or lib.last (lib.splitString "/" (builtins.head (lib.splitString "?" models.${name}.url)));
+    or (lib.last (lib.splitString "/" (builtins.head (lib.splitString "?" models.${name}.url))));
   pathByName = name: "${modelDir}/${fileName name}";
 
   replaceKeys = replacements: attrs:
@@ -217,6 +230,15 @@ in {
             cmd = lib.escapeShellArgs (server ++ [
               "--model" "${modelDir}/surya-2.gguf"
               "--mmproj" "${modelDir}/surya-2-mmproj.gguf"
+              "--flash-attn" "on"
+              "--predict" "8192"
+            ]);
+          };
+          "datalab-to/surya-ocr-2.5" = {
+            cmd = lib.escapeShellArgs (server ++ [
+              "--model" (pathByName "surya-2.5-q8_0")
+              "--mmproj" (pathByName "surya-2.5-mmproj")
+              "--chat-template-file" (pathByName "surya-2.5-chat-template")
               "--flash-attn" "on"
               "--predict" "8192"
             ]);
