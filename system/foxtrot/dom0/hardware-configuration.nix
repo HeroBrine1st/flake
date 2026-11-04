@@ -12,7 +12,7 @@
         };
       };
     };
-    kernelModules = [ "kvm-intel" ];
+    kernelModules = [ "kvm-intel" "dm_thin_pool" ];
     loader = {
       systemd-boot = {
         enable = true;
