@@ -73,6 +73,16 @@
     };
   };
 
+  systemd.services.hydra-evaluator.path = lib.mkBefore [
+    (pkgs.nix-eval-jobs.overrideAttrs (old: {
+      postPatch = (old.postPatch or "") + ''
+        # enable GC back
+        substituteInPlace src/nix-eval-jobs.cc \
+          --replace-fail 'setenv("GC_DONT_GC", "1", 1);' '''
+      '';
+    }))
+  ];
+
   networking.firewall.allowedTCPPorts = [
     config.services.hydra.port
     config.services.nix-serve.port
