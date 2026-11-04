@@ -8,6 +8,7 @@
       initrd.systemd.enable = true;
     };
     nix.enable = lib.mkDefault false;
+    documentation.nixos.enable = false;
   }
   (lib.mkIf (options.boot ? isBareMetal) { # for reusage
     boot.isBareMetal = false;
