@@ -8,6 +8,8 @@
   };
 
   boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
+  boot.kernelParams = [ "SYSTEMD_SULOGIN_FORCE=1" ];
+  services.getty.autologinUser = "root";
 
   nix = {
     enable = true;

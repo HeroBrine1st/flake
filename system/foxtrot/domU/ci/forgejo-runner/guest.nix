@@ -7,6 +7,9 @@
     };
   };
 
+  boot.kernelParams = [ "SYSTEMD_SULOGIN_FORCE=1" ];
+  services.getty.autologinUser = "root";
+
   services.forgejo-runner.instances.main = {
     enable = true;
     runtimes.docker = true;

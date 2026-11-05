@@ -1,0 +1,12 @@
+--- a/subprojects/hydra-builder/src/state.rs
++++ b/subprojects/hydra-builder/src/state.rs
+@@ -436,6 +436,9 @@
+                     LogMessage::Message(m) => {
+                         send_line(&m.text);
+                     }
++                    LogMessage::StartActivity(a) if !a.text.is_empty() => {
++                        send_line(&a.text);
++                    }
+                     LogMessage::Result(r)
+                         if matches!(
+                             r.result_type,

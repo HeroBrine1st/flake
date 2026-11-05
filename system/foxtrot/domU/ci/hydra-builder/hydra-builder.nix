@@ -3,6 +3,9 @@
 in {
   services.hydra-builder = {
     enable = true;
+    package = pkgs.hydra-builder.overrideAttrs (old: {
+      patches = (old.patches or []) ++ [ ./patches/hydra-builder-substitution-logs.patch ];
+    });
     inherit queueRunnerAddr;
     authorizationFile = "/run/xen.secret/hydra-grpc-token";
 
@@ -28,6 +31,7 @@ in {
       requires = [ "xen-secrets.service" ];
       wants = [ "network-online.target" ];
       after = [ "xen-secrets.service" "network-online.target" ];
+      environment.RUST_LOG = "hydra_builder=debug";
     };
 
     # hydra step involving anything on this domU -> hydra-builder -> nix build -> already built, nothing to do! -> hook skipped -> hydra presigns url -> oops
