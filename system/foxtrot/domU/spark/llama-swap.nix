@@ -283,10 +283,14 @@ in {
     };
   };
 
-  systemd.services.llama-swap.serviceConfig = {
-    Group = "docker";
-    StateDirectory = "llama-swap";
-    RuntimeDirectory = "llama-swap";
+
+  systemd.services.llama-swap = {
+    path = [ config.hardware.nvidia.package ];
+    serviceConfig = {
+      Group = "docker";
+      StateDirectory = "llama-swap";
+      RuntimeDirectory = "llama-swap";
+    };
   };
 
   systemd.services.llama-swap-models = {
