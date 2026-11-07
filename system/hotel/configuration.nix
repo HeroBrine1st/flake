@@ -39,4 +39,6 @@
     execWheelOnly = true;
     wheelNeedsPassword = false;
   };
+
+  flake.cache.enable = false;
 }

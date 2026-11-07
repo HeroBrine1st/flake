@@ -43,5 +43,5 @@
     execWheelOnly = true;
   };
 
-  nix.useFlakeCache = false;
+  flake.cache.enable = false;
 }

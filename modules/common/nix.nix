@@ -1,5 +1,12 @@
-{ lib, config, systems, ... }: {
-  options.nix.useFlakeCache = (lib.mkEnableOption "usage of cache from build machine") // { default = true; };
+{ lib, config, systems, ... }: let
+  cfg = config.flake.cache;
+in {
+  options = {
+    flake.cache = {
+      enable = (lib.mkEnableOption "usage of cache from build machine (if joined appropriate network)") // { default = true; };
+      force = lib.mkEnableOption "lifting of appropriate network condition";
+    };
+  };
 
   config.nix.settings = lib.mkMerge [
     {
@@ -7,7 +14,7 @@
       http-connections = 128;
       max-substitution-jobs = 128;
     }
-    (lib.mkIf (config.network.overlay.enabled && config.nix.useFlakeCache) {
+    (lib.mkIf ((config.network.overlay.enabled || cfg.force ) && cfg.enable ) {
       substituters = [
         "https://cache.herobrine1st.ru"
       ];
