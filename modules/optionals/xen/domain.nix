@@ -1,32 +1,38 @@
 { lib, pkgs, config, ... }: let
   cfg = config.virtualisation.xen;
-  decodeDomain = pkgs.writeScript "decode-xl-domain" ''
-    #!${pkgs.bash}/bin/bash
+  xl = "${cfg.package}/bin/xl";
+  decodeDomain = pkgs.writeShellScript "decode-xl-domain" ''
+    set -euo pipefail
 
     ${pkgs.jq}/bin/jq --raw-output '.core, (.cmdline | "cmdline=" + @sh)' "$1"
     ${pkgs.jq}/bin/jq --raw-output '.base64' "$1" | ${pkgs.coreutils}/bin/base64 -d
     ${pkgs.jq}/bin/jq --raw-output '.extraXenlight' "$1"
   '';
-  runDomain = pkgs.writeScript "run-xl-domain" ''
-    #!${pkgs.bash}/bin/bash
-    set -e
+  runDomain = pkgs.writeShellScript "run-xl-domain" ''
+    set -euo pipefail
 
     export PATH="${pkgs.qemu_xen}/bin:$PATH"
-
-    if ${cfg.package}/bin/xl list "$1" 2>&1 > /dev/null; then
-      ${stopDomain} $1
-    fi
-
     cfg="/run/xen/domU-$1.cfg"
+
+    if ${xl} list "$1" >/dev/null 2>&1; then
+      ${stopDomain} "$1"
+    fi
     rm -f "$cfg"
     ${decodeDomain} "$2" > "$cfg"
-    ${cfg.package}/bin/xl create -Fc "$cfg"
+    exec ${xl} create -Fc "$cfg"
   '';
-  stopDomain = pkgs.writeScript "stop-xl-domain" ''
-    #!${pkgs.bash}/bin/bash
+  stopDomain = pkgs.writeShellScript "stop-xl-domain" ''
+    set -euo pipefail
 
-    ${cfg.package}/bin/xl shutdown -ww $1
-    rm -f "$cfg"
+    if ! ${xl} shutdown -ww "$1"; then
+      echo "Graceful shutdown of domain $1 failed; forcing destruction" >&2
+
+      if ${xl} list "$1" >/dev/null 2>&1; then
+        ${xl} destroy "$1"
+      else
+        echo "Domain $1 is vanished. Okay" >&2
+      fi
+    fi
   '';
 in {
   config = lib.mkIf cfg.enable {
