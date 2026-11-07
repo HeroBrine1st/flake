@@ -79,12 +79,16 @@ in {
                     internal = true;
                     readOnly = true;
                   };
+                  extra = lib.mkOption {
+                    type = lib.types.listOf lib.types.str;
+                    default = [];
+                  };
                 };
                 config = let
                   cfg = disk.config;
                   access = if cfg.readOnly then "ro" else "rw";
                 in {
-                  spec = "${cfg.target},${cfg.format},${cfg.vdev},${access}";
+                  spec = lib.strings.join "," ([cfg.target cfg.format cfg.vdev access] ++ cfg.extra);
                 };
               }));
             };
@@ -139,6 +143,10 @@ in {
               '';
               readOnly = true;
               format = "raw";
+              extra = [
+                # xl-disk-configuration.5 allows to use this on local disks
+                "direct-io-safe"
+              ];
             };
             definition = pkgs.runCommand "${machine.name}-xl.json" {
               json = builtins.toJSON {
