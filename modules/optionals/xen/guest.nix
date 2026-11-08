@@ -86,4 +86,10 @@
       };
     };
   })
+  {
+    systemd.targets.network-online = lib.mkIf (config.systemd.services ? dhcpcd) {
+      requires = [ "dhcpcd.service" ];
+      after = [ "dhcpcd.service" ];
+    };
+  }
 ]
